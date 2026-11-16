@@ -2,7 +2,7 @@
 <html lang="fr" class="locked">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <title>Carnet Pilote</title>
 <!-- Application mobile (PWA) -->
 <link rel="manifest" href="manifest.json">
@@ -213,7 +213,11 @@ details.jobc>summary .chev{color:var(--muted);transition:transform .2s}
 details.jobc[open]>summary .chev{transform:rotate(90deg)}
 .bagh{display:flex;justify-content:space-between;align-items:center;gap:8px}
 /* ---------- V16 ---------- */
-.sheet .actions{position:sticky;bottom:calc(-24px - env(safe-area-inset-bottom,0px));background:var(--surface);margin:18px -18px 0;padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);z-index:3}
+#modal{height:var(--vvh,100dvh);top:var(--vvt,0px);bottom:auto}
+.sheet{max-height:calc(var(--vvh,100dvh) * .92);padding-bottom:0}
+.sheet::after{content:"";display:block;height:calc(18px + env(safe-area-inset-bottom,0px))}
+.sheet .actions{position:sticky;bottom:0;background:var(--surface);margin:18px -18px 0;padding:12px 18px;border-top:1px solid var(--line);z-index:3;box-shadow:0 -6px 12px rgba(0,0,0,.06)}
+#lockBio{margin-top:12px}
 .example{border:1.5px dashed var(--line);border-radius:12px;padding:10px 14px;margin:10px 0;color:var(--muted);font-style:italic;font-size:.93rem}
 .example b{font-style:normal}
 .qparts .chip{padding:10px 16px;font-size:1rem;font-weight:700;border-width:2px}
@@ -274,13 +278,14 @@ html.locked #lock{display:flex;position:fixed;inset:0;z-index:200;background:var
     <button class="btn" type="submit">Ouvrir mon carnet</button>
     <p id="lockMsg" role="alert"></p>
   </form>
+  <button class="btn" type="button" id="lockBio" hidden>👆 Ouvrir avec mon empreinte</button>
   <button class="btn ghost" type="button" id="lockHintBtn" hidden>💡 Voir mon indice</button>
   <p id="lockHint" class="meta" hidden></p>
 </div></div>
 
 <script>
 "use strict";
-const VERSION="V16",VERSION_DATE="16/11/2026",FILE_NAME="V16Carnet_Pilote.html";
+const VERSION="V17",VERSION_DATE="16/11/2026",FILE_NAME="V17Carnet_Pilote.html";
 const MOT_DE_PASSE_DE_DEPART="1234"; // 🔒 Mot de passe provisoire : change "1234" ici (garde les guillemets). Ensuite, change-le plutôt dans ⚙️ Paramètres.
 const LOGO="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAoM0lEQVR42u19eZRcxXn9/arqve6eXQJMWGxw7GAsguMFO/wSJEQwm8GBgKZtIAuOsUhseSEYBzTL6zczAjkyMcuJbMkhDomD4xkWO14CsRFSSAjHMTbBlohJQmKHIDaJ6Zamp/u9qvp+f7zXox4to55NmhnVPWcOh6OeN131vlt169b3VQEODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODvMX5LrgMCEIBACR/p9FGFrXKQ5HxqCTBP/+COEGJDcDLPBRPx3p2/v63sHW/pogIivlE6Xu7h/s/RkHR4CFF/xBoNqIvkDAtaRU8m/GgJm/UmT+CMKwgs5OiaEh4zrNEWBhYHBQIp83i4OgzRDdS75/MY+MWAC1kV5Qc7NAFG2yzJ2lMNxZ+x3XebML4bpg1kd+hXzeLAqCNxiiR0ipi3lkJAaRAJFKfwSPjMRQ6jeIaHNbELwZ+bxBECjXgW4GmN/BH4a6vbv7HVDqQRLiJK5WNYj2H9jMmjIZxdZut8yX7wrDJ2rPcJ3pZoB5GfytPT0XQalHiegkrlbNAYMfAIgUV6uGgOME0SPtQXAZwlC7mcDNAPOrTzs7BYaGTHtv74chxAZYK2GMAZFs6AnMFlIKkhIwZtVwX9+fpQtjC4BdF88cpOuCGR31BZYvJ6xfbzuCoJd8//OIIoK13HDwJzMBwVoLa5kymYszS5dmquvXfw/MBEBgyxZHAjcDzMHgT2xO0U70BfK8lTw6asAsQHSgfuYJ3wMzAzDU3Kw4iv6q+MIL12LjxtjZpI4AcwupZXnUjTe26ubmr5LnXczlsp5Q7zMzhEj6P5khaILPampqUhzH30Olki+uXfuaWxy7RfDcWeymNqdubt5Enncxj4wcLPgNeR6BuczALvJ9ArOZcHE8MqJJqfcik9nS1tX1Jrc4dgSYG8Efhro9CN7JQmwhIc7gcllDCDXhaO77koleYSnPEZ63lJm3UyYjwXzgEV0IxaOjmqQ8nTxvS+vq1Wc6EjgCHPbgbwuCCyHEo2A++aA2p7WaslnFzD81cXx2KQy/P9zb+28cx0vZ2h9TLqdgrZ5wJqhWDYAThO9/r6On51JHArcGOPR9tj+bU2sLIcRBdXwUPaaBFSNh+DIGBxNnKJ83bUGwWBB9DZ733oOuH6y1UEqQlCBjPvpaX98X0NkpMThoQeQcIjcDzKLTwwwMDZmO3t6APO/PobWAMRMFP9cF/1AROH8s+PN5g3zeoLNTlsJw5/ALL7yPo+ivqalJgdmkLtD+5JCAMcxxbNn317f39q4Zc4X2l2rt4GaAGQn+ydqczAwiS9mstHH8+VIY/tG4Z+37fAbA7YXCraTUTVypWDDThM8HLDU1SY6ie4rAtQhD7WxSR4CZxXib817yvEsasDkthBDkeWBjbiiG4Z8iCAQKBT6gTGEm5PMCQ0OmIwg+CiH+jLXGQWaYRF41NytE0T9wpfLB4tq1r7lsUieBZm6xm6Qyn6ibmzeRUpc0YnNCKQGlKjaKrkyDXyEMeUKNTsQYGrIIAjUchuvZ2t+ClCPk++KgNunu3RpKnY9sdnP7TTf9ossmdTPAjDk97d3d7yClHoCUJ3OlcrDg1+T7iplfIWM6h/v7t0xp0yr9nUU9Pf/PKnUfER0/YSZp7W8n2aT/x8yXl8Lw+27DzM0A0wr+tiC4kDxvE4CTuVJp3OZkXjbl4AdQszdf6+//F7b2bLb2J43apAScQEJ8r6O7+zedTepmgMn3yeCgQD5v2nt7PwQhvtRQNuf+bM6ZGH33EHGxIBqE553bsE0qBFvmj5bC8IsYHJTo7HQ26V5w2aB7OzHLlxNWrbIdvb095Hm3I44Pls3JYDZprs5gEbgiDsMiBgclVq2a/iJ0yxaLzk5ZXb++XDn77L/NGHMyZbPvQBwbAPt3iJJsUgYzi0zm/Zlly1T1Yx97BIWCyyZ1BJgg+MPQYvNmtDNvoEzm01ypmNSGFAcY9RkAU1OTtNXq7aUwvBZbtmgEgcCqVTN3ssO2bZx+P1PdsuXBzNKlOcpklsIYBjMOSAJmwBhLmczy7LJlJ1deeeWbWLXKorNTYts2RwIngVKkvnlqc/4N+f77G3B6LIQg8jxirT9d7Ou77aA253RRb5P29n4cUt7ZsE2azFAPo1K50tmkbhE8XmMPDZlFXV2v183Nj5BS72/Y5pQytlpfVezruw2Dg/KgNue0h6s6m7Sv7y7W+nJIOQrPEw1mk15Audym9q6uNzqb1BGgPpvz7dbzHiMp382jo43YnBJEr4D5glJf31drewU4NOWKXHN2iv39D9o4fi+EeLHRbFIQvR2e91hbEJzhHKIjmQD12ZxEm4nopIPanMw1m/NZo/XZxTDcfNh89jR4d61Z87iN42XMnNikE5Gg3iYl2tQaBJcc6SSgI7LNtWzOIPh9CLEBxqhJ2Jz/rKPoipFbb31pTmwy1U6fuOmmo2QmMwTfP6dRmxRSWjbmo6W+vg3pmuCIK7o/slyg8UXr3aTU7Q0Ure+xOaNoqFgqXR6vWzeMzk6J9esP/yIytUmjjRtHKldddW9mePgXKZd7O6JIp+7QgWxSC2tJZDLvzyxdKqurVm06Eovu6YgK/jC0YKb2QuEL5PvXNZTNmdicwlart5f6+q4f96y51z4GwG29vZ8Vvv+ZhrJJiSzlctLG8V+Utm5diaEhcyQd0HtkEGDvbE7fv6RBm7OWzXljMQw/N+s257SXx3U2aU/PJ6DUHax1InkOtJcxXt49LCqVD7z22c8WjxSbdOEvgmtF6zWb0/MayuakRCNXrdZXpcGvZt3mnPZwVmeT9vffyVqvgFJlUqoxm9TzLuBc7tH2IDj5SLFJacEHfy2b0/MegBCTyeZ8lYxZMa2EtjnQ9paenl+XUt5PQhzbcDYp88+5Wr2idMstP1jo2aS00IO/rafnApLya0TUzlE0sdNjraZcTrExPzXV6uW7b71127wOgJpD1N39S0Kpr5NSSxrY5zDkeZKBXdaYK3f19397IZOAFmSbatmcQfD7INo4qaL1OP4nXa2umDM25wytf1qC4GiVZJNOyiaF1n9Y7O/fuFCzSRfWGqBWtJ7Pm47e3h5S6u6Gi9abm5WtVu8rFovnj9x660tpasP8H/XSovvdYfjqMPOFHEVfpeZmBUDjQJ5/UnRvEccg39/Q3tsbji2IF1jRPS2o4K8VrQPrG7Y5UxsQcXz7cKEwd23OmeofAG29veuE7396UjZpFN1d2rbtOgwNmYVUdL8wCDDdovU4vrHY3z/3bc7pYnzR/ScgxORs0jj+ezE6euVCsknn/3S2d9F6Y8Ffy+ZMbM4k+Oe+zTnt4W5c0f2dbG0nlBpt2CZV6iKTyz26KAjesFBsUpr3wT+NonXEcb64Zs3mI7JwvFZ0HwRnWaL7iOhYTtInGim6/zmMubzY3//kfO87Md9f4BSL1pNsziM1+IE9Rfdh+E+WeRkzP0PZbKPZpG+AUo+09vRcPN+zSWlefufpFK0vNJtzhgaSlptvPkZls4NQanlDElJKCSktmFcWC4W756tNKufZy5pe0XqSzXlFvG7d8IwVrc931LJJN2zYXTn99L/NZLNvokzmVxDHZoJsUpFmk4I879Ls2Wej8rGPPQogeT/zKJtUzqvgn07RehTdUQrDD+OJJ2a+aH2+o1Z0/yd/oqubN9/vL13aKjKZX4fWjRbd/4a/dOnrq8A3EYbzquh+fhAgyb23R914Y6v/+ONDlMlcNTZNH9jDTorWfV+w1jeWwrAXQSCweTNwzjnuRIR9ZwKu1QNUw/DhzNKlRVLqIjATmO0BSQAIxLEW2ewZGWvPaPrVX/12ZePGUQwOSgwNzfl+nvtrgJpb0dX1eut595NSjdTtGiglQRSxtdeU+vq+eqRWPE0pJoJAIgx1exh2AvgrWJuF1gdfY+VyirV+UjBf/loY/nw+rLHEfAj+eVa0Pt+xp+g+CIZI6/MhxMvk+/KgDtHoqCYh3mWJHmvv7n7HfHCIaK4H/6SyOWtF68Y8a7S+bPfAwDPO6ZkRh+hUmck8QFK+tYF9llo2aTHNJv37ufwOaE5+pz3ZnNdAiC/N66L1hUOCY2Qmcx953rKGbVIhDKy9rtjXd/dcveme5lhnJ5IsDG1HodAFKQe4WuU0KWuibM56m/P38PnPj7pbUmbYhBgaMrjjjkz7zp33kO9/ICWBxIEv+bYgIspmCXEcDIdhX/37dQTYX/AnHUPthcJ68rw/WFBF6/N/JtiTTRoEnxO+fwOPjjacTcpxvLHI/Ie1jN258n7mhg2abErZY4KgxVu+/D7y/asbtDkF+T6x1jeW+voCZ3POIva2Sc86q0Sed2GjNills+/OWHtGy7vf/c3RW26pzhWbVMyBkWUsmzMieqTBg2nnZ9H6fAcRIwwZQaCKfX2ft1p/EFJWJ1F0f7Fubt60qKvr9XMlm5QOe/CHoe7o7v4VKPUgpHwjj44e7KZ1Q74v533R+gJZHHcEwTJOskmPaTSbFMz/w3F8eXFg4EeH+93R4e7AtiA4XwjxNTB3cBzrg2Zz5nKKrX1Wx/HlIwMDW13wzwGHqLv7rVKpB0nKt0xiACuyMR8o9fc/fDjfIR2Wv1mfzSnlxknZnHH8zzHzinIYvuiCf+6QoDkIXqeA+8j3lzZcdC+EAfPKYhj+xeHaqZeHuLP2ZHMGQTd53h2TOZvTRtH9pVLpt+K1a10259xZHFsMDsp41ard1eXLv5ox5i2UzZ6OZDaf+GxSZkG+f2l26VJbWbVq8+E4m5QOafDXzuYMw8ZtzpqNpvUdxSD41LhnOcylmaDeJv1T4XnXp9m6jb3fKNpQBD56qG3SQzMD1NucW7YMkeddPalszjj+TNFlc871maDeJn0os3TprknapO/JWPuulne/+1uH0iYVh2BkSGzOgYETImATKfWbkyhaj63Wv13s61vnbM55gHqbNAz/1Gp9FaSsohGbtFzWpNQlurl50+KBgRMOlU1Ksx78YajbV69+O/n+Aw3anJp8XwF4lbXOF/v7H91nsctMKBTcDZdzC3acbKm9+66u5fC8wYZs0tTlgzH/zcyXF8Pwqdk2OmaPAOm5MW09PRcIpb4K5kWclNk1cjbnf0jmy3aG4b5nczr9Py/WAfUkSG3Sr5OUpzRkk3qeBNFrVusrS/39D8/mGUQ0mx3R1tV1HXnen02yaP3ANmeSd8JNn/70L/gtLRew1osJsHygdYTD7MoHZmZAwPdfk5XKd3fecsv/HYgEzTfffKxKsknPmkw2Kcfxx0pr1myYrYFv5gMnZWtHb+/VyGa/wuWyTetKJ87mbG5WiKL7Wlpbf/f5G24Y3Yf1NVL19JxHnvcVkvJ16XNdJB5O1N6B1jsI+L3XguDb+wRr7V1ef32uva3tHvL9zgazSUFNTQKVym8P9/X9zWzMBDQbhDrxttuypeHhZ0jKNyCO7QFH/vHZgncWC4VP7ncqTdwFtN5662JRLv87+f7RXK3GcBd9zxkakO97VuuSn8mc+mp394spMXh/8qgtCG4Xvv9JLpctgImySQ08T7AxP2/r6Hjr8zfcUBkbNOekC9TZKQDwrpGRU4noJMQxJgh+CyFAvi85jj9TLBQ+mZ7uTPtMdUNDAkQsRkeXUTZ7dFqV5KU2qvs5/D8eV6taZDJt1Sh6LwDex6RI94AQBKIUhp/iKLqRMhkBIZJY2L87JBHHIKKTdo2MnAqA0xib2zYoGyMnlCY1m1Op2BpzdbFQWDfhTetbtxIAkBCtABhO889FCzSZCYRoOahNOjgoi2H4OWvM1VAqbsAmTWJqFjCzPmtS8gavqemneteulyDlMbDWon7DzdrkfEngVWidL9Vsznz+4FZXUgBzYM0IOHfo0EAcYE1HDbwDrnn8pTC8t72nZzuUGkxl7d4OkYGUBGNe9lpbf1ofY3OTAABjcFDuyOd3tfX2rhFNTXfy7t2oO02AqKlJQev/MMyX7e7vn5kriJgBzxPkecLF5iEQ/HGMVN7u7100NjvXTp4Iw0dbguBsRfR1amr6JR4d3XN6B5GipibYcnnNjj/+412zsQie+Z22hN2iFIZ3dfT0LIJSN5FSuXT0BxvzUMz8oRnL5mS28DwBrb9vjfkmM3vkZoLZCXxAEFEM4ALyvLNSg2Pqg05Kgt1huK0pCJZ5xnyZMpkLkV7mw1qPYmRkbam//y4EgZiNvYDZ2WpOFzzDRH3tQfAV1vpsYm6GEP9WDILH6lyBmdjhs+T7Atb+Y7Gvb8CF6eyjIwgEfP8sjmM77XVkQgJRDsMXAVzUEYZLEce/wkQjYN4y3N//XLr/MyuD2uzlWhAxOjtlMQyfA/DcOJ2YWGQz1yBmMNCU5o7U7r9ymJ140Za5WfAMpmTVHCIiDCcD5GN1zqIEkZnNBs0ehoZMehRGMkps28YYGjKztHll09EErkhmlpD2LfX2zvxoXHP/OjslliyhundqZpvRs4vE03ea3KHxQfMQwrkmDkc0HAEcHAEcHI7kVb3DoUeyyKs5KXtMAVft5giwwMBMGBoS2LqVcNppPO4iub3dsIk+6+AIMG+wx/q16X7HeGfj0UfVUd/5Ti5uavIAwCuX4x3ve98oiPQ+n61/lquEcwSY00g8bK63fo8eGDjOxPE7DPBOsvY0MJ+ETZuO1tlsCxmTAQCdzVbbN23aje7uV0H0MxZiqwR+KD3vR692d2+vPQtBILBtG7lj3x0B5l7gDw7a2o5lW3//m0jr9zNwSRRFZwil2oWUiea3NsmJYgalawCmtCZEiF+CEP+PkvRfRFFUbAuCHxDwLVbqm6Wenv8ak0r5vHBEcAQ4/Pq+FohEaA/Dc5n5DyiO30e+30TWguMYHEUmTdfmumUwmTTrS8DYJJuj/l9JEFE7KXUuhDgXUbSmrVD4DhF9sUj0CABTRzy3TnAEOAyjfjLim44wPJuZuwg4j6QEGwMeHdVIincAZgWlJEkJiOSgtJgJ7WYXiBnDql16lMwKacYsoDUDiLlaTQghRJOQcgWsXdFeKHyXiNYMB8EWEMHdhuMIcGiR5qU3DQwc52t9C5ivISHA1Wp92ock3ycoBY4iwNrt1phnQfSsD/18kRZtD5u+e45POvPJkaseOppLx1WgTgTzKUR0CpQ6jnzfg9bgKGJYq7lSAQBBmcx5sPa8jkLhLyOlVpe7u7fP5tEhjgAOeyRPoUDpBX6Xw5i74HnHc7nMY4EvhKJMBohjsDE/IGu/aYHveUL8ZGcYlpLhPNFCV9+OC5nR+vE/fupLr9Tpo8VB0BYDvyyj6L3M/H5S6gx4nuJqFbDWcLVqAAhqarrG0/r89iD4eDGffwBBIFAouNPzHAFmAUEgUkuT2wuFW0nKm1hrcLmskdiUgnI54iiqwJi/NcCXdvX1Pb73M961fbt88rjj+B8Xb1g0bHacT0DmiTtaTzxz58dfXHn8dtr4wnEmJcrj6U9faxD8mjTmIyD6IOVyWR4dZQDM5bKBUseTUve3Fwpri4XCzQhDd3iYI8AsBH9yanG2jeivyfdXcLls0vI/qpVisjF/LYnW7gyCbXW/q9I0cIswtJ8LIJaHMP99hzjHy4gWIkDFw+cjDL98ZQC5MURyVEhnp8CSJYQw1LvC8HEAjy8OgnXGmJvI834HAHEcM7S2bAxTU9NNbYXCm0vMv4MwrDgSOALMnOwhssfecENzFfgGfP9cLpfjtO9qR7c/w8yfKhUK/zC2QK7tB+xVm/DKNjAB/B8sVvhIXFFjxRWA/Yvle9YPPG5Rm/r/O8NwG4DfbQuCrxDR7ZTLvTWtoRVcLseiqWlFR7W6KHPDDZe+FIYjtZP03Et0BJie5t+wQVVeeOFB8v1zeWSkFvxMuZyE1n8pmT+5MwxLGByU2LqVD1TEwcmBLubnt2FxhXFuJQYsAwQs+9ldOJ4+jhfSz4wP2tpIHgQCp51GpXz+HxYHwZlW6zsol7uGR0ctAMUjIzE1NZ1baWl5EBs2XIxCwexzQJWDI0CDSE6gDkPd3tPzV5TLnTc28hMx+b5grT9TLBTW1TtDEz1wcwESgImluLAlg8WlcpL20N6ElnLkXQjEX04/s/+KthoRBgflzny+BOBD7YXCNspk/oSjyIJZ8ehoTE1N57U///yXi/39v52+YwOXaLdfuHToA+t+iTDUbT09qymXu3os+IWw5HkC1l4zdqBXsiF2UAvylW1gAGxZrACDayO9ZcBavgIAL2+kei6fT9Yfg4OyWCisg7XXkOcJCJHMBOVyTLnc1W09PavTMlF3lLwjwCTQ2SlrV4AKKQdSp0cBSG44NOba4ULhHqxc6SGfN41IDGZQfgjm2TtwDDPOKUcgZkgQRDkCUJNBISxzA2eeEiUHTK1c6Q0XCvewMdeS78t0tFdcLmsh5UBHECxDGGp0djoSOAI0qPuXLOFj161rZmvvRnKKhQCzoVxO2Wq1UOzruxsbNnjYuDFu9LGptCEYcX5LDh3awBCBCCBjYFqzaNHWuxAApZ9tDBs3xtiwwSv29d1tq9UC5XIKzMndXACxtXcfu25dM5Ys4YYPrXIEOIIxNCQQhrZSKnVRLvdmjmOdLniVrVT+rjQwECIIFK67blInT9TkDwlxeb38qcFMVgbV47rrNIJAlQYGQlup/B3lcgoAcxxryuXeXCmVuhCGFkND7n07Akyo+wXyedvW3/8mEF3Po6PJ5W6eRxxFL9ls9tp0FJ3Ufbbj5I/Fb4zJnz3L7anJoLo/AcCCmWw2ey1H0UvwPAIRpW24vq2//03I521aX+DgCLAfbNuWZClEUTdlMtn0YF+QlIKt/aPdXV2v1GaIyTx2cwGSAfJYnNdaJ3/2xH8ig1qyaImNuGDSMqjmEA0Nid1dXa+wtX9EUibv1lpLmUwWUdQNgNM2OjgC7Gf0Hxoy7V1dbyTgg1ypMACQ70tbrT5WGhi4d6oJZ7XNr5jFCt6P/KmbKdhCXDYlGVRzhwYHZWlg4F5brT6WLorBlQoT8MH2rq431h1W5uAIsJ++EOIjlM1mYa0BINLdq2Dqa+px7s++8qfu75cjEBjn/NeXcOwUZNBeJhEFadG9gLWGstkshPiIe++OAPuNl9QvzzLzlRxFABFTJiM4jh9Pr2qd0unEe8mf9r3lz56ABenEDWql0SnKoNosEASi2N//KMfx45TJCBAxRxGY+UoEQTZNz3BSyBEgxeCgAIB24Czh+ydDawtmASFAUm6YTl/V5I+24ze/JpgxWFsxNTdor/dKUm5IryAS0NoK3z+5HTirvs2OAA5jVzDB2ksgJZDcTCK5UtlpgW8BAAqFSY/+4+QP6ja/JngfYzLo9mnIoPS7WuBbXKnshJQybVPSxvo2OwI4IAwNmImBZdAaAJg8D0y0uRSGO9Pyx0nn0tQ2vyR757Xsx/2ZUAaxN3UZlB5NXwrDnUy0mTwPABhag4Fl6UWErnrMEQC1c3d4caFwAphPZa0BIoIQgBDfBUB1x3VPWv6kqiYPntS+AVtKNsXSZ0weyXcmCPFdCAEQEWsNMJ+6uFA4AQA7N8hlg9a8f2hgifC8HMexAbPiahXE/K+obTJNQf4Qwbx4O44tpe5PgwOOKEcgyzjnxdtx7C98Ci/tN0X64LAAmKz9V65Wk8J8wAjPy2lrlwB43u0JuBkAY6O7tadAqeTOMSkJ1u5AU9NzqaaesvwpC3FBaxatB5M/+5NBZTENN6j2nZuanoO1OyAlgdlCqaSt9W13BHAA0Um1wZukBBM9X7z55uExTT1JpA4OWyuuYJ68jGFOfnfKblD6nYs33zzMRM9Tsrjnvdrq1gCuC2qCwR47Vj0lBAh4aao6mRlEIexT65tfF1lxzq6qIAMhDAQa/BG7qoIiK855an3z66bsBqXrGwJeStcBnJ5Od6x74W4NUK+VQUK07XVc+XD9GmEK8kefYkYusk1oHS7DCDEJGUMgyzAdTWgVcXQRgHsmrBQ7yPoGwPDYSdTMSVvr2u4I4ABY6+8lISoAgM5OYGhocu7PaYnU+PPy2y5ty4DLkeHJb7wyNwnJpSouBZ6+p/bMSaH23WttOVBbHQEc0nLC+vibcgVVfmtAQIhPlj6wTWQzv4XR0SnEP4A4R7ZS3QY8PfbMKWHvtuzdVkeAIxg1mcC8u14mgDmRCZMc/eulxTFq96COR2+GsFPYzIJEXLVKmcGXpypXat+deby8Y949VXnnFsELDTUrkGjHOAIQHZMG0eQDL6kXoJfh/0RbPG29DBkm2/AimMlaL0Pa4umX4f8ESbLeVAhg07YdM44ARDvGtd0RwIGB59PgJzYGzHw8giCbipGpODASYWiFlA9CqcmO4BZKQQjx9fREuqnIsaS4J8lwPZ6NQa0meKytDo4AddHyn0gKwASMAQHHtQEnpsE8lZHSps99gKtVA6JJuEAkuVq1sPbrU3Zr0u/cBpxIwHEwJmmbtUlbHRwB6oNLED3DUWRBpMBsKJPxyNrTp9xPqQx6rVDYCuYfkecR9r7/a/8LVkueR2zt08NS/njK8qeWEm3t6ZTJeGA2IFIcRVYQPTNlYjkCLDCEIacj5X8y8L9j6dDJ5S3nTOvZQSBBxEz09TTNghsi5PTlTz3OSdtiICUY+N+22gyQtt0R4EiX/52d8mdhWCGi75NSDABp5uR5CAK19wG3k51dJNE3GpZBNfmj1NTlTxLcGkGgwHweJyneIKWYiL7/szCspAdlOQK4+B/nBD2U3FYHgSiypNRbFgHvQXJcuZxCEFowNy6D6uWPMVOXP8l3pUXAe0iptyCKLIDkbiaih5wD5Aiw35FaAQ9xtToCIRSIDJQiY+2H01liak8uFCYjg5JszenKn+S7srH2w1CKQGQghOJqdUQBDzn97wiw70jd2Sl3hOELDDxMmQyDmbhaZQD5xUFwIjo7p3qoVOMyKJU/Ynruj0Bnp10cBCcCyHO1ymAmymSYgYd3hOEL6dmnjgCOAPuMmgDwRVibyCBrjchmW4zWn07Ti6fmBu2RQU8dUAbNpPtDxEbrT4tstmXseJekTV/cq62OAK4LUqRHjpeEeITj+EnKZJJNo9FRC89b2RoEp6QLy8n3WU0GAQ9MIIOm7/4k1yLp1iA4BZ63Mr04A5TJEMfxkyUhHmn0KHdHgCMR6bGHBPSni2ECM5OUOWHtXdPoMwsAVogHuFLR+5VBM7H5lX43Ye1dJGUuJRqBiAjodwfkOgIcfBYIAjHc3/8NW6lsoWy2drSgoWz2/I6enlUIQ42VK72pyKDdYfjvYH6SfH+8DJoJ+bNypYcw1B09Pasomz2fKxUDAJTNSlupbBnu7//GVA/3cgQ4EjtGqU+wMXG6iURcrRqW8rbW1avPxMaNMYJgcpm0hUIy6gvxIKTcWwZNT/4EgcLGjXHr6tVnspS3pfcIE4QAGxMLpT7h3qgjQOOj9eCgHA7Dp9mYAcrlJAALYwjMvvD9+9u7ut44ttE0SRlkrP27fWTQdDa/0o269q6uNwrfvx/MPowh1G6wNGZgOAyfxuCgc34cARqWQhaDg7J0+ulr7Ojo5tqFE4hjS0THw/O+vXj16hMmRYKaDBoYeGacDJrO5lca/ItXrz4BnvdtIjoecZwch5LLKTs6url0+ulr0lOtXfA7AjQMxtatjHze6kzmKo6i58nzkvVAFBkS4q3G9ze1BMGpdSQ4+M7q/mXQVDa/qBb8LUFwqvH9TSTEWzmKEt3veZKj6HmdyVyFfN5i61aGS3twBJi0FOrsFOXu7u0gupSJSkhuhCeuVg0RnSKF2NIWBBemuUKMwcGDBe/+ZNDkNr+Sv8EIQ90WBBdKIbYQ0Sljut/zBBOVQHRpubt7Ozo73Y3xjgBTRHKZhCqG4Q+h9WUQogylRDoTWFj7OkH0nfYgGEAQ+DUX6YB5Q3tkUOIGKZVcv9SI+9PZKcdcnCDw24NgQBB9B9a+jpNcH0ApASHK0PqyYhj+EEGgxt047+AIMIWZQCMIVLG//1Gy9iISYmd684qF1sxxDPL9rg6if2kbGLgg9drNmEbfe+MskUEMIe6HlCApD+z+BIEYW2MMDRmEoW0bGLigg+hfyPe7OI4BrRmAJd+XJMROsvai9D6D6WSxHjFwRfGTIMFwGP7jou7u5VapQWpqOjW9P1hwuWzJ998pjHmoPQi+DSE+XwyCR8YFYC2Qt28nBIGwwDdEFN2SJt4lHv3xx9PY58JQp7OBBYD2MDwX1l5PxlwMInC5bNJ1h6WmJsVx/O9C6/xrAwM/dsHvCDA7JBgclK/l8z9uC4Jfh9ZfpFyuk6MIMEanh+oKymYvhrUXtxcKT4D5a1bKv9/V2/vTvQNyF/BsW0/Pj0nrluKaNU/tT/+39vW9RRhzEYg+QMCZUApcqTCIklsqpZTk+4K1HmLmP3htYGBn6vi44HcEmAXk86Z27j6AfHsQrIQQA+T7x3ClAgA6/a8k3z8TnnemqFQ+297b+xSAJ4joSZNUY73KwE4wPwIpm1pvueUoVKtHAThaAm9m5ncBOBNx/HbKZn1oDY4ixp7dY0W5HFjrVziOu4thuHFsneB2eh0BZn1hzEwoFKgYhhsXB8F3dBz3khAfIt9XXK0C1mqOY0YUEYTwScr3QKn3gBlCa0DrGMBuEFkwkxgdvRLMLVDKg1JJGpLWYK3B5bJOM1EJQijKZMBRpG0cf1kBfTvD8HkEgUChwCBywe8IcAiQBCRjcFDuzOefB7Cyva/vC9D6EyBaQU1NLdAaHMcJGaLIIopqpoOAEB6IFqXP2vPcOLacbGTZMZOCSJHnAUqBq9Xd0Po+KHVnqbf3RwAwdnVrGLr34ghwGCRRkl4siklAfqg9CPptHH+ArL0cRO+kXE7BWsAYsDGAtZzm6HN6WnONAZSSQ5GUgJSAEOBKxbIxP2TmB4joa8OFwnNjcmdw0LpR3xFgLswGif+/bRsVw/A5ALcCuLVjzZq3IY7PZmvPAvDLYH4DlGohKWWaZLcH1iYEMWY3W/tzWPsTEuKfKJvdMtzV9fTY5zo7JZYsYYShGTd7ODgCHGaXKJEtie8vEIY6DdynAdyFIBBHSfkLMXC8jeNjScoOYs4BABONsjHDJMRLnpQv7ABe3GdDLLFHrbvczhFgPhBhPBm2bWOEodkBvIDk5+BIRnpKg946X98RYH6TIakuAwoFwmmn0T739J52WpKAl7g5cCkMjgALDZxqdj4IaVxPHUK4XCAHNwMsGDInC0WFIHBvdrbiJQjAzIIcAeYQiEDMo+jr05jsRXIOk4EGANHbW14oFuxCIIDgKAID57X39NyZFpm4ApDZgLUCRIaZf61uZ9sR4DCP/gJxDPK8t5Hnvc1F6SFYzccxEMdJ3zsCzA0JVJdH43Ao1lsHCv70hnpHgNnq+APZiMkLca7WYZ4cpnO97OEKqLmP005Lgp55Z5o85k44mIvBnyT07ZxX4mE+fc9Fa9e2mZGRH4tM5vU8Ohq7EX+uhD4z5XKKo+hlG8dLdq1duzO9anbOD1TzRQIxgkC8dtNNxbYgWMFa30vZ7JvG9L/D4Qz+5L/W/g8Bv7tr7dodCAKRlm26GWCGO5tAxMcEQUss5XJYuwjM9Tn1DofWfEj6XsphYe2WnWFYqr0j1zmzhand0uLg3s0CmAHqZ4KhIbFPRqXD4TMpOjutG/kdHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHGYa/x/9ZxRo56qpOwAAAABJRU5ErkJggg==";
 const KEY="carnetPilotageYasmine";
@@ -341,7 +346,8 @@ const DEF_Q={
   sorties:["Plage","Randonnée","Rendez-vous médical","Courses","Démarches","Soirée","Voyage","Sport"],
   vetKind:["Vêtement","Chaussures","Sac","Accessoire"],
   projKind:["Projet","Objectif","Carnet"],
-  carnetStage:["Idée","En conception","En test","Terminé"]
+  carnetStage:["Idée","En conception","À alimenter","En test","Terminé"],
+  repas:["Petite faim","Collation","Encas santé","Petit-déjeuner","Déjeuner","Dîner","Repas léger","Repas anti-inflammatoire"]
 };
 const KIND_VAL={Projet:"projet",Objectif:"objectif",Carnet:"carnet"},KIND_LBL={projet:"Projet",objectif:"Objectif",carnet:"Carnet"};
 const QPARTS={ast:"💡 Astuces",alim:"🥗 Alimentation",vet:"👗 Vêtements & sacs"};
@@ -354,6 +360,7 @@ const TIPS=[
   {e:"🔄",t:"Nouvelle version reçue ? Dépose index.html sur GitHub (dépôt pilote-yas), attends 2 à 5 minutes, puis ferme et rouvre l’application."},
   {e:"☁️",t:"Une fois par semaine : une sauvegarde .json rangée dans ton Drive. C’est ta ceinture de sécurité."},
   {e:"🧠",t:"Pensées en vrac ? Dicte-les à ton Assistant IA Claude : il trie pour toi."},
+  {e:"🥗",t:"Une petite faim ? Touche « Qu’est-ce que je mange ? » sur l’Accueil."},
   {e:"👗",t:"Tu sors ? Touche « Je sors : quoi prendre ? » sur l’Accueil : tenue, chaussures, sac et ta fiche mémo."},
   {e:"🔊",t:"Fatiguée de lire ? Touche 🔊 Écouter : le carnet te lit la partie à voix haute."},
   {e:"➕",t:"Tu veux ajouter plusieurs choses d’un coup ? Dicte-les à Claude : il te prépare un petit fichier à ajouter (Paramètres, Ajouter des éléments)."},
@@ -361,6 +368,13 @@ const TIPS=[
   {e:"🆕",t:"Nouveau carnet ou nouveau projet ? Repars des instructions d’un projet qui marche bien, et de « Mes règles pour tout nouveau carnet » (Aide-mémoire)."}
 ];
 const HISTORY=[
+  {v:"V17",d:"16/11/2026",n:[
+    "📝 Formulaires : <b>Enregistrer</b> et <b>Annuler</b> restent visibles en bas, même avec le clavier ouvert (correction).",
+    "🥗 Bouton <b>« Qu’est-ce que je mange ? »</b> sur l’Accueil : petite faim, collation, encas santé, repas léger, anti-inflammatoire… (et Autre…), avec une fiche mémo par envie. Les 🌿 alicaments ont leur choix à eux.",
+    "🍅 Le carnet te propose de <b>lancer le Pomodoro</b> quand tu travailles depuis un moment sans lui (30 min au départ, réglable).",
+    "👆 Ouvrir le carnet avec ton <b>empreinte</b> (à activer dans Paramètres, Mot de passe). Le mot de passe reste en secours.",
+    "📍 « Où c’est rangé » devient <b>facultatif</b> partout : à remplir seulement si la chose est rangée ailleurs que d’habitude. Plus de « À compléter ».",
+    "📓 Nouvelle étape « À alimenter » pour tes carnets."]},
   {v:"V16",d:"16/11/2026",n:[
     "👗 Bouton <b>« Je sors : quoi prendre ? »</b> sur l’Accueil : tu choisis la sortie (plage, randonnée…), le carnet te propose vêtements, chaussures, sacs et accessoires, avec ta <b>fiche mémo</b>. Le rangement reste caché derrière « 📍 Où est-ce ? », pour faire travailler ta mémoire d’abord.",
     "👠 Vêtements & sacs : chaque élément a un <b>type</b> (vêtement, chaussures, sac, accessoire) et ses <b>sorties</b>. Les sacs prêts aussi.",
@@ -436,10 +450,10 @@ function defaults(){
   return {
     name:"Yas",mode:"neutre",reprendre:"",ideas:[],lastExport:null,lastRestore:null,seeded:false,
     skills:[],targets:[],jobFrom:"",jobBase:"both",skillType:"",lastSkills:null,snooze:{},aidePins:["routine","maj"],
-    settings:{lockOn:true,lockPass:MOT_DE_PASSE_DE_DEPART,lockHint:"",theme:"auto",noteFreq:"parfois",noteRead:false,rate:"normale",split:{ast:false,alim:false,vet:false},mergeGap:15,pomo:25,pause:5,longPause:20,cycles:4,remSave:7,remSkills:15,lockIdle:10,lockAway:2,tabOrder:Object.keys(TABS)},
+    settings:{lockOn:true,lockPass:MOT_DE_PASSE_DE_DEPART,lockHint:"",theme:"auto",noteFreq:"parfois",noteRead:false,pomoNudge:30,bioId:"",rate:"normale",split:{ast:false,alim:false,vet:false},mergeGap:15,pomo:25,pause:5,longPause:20,cycles:4,remSave:7,remSkills:15,lockIdle:10,lockAway:2,tabOrder:Object.keys(TABS)},
     lists:Object.assign({cats:DEF_CATS.slice(),tools:DEF_TOOLS.slice()},JSON.parse(JSON.stringify(DEF_SANTE)),JSON.parse(JSON.stringify(DEF_Q))),
     sante:{suivi:[],ess:[],choix:[]},seenVersion:"",rep:[],
-    q:{ast:[],alim:[],vet:[],bags:[],memo:{}},
+    q:{ast:[],alim:[],vet:[],bags:[],memo:{},memoMange:{}},
     projects,
     tasks:[
       t("Restaurer ma sauvegarde .json (⚙️ Paramètres)","Projets","orange","",true),
@@ -471,7 +485,8 @@ function fixState(s){
   if(!Array.isArray(s.rep))s.rep=[];
   if(s.reprendre&&String(s.reprendre).trim()){String(s.reprendre).split(/\n+/).map(x=>x.trim()).filter(Boolean).forEach(t=>s.rep.push({id:uid(),text:t,done:false}));}
   s.reprendre="";
-  s.q=Object.assign({ast:[],alim:[],vet:[],bags:[],memo:{}},s.q||{});if(!s.q.memo||typeof s.q.memo!=="object")s.q.memo={};
+  s.q=Object.assign({ast:[],alim:[],vet:[],bags:[],memo:{}},s.q||{});if(!s.q.memo||typeof s.q.memo!=="object")s.q.memo={};if(!s.q.memoMange||typeof s.q.memoMange!=="object")s.q.memoMange={};
+  if(!s.seed17){if(!s.lists.carnetStage.includes("À alimenter")){const i=s.lists.carnetStage.indexOf("En test");s.lists.carnetStage.splice(i<0?s.lists.carnetStage.length:i,0,"À alimenter");}s.seed17=true;}
   if(!s.seed16){const f=(s.q.ast||[]).find(a=>/filigrane/i.test(a.title||"")&&!a.url);if(f)f.url="https://filigrane.beta.gouv.fr";s.seed16=true;}["ast","alim","vet","bags"].forEach(k=>{if(!Array.isArray(s.q[k]))s.q[k]=[];});
   if(!s.seed15){
     if(!s.q.bags.length)s.q.bags=[{id:uid(),name:"Sac nomade",items:[]},{id:uid(),name:"Valise départ rapide",items:[]}];
@@ -621,7 +636,7 @@ function vAccueil(){
     ${later.length?`<details><summary>⏳ Plus tard (${later.length})</summary>${later.map(i=>ideaRow(i,true)).join("")}</details>`:""}
   </section>`;
   const R=state.rep;
-  const rep=`<div class="bar" style="margin:14px 0 0"><button class="btn sorsbtn" data-act="jeSors">👗 Je sors : quoi prendre ?</button></div><section class="block" id="repBlock"><div class="phead"><h3>Reprendre ici</h3>${R.length?spkBtn("repBlock"):""}</div>
+  const rep=`<div class="bar" style="margin:14px 0 0"><button class="btn sorsbtn" data-act="jeSors">👗 Je sors : quoi prendre ?</button><button class="btn sorsbtn" data-act="mange">🥗 Qu’est-ce que je mange ?</button></div><section class="block" id="repBlock"><div class="phead"><h3>Reprendre ici</h3>${R.length?spkBtn("repBlock"):""}</div>
     ${R.length?"":exBox("Compléter où est rangé le coussin chauffant.<br>Appeler la mutuelle.")}${R.map(r=>`<div class="row rep ${r.done?"done":""}" id="r-${r.id}"><input type="checkbox" data-act="repTick" data-id="${r.id}" ${r.done?"checked":""} aria-label="C’est fait"><div class="grow ttl">${esc(r.text)}</div><button class="icon noread" data-act="repDel" data-id="${r.id}" aria-label="Retirer cette ligne">✕</button></div>`).join("")}
     <div class="inline noread" style="margin-top:8px"><input id="repIn" placeholder="Où j’en étais, ce que je veux faire ensuite" aria-label="Nouvelle ligne pour Reprendre ici"><button class="btn" data-act="repAdd">Ajouter</button></div>
     <p class="meta noread">Une chose par ligne. Coche ce qui est fait : la ligne se barre. Quand tout est barré, la liste s’efface toute seule.</p>
@@ -857,7 +872,7 @@ function essForm(x){
   ${selField("eCat","Catégorie","essCat",x.cat)}
   <label for="eName">Ce que j’utilise</label><input id="eName" value="${esc(x.name)}" placeholder="Ex. : chaufferette magique">
   <label for="eUse">À quoi ça sert</label><input id="eUse" value="${esc(x.use)}" placeholder="Ex. : douleurs au dos, à l’épaule">
-  <label for="eWhere">Où c’est rangé</label><input id="eWhere" value="${esc(x.where)}" placeholder="Ex. : placard de la chambre, 2e étagère">
+  <label for="eWhere">Rangé ailleurs que d’habitude ? <span class="hint">(facultatif)</span></label><input id="eWhere" value="${esc(x.where)}" placeholder="Ex. : placard de la chambre, 2e étagère">
   <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="saveEss" data-id="${x.id}">Enregistrer</button></div>`;
 }
 
@@ -970,7 +985,7 @@ function jumpTo(el){if(!el)return;if(el.tagName==="DETAILS")el.open=true;const h
   window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-st-10,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});}
 
 /* ---------- V15 : à compléter ---------- */
-const todoOf=x=>x&&!String(x.where||"").trim()?"où c’est rangé":"";
+const todoOf=x=>"";
 const todoBadge=x=>todoOf(x)?`<span class="badge todo">✏️ À compléter : ${todoOf(x)}</span>`:"";
 function allTodo(){return [...state.sante.ess.map(x=>({x,k:"ess"})),...state.q.alim.map(x=>({x,k:"alim"})),...state.q.vet.map(x=>({x,k:"vet"}))].filter(o=>todoOf(o.x));}
 
@@ -978,7 +993,7 @@ function allTodo(){return [...state.sante.ess.map(x=>({x,k:"ess"})),...state.q.a
 let qView="ast";
 function astRow(x){return `<div class="row" id="qa-${x.id}"><div class="grow"><b>${esc(x.title)}</b>${x.detail?`<div class="meta">${esc(x.detail).replace(/\n/g,"<br>")}</div>`:""}${x.url?`<div class="noread" style="margin-top:6px"><a href="${esc(x.url)}" target="_blank" rel="noopener">🔗 Ouvrir le site</a></div>`:""}</div>
   ${spkBtn("qa-"+x.id,1)}<button class="icon" data-act="editAst" data-id="${x.id}" aria-label="Modifier">✎</button><button class="icon" data-act="delAst" data-id="${x.id}" aria-label="Supprimer">🗑</button></div>`;}
-function alimRow(x){return `<div class="row" id="ql-${x.id}"><div class="grow"><b>${esc(x.name)}</b>${x.ali?`<span class="badge ali">🌿 Alicament</span>`:""}${todoBadge(x)}
+function alimRow(x){return `<div class="row" id="ql-${x.id}"><div class="grow"><b>${esc(x.name)}</b>${x.ali?`<span class="badge ali">🌿 Alicament</span>`:""}${todoBadge(x)}${(x.tags||[]).length?`<div class="outs">${x.tags.map(o=>`<span class="badge goal">${esc(o)}</span>`).join("")}</div>`:""}
   ${x.use?`<div class="meta">${esc(x.use)}</div>`:""}${x.ali&&x.forWhat?`<div class="meta">🌿 Pour : ${esc(x.forWhat)}</div>`:""}${x.where?`<div class="meta">📍 ${esc(x.where)}</div>`:""}</div>
   ${spkBtn("ql-"+x.id,1)}<button class="icon" data-act="editAlim" data-id="${x.id}" aria-label="Modifier">✎</button><button class="icon" data-act="delAlim" data-id="${x.id}" aria-label="Supprimer">🗑</button></div>`;}
 function vetRow(x){return `<div class="row" id="qv-${x.id}"><div class="grow"><b>${esc(x.name)}</b>${x.kind&&x.kind!=="Vêtement"?`<span class="badge">${esc(x.kind)}</span>`:""}${todoBadge(x)}${(x.outs||[]).length?`<div class="outs">${x.outs.map(o=>`<span class="badge goal">${esc(o)}</span>`).join("")}</div>`:""}${x.use?`<div class="meta">${esc(x.use)}</div>`:""}${x.note?`<div class="meta">${esc(x.note)}</div>`:""}${x.where?`<div class="meta">📍 Rangé : ${esc(x.where)}</div>`:""}</div>
@@ -1000,7 +1015,7 @@ function vQuot(fixed){
     body=`<p class="lead">Les astuces efficaces et validées, celles qui reviennent souvent. Ajoute des mots cachés pour les retrouver même si tu as oublié le mot exact.</p>
     <div class="bar"><button class="btn" data-act="newAst">Ajouter une astuce</button></div>${grouped(Q.ast,state.lists.astCat,"cat",astRow,"qag")}${Q.ast.length?"":empty("Aucune astuce pour l’instant.")+exBox("Organisation : préparer mon sac la veille au soir. Mots cachés : départ, oubli, matin.")}`;
   }else if(p==="alim"){
-    body=`<p class="lead">Tes aliments préférés, ce qu’il faut toujours avoir à la maison, et tes alicaments. Un alicament apparaît aussi dans ✚ Santé, Mes essentiels.</p>
+    body=`<p class="lead">Tes aliments préférés, ce qu’il faut toujours avoir à la maison, et tes alicaments. Un alicament apparaît aussi dans ✚ Santé, Mes essentiels.</p><div class="bar"><button class="btn sorsbtn" data-act="mange">🥗 Qu’est-ce que je mange ?</button></div>
     <div class="bar"><button class="btn" data-act="newAlim">Ajouter un aliment</button></div>${td?`<div class="warn">✏️ ${td} à compléter (où c’est rangé).</div>`:""}${grouped(Q.alim,state.lists.alimCat,"cat",alimRow,"qlg")}${Q.alim.length?"":empty("Aucun aliment pour l’instant.")+exBox("Toujours à la maison : citrons. Rangés : panier de la cuisine. 🌿 Alicament, pour : la gorge.")}`;
   }else{
     const vAst=Q.ast.filter(x=>x.cat==="Vêtements");
@@ -1028,11 +1043,12 @@ function astForm(x){x=x||{id:"",cat:"",title:"",detail:"",kw:""};
   <label for="aUrl">Lien du site (facultatif)</label><input id="aUrl" type="url" value="${esc(x.url||"")}" placeholder="https://…">
   <label for="aKw">Mots cachés pour la retrouver</label><input id="aKw" value="${esc(x.kw)}" placeholder="Ex. : carte d’identité papiers CAF"><p class="hint">Les mots auxquels tu penseras en cherchant, même si ce n’est pas le bon terme.</p>
   <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="saveAst" data-id="${x.id}">Enregistrer</button></div>`;}
-function alimForm(x){x=x||{id:"",cat:"",name:"",use:"",where:"",ali:false,forWhat:""};
+function alimForm(x){x=Object.assign({id:"",cat:"",name:"",use:"",where:"",ali:false,forWhat:"",tags:[]},x||{});
   return `<h2>${x.id?"Modifier l’aliment":"Nouvel aliment"}</h2>${selField("lCat","Catégorie","alimCat",x.cat)}
   <label for="lName2">L’aliment</label><input id="lName2" value="${esc(x.name)}" placeholder="Ex. : gingembre">
   <label for="lUse">Pourquoi je l’aime / à quoi il sert</label><input id="lUse" value="${esc(x.use)}">
-  <label for="lWhere">Où c’est rangé (ou où l’acheter)</label><input id="lWhere" value="${esc(x.where)}">
+  <label for="lWhere">Rangé ailleurs que d’habitude, ou où l’acheter ? <span class="hint">(facultatif)</span></label><input id="lWhere" value="${esc(x.where)}" placeholder="Laisse vide si c’est à sa place habituelle">
+  ${multiChecks("lTags","Pour quelle envie ou quel repas ?","repas",x.tags)}
   <label style="display:flex;gap:10px;align-items:center;color:var(--ink)"><input type="checkbox" id="lAli" ${x.ali?"checked":""} style="margin:0"> 🌿 Alicament : utile pour ma santé</label>
   <label for="lFor">Pour quoi ? (santé)</label><input id="lFor" value="${esc(x.forWhat)}" placeholder="Ex. : digestion, fatigue"><p class="hint">Un alicament apparaît aussi dans ✚ Santé, Mes essentiels, et dans « Ce qui soulage ».</p>
   <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="saveAlim" data-id="${x.id}">Enregistrer</button></div>`;}
@@ -1041,7 +1057,7 @@ function vetForm(x){x=Object.assign({id:"",name:"",use:"",where:"",note:"",kind:
   ${selField("vKind","Type","vetKind",x.kind||"Vêtement")}
   <label for="vName">Nom</label><input id="vName" value="${esc(x.name)}" placeholder="Ex. : robe en lin bleue">
   ${selField("vUse","Usage","vetUse",x.use)}
-  <label for="vWhere">Où c’est rangé</label><input id="vWhere" value="${esc(x.where)}" placeholder="Ex. : armoire, étagère du haut">
+  <label for="vWhere">Rangé ailleurs que d’habitude ? <span class="hint">(facultatif)</span></label><input id="vWhere" value="${esc(x.where)}" placeholder="Ex. : armoire, étagère du haut">
   <label for="vNote">Note</label><input id="vNote" value="${esc(x.note)}" placeholder="Ex. : se porte aussi en jupe">
   ${multiChecks("vOuts","Pour quelles sorties ?","sorties",x.outs)}
   <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="saveVet" data-id="${x.id}">Enregistrer</button></div>`;}
@@ -1064,8 +1080,8 @@ function sorsView(s){
   sorsCur=s;const Q=state.q,memo=Q.memo[s]||"";
   const items=Q.vet.filter(x=>(x.outs||[]).includes(s)),bags=Q.bags.filter(b=>(b.outs||[]).includes(s));
   const kinds=state.lists.vetKind.slice();items.forEach(x=>{if(x.kind&&!kinds.includes(x.kind))kinds.push(x.kind);});
-  const row=x=>`<div class="row"><div class="grow"><b>${esc(x.name)}</b>${x.use?`<div class="meta">${esc(x.use)}</div>`:""}<div class="meta" id="sw-${x.id}" hidden>📍 ${esc(x.where)}</div></div>
-    <button class="btn ghost spk" data-act="sorsWhere" data-id="${x.id}">${x.where?"📍 Où est-ce ?":"✏️ À compléter"}</button></div>`;
+  const row=x=>`<div class="row"><div class="grow"><b>${esc(x.name)}</b>${x.use?`<div class="meta">${esc(x.use)}</div>`:""}<div class="meta" id="sw-${x.id}" hidden>📍 ${x.where?esc(x.where):"À sa place habituelle"}</div></div>
+    <button class="btn ghost spk" data-act="sorsWhere" data-id="${x.id}">📍 Où est-ce ?</button></div>`;
   const groups=kinds.map(k=>{const l=items.filter(x=>(x.kind||"Vêtement")===k);return l.length?`<p class="meta" style="margin:14px 0 4px"><b>${esc(k)}</b></p>${l.map(row).join("")}`:"";}).join("");
   const bagHtml=bags.map(b=>`<p class="meta" style="margin:14px 0 4px"><b>🎒 ${esc(b.name)}</b> (${b.items.filter(i=>i.done).length} / ${b.items.length})</p>
     ${b.items.map(i=>`<div class="row rep ${i.done?"done":""}"><input type="checkbox" data-act="sorsTick" data-id="${b.id}|${i.id}" ${i.done?"checked":""} aria-label="Dans le sac"><div class="grow ttl">${esc(i.text)}</div></div>`).join("")||`<p class="meta">Liste vide : remplis-la dans Vêtements & sacs.</p>`}`).join("");
@@ -1078,6 +1094,62 @@ function sorsView(s){
   </div>
   <div class="bar noread" style="margin:14px 0 0">${spkBtn("sorsBody")}<button class="btn ghost" data-act="sorsNew">➕ Ajouter pour cette sortie</button></div>
   <div class="actions"><button class="btn ghost" data-act="jeSors">↩ Autre sortie</button><button class="btn" data-act="closeModal">Fermer</button></div>`,"sors");
+}
+
+/* ---------- V17 : qu'est-ce que je mange ---------- */
+let mangeCur="",mangeBack=null;
+const ALI_KEY="🌿 Alicaments";
+function mange(){
+  const L=state.lists.repas;
+  openModal(`<h2>🥗 Qu’est-ce que je mange ?</h2><p>Quelle envie, ou quel repas ?</p>
+  <div class="chips wrap qparts">${L.map(s=>`<button class="chip" data-act="mangeGo" data-id="${esc(s)}">${esc(s)}</button>`).join("")}<button class="chip" data-act="mangeGo" data-id="${ALI_KEY}">${ALI_KEY}</button><button class="chip" data-act="mangeOther">➕ Autre…</button></div>
+  <div id="mangeOWrap" hidden><label for="mangeO">Nouvelle envie</label><div class="inline"><input id="mangeO" placeholder="Ex. : après le sport"><button class="btn" data-act="mangeAdd">OK</button></div></div>
+  <div class="actions"><button class="btn ghost" data-act="closeModal">Fermer</button></div>`,"sors");
+}
+function mangeView(s){
+  mangeCur=s;const Q=state.q,memo=Q.memoMange[s]||"";
+  const items=s===ALI_KEY?Q.alim.filter(x=>x.ali):Q.alim.filter(x=>(x.tags||[]).includes(s));
+  const cats=state.lists.alimCat.slice();items.forEach(x=>{if(x.cat&&!cats.includes(x.cat))cats.push(x.cat);});
+  const row=x=>`<div class="row"><div class="grow"><b>${esc(x.name)}</b>${x.ali?`<span class="badge ali">🌿</span>`:""}${x.use?`<div class="meta">${esc(x.use)}</div>`:""}${x.ali&&x.forWhat?`<div class="meta">Pour : ${esc(x.forWhat)}</div>`:""}<div class="meta" id="mw-${x.id}" hidden>📍 ${x.where?esc(x.where):"À sa place habituelle"}</div></div>
+    <button class="btn ghost spk" data-act="mangeWhere" data-id="${x.id}">📍 Où est-ce ?</button></div>`;
+  const groups=cats.map(c=>{const l=items.filter(x=>x.cat===c);return l.length?`<p class="meta" style="margin:14px 0 4px"><b>${esc(c)}</b></p>${l.map(row).join("")}`:"";}).join("")+items.filter(x=>!x.cat).map(row).join("");
+  openModal(`<h2>🥗 ${esc(s)}</h2>
+  <div id="mangeBody">
+  <label for="mangeMemo" style="margin-top:0">📝 Ma fiche mémo</label><textarea id="mangeMemo" rows="3" placeholder="Ex. : boire un grand verre d’eau d’abord, éviter le sucre le soir">${esc(memo)}</textarea>
+  <p class="hint noread">S’enregistre tout seul.</p>
+  ${groups}
+  ${items.length?"":exBox("Pour « "+esc(s)+" » : une poignée d’amandes, une banane, un yaourt. Pour les voir ici, ouvre leur fiche dans Quotidien, Alimentation, et coche cette envie.")}
+  </div>
+  <div class="bar noread" style="margin:14px 0 0">${spkBtn("mangeBody")}<button class="btn ghost" data-act="mangeNew">➕ Ajouter pour cette envie</button></div>
+  <div class="actions"><button class="btn ghost" data-act="mange">↩ Autre envie</button><button class="btn" data-act="closeModal">Fermer</button></div>`,"sors");
+}
+
+/* ---------- V17 : empreinte ---------- */
+const b64=buf=>btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+const unb64=s=>{s=s.replace(/-/g,"+").replace(/_/g,"/");while(s.length%4)s+="=";return Uint8Array.from(atob(s),c=>c.charCodeAt(0));};
+const rnd=n=>{const a=new Uint8Array(n);crypto.getRandomValues(a);return a;};
+async function bioAvailable(){try{return !!(window.PublicKeyCredential&&await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable());}catch(e){return false;}}
+async function bioEnable(){
+  if(!await bioAvailable()){toast("L’empreinte n’est pas disponible ici. Elle marche dans l’application installée, sur ton téléphone.",5000);return;}
+  try{const c=await navigator.credentials.create({publicKey:{challenge:rnd(32),rp:{name:"Carnet Pilote"},user:{id:rnd(16),name:"carnet-pilote",displayName:state.name||"Carnet Pilote"},
+      pubKeyCredParams:[{type:"public-key",alg:-7},{type:"public-key",alg:-257}],authenticatorSelection:{authenticatorAttachment:"platform",userVerification:"required",residentKey:"discouraged"},timeout:60000}});
+    state.settings.bioId=b64(c.rawId);save();render();toast("Empreinte activée 👆");}
+  catch(e){toast("Empreinte non activée : "+(e&&e.name==="NotAllowedError"?"annulé":"essaie encore"),4000);}
+}
+async function bioUnlock(){
+  const id=state.settings.bioId;if(!id)return false;
+  try{await navigator.credentials.get({publicKey:{challenge:rnd(32),allowCredentials:[{type:"public-key",id:unb64(id)}],userVerification:"required",timeout:60000}});return true;}
+  catch(e){return false;}
+}
+
+/* ---------- V17 : proposer le Pomodoro ---------- */
+let nudgeAt=0;
+function pomoNudgeCheck(){
+  const m=state.settings.pomoNudge||0;if(!m||!state.chrono.running||state.pomo.phase!=="off"||isLocked())return;
+  if($("#modal").classList.contains("open")||$("#askBar").classList.contains("show"))return;
+  const ms=chronoMs();if(ms<m*60000||Date.now()<nudgeAt)return;
+  nudgeAt=Date.now()+m*60000;
+  ask(`Tu travailles depuis ${Math.round(ms/60000)} min. Lancer le minuteur 🍅 ?`,[["Lancer",()=>ACT.pomoFresh(),true],["Plus tard",null]],20000);
 }
 
 /* ---------- V15 : ajouter des éléments ---------- */
@@ -1367,7 +1439,7 @@ STYLE : minimaliste et épuré, tableaux et fiches mémo plutôt que texte dense
 MON PROFIL : pragmatique, méthodique, minimaliste. Des tâches courtes, des pauses, et des repères pour reprendre facilement après une phase basse.
 
 EN LIGNE ET APPLICATION MOBILE : prévoir dès le départ que le carnet sera mis en ligne sur GitHub Pages et installé comme une application. Donc : un fichier index.html (en plus du fichier avec la version d’abord, à garder sur le Drive), les lignes du manifest.json et du Service Worker (sw.js) dans le fichier, et des icônes à partir du logo. Rien de personnel ni de médical écrit dans le fichier, car il est public : mes données restent dans le téléphone et dans le .json.`;
-const UPDATE_PROMPT="Voici mon Carnet Pilote (fichier HTML joint). Prépare la version suivante en gardant tout ce qui existe, ajoute ses nouveautés datées dans l’Historique des versions, et donne-moi les 2 fichiers : la version (ex. V17Carnet_Pilote.html) et index.html pour GitHub. Mes remarques : …";
+const UPDATE_PROMPT="Voici mon Carnet Pilote (fichier HTML joint). Prépare la version suivante en gardant tout ce qui existe, ajoute ses nouveautés datées dans l’Historique des versions, et donne-moi les 2 fichiers : la version (ex. V18Carnet_Pilote.html) et index.html pour GitHub. Mes remarques : …";
 function vAide(){
   const s=state.settings,P=state.aidePins;
   const S=[
@@ -1421,7 +1493,7 @@ function vAide(){
   ["maj","🔄 Mettre à jour le carnet (en ligne)",`<ol class="steps">
     <li><span><span class="pic">⚙️</span> Par sécurité : Paramètres, <b>Sauvegarder</b>.</span></li>
     <li><span><span class="pic">💬</span> Envoie ta version actuelle à Claude (projet Carnet Pilote) avec le message ci-dessous.</span></li>
-    <li><span><span class="pic">📄</span> Claude te donne <b>2 fichiers</b> : la nouvelle version, ex. <b>V17Carnet_Pilote.html</b> (version d’abord, à ranger sur le Drive) et <b>index.html</b> (pour GitHub). Télécharge les deux.</span></li>
+    <li><span><span class="pic">📄</span> Claude te donne <b>2 fichiers</b> : la nouvelle version, ex. <b>V18Carnet_Pilote.html</b> (version d’abord, à ranger sur le Drive) et <b>index.html</b> (pour GitHub). Télécharge les deux.</span></li>
     <li><span><span class="pic">🌐</span> Chrome : <b>github.com/carnet-personnalise/pilote-yas</b>. Touche les <b>trois petits points ⋮</b>, puis <b>Upload files</b>.</span></li>
     <li><span><span class="pic">⬆️</span> <b>Choose your files</b> : choisis <b>index.html</b> dans Téléchargements, puis <b>Commit changes</b>. Il remplace l’ancien tout seul.</span></li>
     <li><span><span class="pic">⏳</span> Attends <b>2 à 5 minutes</b>.</span></li>
@@ -1449,9 +1521,17 @@ function vAide(){
     <li><span><span class="pic">👗</span> Sur l’Accueil, touche <b>« Je sors : quoi prendre ? »</b> (ou tape « sortie » dans la recherche).</span></li>
     <li><span><span class="pic">📍</span> Choisis la sortie : plage, randonnée… ou ➕ Autre…</span></li>
     <li><span><span class="pic">📝</span> Lis ta <b>fiche mémo</b> (météo, crème solaire…), puis regarde ce que le carnet te propose.</span></li>
-    <li><span><span class="pic">🧠</span> Essaie de te souvenir où c’est rangé. Si tu bloques, touche <b>« Où est-ce ? »</b>.</span></li>
+    <li><span><span class="pic">🧠</span> Essaie de te souvenir où c’est rangé. Si tu bloques, touche <b>« Où est-ce ? »</b>. Le rangement n’est noté que si la chose n’est pas à sa place habituelle.</span></li>
     <li><span><span class="pic">🎒</span> Coche ce qui est dans le sac.</span></li></ol>
     <p class="meta">Pour qu’un élément apparaisse : dans Quotidien, Vêtements & sacs, ouvre sa fiche et coche ses sorties. Pareil pour un sac : « Modifier ».</p>`],
+  ["mange","🥗 Qu’est-ce que je mange ?",`<ol class="steps">
+    <li><span><span class="pic">🥗</span> Sur l’Accueil, touche <b>« Qu’est-ce que je mange ? »</b> (ou tape « faim » ou « manger » dans la recherche).</span></li>
+    <li><span><span class="pic">✋</span> Choisis ton envie : petite faim, collation, encas santé, repas léger… ou 🌿 Alicaments.</span></li>
+    <li><span><span class="pic">📝</span> Lis ta fiche mémo, puis regarde ce que le carnet te propose.</span></li></ol>
+    <p class="meta">Pour qu’un aliment apparaisse : dans Quotidien, Alimentation, ouvre sa fiche et coche ses envies.</p>`],
+  ["bio","👆 Ouvrir avec mon empreinte",`<p>⚙️ Paramètres, Mot de passe : <b>Activer l’empreinte</b>, puis pose ton doigt.</p>
+    <p>Ensuite, sur l’écran du mot de passe : <b>« Ouvrir avec mon empreinte »</b>. Le mot de passe marche toujours, en secours.</p>
+    <p class="meta">Ça marche dans l’application installée (en ligne). Si tu changes de téléphone, réactive l’empreinte.</p>`],
   ["ajout","➕ Ajouter des éléments dictés à Claude",`<ol class="steps">
     <li><span><span class="pic">🎤</span> Dans le projet Claude « Carnet Pilote », dicte ce que tu veux ajouter (ex. « ajoute le Revitive dans mes essentiels »).</span></li>
     <li><span><span class="pic">📄</span> Claude te donne un petit fichier <b>.json</b>. Télécharge-le.</span></li>
@@ -1545,6 +1625,7 @@ function vParams0(){
   <label for="sMerge" style="margin-top:0">Regrouper en une seule séance si je rouvre le carnet dans les (minutes)</label><input id="sMerge" type="number" min="0" max="120" data-set="mergeGap" value="${s.mergeGap}">
   <p class="meta">Ex. : ouvert à 9 h 15, refermé à 9 h 20, rouvert à 9 h 25 : une seule séance. Le temps où le carnet était fermé n’est pas compté. 0 = ne jamais regrouper.</p></section>
   <section class="block"><h3>Minuteur Pomodoro 🍅</h3>
+  <label for="sNudge" style="margin-top:0">Me proposer de lancer le minuteur après (minutes de travail sans lui)</label><input id="sNudge" type="number" min="0" max="180" data-set="pomoNudge" value="${s.pomoNudge}"><p class="meta">0 = ne jamais proposer.</p>
   <div class="inline"><div><label for="sPomo">Travail (min)</label><input id="sPomo" type="number" min="5" max="90" data-set="pomo" value="${s.pomo}"></div>
   <div><label for="sPause">Petite pause (min)</label><input id="sPause" type="number" min="1" max="30" data-set="pause" value="${s.pause}"></div></div>
   <div class="inline"><div><label for="sLong">Grande pause (min)</label><input id="sLong" type="number" min="5" max="60" data-set="longPause" value="${s.longPause}"></div>
@@ -1554,6 +1635,8 @@ function vParams0(){
   <div class="inline"><div><label for="sRemSave">Sauvegarde : tous les (jours)</label><input id="sRemSave" type="number" min="1" max="60" data-set="remSave" value="${s.remSave}"></div>
   <div><label for="sRemSkills">Point compétences : tous les (jours)</label><input id="sRemSkills" type="number" min="1" max="60" data-set="remSkills" value="${s.remSkills}"></div></div></section>
   <section class="block"><h3>🔒 Mot de passe</h3>
+  <p class="meta"><b>👆 Empreinte :</b> ${s.bioId?"activée. Sur l’écran du mot de passe, touche « Ouvrir avec mon empreinte ».":"pas activée. Elle marche dans l’application installée sur ton téléphone. Le mot de passe reste en secours."}</p>
+  <div class="bar" style="margin:6px 0 12px">${s.bioId?`<button class="btn ghost" data-act="bioOff">Désactiver l’empreinte</button>`:`<button class="btn" data-act="bioOn">👆 Activer l’empreinte</button>`}</div>
   <p class="meta">Un rideau qui cache le carnet à l’ouverture. Ce n’est pas une protection forte : le code de ton téléphone reste le plus sûr.</p>
   <label for="sLockOn" style="margin-top:0">Demander le mot de passe à l’ouverture</label><select id="sLockOn" data-set="lockOn"><option value="1" ${s.lockOn?"selected":""}>Oui</option><option value="0" ${!s.lockOn?"selected":""}>Non</option></select>
   <label for="sLockNew">Nouveau mot de passe</label><div class="inline"><input id="sLockNew" type="password" autocomplete="new-password" placeholder="Écris le nouveau mot de passe"><button class="btn ghost" data-act="lockChange">Changer</button></div>
@@ -1735,6 +1818,7 @@ function tick(){
   const cd=$("#chronoDisp");if(cd&&state.chrono.running)cd.textContent=hms(chronoMs());
   const pd=$("#pomoDisp");if(pd&&state.pomo.phase!=="off")pd.textContent=hms(state.pomo.end-now);
   updateFabs();
+  if(tickCount%15===0)pomoNudgeCheck();
 }
 
 /* ---------- recherche ---------- */
@@ -1748,6 +1832,8 @@ function doSearch(q){
     if(k.startsWith("q_")){const p=k.slice(2);hits.push({tab:qTab(p),qv:p,title:"Partie "+t.label,sub:tabVisible(k)?"Aller à l’onglet":"Dans l’onglet Quotidien"});}
     else if(tabVisible(k))hits.push({tab:k,title:"Onglet "+t.label,sub:"Aller à l’onglet"});});
   if(has("je sors sortie sortir m’habiller m'habiller habiller tenue quoi mettre quoi prendre"))hits.push({fn:"jeSors",title:"👗 Je sors : quoi prendre ?",sub:"Tenue, chaussures, sac et fiche mémo"});
+  if(has("manger mange faim quoi manger repas collation encas en-cas grignoter"))hits.push({fn:"mange",title:"🥗 Qu’est-ce que je mange ?",sub:"Selon ton envie ou ton repas"});
+  state.lists.repas.forEach(s=>{if(has(s))hits.push({fn:"mangeGo",arg:s,title:"🥗 "+s,sub:"Ce que j’ai noté pour cette envie"});});
   state.lists.sorties.forEach(s=>{if(has(s))hits.push({fn:"sorsGo",arg:s,title:"👗 Je sors : "+s,sub:"Ce que j’ai prévu pour cette sortie"});});
   state.projects.forEach(p=>{if(has(p.name,p.why,p.bilan,p.next,p.notes,p.otherFiles,...p.links.map(l=>l.name)))hits.push({tab:p.space==="loisirs"?"loisirs":"projets",id:"p-"+p.id,title:p.name,sub:(p.kind==="objectif"?"Objectif, ":"")+(SPACE_TXT[p.space]||"Projet")+", "+STATUS[p.status]+(p.star?", ⭐":"")});});
   state.tasks.forEach(t=>{if(has(t.title,t.note,t.domain))hits.push({tab:"taches",id:"t-"+t.id,filter:t.done?"Faites":"Tous",title:t.title,sub:(t.type==="rdv"?"RDV, ":"Tâche, ")+t.domain+(t.done?", faite":"")});});
@@ -1876,12 +1962,20 @@ const ACT={
     addToList("relief",name);save();closeModal();cur="sante";santeView="ess";render();flash("e-"+eid);toast("Essentiel enregistré");if(!id)offerRep(name);},
   delEss:id=>{const x=state.sante.ess.find(e=>e.id===id);if(!x||!confirm("Supprimer « "+x.name+" » ?"))return;state.sante.ess=state.sante.ess.filter(e=>e.id!==id);save();render();},
   noteClose:()=>hideNote(),
+  mange:()=>{const m=$("#mangeMemo");if(m&&mangeCur){state.q.memoMange[mangeCur]=m.value.trim();save();}mange();},
+  mangeGo:s=>mangeView(s),
+  mangeOther:()=>{const w=$("#mangeOWrap");if(w){w.hidden=false;$("#mangeO").focus();}},
+  mangeAdd:()=>{const v=val("mangeO");if(!v)return;addToList("repas",v);save();mangeView(v);},
+  mangeWhere:id=>{const el=document.getElementById("mw-"+id);if(el)el.hidden=!el.hidden;},
+  mangeNew:()=>{const m=$("#mangeMemo");if(m)state.q.memoMange[mangeCur]=m.value.trim();save();mangeBack=mangeCur;
+    openModal(alimForm(mangeCur===ALI_KEY?{ali:true,tags:[]}:{tags:[mangeCur]}),"form");},
+  bioOn:()=>bioEnable(),
+  bioOff:()=>{if(!confirm("Désactiver l’empreinte ? Le mot de passe restera."))return;state.settings.bioId="";save();render();toast("Empreinte désactivée");},
   jeSors:()=>{const m=$("#sorsMemo");if(m&&sorsCur){state.q.memo[sorsCur]=m.value.trim();save();}jeSors();},
   sorsGo:s=>sorsView(s),
   sorsOther:()=>{const w=$("#sorsOWrap");if(w){w.hidden=false;$("#sorsO").focus();}},
   sorsAdd:()=>{const v=val("sorsO");if(!v)return;addToList("sorties",v);save();sorsView(v);},
   sorsWhere:id=>{const x=state.q.vet.find(e=>e.id===id);if(!x)return;
-    if(!x.where){sorsBack=sorsCur;openModal(vetForm(x),"form");setTimeout(()=>{const w=$("#vWhere");if(w)w.focus();},120);return;}
     const el=document.getElementById("sw-"+id);if(el)el.hidden=!el.hidden;},
   sorsTick:id=>{const [bid,iid]=id.split("|");const b=state.q.bags.find(x=>x.id===bid);const it=b&&b.items.find(x=>x.id===iid);if(!it)return;it.done=!it.done;save();
     const m=$("#sorsMemo");if(m)state.q.memo[sorsCur]=m.value.trim();const y=$("#sheet").scrollTop;sorsView(sorsCur);$("#sheet").scrollTop=y;
@@ -1923,9 +2017,9 @@ const ACT={
   editAlim:id=>openModal(alimForm(state.q.alim.find(x=>x.id===id)),"form"),
   saveAlim:id=>{const name=val("lName2");if(!name){toast("Écris l’aliment");return;}
     const d=!id&&dupOf(state.q.alim,name,id);if(d&&dupWarn("saveAlim",`Tu as déjà « ${esc(d.name)} »${d.where?", "+esc(d.where):""}.`,{tab:qTab("alim"),qv:"alim",el:"ql-"+d.id,name:d.name}))return;
-    const data={cat:selVal("lCat",true),name,use:val("lUse"),where:val("lWhere"),ali:$("#lAli").checked,forWhat:val("lFor")};let xid=id;
+    const data={cat:selVal("lCat",true),name,use:val("lUse"),where:val("lWhere"),ali:$("#lAli").checked,forWhat:val("lFor"),tags:multiVal("lTags","repas")};let xid=id;
     if(id)Object.assign(state.q.alim.find(x=>x.id===id),data);else{xid=uid();state.q.alim.push(Object.assign({id:xid,date:today()},data));}
-    if(data.ali)addToList("relief",name);const back=cur==="sante";save();closeModal();if(!back){qView="alim";cur=qTab("alim");}render();flash("ql-"+xid);toast(data.ali?"Enregistré, aussi dans Santé 🌿":"Aliment enregistré");if(!id)offerRep(name);},
+    if(data.ali)addToList("relief",name);const back=cur==="sante";save();closeModal();if(mangeBack){const s=mangeBack;mangeBack=null;mangeView(s);toast("Enregistré");return;}if(!back){qView="alim";cur=qTab("alim");}render();flash("ql-"+xid);toast(data.ali?"Enregistré, aussi dans Santé 🌿":"Aliment enregistré");if(!id)offerRep(name);},
   delAlim:id=>{const x=state.q.alim.find(e=>e.id===id);if(!x||!confirm("Supprimer « "+x.name+" » ?"))return;state.q.alim=state.q.alim.filter(e=>e.id!==id);save();render();},
   newVet:()=>openModal(vetForm(),"form"),
   editVet:id=>openModal(vetForm(state.q.vet.find(x=>x.id===id)),"form"),
@@ -2086,6 +2180,7 @@ document.addEventListener("change",e=>{
   }
   if(modalKind==="form"&&t.closest&&t.closest("#sheet"))modalDirty=true;
   if(t.id==="fKind"){const w=$("#fCarnetWrap");if(w)w.hidden=t.value!=="Carnet";}
+  if(t.id==="mangeMemo"&&mangeCur){state.q.memoMange[mangeCur]=t.value.trim();save();toast("Fiche mémo enregistrée");}
   if(t.id==="sorsMemo"&&sorsCur){state.q.memo[sorsCur]=t.value.trim();save();toast("Fiche mémo enregistrée");}
   if(t.id&&t.id.startsWith("jobSt-")){const jid=t.id.slice(6).replace(/O$/,""),tg=state.targets.find(x=>x.id===jid);
     if(tg){if(t.tagName==="SELECT"){if(t.value!=="__autre"){tg.status=t.value;save();jobOpen.add(jid);render();toast("Statut : "+t.value);}}
@@ -2108,8 +2203,8 @@ document.addEventListener("change",e=>{
   else if(k==="lockIdle"||k==="lockAway"){state.settings[k]=parseInt(t.value,10);save();lastAct=Date.now();toast("Réglage enregistré");}
   else if(k==="lockOn"){state.settings.lockOn=t.value==="1";save();renderHeader();toast(state.settings.lockOn?"Mot de passe activé":"Mot de passe désactivé");}
   else if(k==="lockHint"){state.settings.lockHint=t.value.trim();save();toast("Indice enregistré");}
-  else if(["pomo","pause","longPause","cycles","remSave","remSkills","mergeGap"].includes(k)){
-    const lim={pomo:[5,90],pause:[1,30],longPause:[5,60],cycles:[2,8],remSave:[1,60],remSkills:[1,60],mergeGap:[0,120]}[k];
+  else if(["pomo","pause","longPause","cycles","remSave","remSkills","mergeGap","pomoNudge"].includes(k)){
+    const lim={pomo:[5,90],pause:[1,30],longPause:[5,60],cycles:[2,8],remSave:[1,60],remSkills:[1,60],mergeGap:[0,120],pomoNudge:[0,180]}[k];
     const pv=parseInt(t.value,10);const v=Math.max(lim[0],Math.min(lim[1],isNaN(pv)?lim[0]:pv));state.settings[k]=v;t.value=v;save();toast("Réglage enregistré");}
   if(t.id==="importFile"&&t.files&&t.files[0]){
     const file=t.files[0],r=new FileReader();
@@ -2161,12 +2256,20 @@ function setupLock(){
   msg.textContent="";hp.hidden=true;inp.value="";
   hb.hidden=!s.lockHint;
   hb.onclick=()=>{hp.textContent="💡 "+s.lockHint;hp.hidden=false;};
+  const bb=$("#lockBio");bb.hidden=!s.bioId;
+  const ok=()=>{inp.oninput=null;root.classList.remove("locked");inp.value="";msg.textContent="";lastAct=Date.now();onOpen();};
+  bb.onclick=async()=>{if(await bioUnlock())ok();else msg.textContent="Empreinte non reconnue : utilise ton mot de passe";};
   inp.oninput=()=>{if(inp.value===s.lockPass){const f=$("#lockForm");if(f.requestSubmit)f.requestSubmit();else f.onsubmit({preventDefault(){}});}};
   $("#lockForm").onsubmit=e=>{e.preventDefault();
     if(inp.value===s.lockPass){inp.oninput=null;root.classList.remove("locked");inp.value="";msg.textContent="";lastAct=Date.now();onOpen();}
     else{msg.textContent="Mot de passe incorrect";inp.value="";inp.focus();}};
-  setTimeout(()=>inp.focus(),50);
+  if(!s.bioId)setTimeout(()=>inp.focus(),50);
 }
+
+/* ---------- V17 : fenêtre adaptée au clavier ---------- */
+function fitViewport(){const v=window.visualViewport;if(!v)return;const r=document.documentElement.style;r.setProperty("--vvh",v.height+"px");r.setProperty("--vvt",v.offsetTop+"px");
+  const a=document.activeElement;if(a&&a.closest&&a.closest("#sheet")&&/INPUT|TEXTAREA|SELECT/.test(a.tagName))setTimeout(()=>a.scrollIntoView({block:"center"}),60);}
+if(window.visualViewport){visualViewport.addEventListener("resize",fitViewport);visualViewport.addEventListener("scroll",fitViewport);fitViewport();}
 
 /* ---------- démarrage ---------- */
 applyTheme();applyPhase();
