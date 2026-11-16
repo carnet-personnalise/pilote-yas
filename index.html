@@ -170,6 +170,28 @@ details.sec>.body p{margin:6px 0}
 .flash{animation:flash 1.8s}
 @keyframes flash{0%,40%{box-shadow:0 0 0 4px var(--sun)}100%{box-shadow:0 0 0 0 transparent}}
 @media (prefers-reduced-motion:reduce){.flash{animation:none;outline:3px solid var(--sun)}#tabs{scroll-behavior:auto}#toast,body,header{transition:none}}
+/* ---------- V14 : santé, pense-bête, natures ---------- */
+.gcross{color:#1E9E4A;font-weight:700;margin-right:4px}
+.chip.check{display:inline-flex;align-items:center;gap:6px;margin:0;font-size:.93rem;color:var(--ink)}
+.chip.check input{margin:0;width:18px;height:18px}
+.chip.check:has(input:checked){background:var(--accent-soft);border-color:var(--accent);font-weight:700}
+.lvl{display:inline-block;min-width:2.2em;text-align:center;border-radius:999px;padding:1px 8px;font-weight:700;font-size:.85rem}
+.lvl.l0{background:var(--accent-soft);color:var(--ink)}.lvl.l1{background:var(--sun-soft);color:var(--ink)}.lvl.l2{background:var(--orange);color:#fff}.lvl.l3{background:var(--red);color:#fff}
+.range{display:flex;align-items:center;gap:12px}.range input{flex:1;padding:0;accent-color:var(--accent)}.range output{font-weight:700;font-size:1.3rem;min-width:3.2em;text-align:right}
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.seg button{flex:1;min-width:80px;padding:9px 6px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;cursor:pointer}
+.seg button.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:700}
+#note{position:fixed;left:14px;right:92px;max-width:360px;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:rotate(-1.2deg);background:#FFF6BF;color:#3A3420;border-radius:4px 4px 14px 4px;padding:16px 16px 12px;box-shadow:0 10px 24px rgba(0,0,0,.22),0 2px 4px rgba(0,0,0,.12);z-index:90;display:none}
+#note.show{display:block;animation:noteIn .35s ease-out}
+#note h3{margin:0 0 6px;font-size:1rem}#note p{margin:6px 0;font-size:.95rem}
+#note .x{position:absolute;top:4px;right:6px;border:0;background:none;font-size:1.2rem;color:#6B6040;cursor:pointer;padding:4px 8px}
+#note .bar{margin:10px 0 0;gap:6px}#note .btn{padding:7px 12px;font-size:.88rem}
+#note .btn.ghost{background:transparent;color:#3A3420;border-color:#C9B970}
+@keyframes noteIn{from{opacity:0;transform:translateY(16px) rotate(-1.2deg)}to{opacity:1;transform:rotate(-1.2deg)}}
+@media (prefers-reduced-motion:reduce){#note.show{animation:none}}
+html.locked #note{visibility:hidden}
+.histv{border-left:4px solid var(--accent);padding:2px 0 2px 12px;margin:12px 0}
+.histv ul{margin:6px 0 0;padding-left:20px}.histv li{margin:4px 0}
 /* ---------- écran du mot de passe ---------- */
 html.locked header,html.locked main,html.locked .fab{visibility:hidden}
 #lock{display:none}
@@ -204,11 +226,12 @@ html.locked #lock{display:flex;position:fixed;inset:0;z-index:200;background:var
 <main id="main"></main>
 
 <button class="fab" id="fabChrono" aria-label="Chronomètre de travail" title="Chronomètre (déplaçable)">⏱<span class="b" hidden></span></button>
-<button class="fab" id="fabPomo" aria-label="Minuteur de pauses" title="Minuteur de pauses (déplaçable)"><span class="ic">☕</span><span class="b" hidden></span></button>
+<button class="fab" id="fabPomo" aria-label="Minuteur Pomodoro" title="Minuteur Pomodoro (déplaçable)"><span class="ic">🍅</span><span class="b" hidden></span></button>
 <button class="fab" id="fabPin" aria-label="Notes urgentes" title="Notes urgentes (déplaçable)">📌<span class="b" hidden></span></button>
 
 <div id="modal" aria-hidden="true"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
 <div id="toast" role="status" aria-live="polite"></div>
+<div id="note" role="dialog" aria-labelledby="noteTitle"></div>
 
 <div id="lock" role="dialog" aria-modal="true" aria-labelledby="lockTitle"><div class="card">
   <div class="logo"><img id="lockLogo" alt=""></div>
@@ -226,7 +249,7 @@ html.locked #lock{display:flex;position:fixed;inset:0;z-index:200;background:var
 
 <script>
 "use strict";
-const VERSION="V13",VERSION_DATE="15/11/2026",FILE_NAME="V13Carnet_Pilote.html";
+const VERSION="V14",VERSION_DATE="16/11/2026",FILE_NAME="V14Carnet_Pilote.html";
 const MOT_DE_PASSE_DE_DEPART="1234"; // 🔒 Mot de passe provisoire : change "1234" ici (garde les guillemets). Ensuite, change-le plutôt dans ⚙️ Paramètres.
 const LOGO="data:image/png;base64,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";
 const KEY="carnetPilotageYasmine";
@@ -235,7 +258,7 @@ const STATUS={actif:"Actif",classer:"À classer",attente:"En attente",pause:"En 
 const STATUS_ORDER=["actif","classer","attente","pause","termine"];
 const URG=["vert","orange","rouge"];
 const URG_LABEL={vert:"Peut attendre",orange:"Bientôt",rouge:"Urgent"};
-const DEF_CATS=["Visite","Création du carnet","Amélioration du carnet","Tâches quotidiennes","Démarches administratives","Candidatures","Formation","Kay Numérique","Rendez-vous","Loisirs","Projet personnel"];
+const DEF_CATS=["Visite","Création du carnet","Amélioration du carnet","Alimentation du carnet","Tâches quotidiennes","Démarches administratives","Candidatures","Formation","Kay Numérique","Rendez-vous","Loisirs","Projet personnel"];
 const DEF_TOOLS=["Claude IA","ChatGPT","Gemini","Drive","Carnet Pilote"];
 const SPACES={pro:"💼 Professionnel",perso:"🏠 Personnel",loisirs:"🎨 Loisirs"};
 const SPACE_TXT={pro:"Professionnel",perso:"Personnel",loisirs:"Loisir"};
@@ -244,6 +267,7 @@ const TABS={
   accueil:{label:"Accueil",kw:"début maison reprendre priorités aujourd’hui mode phase haute basse neutre idées boîte bonjour plus tard ambiance couleur"},
   projets:{label:"Projets",kw:"priorité pourquoi actif attente pause classer livre mémoire objectif bilan terminé"},
   loisirs:{label:"Loisirs",kw:"loisir crochet sac lecture livre détente plaisir créatif ressource hobby objectif"},
+  sante:{label:"Santé",kw:"santé douleur douleurs dos épaule nuque suivi symptôme intensité soulage soulager essentiels chaufferette lotion pommade objet astuce rangé placard bien-être médical"},
   taches:{label:"Tâches & RDV",kw:"rendez-vous rdv santé médecin administratif démarche papiers rappel agenda calendrier échéance urgent reconversion emploi candidature famille objectifs loisirs à faire"},
   fichiers:{label:"Fichiers Drive",kw:"lien drive dossier document pdf google classement où rangé fichier nom"},
   journal:{label:"Journal de bord",kw:"date tableau calendrier historique activité suivi durée travail chronomètre temps heures outils catégorie visite"},
@@ -266,6 +290,44 @@ const PAUSE_MSG=[
   {e:"⏳",t:"Prends ton temps : bois un verre d’eau et respire calmement."}
 ];
 const SEED_WORK=[];
+const DEF_SANTE={
+  loc:["Dos (haut)","Bas du dos","Nuque","Épaule droite","Épaule gauche","Tête","Bras / mains","Jambes / pieds"],
+  painType:["Musculaire","Nerveuse","Je ne sais pas"],
+  trig:["Stress","Fatigue","Posture","Effort physique","Longtemps assise","Météo","Je ne sais pas"],
+  relief:["Chaleur","Repos","Étirements","Massage","Respiration calme"],
+  essCat:["Chaleur et froid","Matériel et accessoires","Soins et produits","Exercices et étirements","Relaxation"]
+};
+const NOTE_FREQ={jamais:["Jamais",0],rarement:["Rarement",.2],parfois:["Parfois",.4],souvent:["Souvent",.75]};
+const TIPS=[
+  {e:"💡",t:"Une idée pour améliorer ton carnet ? Dis-la directement dans le projet Claude « Carnet Pilote »."},
+  {e:"⏹️",t:"Claude est en train de préparer une version et une idée te vient ? Appuie sur stop, donne ton idée : il reprend ensuite."},
+  {e:"✅",t:"Quelque chose marche bien ? Demande à Claude d’en faire une consigne, puis colle-la dans les instructions du projet. Ce qui est fait n’est plus à refaire."},
+  {e:"🔄",t:"Nouvelle version reçue ? Dépose index.html sur GitHub (dépôt pilote-yas), attends 2 à 5 minutes, puis ferme et rouvre l’application."},
+  {e:"☁️",t:"Une fois par semaine : une sauvegarde .json rangée dans ton Drive. C’est ta ceinture de sécurité."},
+  {e:"🧠",t:"Pensées en vrac ? Dicte-les à ton Assistant IA Claude : il trie pour toi."},
+  {e:"🆕",t:"Nouveau carnet ou nouveau projet ? Repars des instructions d’un projet qui marche bien, et de « Mes règles pour tout nouveau carnet » (Aide-mémoire)."}
+];
+const HISTORY=[
+  {v:"V14",d:"16/11/2026",n:[
+    "<span class=\"gcross\">✚</span> Nouvel onglet <b>Santé</b> : <b>Suivi</b> des douleurs (date, heure, où, intensité de 0 à 10, type, déclencheur, ce qui soulage) et <b>Mes essentiels</b> (catégorie, ce que j’utilise, à quoi ça sert, où c’est rangé).",
+    "🟨 <b>Pense-bête</b> : de temps en temps à l’ouverture, un de tes essentiels ou une astuce de ta méthode. Fréquence réglable dans Paramètres.",
+    "⏱ Chronomètre : tu peux cocher <b>plusieurs natures</b> pour une même séance. La durée compte une seule fois.",
+    "⏱ Les <b>ouvertures rapprochées</b> du carnet sont regroupées en une seule séance (15 min au départ, réglable dans Paramètres).",
+    "📅 La <b>date d’ajout</b> est notée toute seule sur chaque tâche et rendez-vous.",
+    "🍅 Minuteur <b>Pomodoro</b> : une tomate quand il est au repos, 🎵 🎶 quand il te propose de la musique.",
+    "🗂️ Nouvelle nature « Alimentation du carnet ».",
+    "🧠 Aide-mémoire : adresse corrigée (<b>pilote-yas</b>), nouvelle partie « 💡 J’ai une idée d’amélioration », partie Santé.",
+    "📜 <b>Historique des versions</b> ici, dans Paramètres, affiché une fois à chaque nouvelle version."]},
+  {v:"V13",d:"15/11/2026",n:["Carnet de départ vierge, sans exemples personnels.","En ligne sur GitHub Pages (carnet-personnalise.github.io/pilote-yas) et installé comme application mobile, avec l’icône « Yas ». S’ouvre même sans Internet."]},
+  {v:"V12",d:"15/11/2026",n:["Bouton « 🔒 Verrouiller », et verrouillage automatique (inactivité, quand tu quittes Chrome), durées réglables.","« ➕ Autre… » dans « Projet ou loisir lié » pour créer un projet directement.","Nombre affiché sur les filtres d’étiquettes.","Bouton Replier / Déplier « Ma liste ».","Bouton « Copier » écrit en toutes lettres dans Métier visé."]},
+  {v:"V11",d:"15/11/2026",n:["Étiquettes technique / transversale sur les compétences, avec filtres.","Partie « Métier visé », avec le menu « Comparer avec »."]},
+  {v:"V9 et V10",d:"14–15/11/2026",n:["Écran de mot de passe à l’ouverture : à activer, désactiver, modifier, avec un indice.","Logo « Yas » comme icône du carnet."]},
+  {v:"V8",d:"14/11/2026",n:["L’écran reste en place quand tu passes de Détail à Synthèse.","Aide-mémoire : installation par favori Chrome."]},
+  {v:"V7",d:"14/11/2026",n:["Compétences : boutons Détail / Synthèse.","Copie de la liste corrigée sur le téléphone.","Doublons ignorés à l’ajout."]},
+  {v:"V3 à V6",d:"13–14/11/2026",n:["Résumé : onglet Compétences, aide-mémoire avec sommaire et épingles, notes urgentes 📌 et rappels doux, phases du jour, boîte à idées. La V6 a fait l’objet du tuto vidéo (Accueil, Projets, Sauvegarde)."]},
+  {v:"V2",d:"13/11/2026",n:["Nouveau nom « Carnet Pilote » (avant : Carnet de pilotage) et logo maison + boussole.","Durée de travail reprise du fichier Drive « Conception Carnet Pilote ».","Onglet Loisirs, domaines Famille et Objectifs."]},
+  {v:"V1",d:"12/11/2026",n:["Création du carnet : projets, tâches et RDV, chronomètre qui démarre à l’ouverture, minuteur de pauses, Paramètres avec sauvegarde et restauration, aide-mémoire."]}
+];
 
 /* ---------- utilitaires ---------- */
 const $=s=>document.querySelector(s);
@@ -295,8 +357,9 @@ function defaults(){
   return {
     name:"Yas",mode:"neutre",reprendre:"",ideas:[],lastExport:null,lastRestore:null,seeded:false,
     skills:[],targets:[],jobFrom:"",jobBase:"both",skillType:"",lastSkills:null,snooze:{},aidePins:["routine","maj"],
-    settings:{lockOn:true,lockPass:MOT_DE_PASSE_DE_DEPART,lockHint:"",theme:"auto",pomo:25,pause:5,longPause:20,cycles:4,remSave:7,remSkills:15,lockIdle:10,lockAway:2,tabOrder:Object.keys(TABS)},
-    lists:{cats:DEF_CATS.slice(),tools:DEF_TOOLS.slice()},
+    settings:{lockOn:true,lockPass:MOT_DE_PASSE_DE_DEPART,lockHint:"",theme:"auto",noteFreq:"parfois",mergeGap:15,pomo:25,pause:5,longPause:20,cycles:4,remSave:7,remSkills:15,lockIdle:10,lockAway:2,tabOrder:Object.keys(TABS)},
+    lists:Object.assign({cats:DEF_CATS.slice(),tools:DEF_TOOLS.slice()},JSON.parse(JSON.stringify(DEF_SANTE))),
+    sante:{suivi:[],ess:[]},seenVersion:"",
     projects,
     tasks:[
       t("Restaurer ma sauvegarde .json (⚙️ Paramètres)","Projets","orange","",true),
@@ -314,12 +377,16 @@ function fixState(s){
   s.settings=Object.assign(defaults().settings,s.settings||{});
   const keys=Object.keys(TABS);let o=(s.settings.tabOrder||[]).filter(k=>keys.includes(k));
   if(!o.includes("loisirs")){const i=o.indexOf("projets");o.splice(i<0?1:i+1,0,"loisirs");}
+  if(!o.includes("sante")){const i=o.indexOf("taches");o.splice(i<0?o.length:i,0,"sante");}
   if(!o.includes("competences")){const i=o.indexOf("journal");o.splice(i<0?o.length:i+1,0,"competences");}
   keys.forEach(k=>{if(!o.includes(k))o.push(k);});
   s.settings.tabOrder=o;
   ["projects","tasks","files","journal","work","urgent","ideas","skills","targets"].forEach(k=>{if(!Array.isArray(s[k]))s[k]=[];});
   if(!Array.isArray(s.aidePins))s.aidePins=["routine","maj"];s.snooze=s.snooze||{};
   s.lists=Object.assign({cats:DEF_CATS.slice(),tools:DEF_TOOLS.slice()},s.lists||{});
+  Object.keys(DEF_SANTE).forEach(k=>{if(!Array.isArray(s.lists[k]))s.lists[k]=DEF_SANTE[k].slice();});
+  if(!s.lists.cats.includes("Alimentation du carnet")){const i=s.lists.cats.indexOf("Amélioration du carnet");s.lists.cats.splice(i<0?s.lists.cats.length:i+1,0,"Alimentation du carnet");}
+  s.sante=Object.assign({suivi:[],ess:[]},s.sante||{});["suivi","ess"].forEach(k=>{if(!Array.isArray(s.sante[k]))s.sante[k]=[];});
   if(!s.lists.cats.includes("Création du carnet")){const i=s.lists.cats.indexOf("Amélioration du carnet");s.lists.cats.splice(i<0?s.lists.cats.length:i,0,"Création du carnet");}
   s.projects.forEach(p=>{
     if(!p.space||p.space==="principal")p.space=/candidat|emploi|cifelm|kay|tuto|atelier|duoday|formation|mission/.test(norm(p.name))?"pro":"perso";
@@ -334,7 +401,7 @@ function fixState(s){
   if(typeof s.lastExport==="string")s.lastExport=s.lastExport?{date:s.lastExport,time:"",file:""}:null;
   if(s.name==="Yasmine")s.name="Yas";
   s.fabPos=s.fabPos||{};
-  s.chrono=Object.assign({running:false,start:0,lastSeen:0,tool:"",cat:"",details:""},s.chrono||{});
+  s.chrono=Object.assign({running:false,start:0,lastSeen:0,gap:0,tool:"",cat:"",details:""},s.chrono||{});
   if(s.chrono.nature!==undefined){s.chrono.cat=s.chrono.cat||s.chrono.nature;delete s.chrono.nature;}
   s.pomo=Object.assign({phase:"off",end:0,emoji:"",cycle:0,skips:0,next:1,long:false},s.pomo||{});
   sortWork(s);
@@ -358,6 +425,21 @@ function selField(id,label,kind,value){
     <option value="__autre">➕ Autre…</option></select>
     <input id="${id}O" placeholder="Écris le nouveau nom" aria-label="${label} : autre" hidden>`;
 }
+const splitCats=v=>String(v||"").split(" + ").map(x=>x.trim()).filter(Boolean);
+function catChecks(id,value){
+  const sel=splitCats(value),list=state.lists.cats.slice();sel.forEach(x=>{if(!list.includes(x))list.push(x);});
+  return `<label>Nature du travail <span class="hint">(tu peux en cocher plusieurs)</span></label>
+    <div class="chips wrap" id="${id}" role="group" aria-label="Nature du travail">${list.map(x=>`<label class="chip check"><input type="checkbox" value="${esc(x)}" ${sel.includes(x)?"checked":""}>${esc(x)}</label>`).join("")}
+    <label class="chip check"><input type="checkbox" value="__autre" data-other="${id}O">➕ Autre…</label></div>
+    <input id="${id}O" placeholder="Écris la nouvelle nature" aria-label="Nature du travail : autre" hidden>`;
+}
+function catVal(id,addIt){
+  const box=document.getElementById(id);if(!box)return "";const out=[];
+  box.querySelectorAll("input:checked").forEach(c=>{
+    if(c.value==="__autre"){const v=val(id+"O");if(v){if(addIt)addToList("cats",v);if(!out.includes(v))out.push(v);}}
+    else out.push(c.value);});
+  return out.join(" + ");
+}
 function selVal(id,addIt){
   const s=document.getElementById(id);if(!s)return "";
   if(s.value!=="__autre")return s.value;
@@ -370,10 +452,10 @@ function applyPhase(){document.documentElement.setAttribute("data-phase",state.m
 function longDate(){const d=new Intl.DateTimeFormat("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(new Date());return d.charAt(0).toUpperCase()+d.slice(1);}
 function renderHeader(){const d=longDate();$("#today").textContent=(state.name||"Moi")+", "+d.charAt(0).toLowerCase()+d.slice(1);const lb=$("#lockNowBtn");if(lb)lb.hidden=!canLock();}
 function renderTabs(){
-  $("#tabs").innerHTML=state.settings.tabOrder.map(k=>`<button class="tab ${k===cur?"on":""}" role="tab" aria-selected="${k===cur}" data-act="tab" data-id="${k}">${TABS[k].label}</button>`).join("");
+  $("#tabs").innerHTML=state.settings.tabOrder.map(k=>`<button class="tab ${k===cur?"on":""}" role="tab" aria-selected="${k===cur}" data-act="tab" data-id="${k}">${k==="sante"?`<span class="gcross" aria-hidden="true">✚</span>`:""}${TABS[k].label}</button>`).join("");
   const on=$("#tabs .tab.on");if(on)on.scrollIntoView({block:"nearest",inline:"nearest"});
 }
-const VIEWS={accueil:vAccueil,projets:vProjets,loisirs:vLoisirs,taches:vTaches,fichiers:vFichiers,journal:vJournal,competences:vCompetences,aide:vAide,params:vParams};
+const VIEWS={accueil:vAccueil,projets:vProjets,loisirs:vLoisirs,sante:vSante,taches:vTaches,fichiers:vFichiers,journal:vJournal,competences:vCompetences,aide:vAide,params:vParams};
 function render(){applyPhase();renderHeader();renderTabs();$("#main").innerHTML=VIEWS[cur]();updateFabs();}
 const empty=msg=>`<div class="block"><p class="meta">${msg}</p></div>`;
 function toast(msg,ms){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove("show"),ms||2600);}
@@ -416,7 +498,7 @@ function vAccueil(){
     <p class="meta">Pensées en vrac ? Dicte-les à ton Assistant IA Claude, il trie pour toi. Et si c’est trop aujourd’hui, c’est OK aussi.</p></div>`;
   }else{
     box=`<div class="modebox neutre"><strong>Journée neutre : un pas après l’autre.</strong>
-    <p>Choisis une tâche, lance le minuteur ☕ et profite des pauses pour bouger et boire.</p></div>`;
+    <p>Choisis une tâche, lance le minuteur 🍅 et profite des pauses pour bouger et boire.</p></div>`;
   }
   const le=state.lastExport;
   const saveRem=daysSince(le&&le.date)>7?`<div class="warn">Pense à sauvegarder ton carnet (Paramètres, Sauvegarder). ${le?"Dernière sauvegarde : "+fmt(le.date)+".":"Aucune sauvegarde pour l’instant."}</div>`:"";
@@ -530,7 +612,7 @@ function taskRow(t){
     <input type="checkbox" data-act="toggleTask" data-id="${t.id}" ${t.done?"checked":""} aria-label="Marquer comme fait">
     <button class="dot ${t.urg}" data-act="cycleUrg" data-id="${t.id}" title="${URG_LABEL[t.urg]} (toucher pour changer)" aria-label="Urgence : ${URG_LABEL[t.urg]}"></button>
     <div class="grow"><div class="ttl">${t.type==="rdv"?"📅 ":""}${esc(t.title)}${t.micro?`<span class="badge">10 min</span>`:""}</div>
-      <div class="meta">${esc(meta)}</div>${t.note?`<div class="meta">${esc(t.note)}</div>`:""}</div>
+      <div class="meta">${esc(meta)}</div>${t.note?`<div class="meta">${esc(t.note)}</div>`:""}${t.created?`<div class="meta added">Ajouté${t.type==="rdv"?"":"e"} le ${fmt(t.created)}</div>`:""}</div>
     ${t.date?`<button class="icon" data-act="ics" data-id="${t.id}" title="Ajouter à mon agenda" aria-label="Ajouter à mon agenda">🔔</button>`:""}
     <button class="icon" data-act="editTask" data-id="${t.id}" aria-label="Modifier">✎</button>
     <button class="icon" data-act="delTask" data-id="${t.id}" aria-label="Supprimer">🗑</button></div>`;
@@ -572,6 +654,7 @@ function taskForm(t){
   <p class="hint">Il sera créé « À classer » dans cet espace. Tu pourras le compléter ensuite avec ✎ dans Projets.</p></div>
   <label style="display:flex;gap:10px;align-items:center;color:var(--ink)"><input type="checkbox" id="tMicro" ${t.micro?"checked":""} style="margin:0"> Faisable en 10 minutes (idéal en phase basse)</label>
   <label for="tNote">Note</label><textarea id="tNote" rows="2">${esc(t.note)}</textarea>
+  <p class="hint">${t.created?"Ajouté le "+fmt(t.created):"La date d’ajout sera notée toute seule : "+fmt(today())}.</p>
   <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="saveTask" data-id="${t.id}">Enregistrer</button></div>`;
 }
 function icsEsc(s){return String(s||"").replace(/\\/g,"\\\\").replace(/[,;]/g,m=>"\\"+m).replace(/\n/g,"\\n");}
@@ -591,6 +674,101 @@ function makeIcs(t,atTime){
   if(atTime)alarm("PT0M");else{alarm("-P1D");if(t.time)alarm("-PT1H");}
   L.push("END:VEVENT","END:VCALENDAR");
   return L.join("\r\n");
+}
+
+/* ---------- santé ---------- */
+let santeView="suivi";
+const lvlClass=n=>n<=2?"l0":n<=4?"l1":n<=6?"l2":"l3";
+function topOf(arr){const c={};arr.filter(Boolean).forEach(x=>{c[x]=(c[x]||0)+1;});const e=Object.entries(c).sort((a,b)=>b[1]-a[1]);return e.length?e[0][0]:"";}
+function essRow(x){
+  return `<div class="row" id="e-${x.id}"><div class="grow"><b>${esc(x.name)}</b>
+    ${x.use?`<div class="meta">Sert à : ${esc(x.use)}</div>`:""}${x.where?`<div class="meta">📍 Rangé : ${esc(x.where)}</div>`:""}</div>
+    <button class="icon" data-act="editEss" data-id="${x.id}" aria-label="Modifier">✎</button><button class="icon" data-act="delEss" data-id="${x.id}" aria-label="Supprimer">🗑</button></div>`;
+}
+function vSante(){
+  const S=state.sante,sv=santeView;
+  const tabs=`<div class="chips" role="group" aria-label="Partie de l’onglet Santé">
+    <button class="chip ${sv==="suivi"?"on":""}" data-act="santeView" data-id="suivi">📋 Suivi (${S.suivi.length})</button>
+    <button class="chip ${sv==="ess"?"on":""}" data-act="santeView" data-id="ess">🧰 Mes essentiels (${S.ess.length})</button></div>`;
+  let body;
+  if(sv==="suivi"){
+    const list=S.suivi.slice().sort((a,b)=>(b.date+(b.time||"")).localeCompare(a.date+(a.time||"")));
+    const last30=list.filter(x=>daysSince(x.date)<30);
+    const avg=last30.length?Math.round(last30.reduce((s,x)=>s+(+x.int||0),0)/last30.length*10)/10:0;
+    const sum=last30.length>=3?`<div class="modebox neutre"><strong>Sur 30 jours</strong><p>${last30.length} notes, intensité moyenne ${String(avg).replace(".",",")} / 10.${topOf(last30.map(x=>x.loc))?" Zone la plus fréquente : "+esc(topOf(last30.map(x=>x.loc)))+".":""}${topOf(last30.map(x=>x.relief))?" Ce qui soulage le plus souvent : "+esc(topOf(last30.map(x=>x.relief)))+".":""}</p></div>`:"";
+    body=`<div class="bar"><button class="btn" data-act="newSuivi">Noter une douleur</button></div>${sum}
+    ${list.length?`<div class="tablewrap"><table><thead><tr><th>Date</th><th>Où</th><th>Intensité</th><th>Type</th><th>Déclencheur</th><th>Ce qui soulage</th><th></th></tr></thead><tbody>
+    ${list.map(x=>`<tr id="s-h-${x.id}"><td class="nowrap">${fmt(x.date)}${x.time?"<br>"+hText(x.time):""}</td><td>${esc(x.loc)}</td><td><span class="lvl ${lvlClass(+x.int||0)}">${+x.int||0}</span></td><td>${esc(x.type)}</td><td>${esc(x.trig)}</td><td>${esc(x.relief)}${x.note?`<div class="meta">${esc(x.note)}</div>`:""}</td>
+      <td class="nowrap"><button class="icon" data-act="editSuivi" data-id="${x.id}" aria-label="Modifier">✎</button><button class="icon" data-act="delSuivi" data-id="${x.id}" aria-label="Supprimer">🗑</button></td></tr>`).join("")}
+    </tbody></table></div>`:empty("Aucune note pour l’instant. Touche « Noter une douleur » quand ça arrive : en quelques jours, tu verras ce qui revient et ce qui t’aide.")}`;
+  }else{
+    const cats=state.lists.essCat.slice();S.ess.forEach(x=>{if(x.cat&&!cats.includes(x.cat))cats.push(x.cat);});
+    const groups=cats.map(c=>{const l=S.ess.filter(x=>x.cat===c);return l.length?`<section class="block"><h3>${esc(c)} <span class="badge">${l.length}</span></h3>${l.map(essRow).join("")}</section>`:"";}).join("");
+    const none=S.ess.filter(x=>!x.cat);
+    body=`<div class="bar"><button class="btn" data-act="newEss">Ajouter un essentiel</button></div>
+    ${groups}${none.length?`<section class="block"><h3>Sans catégorie</h3>${none.map(essRow).join("")}</section>`:""}
+    ${S.ess.length?"":empty("Note ici ce qui t’aide et où c’est rangé : une chaufferette, une lotion, un exercice… Le Pense-bête 🟨 te les rappellera de temps en temps.")}`;
+  }
+  return `<h2><span class="gcross" aria-hidden="true">✚</span>Santé</h2>
+  <p class="lead">Suivi : note tes douleurs pour repérer ce qui revient et ce qui te soulage. Mes essentiels : ce qui t’aide, et surtout où c’est rangé.</p>${tabs}${body}`;
+}
+function suiviForm(x){
+  const n=new Date();
+  x=x||{id:"",date:today(),time:hm(n),loc:"",int:5,type:"",trig:"",relief:"",note:""};
+  return `<h2>${x.id?"Modifier la note":"Noter une douleur"}</h2>
+  <div class="inline"><div><label for="sDate">Date</label><input id="sDate" type="date" value="${esc(x.date)}"></div>
+  <div><label for="sTime">Heure</label><input id="sTime" type="time" value="${esc(x.time)}"></div></div>
+  ${selField("sLoc","Où ?","loc",x.loc)}
+  <label for="sInt">Intensité <span class="hint">(0 = rien, 10 = très forte)</span></label>
+  <div class="range"><input id="sInt" type="range" min="0" max="10" step="1" value="${+x.int||0}"><output id="sIntOut" for="sInt">${+x.int||0} / 10</output></div>
+  ${selField("sType","Type de douleur","painType",x.type)}
+  ${selField("sTrig","Déclencheur ou contexte","trig",x.trig)}
+  ${selField("sRelief","Ce qui soulage","relief",x.relief)}
+  <p class="hint">Tes essentiels apparaissent aussi dans cette liste.</p>
+  <label for="sNote">Note</label><textarea id="sNote" rows="2">${esc(x.note)}</textarea>
+  <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="saveSuivi" data-id="${x.id}">Enregistrer</button></div>`;
+}
+function essForm(x){
+  x=x||{id:"",cat:"",name:"",use:"",where:""};
+  return `<h2>${x.id?"Modifier l’essentiel":"Nouvel essentiel"}</h2>
+  ${selField("eCat","Catégorie","essCat",x.cat)}
+  <label for="eName">Ce que j’utilise</label><input id="eName" value="${esc(x.name)}" placeholder="Ex. : chaufferette magique">
+  <label for="eUse">À quoi ça sert</label><input id="eUse" value="${esc(x.use)}" placeholder="Ex. : douleurs au dos, à l’épaule">
+  <label for="eWhere">Où c’est rangé</label><input id="eWhere" value="${esc(x.where)}" placeholder="Ex. : placard de la chambre, 2e étagère">
+  <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="saveEss" data-id="${x.id}">Enregistrer</button></div>`;
+}
+
+/* ---------- pense-bête et nouveautés ---------- */
+function showNote(force){
+  const box=$("#note"),ess=state.sante.ess;
+  const useEss=ess.length&&Math.random()<.5;
+  let html;
+  if(useEss){
+    const x=pick(ess);
+    html=`<h3 id="noteTitle">🟨 Pense-bête</h3><p>🧰 N’oublie pas : <b>${esc(x.name)}</b>${x.use?", pour "+esc(x.use):""}.</p>${x.where?`<p>📍 Rangé : ${esc(x.where)}</p>`:""}
+    <div class="bar"><button class="btn ghost" data-act="noteEss">Mes essentiels</button><button class="btn ghost" data-act="noteAdd">Ajouter</button><button class="btn" data-act="noteClose">Merci 👍</button></div>`;
+  }else{
+    const t=pick(TIPS);
+    html=`<h3 id="noteTitle">🟨 Pense-bête</h3><p>${t.e} ${esc(t.t)}</p>
+    <div class="bar"><button class="btn ghost" data-act="noteAdd">Ajouter un essentiel</button><button class="btn" data-act="noteClose">Merci 👍</button></div>`;
+  }
+  box.innerHTML=`<button class="x" data-act="noteClose" aria-label="Fermer le pense-bête">×</button>`+html;
+  box.classList.add("show");
+}
+function hideNote(){$("#note").classList.remove("show");}
+function histHtml(list){return list.map(h=>`<div class="histv"><b>${h.v}</b> <span class="meta">du ${h.d}</span><ul>${h.n.map(x=>`<li>${x}</li>`).join("")}</ul></div>`).join("");}
+function newsModal(){
+  const h=HISTORY[0];
+  openModal(`<span class="em" aria-hidden="true">🎉</span><h2 class="center">Nouveautés de la ${h.v}</h2><p class="center meta">du ${h.d}</p>${histHtml([h]).replace('<div class="histv"><b>'+h.v+'</b> <span class="meta">du '+h.d+'</span>','<div class="histv">')}
+  <p class="meta">Tu retrouves cette liste, et toutes les versions d’avant, dans ⚙️ Paramètres, Historique des versions.</p>
+  <div class="actions"><button class="btn" data-act="closeModal">C’est noté</button></div>`,"news");
+}
+let opened=false;
+function onOpen(){
+  if(opened)return;opened=true;
+  if(state.seenVersion!==VERSION){state.seenVersion=VERSION;save();setTimeout(newsModal,300);return;}
+  const f=NOTE_FREQ[state.settings.noteFreq]||NOTE_FREQ.parfois;
+  if(Math.random()<f[1])setTimeout(()=>showNote(),900);
 }
 
 /* ---------- fichiers ---------- */
@@ -626,11 +804,11 @@ function vJournal(){
   <div class="bar" style="margin:10px 0 0"><button class="btn" data-act="addJournal">Ajouter au journal</button></div></section>
   ${state.journal.length?`<section class="block">${state.journal.map(j=>`<div class="row" id="j-${j.id}"><div class="grow"><div class="meta">${fmt(j.date)}</div>${esc(j.text).replace(/\n/g,"<br>")}</div><button class="icon" data-act="delJournal" data-id="${j.id}" aria-label="Supprimer">🗑</button></div>`).join("")}</section>`:""}
   <section class="block" id="workBlock"><h3>Durée de travail</h3>
-  <p class="meta">Aujourd’hui : ${fmtDur(totToday)}. Sur 7 jours : ${fmtDur(tot7)}. Le chronomètre ⏱ remplit ce tableau tout seul (séances d’au moins 1 minute).</p>
-  ${catRows.length?`<details open><summary>Totaux par catégorie</summary><div class="tablewrap"><table style="min-width:0"><thead><tr><th>Catégorie</th><th>Total</th></tr></thead><tbody>
+  <p class="meta">Aujourd’hui : ${fmtDur(totToday)}. Sur 7 jours : ${fmtDur(tot7)}. Le chronomètre ⏱ remplit ce tableau tout seul (séances d’au moins 1 minute). Une séance à plusieurs natures compte une seule fois dans ces totaux.</p>
+  ${catRows.length?`<details open><summary>Totaux par nature</summary><div class="tablewrap"><table style="min-width:0"><thead><tr><th>Nature</th><th>Total</th></tr></thead><tbody>
     ${catRows.map(([k,m])=>`<tr><td>${esc(k)}</td><td class="nowrap"><b>${fmtDur(m)}</b></td></tr>`).join("")}</tbody></table></div></details>`:""}
   <div class="bar" style="margin:10px 0"><button class="btn ghost" data-act="newWork">Ajouter une séance</button></div>
-  ${state.work.length?`<div class="tablewrap"><table><thead><tr><th>Date</th><th>Outils</th><th>Catégorie</th><th>Détails</th><th>Durée</th><th></th></tr></thead><tbody>
+  ${state.work.length?`<div class="tablewrap"><table><thead><tr><th>Date</th><th>Outils</th><th>Nature</th><th>Détails</th><th>Durée</th><th></th></tr></thead><tbody>
   ${state.work.map(w=>`<tr id="w-${w.id}"><td class="nowrap">${fmt(w.date)}</td><td>${esc(w.tool)}</td><td>${esc(w.cat||"Sans précision")}</td><td>${esc(w.details)}</td>
     <td class="nowrap">${w.start&&w.end?hText(w.start)+" – "+hText(w.end)+"<br>":""}<b>${fmtDur(w.min)}</b></td>
     <td class="nowrap"><button class="icon" data-act="editWork" data-id="${w.id}" aria-label="Modifier">✎</button><button class="icon" data-act="delWork" data-id="${w.id}" aria-label="Supprimer">🗑</button></td></tr>`).join("")}
@@ -641,7 +819,7 @@ function workForm(w){
   return `<h2>${w.id?"Modifier la séance":"Nouvelle séance"}</h2>
   <label for="wDate">Date</label><input id="wDate" type="date" value="${esc(w.date)}">
   ${selField("wTool","Outils","tools",w.tool)}
-  ${selField("wCat","Catégorie","cats",w.cat)}
+  ${catChecks("wCat",w.cat)}
   <label for="wDet">Détails</label><textarea id="wDet" rows="3">${esc(w.details)}</textarea>
   <div class="inline"><div><label for="wStart">Début</label><input id="wStart" type="time" value="${esc(w.start)}"></div>
   <div><label for="wEnd">Fin</label><input id="wEnd" type="time" value="${esc(w.end)}"></div></div>
@@ -802,9 +980,15 @@ const BASE_PROMPT=`Avant de créer ou de faire évoluer ce carnet, applique mes 
 
 NOM DE FICHIER : la version avant le nom, ex. V1Nom_Du_Carnet.html. Les sauvegardes suivent la même règle (version, nom, date et heure).
 
-CHRONOMÈTRE : démarre tout seul à l’ouverture, avec les secondes, catégorie « Visite » par défaut. Il remplit une table Durée de travail (Date, Outils, Catégorie, Détails, Durée). Outils et Catégories en menus déroulants, avec « Autre » qui s’ajoute à la liste. La sauvegarde enregistre aussi la séance en cours.
+CHRONOMÈTRE : démarre tout seul à l’ouverture, avec les secondes, catégorie « Visite » par défaut. Plusieurs natures possibles pour une même séance (durée comptée une fois). Ouvertures rapprochées regroupées en une seule séance (délai réglable). Il remplit une table Durée de travail (Date, Outils, Catégorie, Détails, Durée). Outils et Catégories en menus déroulants, avec « Autre » qui s’ajoute à la liste. La sauvegarde enregistre aussi la séance en cours.
 
-MINUTEUR DE PAUSES (Pomodoro) : 4 cycles de travail avec émoticônes variables (💪 ✍️) et encouragements, parfois une suggestion musicale (Pachelbel, musique classique, mes playlists Musicolet). Pauses avec émoticônes variables (⏳ 🏃‍♀️ 👀 : bouger, boire de l’eau, gym oculaire). Grande pause après le 4e cycle. Bouton « Passer la pause » 2 fois maximum, la 3e est obligatoire.
+MINUTEUR DE PAUSES (Pomodoro, icône 🍅) : 4 cycles de travail avec émoticônes variables (💪 ✍️, 🎵 🎶 pour la musique) et encouragements, parfois une suggestion musicale (Pachelbel, musique classique, mes playlists Musicolet). Pauses avec émoticônes variables (⏳ 🏃‍♀️ 👀 : bouger, boire de l’eau, gym oculaire). Grande pause après le 4e cycle. Bouton « Passer la pause » 2 fois maximum, la 3e est obligatoire.
+
+HISTORIQUE DES VERSIONS : à chaque nouvelle version, la liste des nouveautés avec la date de la version, dans Paramètres. Affichée une fois, à la première ouverture de la nouvelle version.
+
+MENUS DÉROULANTS : toujours un choix « Autre… » pour ajouter ce que je veux.
+
+PENSE-BÊTE : une bulle jaune pâle façon post-it qui apparaît de temps en temps, fréquence réglable, pour me rappeler mes essentiels et ma méthode.
 
 PARAMÈTRES : version du carnet et date du jour. Date, heure et nom du fichier de la dernière sauvegarde et de la dernière restauration. Sauvegarde et restauration en .json. Thème clair, sombre ou comme le téléphone. Onglets réordonnables.
 
@@ -823,7 +1007,7 @@ STYLE : minimaliste et épuré, tableaux et fiches mémo plutôt que texte dense
 MON PROFIL : pragmatique, méthodique, minimaliste. Des tâches courtes, des pauses, et des repères pour reprendre facilement après une phase basse.
 
 EN LIGNE ET APPLICATION MOBILE : prévoir dès le départ que le carnet sera mis en ligne sur GitHub Pages et installé comme une application. Donc : un fichier index.html (en plus du fichier avec la version d’abord, à garder sur le Drive), les lignes du manifest.json et du Service Worker (sw.js) dans le fichier, et des icônes à partir du logo. Rien de personnel ni de médical écrit dans le fichier, car il est public : mes données restent dans le téléphone et dans le .json.`;
-const UPDATE_PROMPT="Voici mon Carnet Pilote (fichier HTML joint). Prépare la version suivante en gardant tout ce qui existe, et donne-moi les 2 fichiers : la version (ex. V14Carnet_Pilote.html) et index.html pour GitHub. Mes remarques : …";
+const UPDATE_PROMPT="Voici mon Carnet Pilote (fichier HTML joint). Prépare la version suivante en gardant tout ce qui existe, ajoute ses nouveautés datées dans l’Historique des versions, et donne-moi les 2 fichiers : la version (ex. V15Carnet_Pilote.html) et index.html pour GitHub. Mes remarques : …";
 function vAide(){
   const s=state.settings,P=state.aidePins;
   const S=[
@@ -845,7 +1029,8 @@ function vAide(){
   ["onglets","🗂️ À quoi sert chaque onglet",`<p><b>Accueil :</b> ta phase du jour, « Reprendre ici », tes projets actifs, tes prochaines dates, la boîte à idées.</p>
     <p><b>Projets :</b> deux espaces, 💼 professionnel et 🏠 personnel, jusqu’à 3 actifs chacun. ☆ pour choisir tes 3 priorités du moment, sur l’Accueil. Un projet terminé a un « Bilan ». Jusqu’à 3 liens Drive par projet : sans nom, le lien prend le nom du projet.</p>
     <p><b>Loisirs :</b> ton espace ressource, jusqu’à 3 actifs. Il peut aussi avoir une priorité ⭐.</p>
-    <p><b>Tâches & RDV :</b> par domaine, avec code couleur. Dans « Projet ou loisir lié », « ➕ Autre… » crée un nouveau projet directement.</p>
+    <p><b>✚ Santé :</b> le suivi de tes douleurs et tes essentiels (ce qui t’aide, où c’est rangé).</p>
+    <p><b>Tâches & RDV :</b> par domaine, avec code couleur. La date d’ajout est notée toute seule. Dans « Projet ou loisir lié », « ➕ Autre… » crée un nouveau projet directement.</p>
     <p><b>Fichiers Drive :</b> tes dossiers 📁 et fichiers 📄, avec mots-clés.</p>
     <p><b>Journal de bord :</b> tes notes, le tableau de durée de travail et les totaux par catégorie (ex. temps de création d’un carnet).</p>
     <p><b>Compétences :</b> ce que tu fais, traduit pour ton CV.</p>
@@ -855,8 +1040,8 @@ function vAide(){
   ["phase","🌗 Selon ma phase",`<p><b>Phase haute :</b> je note mes idées. Je ne lance rien de nouveau. Je trie le lendemain.</p>
     <p><b>Phase basse :</b> je relis ce que j’ai déjà fait. Une seule micro-action de 10 minutes. Aucune grande décision.</p>
     <p><b>Neutre :</b> une tâche à la fois, avec le minuteur de pauses.</p>`],
-  ["boutons","🔘 Les 3 boutons flottants",`<p><span class="pic">⏱</span> Chronomètre : démarre tout seul en « Visite ». Touche-le pour choisir l’outil et la catégorie. La sauvegarde enregistre aussi la séance en cours.</p>
-    <p><span class="pic">☕</span> Minuteur : ${s.cycles} cycles de ${s.pomo} min (💪 ✍️), petite pause de ${s.pause} min (⏳ 🏃‍♀️ 👀), puis grande pause de ${s.longPause} min. « Passer la pause » : <b>2 fois de suite maximum</b>.</p>
+  ["boutons","🔘 Les 3 boutons flottants",`<p><span class="pic">⏱</span> Chronomètre : démarre tout seul en « Visite ». Touche-le pour choisir l’outil et la nature du travail (plusieurs possibles). Si tu rouvres le carnet peu après l’avoir fermé, la séance continue. La sauvegarde enregistre aussi la séance en cours.</p>
+    <p><span class="pic">🍅</span> Minuteur Pomodoro : ${s.cycles} cycles de ${s.pomo} min (💪 ✍️, 🎵 🎶 quand il te propose de la musique), petite pause de ${s.pause} min (⏳ 🏃‍♀️ 👀), puis grande pause de ${s.longPause} min. « Passer la pause » : <b>2 fois de suite maximum</b>.</p>
     <p><span class="pic">📌</span> Punaise : <b>rouge</b> avec un chiffre pour une note urgente ; petite feuille 🌿 pour un <b>rappel doux</b> (sauvegarde, point compétences) ; pâle quand tout va bien.</p>
     <p class="meta">Tu peux les déplacer au doigt.</p>`],
   ["agenda","🔔 Rappels et agenda",`<p>Le carnet ne peut pas t’envoyer de notification. Pour un rappel : touche 🔔 sur une tâche datée, puis ouvre le fichier téléchargé avec ton agenda. Ou demande à Claude de l’ajouter directement à ton agenda.</p>`],
@@ -871,8 +1056,8 @@ function vAide(){
   ["maj","🔄 Mettre à jour le carnet (en ligne)",`<ol class="steps">
     <li><span><span class="pic">⚙️</span> Par sécurité : Paramètres, <b>Sauvegarder</b>.</span></li>
     <li><span><span class="pic">💬</span> Envoie ta version actuelle à Claude (projet Carnet Pilote) avec le message ci-dessous.</span></li>
-    <li><span><span class="pic">📄</span> Claude te donne <b>2 fichiers</b> : <b>V14Carnet_Pilote.html</b> (version d’abord, à ranger sur le Drive) et <b>index.html</b> (pour GitHub). Télécharge les deux.</span></li>
-    <li><span><span class="pic">🌐</span> Chrome : <b>github.com/carnet-personnalise/pilote</b>. Touche <b>Add file</b>, puis <b>Upload files</b>.</span></li>
+    <li><span><span class="pic">📄</span> Claude te donne <b>2 fichiers</b> : la nouvelle version, ex. <b>V15Carnet_Pilote.html</b> (version d’abord, à ranger sur le Drive) et <b>index.html</b> (pour GitHub). Télécharge les deux.</span></li>
+    <li><span><span class="pic">🌐</span> Chrome : <b>github.com/carnet-personnalise/pilote-yas</b>. Touche <b>Add file</b>, puis <b>Upload files</b>.</span></li>
     <li><span><span class="pic">⬆️</span> Choisis <b>index.html</b> dans Téléchargements, puis <b>Commit changes</b>. Il remplace l’ancien tout seul.</span></li>
     <li><span><span class="pic">⏳</span> Attends <b>2 à 5 minutes</b>.</span></li>
     <li><span><span class="pic">📱</span> Ferme l’application Carnet Pilote et rouvre-la. Vérifie le numéro dans ⚙️ Paramètres, Version.</span></li>
@@ -881,10 +1066,20 @@ function vAide(){
     <p class="meta">Toujours l’ancienne version ? Attends encore un peu, puis ferme et rouvre l’application. Ne touche jamais aux autres fichiers du dépôt (manifest.json, sw.js, icônes).</p>
     <label for="promptCopy">Message à copier pour Claude</label><textarea id="promptCopy" rows="3" readonly>${esc(UPDATE_PROMPT)}</textarea>
     <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="copyPrompt">Copier le message</button></div>`],
+  ["idee","💡 J’ai une idée d’amélioration",`<ol class="steps">
+    <li><span><span class="pic">💬</span> Je vais dans le <b>bon projet Claude</b> (ex. « Carnet Pilote » pour ce carnet), et je dis mon idée directement à Claude.</span></li>
+    <li><span><span class="pic">⏹️</span> Claude est en train de préparer une version ? J’appuie sur <b>stop</b>, je donne l’idée, il reprend. Une fois le fichier envoyé, l’idée va dans la version suivante.</span></li>
+    <li><span><span class="pic">✅</span> Ce qui marche bien devient une <b>consigne</b> : je demande à Claude de l’écrire, puis je la colle dans les <b>instructions du projet</b>. Plus besoin de la répéter.</span></li>
+    <li><span><span class="pic">🆕</span> Pour un <b>nouveau projet</b> (autre carnet, prestation…), je repars des instructions d’un projet qui fonctionne, et de « Mes règles pour tout nouveau carnet » : ce qui est fait n’est plus à refaire.</span></li></ol>
+    <p class="meta">Le Pense-bête 🟨 te rappelle ces étapes de temps en temps.</p>`],
+  ["sante","✚ Santé : suivi et essentiels",`<p><b>📋 Suivi :</b> « Noter une douleur » : où, intensité de 0 à 10, type, déclencheur, ce qui soulage. Date et heure se remplissent toutes seules. Après 3 notes, un résumé sur 30 jours apparaît.</p>
+    <p><b>🧰 Mes essentiels :</b> ce que j’utilise, à quoi ça sert, <b>où c’est rangé</b>. Chaque essentiel s’ajoute aussi à la liste « Ce qui soulage ».</p>
+    <p><b>🟨 Pense-bête :</b> de temps en temps à l’ouverture, il te rappelle un essentiel ou une astuce. Fréquence dans ⚙️ Paramètres.</p>
+    <p class="meta">Ces notes restent dans ton téléphone (et dans ton .json). Elles ne sont jamais en ligne.</p>`],
   ["regles","📋 Mes règles pour tout nouveau carnet HTML",`<p>Avant de créer un nouveau carnet (ou de faire évoluer celui de Kay Numérique), copie ce texte et colle-le à Claude <b>avant</b> de décrire ton besoin.</p>
     <label for="basePrompt">Règles communes à copier</label><textarea id="basePrompt" rows="8" readonly>${esc(BASE_PROMPT)}</textarea>
     <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="copyBase">Copier les règles</button></div>`],
-  ["appli","📲 Mon carnet en application",`<p>Le carnet est en ligne à l’adresse <b>carnet-personnalise.github.io/pilote</b>. Il s’installe comme une vraie application, avec son icône « Yas ».</p>
+  ["appli","📲 Mon carnet en application",`<p>Le carnet est en ligne à l’adresse <b>carnet-personnalise.github.io/pilote-yas</b>. Il s’installe comme une vraie application, avec son icône « Yas ».</p>
     <ol class="steps">
     <li><span><span class="pic">🌐</span> Ouvre l’adresse dans <b>Chrome</b>.</span></li>
     <li><span><span class="pic">⋮</span> Menu ⋮, puis <b>Installer l’application</b> (ou « Ajouter à l’écran d’accueil »), puis <b>Installer</b>.</span></li>
@@ -937,7 +1132,19 @@ function vParams(){
   <section class="block"><h3>Mon carnet</h3>
   <label for="sName" style="margin-top:0">Prénom affiché</label><input id="sName" data-set="name" value="${esc(state.name)}">
   <label for="sTheme">Affichage</label><select id="sTheme" data-set="theme"><option value="auto" ${s.theme==="auto"?"selected":""}>Comme le téléphone</option><option value="light" ${s.theme==="light"?"selected":""}>Clair</option><option value="dark" ${s.theme==="dark"?"selected":""}>Sombre</option></select></section>
-  <section class="block"><h3>Minuteur de pauses</h3>
+  <section class="block"><h3>📜 Historique des versions</h3>
+  <p class="meta">Ce qui a changé à chaque version. La liste des nouveautés s’affiche une fois, à la première ouverture d’une nouvelle version.</p>
+  ${histHtml(HISTORY.slice(0,1))}
+  <details><summary>Versions précédentes (V1 à ${HISTORY[1].v})</summary>${histHtml(HISTORY.slice(1))}<p class="meta">Les versions 1 à 6 sont résumées à partir de tes notes de conception.</p></details>
+  <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="showNews">Revoir les nouveautés de la ${VERSION}</button></div></section>
+  <section class="block"><h3>🟨 Pense-bête</h3>
+  <p class="meta">À l’ouverture du carnet, de temps en temps, un de tes essentiels ou une astuce de ta méthode.</p>
+  <div class="seg" role="group" aria-label="Fréquence du pense-bête">${Object.entries(NOTE_FREQ).map(([k,[l]])=>`<button class="${s.noteFreq===k?"on":""}" data-act="setNoteFreq" data-id="${k}" aria-pressed="${s.noteFreq===k}">${l}</button>`).join("")}</div>
+  <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="noteTest">Voir un pense-bête maintenant</button></div></section>
+  <section class="block"><h3>⏱ Chronomètre</h3>
+  <label for="sMerge" style="margin-top:0">Regrouper en une seule séance si je rouvre le carnet dans les (minutes)</label><input id="sMerge" type="number" min="0" max="120" data-set="mergeGap" value="${s.mergeGap}">
+  <p class="meta">Ex. : ouvert à 9 h 15, refermé à 9 h 20, rouvert à 9 h 25 : une seule séance. Le temps où le carnet était fermé n’est pas compté. 0 = ne jamais regrouper.</p></section>
+  <section class="block"><h3>Minuteur Pomodoro 🍅</h3>
   <div class="inline"><div><label for="sPomo">Travail (min)</label><input id="sPomo" type="number" min="5" max="90" data-set="pomo" value="${s.pomo}"></div>
   <div><label for="sPause">Petite pause (min)</label><input id="sPause" type="number" min="1" max="30" data-set="pause" value="${s.pause}"></div></div>
   <div class="inline"><div><label for="sLong">Grande pause (min)</label><input id="sLong" type="number" min="5" max="60" data-set="longPause" value="${s.longPause}"></div>
@@ -958,7 +1165,8 @@ function vParams(){
   <section class="block"><h3>Mes listes</h3>
   <p class="meta">Pour en ajouter : écris dans la case puis « Ajouter ». Pour en retirer : ✕.</p>
   <label>Catégories</label>${listChips("cats")}
-  <label>Outils</label>${listChips("tools")}</section>
+  <label>Outils</label>${listChips("tools")}
+  <p class="meta" style="margin-top:14px">Les listes de l’onglet Santé (où, type, déclencheur, ce qui soulage, catégories d’essentiels) se complètent avec « ➕ Autre… » dans les formulaires.</p></section>
   <section class="block"><h3>Ordre des onglets</h3>
   ${s.tabOrder.map((k,i)=>`<div class="row"><div class="grow">${TABS[k].label}</div><button class="icon" data-act="tabUp" data-id="${i}" aria-label="Monter" ${i===0?"disabled":""}>↑</button><button class="icon" data-act="tabDown" data-id="${i}" aria-label="Descendre" ${i===s.tabOrder.length-1?"disabled":""}>↓</button></div>`).join("")}
   <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="resetFabs">Replacer les boutons flottants</button></div></section>
@@ -993,24 +1201,27 @@ function pinModal(){
 
 /* ---------- chronomètre ---------- */
 function recordWork(c,start,end){
-  const min=Math.round((end-start)/60000);if(min<1)return 0;
+  const min=Math.round((end-start-(c.gap||0))/60000);if(min<1)return 0;
   const s=new Date(start),e=new Date(end);
-  addToList("tools",c.tool);addToList("cats",c.cat);
+  addToList("tools",c.tool);splitCats(c.cat).forEach(x=>addToList("cats",x));
   state.work.push({id:uid(),date:isoOf(s),tool:c.tool||"",cat:c.cat||"",details:c.details||"",start:hm(s),end:hm(e),min});
   sortWork(state);return min;
 }
-function startVisit(){const n=Date.now();state.chrono={running:true,start:n,lastSeen:n,tool:"Carnet Pilote",cat:"Visite",details:""};save();}
+const chronoMs=()=>Date.now()-state.chrono.start-(state.chrono.gap||0);
+function startVisit(){const n=Date.now();state.chrono={running:true,start:n,lastSeen:n,gap:0,tool:"Carnet Pilote",cat:"Visite",details:""};save();}
+let merged=false;
 function bootChrono(){
-  const c=state.chrono;
+  const c=state.chrono,now=Date.now(),g=(state.settings.mergeGap||0)*60000;
+  if(c.running&&c.start&&c.lastSeen&&g>0&&now-c.lastSeen>=0&&now-c.lastSeen<=g){c.gap=(c.gap||0)+(now-c.lastSeen);c.lastSeen=now;merged=true;save();return;}
   if(c.running&&c.start){const end=c.lastSeen&&c.lastSeen>c.start?c.lastSeen:c.start;recordWork(c,c.start,end);}
   startVisit();
 }
 function chronoModal(){
   const c=state.chrono;
-  const fields=`${selField("chTool","Outils","tools",c.tool)}${selField("chCat","Catégorie","cats",c.cat)}
+  const fields=`${selField("chTool","Outils","tools",c.tool)}${catChecks("chCat",c.cat)}
     <label for="chDet">Détails</label><textarea id="chDet" rows="2">${esc(c.details)}</textarea>`;
   if(c.running){
-    openModal(`<h2>⏱ Chronomètre</h2><div class="big" id="chronoDisp">${hms(Date.now()-c.start)}</div>${fields}
+    openModal(`<h2>⏱ Chronomètre</h2><div class="big" id="chronoDisp">${hms(chronoMs())}</div>${fields}
     <p class="meta">Les changements s’enregistrent tout seuls.</p>
     <div class="actions"><button class="btn ghost" data-act="chronoStop">Arrêter et enregistrer</button><button class="btn ghost" data-act="chronoNext">Nouvelle séance</button><button class="btn" data-act="closeModal">Continuer</button></div>`,"chrono");
   }else{
@@ -1021,7 +1232,7 @@ function chronoModal(){
 function syncChronoField(id){
   const key={chTool:"tool",chCat:"cat",chToolO:"tool",chCatO:"cat",chDet:"details"}[id];if(!key)return;
   const base=id.replace(/O$/,"");
-  state.chrono[key]=key==="details"?val("chDet"):selVal(base,false);save();
+  state.chrono[key]=key==="details"?val("chDet"):key==="cat"?catVal("chCat",false):selVal(base,false);save();
 }
 
 /* ---------- minuteur de pauses ---------- */
@@ -1043,16 +1254,16 @@ function pomoModal(){
     <div class="actions"><button class="btn ghost" data-act="pomoStop">Arrêter</button><button class="btn" data-act="pomoResume">Reprendre le travail</button></div>`,"pomo");
   }else{
     const cont=p.next>1;
-    openModal(`<h2>☕ Minuteur de pauses</h2><p>${n} cycles de ${s.pomo} min, avec une petite pause de ${s.pause} min entre chaque, puis une grande pause de ${s.longPause} min.</p>
+    openModal(`<h2>🍅 Minuteur Pomodoro</h2><p>${n} cycles de ${s.pomo} min, avec une petite pause de ${s.pause} min entre chaque, puis une grande pause de ${s.longPause} min.</p>
     <p class="meta">Garde le carnet ouvert pour entendre l’alerte. Durées réglables dans Paramètres.</p>
     <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button>${cont?`<button class="btn ghost" data-act="pomoFresh">Recommencer au cycle 1</button><button class="btn" data-act="pomoResume">Continuer au cycle ${p.next}</button>`:`<button class="btn" data-act="pomoFresh">Démarrer</button>`}</div>`,"pomo");
   }
 }
 function startWork(cycle){
   ensureAudio();const n=nCycles();cycle=cycle>n||cycle<1?1:cycle;
-  const m=pick(WORK_MSG);const music=Math.random()<0.35?pick(MUSIC):"";
-  Object.assign(state.pomo,{phase:"work",end:Date.now()+state.settings.pomo*60000,emoji:m.e,cycle,long:false});save();updateFabs();
-  openModal(`<span class="em" aria-hidden="true">${m.e}</span><h2 class="center">Cycle ${cycle} sur ${n} : ${state.settings.pomo} min de concentration</h2>${dots(cycle)}
+  const m=pick(WORK_MSG);const music=Math.random()<0.35?pick(MUSIC):"";const em=music?pick(["🎵","🎶"]):m.e;
+  Object.assign(state.pomo,{phase:"work",end:Date.now()+state.settings.pomo*60000,emoji:em,cycle,long:false});save();updateFabs();
+  openModal(`<span class="em" aria-hidden="true">${em}</span><h2 class="center">Cycle ${cycle} sur ${n} : ${state.settings.pomo} min de concentration</h2>${dots(cycle)}
   <p class="center">${m.t}</p>${music?`<p class="center meta">🎵 ${music}</p>`:""}
   <div class="actions" style="justify-content:center"><button class="btn" data-act="closeModal">C’est parti</button></div>`,"start");
   setTimeout(()=>{if(modalKind==="start")closeModal();},9000);
@@ -1101,9 +1312,9 @@ function setBadge(el,txt){const b=el.querySelector(".b");if(txt){b.textContent=t
 function updateFabs(){
   const pin=$("#fabPin"),n=state.urgent.length;
   const soft=n?0:dueReminders().length;pin.classList.toggle("alert",n>0);pin.classList.toggle("soft",!n&&soft>0);pin.classList.toggle("calm",!n&&!soft);setBadge(pin,n?String(n):soft?"🌿":"");
-  const c=state.chrono;setBadge($("#fabChrono"),c.running?hms(Date.now()-c.start):"");
+  const c=state.chrono;setBadge($("#fabChrono"),c.running?hms(chronoMs()):"");
   const p=state.pomo,pf=$("#fabPomo");
-  pf.querySelector(".ic").textContent=p.phase!=="off"&&p.emoji?p.emoji:"☕";
+  pf.querySelector(".ic").textContent=p.phase!=="off"&&p.emoji?p.emoji:"🍅";
   setBadge(pf,p.phase!=="off"?Math.max(0,Math.ceil((p.end-Date.now())/60000))+" min":"");
 }
 function tick(){
@@ -1111,7 +1322,7 @@ function tick(){
   if(state.chrono.running){state.chrono.lastSeen=now;if(++tickCount%10===0)save();}
   if(p.phase==="work"&&now>=p.end)startPause(true);
   else if(p.phase==="pause"&&now>=p.end)endPause();
-  const cd=$("#chronoDisp");if(cd&&state.chrono.running)cd.textContent=hms(now-state.chrono.start);
+  const cd=$("#chronoDisp");if(cd&&state.chrono.running)cd.textContent=hms(chronoMs());
   const pd=$("#pomoDisp");if(pd&&state.pomo.phase!=="off")pd.textContent=hms(state.pomo.end-now);
   updateFabs();
 }
@@ -1130,6 +1341,8 @@ function doSearch(q){
   state.work.forEach(w=>{if(has(w.tool,w.cat,w.details))hits.push({tab:"journal",id:"w-"+w.id,title:w.cat||w.tool,sub:"Durée de travail, "+fmt(w.date)});});
   state.ideas.forEach(i=>{if(has(i.text))hits.push({tab:"accueil",id:"i-"+i.id,title:i.text,sub:i.later?"Idée, plus tard":"Boîte à idées",later:i.later});});
   state.urgent.forEach(u=>{if(has(u.text))hits.push({pin:true,title:u.text,sub:"Note urgente"});});
+  state.sante.ess.forEach(x=>{if(has(x.name,x.use,x.where,x.cat))hits.push({tab:"sante",view:"ess",id:"e-"+x.id,title:x.name,sub:"Mes essentiels"+(x.where?", rangé : "+x.where:"")});});
+  state.sante.suivi.forEach(x=>{if(has(x.loc,x.type,x.trig,x.relief,x.note))hits.push({tab:"sante",view:"suivi",id:"s-h-"+x.id,title:x.loc+" ("+(+x.int||0)+"/10)",sub:"Suivi santé, "+fmt(x.date)});});
   state.skills.forEach(k=>{if(has(k.name,k.proof))hits.push({tab:"competences",id:"s-"+k.id,title:k.name,sub:"Compétence, "+fmt(k.date)});});
   lastHits=hits.slice(0,30);
   box.innerHTML=lastHits.length?lastHits.map((h,i)=>`<button class="res" data-act="goto" data-id="${i}">${esc(h.title)}<small>${esc(h.sub)}</small></button>`).join("")
@@ -1220,13 +1433,36 @@ const ACT={
   delFile:id=>{const f=state.files.find(x=>x.id===id);if(!f||!confirm("Supprimer « "+f.name+" » ?"))return;state.files=state.files.filter(x=>x.id!==id);save();render();},
   addJournal:()=>{const v=val("jIn");if(!v){toast("Écris au moins une phrase");return;}state.journal.unshift({id:uid(),date:today(),text:v});save();render();toast("Ajouté au journal");},
   delJournal:id=>{if(!confirm("Supprimer cette note du journal ?"))return;state.journal=state.journal.filter(j=>j.id!==id);save();render();},
+  santeView:id=>{santeView=id;render();},
+  newSuivi:()=>openModal(suiviForm(),"form"),
+  editSuivi:id=>openModal(suiviForm(state.sante.suivi.find(x=>x.id===id)),"form"),
+  saveSuivi:id=>{
+    const loc=selVal("sLoc",true);if(!loc){toast("Indique où tu as mal");return;}
+    const data={date:val("sDate")||today(),time:val("sTime"),loc,int:parseInt(val("sInt"),10)||0,type:selVal("sType",true),trig:selVal("sTrig",true),relief:selVal("sRelief",true),note:val("sNote")};
+    let sid=id;if(id)Object.assign(state.sante.suivi.find(x=>x.id===id),data);else{sid=uid();state.sante.suivi.push(Object.assign({id:sid},data));}
+    save();closeModal();cur="sante";santeView="suivi";render();flash("s-h-"+sid);toast("Noté. Prends soin de toi 🌿");},
+  delSuivi:id=>{if(!confirm("Supprimer cette note ?"))return;state.sante.suivi=state.sante.suivi.filter(x=>x.id!==id);save();render();},
+  newEss:()=>openModal(essForm(),"form"),
+  editEss:id=>openModal(essForm(state.sante.ess.find(x=>x.id===id)),"form"),
+  saveEss:id=>{
+    const name=val("eName");if(!name){toast("Écris ce que tu utilises");return;}
+    const data={cat:selVal("eCat",true),name,use:val("eUse"),where:val("eWhere")};
+    let eid=id;if(id)Object.assign(state.sante.ess.find(x=>x.id===id),data);else{eid=uid();state.sante.ess.push(Object.assign({id:eid,date:today()},data));}
+    addToList("relief",name);save();closeModal();cur="sante";santeView="ess";render();flash("e-"+eid);toast("Essentiel enregistré");},
+  delEss:id=>{const x=state.sante.ess.find(e=>e.id===id);if(!x||!confirm("Supprimer « "+x.name+" » ?"))return;state.sante.ess=state.sante.ess.filter(e=>e.id!==id);save();render();},
+  noteClose:()=>hideNote(),
+  noteEss:()=>{hideNote();cur="sante";santeView="ess";render();window.scrollTo(0,0);},
+  noteAdd:()=>{hideNote();cur="sante";santeView="ess";render();openModal(essForm(),"form");},
+  noteTest:()=>showNote(true),
+  setNoteFreq:id=>{state.settings.noteFreq=id;save();render();toast("Pense-bête : "+NOTE_FREQ[id][0].toLowerCase());},
+  showNews:()=>newsModal(),
   newWork:()=>openModal(workForm(),"form"),
   editWork:id=>openModal(workForm(state.work.find(w=>w.id===id)),"form"),
   saveWork:id=>{
     const date=val("wDate")||today(),start=val("wStart"),end=val("wEnd");
     const min=start&&end?minutesBetween(start,end):parseInt(val("wMin"),10)||0;
     if(!min){toast("Indique les heures de début et de fin, ou une durée");return;}
-    const data={date,tool:selVal("wTool",true),cat:selVal("wCat",true),details:val("wDet"),start:start&&end?start:"",end:start&&end?end:"",min};
+    const data={date,tool:selVal("wTool",true),cat:catVal("wCat",true),details:val("wDet"),start:start&&end?start:"",end:start&&end?end:"",min};
     let wid=id;
     if(id)Object.assign(state.work.find(w=>w.id===id),data);else{wid=uid();state.work.push(Object.assign({id:wid},data));}
     sortWork(state);save();closeModal();cur="journal";render();flash("w-"+wid);toast("Séance enregistrée");
@@ -1237,14 +1473,14 @@ const ACT={
   tabDown:i=>{i=+i;const o=state.settings.tabOrder;if(i<o.length-1){[o[i+1],o[i]]=[o[i],o[i+1]];save();render();}},
   resetFabs:()=>{state.fabPos={};save();restoreFabs();toast("Boutons replacés");},
   exportJson:()=>{const c=state.chrono;let added=0;
-    if(c.running&&c.start){const n=Date.now();added=recordWork(c,c.start,n);if(added)state.chrono=Object.assign({},c,{start:n,lastSeen:n});}
+    if(c.running&&c.start){const n=Date.now();added=recordWork(c,c.start,n);if(added)state.chrono=Object.assign({},c,{start:n,lastSeen:n,gap:0});}
     const d=new Date();const file=VERSION+"Carnet_Pilote_sauvegarde_"+isoOf(d)+"_"+pad(d.getHours())+"h"+pad(d.getMinutes())+".json";
     state.lastExport={date:isoOf(d),time:hm(d),file};save();downloadFile(file,JSON.stringify(state,null,2),"application/json");render();
     toast(added?"Sauvegarde téléchargée, avec "+fmtDur(added)+" de chrono enregistrées":"Sauvegarde téléchargée",3500);},
   resetAll:()=>{if(!confirm("Tout effacer ? As-tu bien sauvegardé avant ?"))return;state=fixState(null);startVisit();save();applyTheme();restoreFabs();cur="accueil";render();toast("Carnet remis à zéro");},
   addUrgent:()=>{const v=val("uIn");if(!v)return;state.urgent.unshift({id:uid(),text:v,date:today()});save();pinModal();updateFabs();},
   delUrgent:id=>{state.urgent=state.urgent.filter(u=>u.id!==id);save();pinModal();updateFabs();toast("Réglé ✓");},
-  chronoStart:()=>{const n=Date.now();state.chrono={running:true,start:n,lastSeen:n,tool:selVal("chTool",true),cat:selVal("chCat",true),details:val("chDet")};save();chronoModal();updateFabs();},
+  chronoStart:()=>{const n=Date.now();state.chrono={running:true,start:n,lastSeen:n,gap:0,tool:selVal("chTool",true),cat:catVal("chCat",true),details:val("chDet")};save();chronoModal();updateFabs();},
   chronoStop:()=>{const c=state.chrono;const min=recordWork(c,c.start,Date.now());state.chrono={running:false,start:0,lastSeen:0,tool:"",cat:"",details:""};
     toast(min?fmtDur(min)+" ajoutées à la durée de travail":"Moins d’une minute : non enregistré");save();closeModal();render();},
   chronoNext:()=>{const c=state.chrono;const min=recordWork(c,c.start,Date.now());const n=Date.now();
@@ -1257,7 +1493,7 @@ const ACT={
   pomoStop:()=>{state.pomo={phase:"off",end:0,emoji:"",cycle:0,skips:0,next:1,long:false};save();closeModal();updateFabs();toast("Minuteur arrêté");},
   goto:i=>{const h=lastHits[+i];if(!h)return;clearSearch();
     if(h.pin){pinModal();return;}
-    cur=h.tab;if(h.filter)taskFilter=h.filter;render();
+    cur=h.tab;if(h.filter)taskFilter=h.filter;if(h.view)santeView=h.view;render();
     if(h.later){const d=$("#ideasBlock details");if(d)d.open=true;}
     if(h.id)setTimeout(()=>flash(h.id),60);else window.scrollTo(0,0);},
   toggleStar:id=>{const p=state.projects.find(x=>x.id===id);if(!p||p.status==="termine")return;
@@ -1330,6 +1566,7 @@ document.addEventListener("input",e=>{
   if(t.id==="q")doSearch(t.value);
   if(t.id==="reprendre"){state.reprendre=t.value;save();const s=$("#repSaved");if(s)s.textContent="Enregistré ✓";}
   if(state.chrono.running&&["chDet","chToolO","chCatO"].includes(t.id))syncChronoField(t.id);
+  if(t.id==="sInt"){const o=$("#sIntOut");if(o)o.textContent=t.value+" / 10";}
 });
 document.addEventListener("change",e=>{
   const t=e.target,k=t.dataset.set;
@@ -1338,6 +1575,11 @@ document.addEventListener("change",e=>{
     if(o){o.hidden=t.value!=="__autre";if(!o.hidden)o.focus();}
     if(state.chrono.running&&(t.id==="chTool"||t.id==="chCat"))syncChronoField(t.id);
   }
+  if(t.type==="checkbox"&&t.closest(".chips")&&t.closest(".chips").id){
+    const box=t.closest(".chips");
+    if(t.value==="__autre"){const o=document.getElementById(box.id+"O");if(o){o.hidden=!t.checked;if(t.checked)o.focus();}}
+    if(state.chrono.running&&box.id==="chCat")syncChronoField("chCat");
+  }
   if(t.id==="tProj"){const w=$("#tProjNewWrap");if(w){w.hidden=t.value!=="__new";if(!w.hidden)$("#tProjNew").focus();}}
   if(t.id==="fStatus"){const end=t.value==="termine";$("#fWhyWrap").hidden=end;$("#fBilanWrap").hidden=!end;}
   if(k==="name"){state.name=t.value.trim()||"Yas";save();renderHeader();}
@@ -1345,9 +1587,9 @@ document.addEventListener("change",e=>{
   else if(k==="lockIdle"||k==="lockAway"){state.settings[k]=parseInt(t.value,10);save();lastAct=Date.now();toast("Réglage enregistré");}
   else if(k==="lockOn"){state.settings.lockOn=t.value==="1";save();renderHeader();toast(state.settings.lockOn?"Mot de passe activé":"Mot de passe désactivé");}
   else if(k==="lockHint"){state.settings.lockHint=t.value.trim();save();toast("Indice enregistré");}
-  else if(["pomo","pause","longPause","cycles","remSave","remSkills"].includes(k)){
-    const lim={pomo:[5,90],pause:[1,30],longPause:[5,60],cycles:[2,8],remSave:[1,60],remSkills:[1,60]}[k];
-    const v=Math.max(lim[0],Math.min(lim[1],parseInt(t.value,10)||lim[0]));state.settings[k]=v;t.value=v;save();toast("Réglage enregistré");}
+  else if(["pomo","pause","longPause","cycles","remSave","remSkills","mergeGap"].includes(k)){
+    const lim={pomo:[5,90],pause:[1,30],longPause:[5,60],cycles:[2,8],remSave:[1,60],remSkills:[1,60],mergeGap:[0,120]}[k];
+    const pv=parseInt(t.value,10);const v=Math.max(lim[0],Math.min(lim[1],isNaN(pv)?lim[0]:pv));state.settings[k]=v;t.value=v;save();toast("Réglage enregistré");}
   if(t.id==="importFile"&&t.files&&t.files[0]){
     const file=t.files[0],r=new FileReader();
     r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||!Array.isArray(o.projects)||!Array.isArray(o.tasks))throw new Error("format");
@@ -1360,7 +1602,7 @@ document.addEventListener("change",e=>{
   }
 });
 document.addEventListener("keydown",e=>{
-  if(e.key==="Escape"){if($("#modal").classList.contains("open"))closeModal();else{$("#results").hidden=true;}}
+  if(e.key==="Escape"){if($("#modal").classList.contains("open"))closeModal();else if($("#note").classList.contains("show"))hideNote();else{$("#results").hidden=true;}}
   if(e.key==="Enter"&&!e.shiftKey){
     if(e.target.id==="ideaIn"){e.preventDefault();ACT.addIdea();}
     else if(e.target.id==="uIn"){e.preventDefault();ACT.addUrgent();}
@@ -1389,14 +1631,14 @@ document.addEventListener("visibilitychange",()=>{const now=Date.now();
   hiddenAt=0;lastAct=now;});
 function setupLock(){
   const s=state.settings,root=document.documentElement;
-  if(!s.lockOn||!s.lockPass){root.classList.remove("locked");return;}
+  if(!s.lockOn||!s.lockPass){root.classList.remove("locked");onOpen();return;}
   $("#lockLogo").src=LOGO;
   const inp=$("#lockIn"),msg=$("#lockMsg"),hb=$("#lockHintBtn"),hp=$("#lockHint");
   msg.textContent="";hp.hidden=true;inp.value="";
   hb.hidden=!s.lockHint;
   hb.onclick=()=>{hp.textContent="💡 "+s.lockHint;hp.hidden=false;};
   $("#lockForm").onsubmit=e=>{e.preventDefault();
-    if(inp.value===s.lockPass){root.classList.remove("locked");inp.value="";msg.textContent="";lastAct=Date.now();}
+    if(inp.value===s.lockPass){root.classList.remove("locked");inp.value="";msg.textContent="";lastAct=Date.now();onOpen();}
     else{msg.textContent="Mot de passe incorrect";inp.value="";inp.focus();}};
   setTimeout(()=>inp.focus(),50);
 }
@@ -1409,6 +1651,7 @@ restoreFabs();
 render();
 setInterval(tick,1000);
 setupLock();
+if(merged)setTimeout(()=>toast("Bon retour ! Ta séance continue."),600);
 </script>
 <script>
 /* Application mobile : fonctionne seulement une fois le carnet en ligne (https) */
