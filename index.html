@@ -192,6 +192,26 @@ details.sec>.body p{margin:6px 0}
 html.locked #note{visibility:hidden}
 .histv{border-left:4px solid var(--accent);padding:2px 0 2px 12px;margin:12px 0}
 .histv ul{margin:6px 0 0;padding-left:20px}.histv li{margin:4px 0}
+/* ---------- V15 ---------- */
+.spk{padding:6px 12px;font-size:.88rem}
+.badge.todo{background:var(--sun-soft);color:var(--ink)}
+.badge.ali{background:#DDF3E3;color:#1D5B33}
+.rep.done .ttl{text-decoration:line-through;color:var(--muted)}
+#speakBar,#askBar{position:fixed;left:14px;right:92px;max-width:420px;z-index:95;background:var(--ink);color:var(--bg);border-radius:14px;padding:10px 12px;box-shadow:0 8px 20px rgba(0,0,0,.25);display:none;align-items:center;gap:8px;flex-wrap:wrap}
+#speakBar{bottom:calc(150px + env(safe-area-inset-bottom,0px))}
+#askBar{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+#speakBar.show,#askBar.show{display:flex}
+#speakBar span,#askBar span{flex:1 1 160px;font-size:.93rem}
+#speakBar button,#askBar button{border:1px solid var(--bg);background:transparent;color:var(--bg);border-radius:999px;padding:6px 12px;font:inherit;font-size:.88rem;cursor:pointer}
+#askBar button.main{background:var(--bg);color:var(--ink);font-weight:700}
+html.locked #speakBar,html.locked #askBar{visibility:hidden}
+.toc .chips{margin:0}
+details.jobc{border-top:1px solid var(--line);padding:6px 0}
+details.jobc>summary{list-style:none;display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px 0}
+details.jobc>summary::-webkit-details-marker{display:none}
+details.jobc>summary .chev{color:var(--muted);transition:transform .2s}
+details.jobc[open]>summary .chev{transform:rotate(90deg)}
+.bagh{display:flex;justify-content:space-between;align-items:center;gap:8px}
 /* ---------- écran du mot de passe ---------- */
 html.locked header,html.locked main,html.locked .fab{visibility:hidden}
 #lock{display:none}
@@ -232,6 +252,8 @@ html.locked #lock{display:flex;position:fixed;inset:0;z-index:200;background:var
 <div id="modal" aria-hidden="true"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
 <div id="toast" role="status" aria-live="polite"></div>
 <div id="note" role="dialog" aria-labelledby="noteTitle"></div>
+<div id="speakBar" role="status"><span>🔊 Lecture en cours…</span><button data-act="speakStop">⏹ Arrêter</button></div>
+<div id="askBar" role="alertdialog"></div>
 
 <div id="lock" role="dialog" aria-modal="true" aria-labelledby="lockTitle"><div class="card">
   <div class="logo"><img id="lockLogo" alt=""></div>
@@ -249,7 +271,7 @@ html.locked #lock{display:flex;position:fixed;inset:0;z-index:200;background:var
 
 <script>
 "use strict";
-const VERSION="V14",VERSION_DATE="16/11/2026",FILE_NAME="V14Carnet_Pilote.html";
+const VERSION="V15",VERSION_DATE="16/11/2026",FILE_NAME="V15Carnet_Pilote.html";
 const MOT_DE_PASSE_DE_DEPART="1234"; // 🔒 Mot de passe provisoire : change "1234" ici (garde les guillemets). Ensuite, change-le plutôt dans ⚙️ Paramètres.
 const LOGO="data:image/png;base64,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";
 const KEY="carnetPilotageYasmine";
@@ -268,6 +290,10 @@ const TABS={
   projets:{label:"Projets",kw:"priorité pourquoi actif attente pause classer livre mémoire objectif bilan terminé"},
   loisirs:{label:"Loisirs",kw:"loisir crochet sac lecture livre détente plaisir créatif ressource hobby objectif"},
   sante:{label:"Santé",kw:"santé douleur douleurs dos épaule nuque suivi symptôme intensité soulage soulager essentiels chaufferette lotion pommade objet astuce rangé placard bien-être médical"},
+  quotidien:{label:"🏠 Mon quotidien",kw:"quotidien astuces astuce alimentation aliments alicaments courses vêtements habits sac valise départ rangé où placard maison filigrane"},
+  q_ast:{label:"💡 Astuces",kw:"astuces astuce validée efficace méthode filigrane papiers"},
+  q_alim:{label:"🥗 Alimentation",kw:"alimentation aliments alicaments courses toujours à la maison préférés boissons"},
+  q_vet:{label:"👗 Vêtements & sacs",kw:"vêtements habits chaleur léger tout en un sac nomade valise départ rapide rangé"},
   taches:{label:"Tâches & RDV",kw:"rendez-vous rdv santé médecin administratif démarche papiers rappel agenda calendrier échéance urgent reconversion emploi candidature famille objectifs loisirs à faire"},
   fichiers:{label:"Fichiers Drive",kw:"lien drive dossier document pdf google classement où rangé fichier nom"},
   journal:{label:"Journal de bord",kw:"date tableau calendrier historique activité suivi durée travail chronomètre temps heures outils catégorie visite"},
@@ -297,6 +323,15 @@ const DEF_SANTE={
   relief:["Chaleur","Repos","Étirements","Massage","Respiration calme"],
   essCat:["Chaleur et froid","Matériel et accessoires","Soins et produits","Exercices et étirements","Relaxation"]
 };
+const DEF_Q={
+  astCat:["Administratif","Santé","Maison","Numérique","Organisation","Vêtements","Alimentation"],
+  alimCat:["Toujours à la maison","Mes préférés","Alicaments","Boissons","Collations"],
+  vetUse:["Léger, pour la chaleur","Tout en un","Sortie","Maison","Sport","Pluie"],
+  choixTopic:["Lunettes","Chaussures","Matériel","Soins"],
+  jobStatus:["En cours","Plus d’actualité","Abandonné","Incompatible"]
+};
+const QPARTS={ast:"💡 Astuces",alim:"🥗 Alimentation",vet:"👗 Vêtements & sacs"};
+const RATES={lente:["Lente",.8],normale:["Normale",1],rapide:["Rapide",1.2]};
 const NOTE_FREQ={jamais:["Jamais",0],rarement:["Rarement",.2],parfois:["Parfois",.4],souvent:["Souvent",.75]};
 const TIPS=[
   {e:"💡",t:"Une idée pour améliorer ton carnet ? Dis-la directement dans le projet Claude « Carnet Pilote »."},
@@ -305,9 +340,26 @@ const TIPS=[
   {e:"🔄",t:"Nouvelle version reçue ? Dépose index.html sur GitHub (dépôt pilote-yas), attends 2 à 5 minutes, puis ferme et rouvre l’application."},
   {e:"☁️",t:"Une fois par semaine : une sauvegarde .json rangée dans ton Drive. C’est ta ceinture de sécurité."},
   {e:"🧠",t:"Pensées en vrac ? Dicte-les à ton Assistant IA Claude : il trie pour toi."},
+  {e:"🔊",t:"Fatiguée de lire ? Touche 🔊 Écouter : le carnet te lit la partie à voix haute."},
+  {e:"➕",t:"Tu veux ajouter plusieurs choses d’un coup ? Dicte-les à Claude : il te prépare un petit fichier à ajouter (Paramètres, Ajouter des éléments)."},
+  {e:"☑️",t:"Dans « Reprendre ici », une chose par ligne : tu coches au fur et à mesure, et tout s’efface quand c’est fini."},
   {e:"🆕",t:"Nouveau carnet ou nouveau projet ? Repars des instructions d’un projet qui marche bien, et de « Mes règles pour tout nouveau carnet » (Aide-mémoire)."}
 ];
 const HISTORY=[
+  {v:"V15",d:"16/11/2026",n:[
+    "🔊 <b>Lecture à voix haute</b> : bouton « Écouter » sur les parties utiles (aide-mémoire, Reprendre ici, essentiels, astuces, tâches, Pense-bête…). Il lit seulement le contenu, sans les émoticônes. Vitesse réglable.",
+    "🔓 Le carnet s’ouvre <b>tout seul</b> dès que le bon mot de passe est tapé.",
+    "☑️ <b>Reprendre ici</b> en cases à cocher : une ligne barrée par chose faite, tout s’efface quand c’est fini, avec « Annuler ». Bouton « Effacer tout ».",
+    "✓ Quand tu ajoutes un élément qui est dans Reprendre ici, le carnet te propose de barrer la ligne.",
+    "⚠️ <b>Doublons</b> signalés quand tu ajoutes un essentiel, une tâche, un aliment, une astuce ou un vêtement déjà présent.",
+    "📑 <b>Sommaire</b> en haut des Paramètres, du Journal de bord et des Compétences.",
+    "🎯 Métier visé : chaque comparaison se <b>replie</b>, avec un <b>statut</b> (en cours, plus d’actualité, abandonné, incompatible, Autre…) et le « pourquoi ». Les pistes écartées sont rangées à part.",
+    "🏠 Nouvel onglet <b>Mon quotidien</b> : 💡 Astuces (avec mots cachés pour les retrouver), 🥗 Alimentation (les alicaments apparaissent aussi dans Santé), 👗 Vêtements & sacs (où c’est rangé, sacs prêts à cocher). Chaque partie peut devenir un onglet à part (Paramètres).",
+    "✅ Santé : nouvelle partie <b>Mes choix validés</b> (lunettes, matériel…).",
+    "✏️ Les éléments sans « où c’est rangé » sont marqués <b>À compléter</b>, et le Pense-bête te le rappelle.",
+    "➕ <b>Ajouter des éléments</b> (Paramètres) : un petit fichier préparé par Claude à partir de ce que tu lui dictes.",
+    "💡 Astuce prête : le filigrane sur tes justificatifs (tape « carte d’identité » ou « papiers » dans la recherche).",
+    "🧠 Aide-mémoire : étapes GitHub corrigées (⋮, Upload files), nouvelles parties."]},
   {v:"V14",d:"16/11/2026",n:[
     "<span class=\"gcross\">✚</span> Nouvel onglet <b>Santé</b> : <b>Suivi</b> des douleurs (date, heure, où, intensité de 0 à 10, type, déclencheur, ce qui soulage) et <b>Mes essentiels</b> (catégorie, ce que j’utilise, à quoi ça sert, où c’est rangé).",
     "🟨 <b>Pense-bête</b> : de temps en temps à l’ouverture, un de tes essentiels ou une astuce de ta méthode. Fréquence réglable dans Paramètres.",
@@ -357,9 +409,10 @@ function defaults(){
   return {
     name:"Yas",mode:"neutre",reprendre:"",ideas:[],lastExport:null,lastRestore:null,seeded:false,
     skills:[],targets:[],jobFrom:"",jobBase:"both",skillType:"",lastSkills:null,snooze:{},aidePins:["routine","maj"],
-    settings:{lockOn:true,lockPass:MOT_DE_PASSE_DE_DEPART,lockHint:"",theme:"auto",noteFreq:"parfois",mergeGap:15,pomo:25,pause:5,longPause:20,cycles:4,remSave:7,remSkills:15,lockIdle:10,lockAway:2,tabOrder:Object.keys(TABS)},
-    lists:Object.assign({cats:DEF_CATS.slice(),tools:DEF_TOOLS.slice()},JSON.parse(JSON.stringify(DEF_SANTE))),
-    sante:{suivi:[],ess:[]},seenVersion:"",
+    settings:{lockOn:true,lockPass:MOT_DE_PASSE_DE_DEPART,lockHint:"",theme:"auto",noteFreq:"parfois",noteRead:false,rate:"normale",split:{ast:false,alim:false,vet:false},mergeGap:15,pomo:25,pause:5,longPause:20,cycles:4,remSave:7,remSkills:15,lockIdle:10,lockAway:2,tabOrder:Object.keys(TABS)},
+    lists:Object.assign({cats:DEF_CATS.slice(),tools:DEF_TOOLS.slice()},JSON.parse(JSON.stringify(DEF_SANTE)),JSON.parse(JSON.stringify(DEF_Q))),
+    sante:{suivi:[],ess:[],choix:[]},seenVersion:"",rep:[],
+    q:{ast:[],alim:[],vet:[],bags:[]},
     projects,
     tasks:[
       t("Restaurer ma sauvegarde .json (⚙️ Paramètres)","Projets","orange","",true),
@@ -378,6 +431,7 @@ function fixState(s){
   const keys=Object.keys(TABS);let o=(s.settings.tabOrder||[]).filter(k=>keys.includes(k));
   if(!o.includes("loisirs")){const i=o.indexOf("projets");o.splice(i<0?1:i+1,0,"loisirs");}
   if(!o.includes("sante")){const i=o.indexOf("taches");o.splice(i<0?o.length:i,0,"sante");}
+  ["quotidien","q_ast","q_alim","q_vet"].forEach((k,j)=>{if(!o.includes(k)){const b=j?o.indexOf(["quotidien","q_ast","q_alim"][j-1]):o.indexOf("sante");o.splice(b<0?o.length:b+1,0,k);}});
   if(!o.includes("competences")){const i=o.indexOf("journal");o.splice(i<0?o.length:i+1,0,"competences");}
   keys.forEach(k=>{if(!o.includes(k))o.push(k);});
   s.settings.tabOrder=o;
@@ -385,8 +439,19 @@ function fixState(s){
   if(!Array.isArray(s.aidePins))s.aidePins=["routine","maj"];s.snooze=s.snooze||{};
   s.lists=Object.assign({cats:DEF_CATS.slice(),tools:DEF_TOOLS.slice()},s.lists||{});
   Object.keys(DEF_SANTE).forEach(k=>{if(!Array.isArray(s.lists[k]))s.lists[k]=DEF_SANTE[k].slice();});
+  Object.keys(DEF_Q).forEach(k=>{if(!Array.isArray(s.lists[k]))s.lists[k]=DEF_Q[k].slice();});
+  s.settings.split=Object.assign({ast:false,alim:false,vet:false},s.settings.split||{});
+  if(!Array.isArray(s.rep))s.rep=[];
+  if(s.reprendre&&String(s.reprendre).trim()){String(s.reprendre).split(/\n+/).map(x=>x.trim()).filter(Boolean).forEach(t=>s.rep.push({id:uid(),text:t,done:false}));}
+  s.reprendre="";
+  s.q=Object.assign({ast:[],alim:[],vet:[],bags:[]},s.q||{});["ast","alim","vet","bags"].forEach(k=>{if(!Array.isArray(s.q[k]))s.q[k]=[];});
+  if(!s.seed15){
+    if(!s.q.bags.length)s.q.bags=[{id:uid(),name:"Sac nomade",items:[]},{id:uid(),name:"Valise départ rapide",items:[]}];
+    s.q.ast.push({id:uid(),cat:"Administratif",title:"Filigrane sur mes justificatifs avant de les envoyer",detail:"Avant d’envoyer la copie d’une carte d’identité ou d’un justificatif à un organisme, j’ajoute un filigrane avec le service officiel et gratuit FiligraneFacile (filigrane.beta.gouv.fr). Par exemple : « Envoyé à la CAF le … ». Ça évite qu’on réutilise mes papiers.",kw:"carte d’identité pièce d’identité pièce justificative justificatifs papiers envoyer document organisme CAF France Travail banque location copie sécurité vol usurpation filigrane",date:today()});
+    s.seed15=true;
+  }
   if(!s.lists.cats.includes("Alimentation du carnet")){const i=s.lists.cats.indexOf("Amélioration du carnet");s.lists.cats.splice(i<0?s.lists.cats.length:i+1,0,"Alimentation du carnet");}
-  s.sante=Object.assign({suivi:[],ess:[]},s.sante||{});["suivi","ess"].forEach(k=>{if(!Array.isArray(s.sante[k]))s.sante[k]=[];});
+  s.sante=Object.assign({suivi:[],ess:[],choix:[]},s.sante||{});["suivi","ess","choix"].forEach(k=>{if(!Array.isArray(s.sante[k]))s.sante[k]=[];});
   if(!s.lists.cats.includes("Création du carnet")){const i=s.lists.cats.indexOf("Amélioration du carnet");s.lists.cats.splice(i<0?s.lists.cats.length:i,0,"Création du carnet");}
   s.projects.forEach(p=>{
     if(!p.space||p.space==="principal")p.space=/candidat|emploi|cifelm|kay|tuto|atelier|duoday|formation|mission/.test(norm(p.name))?"pro":"perso";
@@ -451,12 +516,15 @@ function applyTheme(){const t=state.settings.theme;if(t==="auto")document.docume
 function applyPhase(){document.documentElement.setAttribute("data-phase",state.mode||"neutre");}
 function longDate(){const d=new Intl.DateTimeFormat("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(new Date());return d.charAt(0).toUpperCase()+d.slice(1);}
 function renderHeader(){const d=longDate();$("#today").textContent=(state.name||"Moi")+", "+d.charAt(0).toLowerCase()+d.slice(1);const lb=$("#lockNowBtn");if(lb)lb.hidden=!canLock();}
+function tabVisible(k){const sp=state.settings.split||{};if(k.startsWith("q_"))return !!sp[k.slice(2)];if(k==="quotidien")return !(sp.ast&&sp.alim&&sp.vet);return true;}
 function renderTabs(){
-  $("#tabs").innerHTML=state.settings.tabOrder.map(k=>`<button class="tab ${k===cur?"on":""}" role="tab" aria-selected="${k===cur}" data-act="tab" data-id="${k}">${k==="sante"?`<span class="gcross" aria-hidden="true">✚</span>`:""}${TABS[k].label}</button>`).join("");
+  if(!tabVisible(cur))cur=cur.startsWith("q_")?"quotidien":(["q_ast","q_alim","q_vet"].find(tabVisible)||"accueil");
+  $("#tabs").innerHTML=state.settings.tabOrder.filter(tabVisible).map(k=>`<button class="tab ${k===cur?"on":""}" role="tab" aria-selected="${k===cur}" data-act="tab" data-id="${k}">${k==="sante"?`<span class="gcross" aria-hidden="true">✚</span>`:""}${TABS[k].label}</button>`).join("");
   const on=$("#tabs .tab.on");if(on)on.scrollIntoView({block:"nearest",inline:"nearest"});
 }
-const VIEWS={accueil:vAccueil,projets:vProjets,loisirs:vLoisirs,sante:vSante,taches:vTaches,fichiers:vFichiers,journal:vJournal,competences:vCompetences,aide:vAide,params:vParams};
+const VIEWS={accueil:vAccueil,projets:vProjets,loisirs:vLoisirs,sante:vSante,quotidien:()=>vQuot(null),q_ast:()=>vQuot("ast"),q_alim:()=>vQuot("alim"),q_vet:()=>vQuot("vet"),taches:vTaches,fichiers:vFichiers,journal:vJournal,competences:vCompetences,aide:vAide,params:vParams};
 function render(){applyPhase();renderHeader();renderTabs();$("#main").innerHTML=VIEWS[cur]();updateFabs();}
+const qTab=p=>state.settings.split&&state.settings.split[p]?"q_"+p:"quotidien";
 const empty=msg=>`<div class="block"><p class="meta">${msg}</p></div>`;
 function toast(msg,ms){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove("show"),ms||2600);}
 function flash(id){const el=document.getElementById(id);if(!el)return;el.scrollIntoView({block:"center",behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});el.classList.remove("flash");void el.offsetWidth;el.classList.add("flash");}
@@ -511,9 +579,12 @@ function vAccueil(){
     ${act_i.length>=5?`<p class="meta">Beaucoup d’idées en attente : copie-les à ton Assistant IA Claude pour les trier.</p>`:""}
     ${later.length?`<details><summary>⏳ Plus tard (${later.length})</summary>${later.map(i=>ideaRow(i,true)).join("")}</details>`:""}
   </section>`;
-  const rep=`<section class="block"><h3>Reprendre ici</h3>
-    <textarea id="reprendre" rows="3" placeholder="Où j’en étais, ce que je voulais faire ensuite…" aria-label="Reprendre ici">${esc(state.reprendre)}</textarea>
-    <p class="meta" id="repSaved">S’enregistre tout seul.</p></section>`;
+  const R=state.rep;
+  const rep=`<section class="block" id="repBlock"><div class="phead"><h3>Reprendre ici</h3>${R.length?spkBtn("repBlock"):""}</div>
+    ${R.map(r=>`<div class="row rep ${r.done?"done":""}" id="r-${r.id}"><input type="checkbox" data-act="repTick" data-id="${r.id}" ${r.done?"checked":""} aria-label="C’est fait"><div class="grow ttl">${esc(r.text)}</div><button class="icon noread" data-act="repDel" data-id="${r.id}" aria-label="Retirer cette ligne">✕</button></div>`).join("")}
+    <div class="inline noread" style="margin-top:8px"><input id="repIn" placeholder="Où j’en étais, ce que je veux faire ensuite" aria-label="Nouvelle ligne pour Reprendre ici"><button class="btn" data-act="repAdd">Ajouter</button></div>
+    <p class="meta noread">Une chose par ligne. Coche ce qui est fait : la ligne se barre. Quand tout est barré, la liste s’efface toute seule.</p>
+    ${R.length?`<div class="bar noread" style="margin:8px 0 0"><button class="btn ghost" data-act="repClear">Effacer tout</button></div>`:""}</section>`;
   const prio=`<section class="block"><h3>⭐ Mes 3 priorités du moment <span class="badge">${stars.length} / 3</span></h3>
     ${stars.length?stars.map(p=>`<div class="row"><div class="grow"><b>${esc(p.name)}</b>${p.kind==="objectif"?`<span class="badge goal">🎯 Objectif</span>`:""}<div class="meta">${SPACE_TXT[p.space]||""}${p.next?", prochaine étape : "+esc(p.next):""}</div></div></div>`).join(""):`<p class="meta">Aucune priorité choisie. Dans Projets ou Loisirs, touche ☆ sur 3 projets maximum.</p>`}
     <p class="meta" style="margin-top:12px">Projets actifs : professionnel ${cnt("pro")}/3, personnel ${cnt("perso")}/3, loisirs ${cnt("loisirs")}/3.</p>
@@ -681,15 +752,16 @@ let santeView="suivi";
 const lvlClass=n=>n<=2?"l0":n<=4?"l1":n<=6?"l2":"l3";
 function topOf(arr){const c={};arr.filter(Boolean).forEach(x=>{c[x]=(c[x]||0)+1;});const e=Object.entries(c).sort((a,b)=>b[1]-a[1]);return e.length?e[0][0]:"";}
 function essRow(x){
-  return `<div class="row" id="e-${x.id}"><div class="grow"><b>${esc(x.name)}</b>
+  return `<div class="row" id="e-${x.id}"><div class="grow"><b>${esc(x.name)}</b>${todoBadge(x)}
     ${x.use?`<div class="meta">Sert à : ${esc(x.use)}</div>`:""}${x.where?`<div class="meta">📍 Rangé : ${esc(x.where)}</div>`:""}</div>
-    <button class="icon" data-act="editEss" data-id="${x.id}" aria-label="Modifier">✎</button><button class="icon" data-act="delEss" data-id="${x.id}" aria-label="Supprimer">🗑</button></div>`;
+    ${spkBtn("e-"+x.id,1)}<button class="icon" data-act="editEss" data-id="${x.id}" aria-label="Modifier">✎</button><button class="icon" data-act="delEss" data-id="${x.id}" aria-label="Supprimer">🗑</button></div>`;
 }
 function vSante(){
-  const S=state.sante,sv=santeView;
+  const S=state.sante,sv=santeView,aliS=state.q.alim.filter(x=>x.ali);
   const tabs=`<div class="chips" role="group" aria-label="Partie de l’onglet Santé">
     <button class="chip ${sv==="suivi"?"on":""}" data-act="santeView" data-id="suivi">📋 Suivi (${S.suivi.length})</button>
-    <button class="chip ${sv==="ess"?"on":""}" data-act="santeView" data-id="ess">🧰 Mes essentiels (${S.ess.length})</button></div>`;
+    <button class="chip ${sv==="ess"?"on":""}" data-act="santeView" data-id="ess">🧰 Mes essentiels (${S.ess.length+aliS.length})</button>
+    <button class="chip ${sv==="choix"?"on":""}" data-act="santeView" data-id="choix">✅ Mes choix validés (${S.choix.length})</button></div>`;
   let body;
   if(sv==="suivi"){
     const list=S.suivi.slice().sort((a,b)=>(b.date+(b.time||"")).localeCompare(a.date+(a.time||"")));
@@ -701,12 +773,19 @@ function vSante(){
     ${list.map(x=>`<tr id="s-h-${x.id}"><td class="nowrap">${fmt(x.date)}${x.time?"<br>"+hText(x.time):""}</td><td>${esc(x.loc)}</td><td><span class="lvl ${lvlClass(+x.int||0)}">${+x.int||0}</span></td><td>${esc(x.type)}</td><td>${esc(x.trig)}</td><td>${esc(x.relief)}${x.note?`<div class="meta">${esc(x.note)}</div>`:""}</td>
       <td class="nowrap"><button class="icon" data-act="editSuivi" data-id="${x.id}" aria-label="Modifier">✎</button><button class="icon" data-act="delSuivi" data-id="${x.id}" aria-label="Supprimer">🗑</button></td></tr>`).join("")}
     </tbody></table></div>`:empty("Aucune note pour l’instant. Touche « Noter une douleur » quand ça arrive : en quelques jours, tu verras ce qui revient et ce qui t’aide.")}`;
+  }else if(sv==="choix"){
+    const cs=state.lists.choixTopic.slice();S.choix.forEach(x=>{if(x.topic&&!cs.includes(x.topic))cs.push(x.topic);});
+    const row=x=>`<div class="row" id="c-${x.id}"><div class="grow"><b>${esc(x.choice).replace(/\n/g,"<br>")}</b>${x.why?`<div class="meta">Pourquoi : ${esc(x.why)}</div>`:""}</div>${spkBtn("c-"+x.id,1)}<button class="icon" data-act="editChoix" data-id="${x.id}" aria-label="Modifier">✎</button><button class="icon" data-act="delChoix" data-id="${x.id}" aria-label="Supprimer">🗑</button></div>`;
+    body=`<p class="meta">Ce qui est validé et efficace pour toi, à garder pour la prochaine fois (ex. : tes prochaines lunettes).</p><div class="bar"><button class="btn" data-act="newChoix">Ajouter un choix validé</button></div>
+    ${cs.map((c,i)=>{const l=S.choix.filter(x=>x.topic===c);return l.length?`<section class="block" id="cg${i}"><div class="phead"><h3>${esc(c)}</h3>${spkBtn("cg"+i)}</div>${l.map(row).join("")}</section>`:"";}).join("")}
+    ${S.choix.filter(x=>!x.topic).map(row).join("")}${S.choix.length?"":empty("Aucun choix validé pour l’instant.")}`;
   }else{
     const cats=state.lists.essCat.slice();S.ess.forEach(x=>{if(x.cat&&!cats.includes(x.cat))cats.push(x.cat);});
-    const groups=cats.map(c=>{const l=S.ess.filter(x=>x.cat===c);return l.length?`<section class="block"><h3>${esc(c)} <span class="badge">${l.length}</span></h3>${l.map(essRow).join("")}</section>`:"";}).join("");
+    const groups=cats.map((c,i)=>{const l=S.ess.filter(x=>x.cat===c);return l.length?`<section class="block" id="eg${i}"><div class="phead"><h3>${esc(c)} <span class="badge">${l.length}</span></h3>${spkBtn("eg"+i)}</div>${l.map(essRow).join("")}</section>`:"";}).join("");
     const none=S.ess.filter(x=>!x.cat);
-    body=`<div class="bar"><button class="btn" data-act="newEss">Ajouter un essentiel</button></div>
-    ${groups}${none.length?`<section class="block"><h3>Sans catégorie</h3>${none.map(essRow).join("")}</section>`:""}
+    const tdE=S.ess.filter(todoOf).length;
+    body=`<div class="bar"><button class="btn" data-act="newEss">Ajouter un essentiel</button></div>${tdE?`<div class="warn">✏️ ${tdE} à compléter (où c’est rangé).</div>`:""}
+    ${groups}${aliS.length?`<section class="block" id="aliBlock"><div class="phead"><h3>🌿 Alicaments <span class="badge">${aliS.length}</span></h3>${spkBtn("aliBlock")}</div><p class="meta noread">Depuis 🏠 Mon quotidien, Alimentation : une seule fiche pour les deux onglets.</p>${aliS.map(alimRow).join("")}</section>`:""}${none.length?`<section class="block"><h3>Sans catégorie</h3>${none.map(essRow).join("")}</section>`:""}
     ${S.ess.length?"":empty("Note ici ce qui t’aide et où c’est rangé : une chaufferette, une lotion, un exercice… Le Pense-bête 🟨 te les rappellera de temps en temps.")}`;
   }
   return `<h2><span class="gcross" aria-hidden="true">✚</span>Santé</h2>
@@ -740,26 +819,30 @@ function essForm(x){
 
 /* ---------- pense-bête et nouveautés ---------- */
 function showNote(force){
-  const box=$("#note"),ess=state.sante.ess;
-  const useEss=ess.length&&Math.random()<.5;
+  const box=$("#note"),ess=state.sante.ess.concat(state.q.alim.filter(a=>a.ali)),todo=allTodo();
+  const r=Math.random(),useEss=ess.length&&r<.45,useTodo=!useEss&&todo.length&&r<.7;
   let html;
-  if(useEss){
+  if(useTodo){
+    const o=pick(todo);
+    html=`<h3 id="noteTitle">🟨 Pense-bête</h3><div id="noteTxt"><p>✏️ À compléter : où est rangé <b>${esc(o.x.name)}</b> ?</p></div>
+    <div class="bar"><button class="btn ghost" data-act="noteFix" data-id="${o.k}|${o.x.id}">Compléter</button><button class="btn" data-act="noteClose">Plus tard</button></div>`;
+  }else if(useEss){
     const x=pick(ess);
-    html=`<h3 id="noteTitle">🟨 Pense-bête</h3><p>🧰 N’oublie pas : <b>${esc(x.name)}</b>${x.use?", pour "+esc(x.use):""}.</p>${x.where?`<p>📍 Rangé : ${esc(x.where)}</p>`:""}
+    html=`<h3 id="noteTitle">🟨 Pense-bête</h3><div id="noteTxt"><p>🧰 N’oublie pas : <b>${esc(x.name)}</b>${x.use?", pour "+esc(x.use):""}.</p>${x.where?`<p>📍 Rangé : ${esc(x.where)}</p>`:""}</div>
     <div class="bar"><button class="btn ghost" data-act="noteEss">Mes essentiels</button><button class="btn ghost" data-act="noteAdd">Ajouter</button><button class="btn" data-act="noteClose">Merci 👍</button></div>`;
   }else{
     const t=pick(TIPS);
-    html=`<h3 id="noteTitle">🟨 Pense-bête</h3><p>${t.e} ${esc(t.t)}</p>
+    html=`<h3 id="noteTitle">🟨 Pense-bête</h3><div id="noteTxt"><p>${t.e} ${esc(t.t)}</p></div>
     <div class="bar"><button class="btn ghost" data-act="noteAdd">Ajouter un essentiel</button><button class="btn" data-act="noteClose">Merci 👍</button></div>`;
   }
-  box.innerHTML=`<button class="x" data-act="noteClose" aria-label="Fermer le pense-bête">×</button>`+html;
-  box.classList.add("show");
+  box.innerHTML=`<button class="x" data-act="noteClose" aria-label="Fermer le pense-bête">×</button>`+html.replace('<div class="bar">','<div class="bar"><button class="btn ghost" data-act="speak" data-id="noteTxt">🔊</button>');
+  box.classList.add("show");if(state.settings.noteRead)setTimeout(()=>speak(textOf($("#noteTxt"))),400);
 }
 function hideNote(){$("#note").classList.remove("show");}
 function histHtml(list){return list.map(h=>`<div class="histv"><b>${h.v}</b> <span class="meta">du ${h.d}</span><ul>${h.n.map(x=>`<li>${x}</li>`).join("")}</ul></div>`).join("");}
 function newsModal(){
   const h=HISTORY[0];
-  openModal(`<span class="em" aria-hidden="true">🎉</span><h2 class="center">Nouveautés de la ${h.v}</h2><p class="center meta">du ${h.d}</p>${histHtml([h]).replace('<div class="histv"><b>'+h.v+'</b> <span class="meta">du '+h.d+'</span>','<div class="histv">')}
+  openModal(`<span class="em" aria-hidden="true">🎉</span><h2 class="center">Nouveautés de la ${h.v}</h2><p class="center meta">du ${h.d}</p><div class="center">${spkBtn("newsBody")}</div><div id="newsBody">${histHtml([h]).replace('<div class="histv"><b>'+h.v+'</b> <span class="meta">du '+h.d+'</span>','<div class="histv">')}</div>
   <p class="meta">Tu retrouves cette liste, et toutes les versions d’avant, dans ⚙️ Paramètres, Historique des versions.</p>
   <div class="actions"><button class="btn" data-act="closeModal">C’est noté</button></div>`,"news");
 }
@@ -769,6 +852,170 @@ function onOpen(){
   if(state.seenVersion!==VERSION){state.seenVersion=VERSION;save();setTimeout(newsModal,300);return;}
   const f=NOTE_FREQ[state.settings.noteFreq]||NOTE_FREQ.parfois;
   if(Math.random()<f[1])setTimeout(()=>showNote(),900);
+}
+
+/* ---------- V15 : voix, barre de question, doublons, sommaire ---------- */
+const spkBtn=(id,small)=>small?`<button class="icon noread" data-act="speak" data-id="${id}" aria-label="Écouter">🔊</button>`:`<button class="btn ghost spk noread" data-act="speak" data-id="${id}">🔊 Écouter</button>`;
+function cleanSpeech(t){return String(t||"").replace(/[\p{Extended_Pictographic}️‍⃣]/gu," ").replace(/[•·|›‹▾▸✕✎🗑]/g," ").replace(/\s*\.\s*(\.\s*)+/g,". ").replace(/:\s*\./g,":").replace(/\s{2,}/g," ").replace(/^\s*\.\s*/,"").trim();}
+function textOf(el){
+  if(!el)return "";const c=el.cloneNode(true);
+  c.querySelectorAll("button,input,select,textarea,.noread,.chev,.x,script,style").forEach(n=>n.remove());
+  c.querySelectorAll("p,div,li,h2,h3,h4,tr,summary,label").forEach(n=>n.append(document.createTextNode(". ")));
+  c.querySelectorAll("td,th").forEach(n=>n.append(document.createTextNode(", ")));
+  return c.textContent;
+}
+function speak(txt){
+  if(!("speechSynthesis" in window)||!window.SpeechSynthesisUtterance){toast("La lecture à voix haute n’est pas disponible sur cet appareil");return;}
+  const t=cleanSpeech(txt);if(!t){toast("Rien à lire ici");return;}
+  try{speechSynthesis.cancel();}catch(e){}
+  const u=new SpeechSynthesisUtterance(t);u.lang="fr-FR";u.rate=(RATES[state.settings.rate]||RATES.normale)[1];
+  const v=(speechSynthesis.getVoices()||[]).find(x=>/^fr(-|_|$)/i.test(x.lang));if(v)u.voice=v;
+  u.onend=u.onerror=()=>$("#speakBar").classList.remove("show");
+  $("#speakBar").classList.add("show");speechSynthesis.speak(u);
+}
+function speakStop(){try{speechSynthesis.cancel();}catch(e){}$("#speakBar").classList.remove("show");}
+let askFns=[];
+function ask(msg,btns,ms){
+  const b=$("#askBar");askFns=btns.map(x=>x[1]);
+  b.innerHTML=`<span>${msg}</span>`+btns.map((x,i)=>`<button class="${x[2]?"main":""}" data-act="askBtn" data-id="${i}">${esc(x[0])}</button>`).join("");
+  b.classList.add("show");clearTimeout(ask.h);ask.h=setTimeout(()=>b.classList.remove("show"),ms||9000);
+}
+const dupKey=s=>norm(s).replace(/[^a-z0-9 ]/g," ").split(/\s+/).filter(Boolean).map(w=>w.length>3?w.replace(/s$/,""):w).join(" ");
+function dupOf(list,name,id,field){
+  const k=dupKey(name);if(!k)return null;
+  return list.find(x=>x.id!==id&&(()=>{const o=dupKey(x[field||"name"]);return o===k||(k.length>=6&&o.length>=6&&(o.includes(k)||k.includes(o)));})());
+}
+function dupWarn(act,txt,go){
+  const btn=$(`#sheet [data-act=${act}]`);if(!btn||btn.dataset.force==="1")return false;
+  btn.insertAdjacentHTML("beforebegin","");
+  const w=document.createElement("div");w.className="warn";w.innerHTML=`⚠️ ${txt} <button class="btn ghost" style="padding:4px 10px;margin-left:4px" data-act="dupSee">Voir</button>`;
+  btn.closest(".actions").before(w);dupGo=go;btn.dataset.force="1";btn.textContent="Ajouter quand même";w.scrollIntoView({block:"nearest"});return true;
+}
+let dupGo=null;
+const sigWords=s=>dupKey(s).split(" ").filter(w=>w.length>=4&&!STOP.has(w)&&!SK_STOP.has(w));
+function offerRep(name){
+  const W=sigWords(name);if(!W.length)return;
+  const r=state.rep.find(x=>!x.done&&W.some(w=>dupKey(x.text).includes(w)));if(!r)return;
+  ask(`Tu viens d’ajouter « ${esc(name)} ». Barrer « ${esc(r.text.length>70?r.text.slice(0,70)+"…":r.text)} » dans Reprendre ici ?`,[["Oui, barrer",()=>{r.done=true;save();if(cur==="accueil")render();repCheck();toast("Ligne barrée ✓");},true],["Non",null]],12000);
+}
+function repCheck(){
+  if(!state.rep.length||state.rep.some(r=>!r.done))return;
+  clearTimeout(repCheck.h);repCheck.h=setTimeout(()=>{if(state.rep.length&&state.rep.every(r=>r.done))repClear("Bravo, tout est fait ✓");},1600);
+}
+function repClear(msg){
+  const old=state.rep.slice();state.rep=[];save();if(cur==="accueil")render();
+  ask(esc(msg),[["Annuler",()=>{state.rep=old;save();if(cur==="accueil")render();toast("Liste remise");},true]],8000);
+}
+const TOPBTN=`<div class="bar noread" style="margin:12px 0 0"><button class="btn ghost" data-act="jumpTop">↑ Sommaire</button></div>`;
+function withToc(html){
+  const items=[];let n=0;
+  const out=html.split('<section class="block"').map((chunk,i)=>{
+    if(i===0)return chunk;
+    const m=chunk.match(/^( id="([^"]+)")?>(\s*<div class="phead">)?\s*<h3>([\s\S]*?)<\/h3>/);
+    if(!m)return '<section class="block"'+chunk;
+    const id=m[2]||("sec"+(++n));items.push([id,m[4].replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim()]);
+    let c=m[1]?chunk:' id="'+id+'"'+chunk;const e=c.indexOf("</section>");if(e>=0)c=c.slice(0,e)+TOPBTN+c.slice(e);
+    return '<section class="block"'+c;
+  }).join("");
+  if(items.length<3)return out;
+  const nav=`<nav class="block toc noread" id="tocNav" aria-label="Sommaire"><h3>Aller à</h3><div class="chips wrap">${items.map(([id,l])=>`<button class="chip" data-act="jump" data-id="${id}">${esc(l)}</button>`).join("")}</div></nav>`;
+  const p=out.indexOf("</p>");return p<0?nav+out:out.slice(0,p+4)+nav+out.slice(p+4);
+}
+function jumpTo(el){if(!el)return;if(el.tagName==="DETAILS")el.open=true;const hd=document.querySelector("header");const st=hd&&/sticky|fixed/.test(getComputedStyle(hd).position)?hd.getBoundingClientRect().height:0;
+  window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-st-10,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});}
+
+/* ---------- V15 : à compléter ---------- */
+const todoOf=x=>x&&!String(x.where||"").trim()?"où c’est rangé":"";
+const todoBadge=x=>todoOf(x)?`<span class="badge todo">✏️ À compléter : ${todoOf(x)}</span>`:"";
+function allTodo(){return [...state.sante.ess.map(x=>({x,k:"ess"})),...state.q.alim.map(x=>({x,k:"alim"})),...state.q.vet.map(x=>({x,k:"vet"}))].filter(o=>todoOf(o.x));}
+
+/* ---------- V15 : mon quotidien ---------- */
+let qView="ast";
+function astRow(x){return `<div class="row" id="qa-${x.id}"><div class="grow"><b>${esc(x.title)}</b>${x.detail?`<div class="meta">${esc(x.detail).replace(/\n/g,"<br>")}</div>`:""}</div>
+  ${spkBtn("qa-"+x.id,1)}<button class="icon" data-act="editAst" data-id="${x.id}" aria-label="Modifier">✎</button><button class="icon" data-act="delAst" data-id="${x.id}" aria-label="Supprimer">🗑</button></div>`;}
+function alimRow(x){return `<div class="row" id="ql-${x.id}"><div class="grow"><b>${esc(x.name)}</b>${x.ali?`<span class="badge ali">🌿 Alicament</span>`:""}${todoBadge(x)}
+  ${x.use?`<div class="meta">${esc(x.use)}</div>`:""}${x.ali&&x.forWhat?`<div class="meta">🌿 Pour : ${esc(x.forWhat)}</div>`:""}${x.where?`<div class="meta">📍 ${esc(x.where)}</div>`:""}</div>
+  ${spkBtn("ql-"+x.id,1)}<button class="icon" data-act="editAlim" data-id="${x.id}" aria-label="Modifier">✎</button><button class="icon" data-act="delAlim" data-id="${x.id}" aria-label="Supprimer">🗑</button></div>`;}
+function vetRow(x){return `<div class="row" id="qv-${x.id}"><div class="grow"><b>${esc(x.name)}</b>${todoBadge(x)}${x.use?`<div class="meta">${esc(x.use)}</div>`:""}${x.note?`<div class="meta">${esc(x.note)}</div>`:""}${x.where?`<div class="meta">📍 Rangé : ${esc(x.where)}</div>`:""}</div>
+  ${spkBtn("qv-"+x.id,1)}<button class="icon" data-act="editVet" data-id="${x.id}" aria-label="Modifier">✎</button><button class="icon" data-act="delVet" data-id="${x.id}" aria-label="Supprimer">🗑</button></div>`;}
+function grouped(list,cats,field,rowFn,pref){
+  const cs=cats.slice();list.forEach(x=>{if(x[field]&&!cs.includes(x[field]))cs.push(x[field]);});
+  let i=0;return cs.map(c=>{const l=list.filter(x=>x[field]===c);i++;return l.length?`<section class="block" id="${pref}${i}"><div class="phead"><h3>${esc(c)} <span class="badge">${l.length}</span></h3>${spkBtn(pref+i)}</div>${l.map(rowFn).join("")}</section>`:"";}).join("")+
+    (list.some(x=>!x[field])?`<section class="block" id="${pref}0"><h3>Sans catégorie</h3>${list.filter(x=>!x[field]).map(rowFn).join("")}</section>`:"");
+}
+function vQuot(fixed){
+  const sp=state.settings.split,Q=state.q;
+  const vis=Object.keys(QPARTS).filter(p=>!sp[p]);
+  const p=fixed||(vis.includes(qView)?qView:vis[0]||"ast");
+  const cnt={ast:Q.ast.length,alim:Q.alim.length,vet:Q.vet.length};
+  const chips=!fixed&&vis.length>1?`<div class="chips" role="group" aria-label="Partie de Mon quotidien">${vis.map(k=>`<button class="chip ${p===k?"on":""}" data-act="qView" data-id="${k}">${QPARTS[k]} (${cnt[k]})</button>`).join("")}</div>`:"";
+  const td=allTodo().filter(o=>o.k===p).length;
+  let body="";
+  if(p==="ast"){
+    body=`<p class="lead">Les astuces efficaces et validées, celles qui reviennent souvent. Ajoute des mots cachés pour les retrouver même si tu as oublié le mot exact.</p>
+    <div class="bar"><button class="btn" data-act="newAst">Ajouter une astuce</button></div>${grouped(Q.ast,state.lists.astCat,"cat",astRow,"qag")}${Q.ast.length?"":empty("Aucune astuce pour l’instant.")}`;
+  }else if(p==="alim"){
+    body=`<p class="lead">Tes aliments préférés, ce qu’il faut toujours avoir à la maison, et tes alicaments. Un alicament apparaît aussi dans ✚ Santé, Mes essentiels.</p>
+    <div class="bar"><button class="btn" data-act="newAlim">Ajouter un aliment</button></div>${td?`<div class="warn">✏️ ${td} à compléter (où c’est rangé).</div>`:""}${grouped(Q.alim,state.lists.alimCat,"cat",alimRow,"qlg")}${Q.alim.length?"":empty("Aucun aliment pour l’instant.")}`;
+  }else{
+    const vAst=Q.ast.filter(x=>x.cat==="Vêtements");
+    body=`<p class="lead">Tes vêtements (surtout où ils sont rangés), tes sacs prêts pour partir vite, et tes astuces vêtements.</p>
+    <section class="block" id="qvBlock"><div class="phead"><h3>Mes vêtements <span class="badge">${Q.vet.length}</span></h3>${Q.vet.length?spkBtn("qvBlock"):""}</div>
+    ${td?`<div class="warn">✏️ ${td} à compléter (où c’est rangé).</div>`:""}
+    <div class="bar"><button class="btn" data-act="newVet">Ajouter un vêtement</button></div>${Q.vet.map(vetRow).join("")||`<p class="meta">Aucun vêtement noté.</p>`}</section>
+    <h3 style="margin:22px 0 8px">🎒 Mes sacs prêts</h3><p class="meta">Avant de partir, coche ce qui est dans le sac. « Tout décocher » pour le prochain départ.</p>
+    ${Q.bags.map(b=>{const ok=b.items.filter(i=>i.done).length;return `<section class="block" id="qb-${b.id}"><div class="bagh"><h3 style="margin:0">${esc(b.name)} <span class="badge">${ok} / ${b.items.length}</span></h3>${b.items.length?spkBtn("qb-"+b.id,1):""}</div>
+      ${b.items.map(i=>`<div class="row rep ${i.done?"done":""}"><input type="checkbox" data-act="bagTick" data-id="${b.id}|${i.id}" ${i.done?"checked":""} aria-label="Dans le sac"><div class="grow ttl">${esc(i.text)}</div><button class="icon noread" data-act="bagDel" data-id="${b.id}|${i.id}" aria-label="Retirer">✕</button></div>`).join("")}
+      <div class="inline noread" style="margin-top:8px"><input id="bagIn-${b.id}" placeholder="Ajouter une chose à emporter" aria-label="Ajouter à ${esc(b.name)}"><button class="btn" data-act="bagAdd" data-id="${b.id}">Ajouter</button></div>
+      <div class="bar noread" style="margin:8px 0 0">${ok?`<button class="btn ghost" data-act="bagReset" data-id="${b.id}">Tout décocher</button>`:""}<button class="btn ghost" data-act="bagRename" data-id="${b.id}">Renommer</button><button class="btn ghost" data-act="bagRemove" data-id="${b.id}">Supprimer le sac</button></div></section>`;}).join("")}
+    <div class="bar"><button class="btn ghost" data-act="bagNew">➕ Nouveau sac</button></div>
+    <section class="block" id="qvaBlock"><div class="phead"><h3>Mes astuces vêtements <span class="badge">${vAst.length}</span></h3>${vAst.length?spkBtn("qvaBlock"):""}</div>
+    ${vAst.map(astRow).join("")||`<p class="meta">Ex. : « un vêtement, 2 ou 3 usages ».</p>`}
+    <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="newAstVet">Ajouter une astuce vêtements</button></div></section>`;
+  }
+  return `<h2>${fixed?QPARTS[fixed]:"🏠 Mon quotidien"}</h2>${chips}${body}`;
+}
+function astForm(x){x=x||{id:"",cat:"",title:"",detail:"",kw:""};
+  return `<h2>${x.id?"Modifier l’astuce":"Nouvelle astuce"}</h2>${selField("aCat","Catégorie","astCat",x.cat)}
+  <label for="aTitle">L’astuce, en quelques mots</label><input id="aTitle" value="${esc(x.title)}" placeholder="Ex. : filigrane sur mes justificatifs">
+  <label for="aDet">Comment faire</label><textarea id="aDet" rows="3">${esc(x.detail)}</textarea>
+  <label for="aKw">Mots cachés pour la retrouver</label><input id="aKw" value="${esc(x.kw)}" placeholder="Ex. : carte d’identité papiers CAF"><p class="hint">Les mots auxquels tu penseras en cherchant, même si ce n’est pas le bon terme.</p>
+  <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="saveAst" data-id="${x.id}">Enregistrer</button></div>`;}
+function alimForm(x){x=x||{id:"",cat:"",name:"",use:"",where:"",ali:false,forWhat:""};
+  return `<h2>${x.id?"Modifier l’aliment":"Nouvel aliment"}</h2>${selField("lCat","Catégorie","alimCat",x.cat)}
+  <label for="lName2">L’aliment</label><input id="lName2" value="${esc(x.name)}" placeholder="Ex. : gingembre">
+  <label for="lUse">Pourquoi je l’aime / à quoi il sert</label><input id="lUse" value="${esc(x.use)}">
+  <label for="lWhere">Où c’est rangé (ou où l’acheter)</label><input id="lWhere" value="${esc(x.where)}">
+  <label style="display:flex;gap:10px;align-items:center;color:var(--ink)"><input type="checkbox" id="lAli" ${x.ali?"checked":""} style="margin:0"> 🌿 Alicament : utile pour ma santé</label>
+  <label for="lFor">Pour quoi ? (santé)</label><input id="lFor" value="${esc(x.forWhat)}" placeholder="Ex. : digestion, fatigue"><p class="hint">Un alicament apparaît aussi dans ✚ Santé, Mes essentiels, et dans « Ce qui soulage ».</p>
+  <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="saveAlim" data-id="${x.id}">Enregistrer</button></div>`;}
+function vetForm(x){x=x||{id:"",name:"",use:"",where:"",note:""};
+  return `<h2>${x.id?"Modifier le vêtement":"Nouveau vêtement"}</h2>
+  <label for="vName">Le vêtement</label><input id="vName" value="${esc(x.name)}" placeholder="Ex. : robe en lin bleue">
+  ${selField("vUse","Usage","vetUse",x.use)}
+  <label for="vWhere">Où c’est rangé</label><input id="vWhere" value="${esc(x.where)}" placeholder="Ex. : armoire, étagère du haut">
+  <label for="vNote">Note</label><input id="vNote" value="${esc(x.note)}" placeholder="Ex. : se porte aussi en jupe">
+  <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="saveVet" data-id="${x.id}">Enregistrer</button></div>`;}
+function choixForm(x){x=x||{id:"",topic:"",choice:"",why:""};
+  return `<h2>${x.id?"Modifier le choix":"Nouveau choix validé"}</h2>${selField("cTopic","Sujet","choixTopic",x.topic)}
+  <label for="cChoice">Ce que je choisis</label><textarea id="cChoice" rows="3" placeholder="Ex. : monture œil de chat, verres photochromiques">${esc(x.choice)}</textarea>
+  <label for="cWhy">Pourquoi c’est validé</label><textarea id="cWhy" rows="2">${esc(x.why)}</textarea>
+  <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="saveChoix" data-id="${x.id}">Enregistrer</button></div>`;}
+
+/* ---------- V15 : ajouter des éléments ---------- */
+function importAdd(o){
+  let add=0,skip=0;const S=state.sante,Q=state.q;
+  const put=(list,items,field,mk)=>(Array.isArray(items)?items:[]).forEach(it=>{const x=mk(it||{});const nm=x[field];if(!nm){return;}
+    if(list.some(y=>dupKey(y[field])===dupKey(nm))){skip++;return;}list.push(Object.assign({id:uid(),date:today()},x));add++;});
+  const s=v=>String(v||"").trim();
+  put(S.ess,o.ess||o.essentiels,"name",x=>{const c=s(x.cat||x.categorie);if(c)addToList("essCat",c);if(s(x.name||x.nom))addToList("relief",s(x.name||x.nom));return {cat:c,name:s(x.name||x.nom),use:s(x.use||x.usage),where:s(x.where||x.range)};});
+  put(S.choix,o.choix,"choice",x=>{const c=s(x.topic||x.sujet);if(c)addToList("choixTopic",c);return {topic:c,choice:s(x.choice||x.choix),why:s(x.why||x.pourquoi)};});
+  put(Q.alim,o.alim||o.aliments,"name",x=>{const c=s(x.cat||x.categorie);if(c)addToList("alimCat",c);if(x.ali&&s(x.name||x.nom))addToList("relief",s(x.name||x.nom));return {cat:c,name:s(x.name||x.nom),use:s(x.use||x.usage),where:s(x.where||x.range),ali:!!x.ali,forWhat:s(x.forWhat||x.pour)};});
+  put(Q.ast,o.ast||o.astuces,"title",x=>{const c=s(x.cat||x.categorie);if(c)addToList("astCat",c);return {cat:c,title:s(x.title||x.titre),detail:s(x.detail),kw:s(x.kw||x.mots)};});
+  put(Q.vet,o.vet||o.vetements,"name",x=>{const u=s(x.use||x.usage);if(u)addToList("vetUse",u);return {name:s(x.name||x.nom),use:u,where:s(x.where||x.range),note:s(x.note)};});
+  put(state.tasks,o.tasks||o.taches,"title",x=>({title:s(x.title||x.titre),type:x.type==="rdv"?"rdv":"tache",domain:DOMAINS.includes(x.domain)?x.domain:"Quotidien",date:s(x.date),time:s(x.time),urg:URG.includes(x.urg)?x.urg:"vert",project:"",micro:false,note:s(x.note),done:false,created:today()}));
+  (Array.isArray(o.rep||o.reprendre)?(o.rep||o.reprendre):[]).forEach(t=>{t=s(t);if(t&&!state.rep.some(r=>dupKey(r.text)===dupKey(t))){state.rep.push({id:uid(),text:t,done:false});add++;}else if(t)skip++;});
+  return {add,skip};
 }
 
 /* ---------- fichiers ---------- */
@@ -793,7 +1040,8 @@ function fileForm(f){
 }
 
 /* ---------- journal & durée de travail ---------- */
-function vJournal(){
+function vJournal(){return withToc(vJournal0());}
+function vJournal0(){
   const t=today();
   const totToday=state.work.filter(w=>w.date===t).reduce((s,w)=>s+(w.min||0),0);
   const tot7=state.work.filter(w=>daysSince(w.date)<7).reduce((s,w)=>s+(w.min||0),0);
@@ -883,8 +1131,19 @@ function parseJob(raw){
 }
 function jobScore(t){const tot=t.have.length+t.todo.length;const ok=t.have.length+t.todo.filter(x=>x.done).length;return {tot,ok,pct:tot?Math.round(ok*100/tot):0};}
 function jobText(t){const sc=jobScore(t);return "Métier visé : "+t.job+(t.from?"\nMétier de départ : "+t.from:"")+"\nCe que j’ai déjà : "+sc.ok+" sur "+sc.tot+" ("+sc.pct+" %)\n\nJ’AI DÉJÀ (compétences transférables)\n"+t.have.map(x=>"- "+x.name+(x.note?" : "+x.note:"")).join("\n")+"\n\nÀ DÉVELOPPER\n"+t.todo.map(x=>"- "+(x.done?"✓ ":"")+x.name+(x.note?" : "+x.note:"")).join("\n");}
+let jobOpen=new Set();
+const jobOn=t=>!t.status||t.status==="En cours";
 function vJobs(){
-  const T=state.targets.slice().sort((a,b)=>b.date.localeCompare(a.date));
+  const T=state.targets.slice().sort((a,b)=>b.date.localeCompare(a.date)),TA=T.filter(jobOn),TO=T.filter(t=>!jobOn(t));
+  const card=t=>{const sc=jobScore(t),op=jobOpen.has(t.id)||(TA.length===1&&jobOn(t)&&!jobOpen.has("x"+t.id));return `<details class="jobc" id="j-${t.id}" data-job="${t.id}" ${op?"open":""}><summary><span class="grow"><b>${esc(t.job)}</b> <span class="badge">${sc.pct} %</span>${jobOn(t)?"":`<span class="badge goal">${esc(t.status)}</span>`}</span><span class="chev" aria-hidden="true">›</span></summary>
+    <div class="meta">${fmt(t.date)}${t.from&&t.base!=="carnet"?" · depuis : "+esc(t.from):""}${t.base?" · "+JOB_BASES[t.base]:""}</div>
+    <div class="bar noread" style="margin:8px 0 4px">${spkBtn("j-"+t.id)}<button class="btn ghost spk" data-act="jobCopy" data-id="${t.id}">📋 Copier</button><button class="btn ghost spk" data-act="jobDel" data-id="${t.id}">🗑 Supprimer</button></div>
+    <div class="meta" style="margin-top:6px"><b>${sc.pct} %</b> : tu as déjà ${sc.ok} compétence${sc.ok>1?"s":""} sur ${sc.tot}</div>
+    <div style="height:10px;border-radius:999px;background:var(--accent-soft);overflow:hidden;margin:4px 0 10px" role="img" aria-label="${sc.pct} %"><div style="height:100%;width:${sc.pct}%;background:var(--accent)"></div></div>
+    <p class="meta"><b>✅ J’ai déjà (${t.have.length})</b></p>${t.have.map(x=>`<div class="meta">• <b>${esc(x.name)}</b>${x.note?" : "+esc(x.note):""}</div>`).join("")}
+    <p class="meta" style="margin-top:10px"><b>🌱 À développer (${t.todo.length})</b></p>${t.todo.map((x,i)=>`<div class="inline" style="align-items:flex-start;margin:4px 0"><button class="icon" style="flex:0 0 auto" data-act="jobTick" data-id="${t.id}|${i}" aria-pressed="${x.done}" aria-label="${x.done?"Remettre à développer":"Marquer comme acquise"}">${x.done?"☑️":"⬜"}</button><div class="grow meta" style="${x.done?"text-decoration:line-through":""}"><b>${esc(x.name)}</b>${x.note?" : "+esc(x.note):""}</div></div>`).join("")}
+    <div class="noread">${selField("jobSt-"+t.id,"Statut","jobStatus",t.status||"En cours")}
+    <label for="jobWhy-${t.id}">Pourquoi ?</label><input id="jobWhy-${t.id}" value="${esc(t.why||"")}" placeholder="Ex. : trop de déplacements, rythme pas adapté…"></div></details>`;};
   return `<section class="block" id="jobsBlock"><h3>🎯 Métier visé</h3>
   <p class="meta">Compare tes compétences à un métier qui t’intéresse : ce que tu as déjà (tes compétences <b>transférables</b>) et ce qu’il te reste à développer.</p>
   <label for="jobIn" style="margin-top:6px">Métier visé</label><input id="jobIn" placeholder="Ex. : Formatrice atelier numérique">
@@ -894,13 +1153,16 @@ function vJobs(){
   <label for="jobSrc">Texte préparé (2. à coller à Claude)</label><textarea id="jobSrc" rows="3" readonly placeholder="Touche « Préparer » pour le remplir"></textarea>
   <label for="jobResp">3. Réponse de Claude à coller ici</label><textarea id="jobResp" rows="5" placeholder="J’AI DÉJÀ … puis À DÉVELOPPER …"></textarea>
   <div class="bar" style="margin:10px 0 0"><button class="btn" data-act="jobPaste">Ajouter la comparaison</button></div>
-  ${T.map(t=>{const sc=jobScore(t);return `<div class="row" id="j-${t.id}" style="display:block">
+  ${T.length>1?`<div class="bar" style="margin:14px 0 4px"><button class="btn ghost" data-act="jobsFold" data-id="0">▾ Tout replier</button><button class="btn ghost" data-act="jobsFold" data-id="1">▸ Tout déplier</button></div>`:""}
+  ${TA.map(card).join("")}
+  ${TO.length?`<details style="margin-top:12px"><summary>💤 Pistes écartées (${TO.length})</summary>${TO.map(card).join("")}</details>`:""}
+  ${[].map(t=>{const sc=jobScore(t);return `<div class="row" id="j-${t.id}" style="display:block">
     <div class="inline" style="align-items:flex-start"><div class="grow"><b>${esc(t.job)}</b><div class="meta">${fmt(t.date)}${t.from&&t.base!=="carnet"?" · depuis : "+esc(t.from):""}${t.base?" · "+JOB_BASES[t.base]:""}</div></div>
     <button class="btn ghost" style="padding:6px 12px" data-act="jobCopy" data-id="${t.id}">📋 Copier</button><button class="icon" data-act="jobDel" data-id="${t.id}" aria-label="Supprimer">🗑</button></div>
     <div class="meta" style="margin-top:6px"><b>${sc.pct} %</b> : tu as déjà ${sc.ok} compétence${sc.ok>1?"s":""} sur ${sc.tot}</div>
     <div style="height:10px;border-radius:999px;background:var(--accent-soft);overflow:hidden;margin:4px 0 10px" role="img" aria-label="${sc.pct} %"><div style="height:100%;width:${sc.pct}%;background:var(--accent)"></div></div>
     <details ${T.length===1?"open":""}><summary>✅ J’ai déjà (${t.have.length})</summary>${t.have.map(x=>`<div class="meta">• <b>${esc(x.name)}</b>${x.note?" : "+esc(x.note):""}</div>`).join("")}</details>
-    <details ${T.length===1?"open":""}><summary>🌱 À développer (${t.todo.length})</summary>${t.todo.map((x,i)=>`<div class="inline" style="align-items:flex-start;margin:4px 0"><button class="icon" data-act="jobTick" data-id="${t.id}|${i}" aria-pressed="${x.done}" aria-label="${x.done?"Remettre à développer":"Marquer comme acquise"}">${x.done?"☑️":"⬜"}</button><div class="grow meta" style="${x.done?"text-decoration:line-through":""}"><b>${esc(x.name)}</b>${x.note?" : "+esc(x.note):""}</div></div>`).join("")}</details></div>`;}).join("")}
+    <details ${T.length===1?"open":""}><summary>🌱 À développer (${t.todo.length})</summary>${t.todo.map((x,i)=>`<div class="inline" style="align-items:flex-start;margin:4px 0"><button class="icon" style="flex:0 0 auto" data-act="jobTick" data-id="${t.id}|${i}" aria-pressed="${x.done}" aria-label="${x.done?"Remettre à développer":"Marquer comme acquise"}">${x.done?"☑️":"⬜"}</button><div class="grow meta" style="${x.done?"text-decoration:line-through":""}"><b>${esc(x.name)}</b>${x.note?" : "+esc(x.note):""}</div></div>`).join("")}</details></div>`;}).join("")}
   </section>`;
 }
 const SK_STOP=new Set(["avec","pour","dans","des","les","une","sur","par","aux","du","de","la","le","et","en","un","au","ou"]);
@@ -926,7 +1188,8 @@ function skillsText(view){
   if(view==="synth")return skillGroups().map(G=>"- "+G.name+" : "+G.items.filter(k=>k.proof).map(k=>k.proof.replace(/[.\s]+$/,"")).join(" ; ")+" ("+G.dates.map(fmt).join(", ")+")").join("\n");
   return state.skills.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(k=>"- "+k.name+(k.proof?" : "+k.proof:"")+" ("+fmt(k.date)+")").join("\n");
 }
-function vCompetences(){
+function vCompetences(){return withToc(vCompetences0());}
+function vCompetences0(){
   const ls=state.lastSkills;
   const list=state.skills.slice().sort((a,b)=>b.date.localeCompare(a.date));
   const view=state.skillView==="synth"?"synth":"list",allGroups=skillGroups(),gOf={};
@@ -988,6 +1251,16 @@ HISTORIQUE DES VERSIONS : à chaque nouvelle version, la liste des nouveautés a
 
 MENUS DÉROULANTS : toujours un choix « Autre… » pour ajouter ce que je veux.
 
+LECTURE À VOIX HAUTE : un bouton « 🔊 Écouter » sur les parties utiles, qui lit seulement le contenu (sans émoticônes, dates d’en-tête ni boutons), vitesse réglable.
+
+DOUBLONS : prévenir quand j’ajoute une chose déjà notée (nom proche), avec « Voir » et « Ajouter quand même ».
+
+SOMMAIRE : en haut des onglets longs, pour aller directement à une partie, et Replier / Déplier pour les listes longues.
+
+REPRENDRE ICI : une chose par ligne, à cocher ; tout s’efface quand tout est fait, avec « Annuler ».
+
+AJOUT D’ÉLÉMENTS : un bouton pour importer un petit fichier préparé par Claude, qui ajoute sans rien effacer ; ce qui manque est marqué « À compléter ».
+
 PENSE-BÊTE : une bulle jaune pâle façon post-it qui apparaît de temps en temps, fréquence réglable, pour me rappeler mes essentiels et ma méthode.
 
 PARAMÈTRES : version du carnet et date du jour. Date, heure et nom du fichier de la dernière sauvegarde et de la dernière restauration. Sauvegarde et restauration en .json. Thème clair, sombre ou comme le téléphone. Onglets réordonnables.
@@ -1007,7 +1280,7 @@ STYLE : minimaliste et épuré, tableaux et fiches mémo plutôt que texte dense
 MON PROFIL : pragmatique, méthodique, minimaliste. Des tâches courtes, des pauses, et des repères pour reprendre facilement après une phase basse.
 
 EN LIGNE ET APPLICATION MOBILE : prévoir dès le départ que le carnet sera mis en ligne sur GitHub Pages et installé comme une application. Donc : un fichier index.html (en plus du fichier avec la version d’abord, à garder sur le Drive), les lignes du manifest.json et du Service Worker (sw.js) dans le fichier, et des icônes à partir du logo. Rien de personnel ni de médical écrit dans le fichier, car il est public : mes données restent dans le téléphone et dans le .json.`;
-const UPDATE_PROMPT="Voici mon Carnet Pilote (fichier HTML joint). Prépare la version suivante en gardant tout ce qui existe, ajoute ses nouveautés datées dans l’Historique des versions, et donne-moi les 2 fichiers : la version (ex. V15Carnet_Pilote.html) et index.html pour GitHub. Mes remarques : …";
+const UPDATE_PROMPT="Voici mon Carnet Pilote (fichier HTML joint). Prépare la version suivante en gardant tout ce qui existe, ajoute ses nouveautés datées dans l’Historique des versions, et donne-moi les 2 fichiers : la version (ex. V16Carnet_Pilote.html) et index.html pour GitHub. Mes remarques : …";
 function vAide(){
   const s=state.settings,P=state.aidePins;
   const S=[
@@ -1029,7 +1302,10 @@ function vAide(){
   ["onglets","🗂️ À quoi sert chaque onglet",`<p><b>Accueil :</b> ta phase du jour, « Reprendre ici », tes projets actifs, tes prochaines dates, la boîte à idées.</p>
     <p><b>Projets :</b> deux espaces, 💼 professionnel et 🏠 personnel, jusqu’à 3 actifs chacun. ☆ pour choisir tes 3 priorités du moment, sur l’Accueil. Un projet terminé a un « Bilan ». Jusqu’à 3 liens Drive par projet : sans nom, le lien prend le nom du projet.</p>
     <p><b>Loisirs :</b> ton espace ressource, jusqu’à 3 actifs. Il peut aussi avoir une priorité ⭐.</p>
-    <p><b>✚ Santé :</b> le suivi de tes douleurs et tes essentiels (ce qui t’aide, où c’est rangé).</p>
+    <p><b>Reprendre ici</b> (Accueil) : une chose par ligne, coche ce qui est fait. Quand tout est barré, la liste s’efface toute seule (« Annuler » quelques secondes).</p>
+    <p><b>✚ Santé :</b> le suivi de tes douleurs, tes essentiels (ce qui t’aide, où c’est rangé) et tes choix validés.</p>
+    <p><b>🏠 Mon quotidien :</b> astuces, alimentation, vêtements & sacs.</p>
+    <p><b>Doublons :</b> si tu ajoutes une chose déjà notée, le carnet te prévient et te propose de la voir.</p>
     <p><b>Tâches & RDV :</b> par domaine, avec code couleur. La date d’ajout est notée toute seule. Dans « Projet ou loisir lié », « ➕ Autre… » crée un nouveau projet directement.</p>
     <p><b>Fichiers Drive :</b> tes dossiers 📁 et fichiers 📄, avec mots-clés.</p>
     <p><b>Journal de bord :</b> tes notes, le tableau de durée de travail et les totaux par catégorie (ex. temps de création d’un carnet).</p>
@@ -1056,9 +1332,9 @@ function vAide(){
   ["maj","🔄 Mettre à jour le carnet (en ligne)",`<ol class="steps">
     <li><span><span class="pic">⚙️</span> Par sécurité : Paramètres, <b>Sauvegarder</b>.</span></li>
     <li><span><span class="pic">💬</span> Envoie ta version actuelle à Claude (projet Carnet Pilote) avec le message ci-dessous.</span></li>
-    <li><span><span class="pic">📄</span> Claude te donne <b>2 fichiers</b> : la nouvelle version, ex. <b>V15Carnet_Pilote.html</b> (version d’abord, à ranger sur le Drive) et <b>index.html</b> (pour GitHub). Télécharge les deux.</span></li>
-    <li><span><span class="pic">🌐</span> Chrome : <b>github.com/carnet-personnalise/pilote-yas</b>. Touche <b>Add file</b>, puis <b>Upload files</b>.</span></li>
-    <li><span><span class="pic">⬆️</span> Choisis <b>index.html</b> dans Téléchargements, puis <b>Commit changes</b>. Il remplace l’ancien tout seul.</span></li>
+    <li><span><span class="pic">📄</span> Claude te donne <b>2 fichiers</b> : la nouvelle version, ex. <b>V16Carnet_Pilote.html</b> (version d’abord, à ranger sur le Drive) et <b>index.html</b> (pour GitHub). Télécharge les deux.</span></li>
+    <li><span><span class="pic">🌐</span> Chrome : <b>github.com/carnet-personnalise/pilote-yas</b>. Touche les <b>trois petits points ⋮</b>, puis <b>Upload files</b>.</span></li>
+    <li><span><span class="pic">⬆️</span> <b>Choose your files</b> : choisis <b>index.html</b> dans Téléchargements, puis <b>Commit changes</b>. Il remplace l’ancien tout seul.</span></li>
     <li><span><span class="pic">⏳</span> Attends <b>2 à 5 minutes</b>.</span></li>
     <li><span><span class="pic">📱</span> Ferme l’application Carnet Pilote et rouvre-la. Vérifie le numéro dans ⚙️ Paramètres, Version.</span></li>
     <li><span><span class="pic">✅</span> <b>Rien à restaurer</b> : tes données restent, car l’adresse ne change pas.</span></li>
@@ -1072,9 +1348,24 @@ function vAide(){
     <li><span><span class="pic">✅</span> Ce qui marche bien devient une <b>consigne</b> : je demande à Claude de l’écrire, puis je la colle dans les <b>instructions du projet</b>. Plus besoin de la répéter.</span></li>
     <li><span><span class="pic">🆕</span> Pour un <b>nouveau projet</b> (autre carnet, prestation…), je repars des instructions d’un projet qui fonctionne, et de « Mes règles pour tout nouveau carnet » : ce qui est fait n’est plus à refaire.</span></li></ol>
     <p class="meta">Le Pense-bête 🟨 te rappelle ces étapes de temps en temps.</p>`],
+  ["voix","🔊 Écouter au lieu de lire",`<p>Quand lire te fatigue : touche <b>🔊 Écouter</b> (ou le petit 🔊 sur une ligne). Le carnet lit seulement cette partie, sans les émoticônes ni les boutons.</p>
+    <p><b>⏹ Arrêter</b> : le bouton noir qui apparaît pendant la lecture.</p>
+    <p>Vitesse, et lecture automatique du Pense-bête : ⚙️ Paramètres, Lecture à voix haute.</p>
+    <p class="meta">Pour écrire sans taper : le micro 🎤 du clavier de ton téléphone.</p>`],
+  ["quotidien","🏠 Mon quotidien",`<p><b>💡 Astuces :</b> ce qui est efficace et validé. Ajoute des <b>mots cachés</b> : la recherche retrouvera l’astuce même si tu as oublié le mot exact (ex. « papiers » retrouve le filigrane).</p>
+    <p><b>🥗 Alimentation :</b> préférés, toujours à la maison, alicaments. Coche 🌿 Alicament : il apparaît aussi dans ✚ Santé. Une seule fiche pour les deux.</p>
+    <p><b>👗 Vêtements & sacs :</b> où est rangé chaque vêtement, tes sacs prêts à cocher avant de partir, tes astuces vêtements.</p>
+    <p>Une partie très utilisée peut devenir un <b>onglet à part</b> : ⚙️ Paramètres, Mon quotidien.</p>`],
+  ["ajout","➕ Ajouter des éléments dictés à Claude",`<ol class="steps">
+    <li><span><span class="pic">🎤</span> Dans le projet Claude « Carnet Pilote », dicte ce que tu veux ajouter (ex. « ajoute le Revitive dans mes essentiels »).</span></li>
+    <li><span><span class="pic">📄</span> Claude te donne un petit fichier <b>.json</b>. Télécharge-le.</span></li>
+    <li><span><span class="pic">⚙️</span> Paramètres, <b>Ajouter des éléments</b>, choisis le fichier.</span></li>
+    <li><span><span class="pic">✏️</span> Ce qui manque (ex. où c’est rangé) est marqué <b>À compléter</b>. Le Pense-bête te le rappelle.</span></li></ol>
+    <p class="meta">⚠️ Ce fichier est privé : ne le dépose jamais sur GitHub. Les doublons sont ignorés.</p>`],
   ["sante","✚ Santé : suivi et essentiels",`<p><b>📋 Suivi :</b> « Noter une douleur » : où, intensité de 0 à 10, type, déclencheur, ce qui soulage. Date et heure se remplissent toutes seules. Après 3 notes, un résumé sur 30 jours apparaît.</p>
     <p><b>🧰 Mes essentiels :</b> ce que j’utilise, à quoi ça sert, <b>où c’est rangé</b>. Chaque essentiel s’ajoute aussi à la liste « Ce qui soulage ».</p>
-    <p><b>🟨 Pense-bête :</b> de temps en temps à l’ouverture, il te rappelle un essentiel ou une astuce. Fréquence dans ⚙️ Paramètres.</p>
+    <p><b>✅ Mes choix validés :</b> ce qui marche pour toi, à garder pour la prochaine fois (ex. tes prochaines lunettes).</p>
+    <p><b>🟨 Pense-bête :</b> de temps en temps à l’ouverture, il te rappelle un essentiel, une astuce, ou ce qui reste à compléter. Fréquence dans ⚙️ Paramètres.</p>
     <p class="meta">Ces notes restent dans ton téléphone (et dans ton .json). Elles ne sont jamais en ligne.</p>`],
   ["regles","📋 Mes règles pour tout nouveau carnet HTML",`<p>Avant de créer un nouveau carnet (ou de faire évoluer celui de Kay Numérique), copie ce texte et colle-le à Claude <b>avant</b> de décrire ton besoin.</p>
     <label for="basePrompt">Règles communes à copier</label><textarea id="basePrompt" rows="8" readonly>${esc(BASE_PROMPT)}</textarea>
@@ -1110,14 +1401,15 @@ function vAide(){
   <nav class="block" id="aideToc" aria-label="Sommaire"><h3>Sommaire</h3>${toc}</nav>
   ${S.map(([k,t,h],i)=>{const on=P.includes(k);return `<details class="sec" id="a-${k}" ${on?"open":""}><summary><span class="num">${i+1}</span><span class="st">${t}</span>
     <button class="pinbtn ${on?"on":""}" data-act="aidePin" data-id="${k}" aria-pressed="${on}" aria-label="${on?"Désépingler":"Épingler"} la partie ${i+1}" title="${on?"Désépingler":"Épingler pour garder ouvert"}">🧷</button><span class="chev" aria-hidden="true">›</span></summary>
-    <div class="body">${h}<div class="bar" style="margin:14px 0 0"><button class="btn ghost" data-act="aideTop">↑ Retour au sommaire</button></div></div></details>`;}).join("")}`;
+    <div class="body" id="ab-${k}"><div class="bar noread" style="margin:4px 0 8px">${spkBtn("ab-"+k)}</div>${h}<div class="bar noread" style="margin:14px 0 0"><button class="btn ghost" data-act="aideTop">↑ Retour au sommaire</button></div></div></details>`;}).join("")}`;
 }
 
 /* ---------- paramètres ---------- */
 function stampText(x){if(!x)return "Aucune pour l’instant.";return fmt(x.date)+(x.time?" à "+hText(x.time):"")+(x.file?"<br><span class=\"meta\">Fichier : "+esc(x.file)+"</span>":"");}
 function listChips(kind){const lab=kind==="cats"?"catégorie":"outil";return `<div class="chips wrap">${state.lists[kind].map((x,i)=>`<span class="chip tag">${esc(x)}<button data-act="delListItem" data-id="${kind}|${i}" aria-label="Retirer ${esc(x)}">✕</button></span>`).join("")}</div>
   <div class="inline"><input id="add_${kind}" placeholder="Nouvel${kind==="cats"?"le":""} ${lab}" aria-label="Ajouter un${kind==="cats"?"e":""} ${lab}"><button class="btn ghost" data-act="addListItem" data-id="${kind}">Ajouter</button></div>`;}
-function vParams(){
+function vParams(){return withToc(vParams0());}
+function vParams0(){
   const s=state.settings;
   return `<h2>⚙️ Paramètres</h2><p class="lead">Les réglages et la sauvegarde du carnet.</p>
   <section class="block"><h3>Version</h3>
@@ -1137,6 +1429,18 @@ function vParams(){
   ${histHtml(HISTORY.slice(0,1))}
   <details><summary>Versions précédentes (V1 à ${HISTORY[1].v})</summary>${histHtml(HISTORY.slice(1))}<p class="meta">Les versions 1 à 6 sont résumées à partir de tes notes de conception.</p></details>
   <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="showNews">Revoir les nouveautés de la ${VERSION}</button></div></section>
+  <section class="block"><h3>🔊 Lecture à voix haute</h3>
+  <p class="meta">Le bouton « 🔊 Écouter » lit seulement le contenu de la partie, sans les émoticônes ni les boutons.</p>
+  <label style="margin-top:0">Vitesse</label><div class="seg" role="group" aria-label="Vitesse de lecture">${Object.entries(RATES).map(([k,[l]])=>`<button class="${s.rate===k?"on":""}" data-act="setRate" data-id="${k}" aria-pressed="${s.rate===k}">${l}</button>`).join("")}</div>
+  <label>Lire le Pense-bête tout seul</label><div class="seg" role="group" aria-label="Lire le Pense-bête tout seul">${[["1","Oui"],["0","Non"]].map(([k,l])=>`<button class="${(s.noteRead?"1":"0")===k?"on":""}" data-act="setNoteRead" data-id="${k}">${l}</button>`).join("")}</div>
+  <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="speakTest">🔊 Essayer</button></div></section>
+  <section class="block"><h3>🏠 Mon quotidien : onglets à part</h3>
+  <p class="meta">Chaque partie peut rester dans Mon quotidien, ou devenir un onglet à part dans la barre. Rien n’est perdu quand tu changes.</p>
+  ${Object.entries(QPARTS).map(([k,l])=>`<label>${l}</label><div class="seg" role="group" aria-label="${l}">${[["0","Dans Mon quotidien"],["1","Onglet à part"]].map(([v,t])=>`<button class="${(s.split[k]?"1":"0")===v?"on":""}" data-act="setSplit" data-id="${k}|${v}">${t}</button>`).join("")}</div>`).join("")}</section>
+  <section class="block"><h3>➕ Ajouter des éléments</h3>
+  <p class="meta">Dicte à Claude ce que tu veux ajouter (essentiels, aliments, astuces, vêtements, choix validés, tâches, Reprendre ici). Il te prépare un petit fichier .json : choisis-le ici. Les éléments <b>s’ajoutent</b>, rien n’est effacé. Les doublons sont ignorés.</p>
+  <label class="btn" style="margin:0;display:inline-block">Choisir le fichier d’ajout<input type="file" id="addFile" accept=".json,application/json" hidden></label>
+  <p class="meta">⚠️ Ce fichier reste privé : ne le dépose jamais sur GitHub.</p></section>
   <section class="block"><h3>🟨 Pense-bête</h3>
   <p class="meta">À l’ouverture du carnet, de temps en temps, un de tes essentiels ou une astuce de ta méthode.</p>
   <div class="seg" role="group" aria-label="Fréquence du pense-bête">${Object.entries(NOTE_FREQ).map(([k,[l]])=>`<button class="${s.noteFreq===k?"on":""}" data-act="setNoteFreq" data-id="${k}" aria-pressed="${s.noteFreq===k}">${l}</button>`).join("")}</div>
@@ -1166,9 +1470,9 @@ function vParams(){
   <p class="meta">Pour en ajouter : écris dans la case puis « Ajouter ». Pour en retirer : ✕.</p>
   <label>Catégories</label>${listChips("cats")}
   <label>Outils</label>${listChips("tools")}
-  <p class="meta" style="margin-top:14px">Les listes de l’onglet Santé (où, type, déclencheur, ce qui soulage, catégories d’essentiels) se complètent avec « ➕ Autre… » dans les formulaires.</p></section>
+  <p class="meta" style="margin-top:14px">Les listes de Santé, Mon quotidien et Métier visé (catégories, usages, statuts…) se complètent avec « ➕ Autre… » dans les formulaires.</p></section>
   <section class="block"><h3>Ordre des onglets</h3>
-  ${s.tabOrder.map((k,i)=>`<div class="row"><div class="grow">${TABS[k].label}</div><button class="icon" data-act="tabUp" data-id="${i}" aria-label="Monter" ${i===0?"disabled":""}>↑</button><button class="icon" data-act="tabDown" data-id="${i}" aria-label="Descendre" ${i===s.tabOrder.length-1?"disabled":""}>↓</button></div>`).join("")}
+  ${s.tabOrder.map((k,i)=>`<div class="row"><div class="grow">${TABS[k].label}${tabVisible(k)?"":`<div class="meta">Caché : ${k==="quotidien"?"toutes ses parties sont en onglets à part":"rangé dans Mon quotidien"}</div>`}</div><button class="icon" data-act="tabUp" data-id="${i}" aria-label="Monter" ${i===0?"disabled":""}>↑</button><button class="icon" data-act="tabDown" data-id="${i}" aria-label="Descendre" ${i===s.tabOrder.length-1?"disabled":""}>↓</button></div>`).join("")}
   <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="resetFabs">Replacer les boutons flottants</button></div></section>
   <section class="block"><h3>Tout effacer</h3><p class="meta">Sauvegarde d’abord. Cette action remet le carnet à zéro.</p>
   <button class="btn danger" data-act="resetAll">Réinitialiser le carnet</button></section>`;
@@ -1341,6 +1645,12 @@ function doSearch(q){
   state.work.forEach(w=>{if(has(w.tool,w.cat,w.details))hits.push({tab:"journal",id:"w-"+w.id,title:w.cat||w.tool,sub:"Durée de travail, "+fmt(w.date)});});
   state.ideas.forEach(i=>{if(has(i.text))hits.push({tab:"accueil",id:"i-"+i.id,title:i.text,sub:i.later?"Idée, plus tard":"Boîte à idées",later:i.later});});
   state.urgent.forEach(u=>{if(has(u.text))hits.push({pin:true,title:u.text,sub:"Note urgente"});});
+  state.q.ast.forEach(x=>{if(has(x.title,x.detail,x.kw,x.cat)){const p=x.cat==="Vêtements"?"vet":"ast";hits.push({tab:qTab(p),qv:p,id:"qa-"+x.id,title:x.title,sub:"Astuce"+(x.cat?", "+x.cat:"")});}});
+  state.q.alim.forEach(x=>{if(has(x.name,x.use,x.where,x.cat,x.forWhat))hits.push({tab:qTab("alim"),qv:"alim",id:"ql-"+x.id,title:x.name,sub:"Alimentation"+(x.ali?", alicament":"")+(x.where?", "+x.where:"")});});
+  state.q.vet.forEach(x=>{if(has(x.name,x.use,x.where,x.note))hits.push({tab:qTab("vet"),qv:"vet",id:"qv-"+x.id,title:x.name,sub:"Vêtement"+(x.where?", rangé : "+x.where:"")});});
+  state.q.bags.forEach(b=>{if(has(b.name,...b.items.map(i=>i.text)))hits.push({tab:qTab("vet"),qv:"vet",id:"qb-"+b.id,title:b.name,sub:"Sac prêt"});});
+  state.sante.choix.forEach(x=>{if(has(x.topic,x.choice,x.why))hits.push({tab:"sante",view:"choix",id:"c-"+x.id,title:x.topic||x.choice.slice(0,60),sub:"Mes choix validés"});});
+  state.rep.forEach(r=>{if(has(r.text))hits.push({tab:"accueil",id:"r-"+r.id,title:r.text,sub:"Reprendre ici"});});
   state.sante.ess.forEach(x=>{if(has(x.name,x.use,x.where,x.cat))hits.push({tab:"sante",view:"ess",id:"e-"+x.id,title:x.name,sub:"Mes essentiels"+(x.where?", rangé : "+x.where:"")});});
   state.sante.suivi.forEach(x=>{if(has(x.loc,x.type,x.trig,x.relief,x.note))hits.push({tab:"sante",view:"suivi",id:"s-h-"+x.id,title:x.loc+" ("+(+x.int||0)+"/10)",sub:"Suivi santé, "+fmt(x.date)});});
   state.skills.forEach(k=>{if(has(k.name,k.proof))hits.push({tab:"competences",id:"s-"+k.id,title:k.name,sub:"Compétence, "+fmt(k.date)});});
@@ -1406,6 +1716,7 @@ const ACT={
   editTask:id=>openModal(taskForm(state.tasks.find(t=>t.id===id)),"form"),
   saveTask:id=>{
     const title=val("tTitle");if(!title){toast("Écris ce qu’il y a à faire");return;}
+    const d=!id&&dupOf(state.tasks.filter(x=>!x.done),title,id,"title");if(d&&dupWarn("saveTask",`Tu as déjà la tâche « ${esc(d.title)} ».`,{tab:"taches",filter:"Tous",el:"t-"+d.id}))return;
     let project=val("tProj"),newName="";
     if(project==="__new"){newName=val("tProjNew");if(!newName){toast("Écris le nom du nouveau projet");return;}
       const sim=similarProject(newName);if(sim&&!confirm("Ça ressemble à « "+sim.name+" ». Créer quand même un nouveau projet ?"))return;
@@ -1417,7 +1728,7 @@ const ACT={
     if(pendingIdea)state.ideas=state.ideas.filter(i=>i.id!==pendingIdea);
     save();closeModal();
     if(cur!=="accueil"){cur="taches";if(taskFilter!=="Tous"&&taskFilter!==data.domain)taskFilter="Tous";}
-    render();flash("t-"+tid);toast(newName?"Enregistré, avec le nouveau projet « "+newName+" »":data.date?"Enregistré. Touche 🔔 pour l’agenda":"Enregistré",newName?4000:2600);
+    render();flash("t-"+tid);if(!id)setTimeout(()=>offerRep(title),300);toast(newName?"Enregistré, avec le nouveau projet « "+newName+" »":data.date?"Enregistré. Touche 🔔 pour l’agenda":"Enregistré",newName?4000:2600);
   },
   delTask:id=>{const t=state.tasks.find(x=>x.id===id);if(!t||!confirm("Supprimer « "+t.title+" » ?"))return;state.tasks=state.tasks.filter(x=>x.id!==id);save();render();},
   toggleTask:id=>{const t=state.tasks.find(x=>x.id===id);if(!t)return;t.done=!t.done;t.doneDate=t.done?today():"";save();render();if(t.done)toast("Bravo, c’est fait ✓");},
@@ -1446,11 +1757,73 @@ const ACT={
   editEss:id=>openModal(essForm(state.sante.ess.find(x=>x.id===id)),"form"),
   saveEss:id=>{
     const name=val("eName");if(!name){toast("Écris ce que tu utilises");return;}
+    const d=!id&&dupOf(state.sante.ess,name,id);if(d&&dupWarn("saveEss",`Tu as déjà « ${esc(d.name)} » dans tes essentiels${d.where?", rangé : "+esc(d.where):""}.`,{tab:"sante",sv:"ess",el:"e-"+d.id}))return;
     const data={cat:selVal("eCat",true),name,use:val("eUse"),where:val("eWhere")};
     let eid=id;if(id)Object.assign(state.sante.ess.find(x=>x.id===id),data);else{eid=uid();state.sante.ess.push(Object.assign({id:eid,date:today()},data));}
-    addToList("relief",name);save();closeModal();cur="sante";santeView="ess";render();flash("e-"+eid);toast("Essentiel enregistré");},
+    addToList("relief",name);save();closeModal();cur="sante";santeView="ess";render();flash("e-"+eid);toast("Essentiel enregistré");if(!id)offerRep(name);},
   delEss:id=>{const x=state.sante.ess.find(e=>e.id===id);if(!x||!confirm("Supprimer « "+x.name+" » ?"))return;state.sante.ess=state.sante.ess.filter(e=>e.id!==id);save();render();},
   noteClose:()=>hideNote(),
+  noteFix:id=>{hideNote();const [k,i]=id.split("|");if(k==="ess"){cur="sante";santeView="ess";render();openModal(essForm(state.sante.ess.find(x=>x.id===i)),"form");}
+    else if(k==="alim"){qView="alim";cur=qTab("alim");render();openModal(alimForm(state.q.alim.find(x=>x.id===i)),"form");}
+    else{qView="vet";cur=qTab("vet");render();openModal(vetForm(state.q.vet.find(x=>x.id===i)),"form");}
+    setTimeout(()=>{const w=$("#eWhere")||$("#lWhere")||$("#vWhere");if(w)w.focus();},120);},
+  speak:id=>{const el=document.getElementById(id);if(!el)return;if(el.tagName==="DETAILS")el.open=true;speak(textOf(el));},
+  speakStop:()=>speakStop(),
+  speakTest:()=>speak("Bonjour "+(state.name||"")+". Voici la lecture à voix haute de ton Carnet Pilote."),
+  setRate:id=>{state.settings.rate=id;save();render();toast("Vitesse : "+RATES[id][0].toLowerCase());},
+  setNoteRead:id=>{state.settings.noteRead=id==="1";save();render();toast(id==="1"?"Le Pense-bête sera lu tout seul":"Le Pense-bête ne sera pas lu");},
+  setSplit:id=>{const [k,v]=id.split("|");state.settings.split[k]=v==="1";save();render();toast(v==="1"?QPARTS[k]+" : onglet à part":QPARTS[k]+" : dans Mon quotidien");},
+  askBtn:i=>{const f=askFns[+i];$("#askBar").classList.remove("show");if(f)f();},
+  dupSee:()=>{const g=dupGo;closeModal();if(!g)return;cur=g.tab;if(g.sv)santeView=g.sv;if(g.qv)qView=g.qv;if(g.filter)taskFilter=g.filter;render();setTimeout(()=>flash(g.el),60);},
+  jump:id=>jumpTo(document.getElementById(id)),
+  jumpTop:()=>jumpTo(document.getElementById("tocNav")),
+  repAdd:()=>{const v=val("repIn");if(!v){toast("Écris d’abord une ligne");return;}v.split(/\n+/).map(x=>x.trim()).filter(Boolean).forEach(t=>state.rep.push({id:uid(),text:t,done:false}));save();render();const i=$("#repIn");if(i)i.focus();},
+  repTick:id=>{const r=state.rep.find(x=>x.id===id);if(!r)return;r.done=!r.done;save();render();if(r.done)toast("Bravo ✓");repCheck();},
+  repDel:id=>{const old=state.rep.slice();state.rep=state.rep.filter(x=>x.id!==id);save();render();ask("Ligne retirée",[["Annuler",()=>{state.rep=old;save();render();},true]],6000);},
+  repClear:()=>repClear("Reprendre ici effacé"),
+  qView:id=>{qView=id;render();},
+  newAst:()=>openModal(astForm(),"form"),
+  newAstVet:()=>openModal(astForm({id:"",cat:"Vêtements",title:"",detail:"",kw:""}),"form"),
+  editAst:id=>openModal(astForm(state.q.ast.find(x=>x.id===id)),"form"),
+  saveAst:id=>{const title=val("aTitle");if(!title){toast("Écris l’astuce");return;}
+    const d=!id&&dupOf(state.q.ast,title,id,"title");if(d&&dupWarn("saveAst",`Tu as déjà l’astuce « ${esc(d.title)} ».`,{tab:qTab(d.cat==="Vêtements"?"vet":"ast"),qv:d.cat==="Vêtements"?"vet":"ast",el:"qa-"+d.id}))return;
+    const data={cat:selVal("aCat",true),title,detail:val("aDet"),kw:val("aKw")};let xid=id;
+    if(id)Object.assign(state.q.ast.find(x=>x.id===id),data);else{xid=uid();state.q.ast.push(Object.assign({id:xid,date:today()},data));}
+    const p=data.cat==="Vêtements"&&cur!=="q_ast"&&(cur==="q_vet"||qView==="vet")?"vet":"ast";qView=p;cur=qTab(p);save();closeModal();render();flash("qa-"+xid);toast("Astuce enregistrée");if(!id)offerRep(title);},
+  delAst:id=>{const x=state.q.ast.find(e=>e.id===id);if(!x||!confirm("Supprimer « "+x.title+" » ?"))return;state.q.ast=state.q.ast.filter(e=>e.id!==id);save();render();},
+  newAlim:()=>openModal(alimForm(),"form"),
+  editAlim:id=>openModal(alimForm(state.q.alim.find(x=>x.id===id)),"form"),
+  saveAlim:id=>{const name=val("lName2");if(!name){toast("Écris l’aliment");return;}
+    const d=!id&&dupOf(state.q.alim,name,id);if(d&&dupWarn("saveAlim",`Tu as déjà « ${esc(d.name)} »${d.where?", "+esc(d.where):""}.`,{tab:qTab("alim"),qv:"alim",el:"ql-"+d.id}))return;
+    const data={cat:selVal("lCat",true),name,use:val("lUse"),where:val("lWhere"),ali:$("#lAli").checked,forWhat:val("lFor")};let xid=id;
+    if(id)Object.assign(state.q.alim.find(x=>x.id===id),data);else{xid=uid();state.q.alim.push(Object.assign({id:xid,date:today()},data));}
+    if(data.ali)addToList("relief",name);const back=cur==="sante";save();closeModal();if(!back){qView="alim";cur=qTab("alim");}render();flash("ql-"+xid);toast(data.ali?"Enregistré, aussi dans Santé 🌿":"Aliment enregistré");if(!id)offerRep(name);},
+  delAlim:id=>{const x=state.q.alim.find(e=>e.id===id);if(!x||!confirm("Supprimer « "+x.name+" » ?"))return;state.q.alim=state.q.alim.filter(e=>e.id!==id);save();render();},
+  newVet:()=>openModal(vetForm(),"form"),
+  editVet:id=>openModal(vetForm(state.q.vet.find(x=>x.id===id)),"form"),
+  saveVet:id=>{const name=val("vName");if(!name){toast("Écris le vêtement");return;}
+    const d=!id&&dupOf(state.q.vet,name,id);if(d&&dupWarn("saveVet",`Tu as déjà « ${esc(d.name)} »${d.where?", rangé : "+esc(d.where):""}.`,{tab:qTab("vet"),qv:"vet",el:"qv-"+d.id}))return;
+    const data={name,use:selVal("vUse",true),where:val("vWhere"),note:val("vNote")};let xid=id;
+    if(id)Object.assign(state.q.vet.find(x=>x.id===id),data);else{xid=uid();state.q.vet.push(Object.assign({id:xid,date:today()},data));}
+    qView="vet";cur=qTab("vet");save();closeModal();render();flash("qv-"+xid);toast("Vêtement enregistré");if(!id)offerRep(name);},
+  delVet:id=>{const x=state.q.vet.find(e=>e.id===id);if(!x||!confirm("Supprimer « "+x.name+" » ?"))return;state.q.vet=state.q.vet.filter(e=>e.id!==id);save();render();},
+  bagAdd:id=>{const b=state.q.bags.find(x=>x.id===id);const v=val("bagIn-"+id);if(!b||!v)return;
+    if(b.items.some(i=>dupKey(i.text)===dupKey(v))){toast("« "+v+" » est déjà dans ce sac");return;}
+    b.items.push({id:uid(),text:v,done:false});save();render();const i=document.getElementById("bagIn-"+id);if(i)i.focus();},
+  bagTick:id=>{const [bid,iid]=id.split("|");const b=state.q.bags.find(x=>x.id===bid);const it=b&&b.items.find(x=>x.id===iid);if(!it)return;it.done=!it.done;save();const y=window.scrollY;render();window.scrollTo(0,y);if(b.items.length&&b.items.every(x=>x.done))toast("Tout est dans le sac ✓ Bon départ !",3500);},
+  bagDel:id=>{const [bid,iid]=id.split("|");const b=state.q.bags.find(x=>x.id===bid);if(!b)return;b.items=b.items.filter(x=>x.id!==iid);save();render();},
+  bagReset:id=>{const b=state.q.bags.find(x=>x.id===id);if(!b)return;b.items.forEach(x=>x.done=false);save();render();toast("Prêt pour le prochain départ");},
+  bagNew:()=>{const n=prompt("Nom du nouveau sac (ex. : sac de piscine)");if(!n||!n.trim())return;state.q.bags.push({id:uid(),name:n.trim(),items:[]});save();render();},
+  bagRename:id=>{const b=state.q.bags.find(x=>x.id===id);if(!b)return;const n=prompt("Nouveau nom",b.name);if(!n||!n.trim())return;b.name=n.trim();save();render();},
+  bagRemove:id=>{const b=state.q.bags.find(x=>x.id===id);if(!b||!confirm("Supprimer le sac « "+b.name+" » et sa liste ?"))return;state.q.bags=state.q.bags.filter(x=>x.id!==id);save();render();},
+  newChoix:()=>openModal(choixForm(),"form"),
+  editChoix:id=>openModal(choixForm(state.sante.choix.find(x=>x.id===id)),"form"),
+  saveChoix:id=>{const choice=val("cChoice");if(!choice){toast("Écris ton choix");return;}
+    const data={topic:selVal("cTopic",true),choice,why:val("cWhy")};let xid=id;
+    if(id)Object.assign(state.sante.choix.find(x=>x.id===id),data);else{xid=uid();state.sante.choix.push(Object.assign({id:xid,date:today()},data));}
+    cur="sante";santeView="choix";save();closeModal();render();flash("c-"+xid);toast("Choix enregistré");},
+  delChoix:id=>{if(!confirm("Supprimer ce choix ?"))return;state.sante.choix=state.sante.choix.filter(x=>x.id!==id);save();render();},
+  jobsFold:v=>{const open=v==="1";state.targets.forEach(t=>{if(open){jobOpen.add(t.id);jobOpen.delete("x"+t.id);}else{jobOpen.delete(t.id);jobOpen.add("x"+t.id);}});const y=window.scrollY;render();window.scrollTo(0,y);},
   noteEss:()=>{hideNote();cur="sante";santeView="ess";render();window.scrollTo(0,0);},
   noteAdd:()=>{hideNote();cur="sante";santeView="ess";render();openModal(essForm(),"form");},
   noteTest:()=>showNote(true),
@@ -1493,7 +1866,7 @@ const ACT={
   pomoStop:()=>{state.pomo={phase:"off",end:0,emoji:"",cycle:0,skips:0,next:1,long:false};save();closeModal();updateFabs();toast("Minuteur arrêté");},
   goto:i=>{const h=lastHits[+i];if(!h)return;clearSearch();
     if(h.pin){pinModal();return;}
-    cur=h.tab;if(h.filter)taskFilter=h.filter;if(h.view)santeView=h.view;render();
+    cur=h.tab;if(h.filter)taskFilter=h.filter;if(h.view)santeView=h.view;if(h.qv)qView=h.qv;render();
     if(h.later){const d=$("#ideasBlock details");if(d)d.open=true;}
     if(h.id)setTimeout(()=>flash(h.id),60);else window.scrollTo(0,0);},
   toggleStar:id=>{const p=state.projects.find(x=>x.id===id);if(!p||p.status==="termine")return;
@@ -1564,7 +1937,7 @@ document.addEventListener("click",e=>{
 document.addEventListener("input",e=>{
   const t=e.target;
   if(t.id==="q")doSearch(t.value);
-  if(t.id==="reprendre"){state.reprendre=t.value;save();const s=$("#repSaved");if(s)s.textContent="Enregistré ✓";}
+
   if(state.chrono.running&&["chDet","chToolO","chCatO"].includes(t.id))syncChronoField(t.id);
   if(t.id==="sInt"){const o=$("#sIntOut");if(o)o.textContent=t.value+" / 10";}
 });
@@ -1579,6 +1952,20 @@ document.addEventListener("change",e=>{
     const box=t.closest(".chips");
     if(t.value==="__autre"){const o=document.getElementById(box.id+"O");if(o){o.hidden=!t.checked;if(t.checked)o.focus();}}
     if(state.chrono.running&&box.id==="chCat")syncChronoField("chCat");
+  }
+  if(t.id&&t.id.startsWith("jobSt-")){const jid=t.id.slice(6).replace(/O$/,""),tg=state.targets.find(x=>x.id===jid);
+    if(tg){if(t.tagName==="SELECT"){if(t.value!=="__autre"){tg.status=t.value;save();jobOpen.add(jid);render();toast("Statut : "+t.value);}}
+      else{const v=t.value.trim();if(v){addToList("jobStatus",v);tg.status=v;save();render();toast("Statut : "+v);}}}}
+  if(t.id&&t.id.startsWith("jobWhy-")){const tg=state.targets.find(x=>x.id===t.id.slice(7));if(tg){tg.why=t.value.trim();save();toast("Enregistré");}}
+  if(t.id==="addFile"&&t.files&&t.files[0]){
+    const file=t.files[0],r=new FileReader();
+    r.onload=()=>{try{const o=JSON.parse(r.result);
+      if(o&&Array.isArray(o.projects)&&Array.isArray(o.tasks)){toast("C’est une sauvegarde complète : utilise plutôt « Restaurer »",5000);return;}
+      if(!o||o.carnetPilote!=="ajout")throw new Error("format");
+      const res=importAdd(o);save();render();
+      toast(res.add+" élément"+(res.add>1?"s":"")+" ajouté"+(res.add>1?"s":"")+(res.skip?", "+res.skip+" déjà présent"+(res.skip>1?"s":""):""),5000);}
+      catch(err){toast("Ce fichier n’est pas un fichier d’ajout du carnet",4000);}};
+    r.readAsText(file);t.value="";
   }
   if(t.id==="tProj"){const w=$("#tProjNewWrap");if(w){w.hidden=t.value!=="__new";if(!w.hidden)$("#tProjNew").focus();}}
   if(t.id==="fStatus"){const end=t.value==="termine";$("#fWhyWrap").hidden=end;$("#fBilanWrap").hidden=!end;}
@@ -1601,11 +1988,14 @@ document.addEventListener("change",e=>{
     r.readAsText(file);t.value="";
   }
 });
+document.addEventListener("toggle",e=>{const d=e.target;if(d&&d.classList&&d.classList.contains("jobc")){const id=d.dataset.job;if(d.open){jobOpen.add(id);jobOpen.delete("x"+id);}else{jobOpen.delete(id);jobOpen.add("x"+id);}}},true);
 document.addEventListener("keydown",e=>{
-  if(e.key==="Escape"){if($("#modal").classList.contains("open"))closeModal();else if($("#note").classList.contains("show"))hideNote();else{$("#results").hidden=true;}}
+  if(e.key==="Escape"){speakStop();if($("#modal").classList.contains("open"))closeModal();else if($("#note").classList.contains("show"))hideNote();else{$("#results").hidden=true;}}
   if(e.key==="Enter"&&!e.shiftKey){
     if(e.target.id==="ideaIn"){e.preventDefault();ACT.addIdea();}
     else if(e.target.id==="uIn"){e.preventDefault();ACT.addUrgent();}
+    else if(e.target.id==="repIn"){e.preventDefault();ACT.repAdd();}
+    else if(e.target.id&&e.target.id.startsWith("bagIn-")){e.preventDefault();ACT.bagAdd(e.target.id.slice(6));}
   }
 });
 document.addEventListener("visibilitychange",()=>{
@@ -1637,8 +2027,9 @@ function setupLock(){
   msg.textContent="";hp.hidden=true;inp.value="";
   hb.hidden=!s.lockHint;
   hb.onclick=()=>{hp.textContent="💡 "+s.lockHint;hp.hidden=false;};
+  inp.oninput=()=>{if(inp.value===s.lockPass){const f=$("#lockForm");if(f.requestSubmit)f.requestSubmit();else f.onsubmit({preventDefault(){}});}};
   $("#lockForm").onsubmit=e=>{e.preventDefault();
-    if(inp.value===s.lockPass){root.classList.remove("locked");inp.value="";msg.textContent="";lastAct=Date.now();onOpen();}
+    if(inp.value===s.lockPass){inp.oninput=null;root.classList.remove("locked");inp.value="";msg.textContent="";lastAct=Date.now();onOpen();}
     else{msg.textContent="Mot de passe incorrect";inp.value="";inp.focus();}};
   setTimeout(()=>inp.focus(),50);
 }
