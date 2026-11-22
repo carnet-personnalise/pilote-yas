@@ -300,6 +300,34 @@ html.locked #repSelBar{visibility:hidden}
 .resume b{display:block;font-size:1.15rem;color:var(--ink)}
 .resume span{font-size:.82rem;color:var(--muted)}
 .tab.tabmore{color:var(--accent);font-weight:700}
+/* ---------- V20 ---------- */
+#fabNote{bottom:calc(214px + env(safe-area-inset-bottom,0px));opacity:.35;transition:opacity .2s}
+#fabNote.on,#fabNote:focus-visible,#fabNote:hover{opacity:1}
+.asstBtn{margin-left:auto;flex:0 0 auto;width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:var(--surface);padding:2px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+#lockNowBtn{margin-left:6px}
+@media (max-width:460px){#lockNowBtn .lbl{display:none}}
+#qnote{position:fixed;left:12px;right:12px;margin:0 auto;max-width:560px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:97;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:14px;padding:12px 14px;box-shadow:0 10px 26px rgba(0,0,0,.25);display:none}
+#qnote.show{display:block}
+#qnote h3{margin:0;font-size:1rem;color:var(--accent)}
+#qnote .x{border:0;background:none;font-size:1.3rem;color:var(--muted);cursor:pointer;padding:2px 8px}
+#qnote .bar{margin:8px 0 0}
+html.locked #qnote{visibility:hidden}
+textarea.grow-ta{resize:none;overflow-y:auto;min-height:46px;line-height:1.4}
+.repadd textarea{flex:1 1 220px;width:auto}
+.btn.rec,.icon.rec{background:var(--red)!important;border-color:var(--red)!important;color:#fff!important}
+.lkTools{grid-column:1 / -1;display:flex;justify-content:flex-end;gap:2px;margin-top:-2px}
+.tlink{display:inline-block;margin:4px 12px 0 0;font-size:.92rem}
+.asstHead{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+.asstHead h2{margin:0}
+.chip.robotpick{display:inline-flex;flex-direction:column;align-items:center;gap:2px;padding:8px 10px;border-radius:14px}
+.chip.robotpick.on{background:var(--accent-soft);color:var(--ink);border:2px solid var(--accent)}
+.winc{display:flex;gap:12px;align-items:flex-start}
+.winc>div{flex:1;min-width:0}
+.grow.winc{overflow-wrap:break-word}
+.winc img{width:64px;height:64px;object-fit:cover;border-radius:10px;flex:0 0 auto;border:1px solid var(--line)}
+.wprev img{max-width:160px;border-radius:10px;margin-top:6px;display:block}
+.teststep{border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 12px 12px 0;padding:10px 14px;margin:10px 0}
+.teststep p{margin:4px 0}
 /* ---------- écran du mot de passe ---------- */
 html.locked header,html.locked main,html.locked .fab{visibility:hidden}
 #lock{display:none}
@@ -319,7 +347,8 @@ html.locked #lock{display:flex;position:fixed;inset:0;z-index:200;background:var
   <div class="top">
     <div class="logo"><img src="data:image/png;base64,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" alt="Logo du Carnet Pilote"></div>
     <div><h1>Carnet Pilote</h1><span class="today" id="today"></span></div>
-    <button class="btn ghost" id="lockNowBtn" data-act="lockNow" hidden>🔒 Verrouiller</button>
+    <button class="asstBtn" id="asstBtn" data-act="asstOpen" aria-label="Mon assistant" title="Mon assistant"></button>
+    <button class="btn ghost" id="lockNowBtn" data-act="lockNow" aria-label="Verrouiller" hidden>🔒<span class="lbl"> Verrouiller</span></button>
   </div>
   <div class="searchwrap">
     <input id="q" type="search" placeholder="Rechercher (un mot, même approximatif)" aria-label="Rechercher dans le carnet" autocomplete="off">
@@ -333,6 +362,7 @@ html.locked #lock{display:flex;position:fixed;inset:0;z-index:200;background:var
 </header>
 <main id="main"></main>
 
+<button class="fab" id="fabNote" aria-label="Note rapide pour Reprendre ici" title="Note rapide pour Reprendre ici (déplaçable)">✍️</button>
 <button class="fab" id="fabChrono" aria-label="Chronomètre de travail" title="Chronomètre (déplaçable)">⏱<span class="b" hidden></span></button>
 <button class="fab" id="fabPomo" aria-label="Minuteur Pomodoro" title="Minuteur Pomodoro (déplaçable)"><span class="ic">🍅</span><span class="b" hidden></span></button>
 <button class="fab" id="fabPin" aria-label="Notes urgentes" title="Notes urgentes (déplaçable)">📌<span class="b" hidden></span></button>
@@ -340,6 +370,7 @@ html.locked #lock{display:flex;position:fixed;inset:0;z-index:200;background:var
 <div id="modal" aria-hidden="true"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
 <div id="toast" role="status" aria-live="polite"></div>
 <div id="note" role="dialog" aria-labelledby="noteTitle"></div>
+<div id="qnote" role="dialog" aria-labelledby="qnTitle"></div>
 <div id="speakBar" role="status"><span>🔊 Lecture en cours…</span><button data-act="speakStop">⏹ Arrêter</button></div>
 <div id="askBar" role="alertdialog"></div>
 <div id="alertPop" role="alertdialog" aria-modal="true" aria-labelledby="alertTitle"></div>
@@ -361,7 +392,7 @@ html.locked #lock{display:flex;position:fixed;inset:0;z-index:200;background:var
 
 <script>
 "use strict";
-const VERSION="V19",VERSION_DATE="21/11/2026",FILE_NAME="V19Carnet_Pilote.html";
+const VERSION="V20",VERSION_DATE="22/11/2026",FILE_NAME="V20Carnet_Pilote.html";
 const MOT_DE_PASSE_DE_DEPART="1234"; // 🔒 Mot de passe provisoire : change "1234" ici (garde les guillemets). Ensuite, change-le plutôt dans ⚙️ Paramètres.
 const LOGO="data:image/png;base64,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";
 const KEY="carnetPilotageYasmine";
@@ -374,12 +405,13 @@ const DEF_CATS=["Visite","Création du carnet","Amélioration du carnet","Alimen
 const DEF_TOOLS=["Claude IA","ChatGPT","Gemini","Drive","Carnet Pilote"];
 const SPACES={pro:"💼 Professionnel",perso:"🏠 Personnel",loisirs:"🎨 Loisirs"};
 const SPACE_TXT={pro:"Professionnel",perso:"Personnel",loisirs:"Loisir"};
-const LINK_TYPE={dossier:"📁",fichier:"📄"};
+const LINK_TYPE={dossier:"📁",fichier:"📄",video:"🎬",lien:"🔗"};
+const LINK_LBL={dossier:"📁 Dossier",fichier:"📄 Fichier",video:"🎬 Vidéo",lien:"🔗 Lien"};
 const TABS={
-  accueil:{label:"Accueil",kw:"début maison reprendre priorités aujourd’hui mode phase haute basse neutre idées boîte bonjour plus tard ambiance couleur urgence urgences contact contacts appeler téléphone sos secours"},
+  accueil:{label:"Accueil",kw:"début maison reprendre priorités aujourd’hui mode phase haute basse neutre idées boîte bonjour plus tard ambiance couleur urgence urgences contact contacts appeler téléphone sos secours assistant robot demander claude"},
   projets:{label:"Projets",kw:"priorité pourquoi actif attente pause classer livre mémoire objectif bilan terminé"},
   loisirs:{label:"Loisirs",kw:"loisir crochet sac lecture livre détente plaisir créatif ressource hobby objectif"},
-  sante:{label:"Santé",kw:"santé douleur douleurs dos épaule nuque suivi symptôme intensité soulage soulager essentiels chaufferette lotion pommade objet astuce rangé placard bien-être médical calendrier mictionnel miction uriner urine vessie fuite fuites protection boisson boissons bilan urodynamique"},
+  sante:{label:"Santé",kw:"santé douleur douleurs dos épaule nuque suivi symptôme intensité soulage soulager essentiels chaufferette lotion pommade objet astuce rangé placard bien-être médical calendrier mictionnel miction uriner urine vessie fuite fuites protection boisson boissons bilan urodynamique appel appels appelé urgence"},
   quotidien:{label:"🏠 Quotidien",kw:"mon quotidien astuces astuce alimentation aliments alicaments courses vêtements habits sac valise départ rangé où placard maison filigrane beauté apa prêt emprunt abonnements"},
   q_ast:{label:"💡 Astuces",kw:"astuces astuce validée efficace méthode filigrane papiers"},
   q_alim:{label:"🥗 Alimentation",kw:"alimentation aliments alicaments courses toujours à la maison préférés boissons"},
@@ -387,14 +419,14 @@ const TABS={
   q_beaute:{label:"💄 Beauté",kw:"beauté soin soins visage cheveux crème maquillage ongles routine produit"},
   q_apa:{label:"🏃‍♀️ APA perso",kw:"apa activité physique adaptée sport marche étirements exercice séance bouger"},
   q_pret:{label:"🤝 Prêté",kw:"prêté prêt prêter emprunt emprunté emprunter rendre rendu objet livre"},
-  q_abo:{label:"💳 Abonnements",kw:"abonnement abonnements ia claude chatgpt gemini tarif prix renouvellement fin essai gratuit résilier"},
+  q_abo:{label:"💳 Abonnements",kw:"abonnement abonnements ia claude chatgpt gemini tarif prix renouvellement fin essai gratuit résilier résilié rappel"},
   taches:{label:"Tâches & RDV",kw:"rendez-vous rdv santé médecin administratif démarche papiers rappel agenda calendrier échéance urgent reconversion emploi candidature famille objectifs loisirs à faire"},
   fichiers:{label:"Fichiers Drive",kw:"lien drive dossier document pdf google classement où rangé fichier nom"},
-  victoires:{label:"🏆 Mes victoires",kw:"victoires avancées statistiques médaille médailles coupe progrès fait à faire bravo réussite"},
+  victoires:{label:"🏆 Mes victoires",kw:"victoires avancées statistiques médaille médailles coupe progrès fait à faire bravo réussite souvenir souvenirs randonnée passé photo"},
   journal:{label:"Journal de bord",kw:"date tableau calendrier historique activité suivi durée travail chronomètre temps heures outils catégorie visite"},
   competences:{label:"Compétences",kw:"compétences cv recrutement savoir-faire savoir-être point bilan valoriser métier synthèse détail doublon regrouper dates copier liste étiquette technique transversale transférable métier visé reconversion comparer"},
   aide:{label:"🧠 Aide-mémoire",kw:"favori favoris installer installation fichiers téléchargements mode d’emploi comment aide procédure mise à jour version sauvegarde json restaurer drive lien mémoire claude maison porte pensées vrac routine raccourci pomodoro règles nouveau carnet prompt base modèle application appli pwa github pages en ligne héberger hébergement dépôt icône écran d’accueil manifest service worker"},
-  params:{label:"⚙️ Paramètres",kw:"réglages mot de passe verrou verrouiller verrouillage automatique inactivité quitter indice code sauvegarde restauration export import prénom pomodoro pause cycles thème sombre clair ordre onglets version listes catégories outils barre adaptée phase plus utilisés"}
+  params:{label:"⚙️ Paramètres",kw:"réglages mot de passe verrou verrouiller verrouillage automatique inactivité quitter indice code sauvegarde restauration export import prénom pomodoro pause cycles thème sombre clair ordre onglets version listes catégories outils barre adaptée phase plus utilisés mots cachés musique musiques assistant robot nom visage test tester fiche"}
 };
 const STOP=new Set(["projet","avec","dans","pour","atelier","ateliers","faire","sur","mon","mes","une","des"]);
 const WORK_MSG=[
@@ -440,7 +472,9 @@ const DEF_Q={
   pretSt:["En cours","Rendu"],
   aboCat:["IA","Musique","Vidéo","Logiciel","Stockage","Presse"],
   aboPer:["Mensuel","Annuel","Trimestriel","Paiement unique","Gratuit"],
-  aboSt:["Actif","Essai gratuit","Résilié","Terminé"],
+  aboSt:["Actif","Essai gratuit","Résilié, encore actif","Résilié","Terminé"],
+  aboName:["Claude","ChatGPT","Gemini","Canva","Spotify","Deezer","Netflix","YouTube Premium","Amazon Prime","Google One"],
+  callReason:["Douleur","Malaise","Chute","Besoin d’aide","Besoin de parler","Transport","Question médicale"],
   aboPay:["Compte par défaut","Bred","Crédit Agricole"],
   contactRel:["Famille","Compagnon","Ami(e)","Voisin(e)","Médecin","Infirmier(e)","Pharmacie"]
 };
@@ -467,9 +501,52 @@ const TIPS=[
   {e:"🆕",t:"Nouveau carnet ou nouveau projet ? Repars des instructions d’un projet qui marche bien, et de « Mes règles pour tout nouveau carnet » (Aide-mémoire)."},
   {e:"🆘",t:"Tes contacts en cas de problème sont sur l’Accueil : bouton « 🆘 Mes contacts d’urgence », puis 📞 Appeler."},
   {e:"☰",t:"La barre des onglets montre tes onglets les plus utilisés, moins en phase basse. « ☰ +… » pour tout voir. Réglable dans Paramètres."},
-  {e:"🧪",t:"Après un test, pense à effacer les éléments de test (✎ ou 🗑)."}
+  {e:"🧪",t:"Après un test, pense à effacer les éléments de test (✎ ou 🗑)."},
+  {e:"🤖",t:"Le petit robot en haut, c’est ton assistant : « Qu’est-ce que je fais aujourd’hui ? », « Où j’en étais ? »… Tu peux changer son nom et son visage dans Paramètres."},
+  {e:"💬",t:"« Demander à Claude » (Accueil ou robot) : le carnet prépare ta question avec ce qu’il sait, la copie, et ouvre Claude. Tu n’as plus qu’à coller."},
+  {e:"✍️",t:"Une idée en plein milieu d’un onglet ? Le bouton flottant ✍️ : tu dictes, ça part dans « Reprendre ici », sans quitter ta page."},
+  {e:"🎵",t:"Pendant le Pomodoro : « 🎵 Choisir une musique », puis ▶. Ajoute tes morceaux avec leur lien."},
+  {e:"🔎",t:"Un mot que tu tapes souvent ne trouve rien ? Ajoute-le comme mot caché : ⚙️ Paramètres, Mes mots cachés."},
+  {e:"🧪",t:"Nouvelle version ? Lance la fiche de test : elle se lit à voix haute, étape par étape, et garde tes remarques pour la version suivante."}
 ];
+const TESTS={V20:[
+  {k:"Mon assistant",t:"En haut, à côté du titre, touche le petit robot. Choisis « Qu’est-ce que je fais aujourd’hui ? ». La réponse s’affiche et se lit toute seule."},
+  {k:"Mon assistant › Autre…",t:"Dans la fenêtre de l’assistant, touche « ➕ Autre… ». Écris une question à toi, choisis d’où vient la réponse, puis Enregistrer. Touche ta question pour vérifier."},
+  {k:"Paramètres › Mon assistant",t:"Dans Paramètres, partie Mon assistant : change son nom, puis son visage. Vérifie le robot en haut de l’écran."},
+  {k:"Demander à Claude",t:"Sur l’Accueil, touche « 💬 Demander à Claude », puis « Organiser ma journée ». Relis le texte préparé, puis « Copier et ouvrir Claude ». Colle le texte dans Claude."},
+  {k:"Demander à Claude › Autre…",t:"Dans Demander à Claude, touche « ➕ Autre… » : écris le nom et le texte d’une demande à toi, puis Enregistrer."},
+  {k:"Note rapide ✍️",t:"Va dans un autre onglet, par exemple Paramètres. Touche le bouton flottant ✍️, pâle quand il ne sert pas. Dicte une idée, puis Ajouter. Reviens sur l’Accueil : la ligne est en haut de Reprendre ici, avec le nom de l’onglet devant."},
+  {k:"Reprendre ici › dictée",t:"Sur l’Accueil, dans Reprendre ici, dicte une longue phrase. La case s’agrandit et les derniers mots restent visibles."},
+  {k:"Reprendre ici › sujet",t:"Ajoute une ligne qui parle du Pomodoro ou d’un onglet. Le sujet trouvé tout seul doit être « Carnet Pilote ». Si tes anciennes lignes ont un mauvais sujet, touche « 🔄 Revoir les sujets »."},
+  {k:"Pomodoro › musique",t:"Lance le minuteur 🍅. Touche « 🎵 Choisir une musique », puis ▶ sur le Canon de Pachelbel. Ajoute ensuite une musique à toi, avec son lien."},
+  {k:"Contacts d’urgence › appels",t:"Ouvre 🆘 Mes contacts d’urgence. Touche 📝 sur un contact : note la date et la raison, coche « Lié à ma santé ». Va dans ✚ Santé, partie « 🆘 Appels » : l’appel y est."},
+  {k:"Abonnements",t:"Quotidien, Abonnements : ajoute un abonnement. Choisis le nom dans le menu, ou Autre…. Remplis « Me rappeler de résilier avant le ». Regarde le rappel dans la punaise 📌. Essaie aussi le statut « Résilié, encore actif », avec sa date."},
+  {k:"Paramètres › Aller à",t:"Dans Paramètres, dans la case « Aller à », tape « abonnement ». Le carnet doit te proposer l’onglet Abonnements."},
+  {k:"Paramètres › Mots cachés",t:"Dans Paramètres, Mes mots cachés : ajoute un mot à toi pour une partie. Tape-le dans la recherche du haut : la partie apparaît."},
+  {k:"Mes victoires",t:"Onglet Mes victoires : « ➕ Ajouter une victoire » passée, avec la date, le lieu, avec qui, les difficultés, ce que tu retiens, une photo ou un lien."},
+  {k:"Projets › étape suivante",t:"Ouvre un projet avec ✎. Écris l’étape suivante et choisis « Créer la tâche ». Vérifie la tâche dans Tâches & RDV, et le bouton « Voir la tâche » sur le projet."},
+  {k:"Projets › ordre des liens",t:"Dans un projet, ajoute deux liens, puis change leur ordre avec ↑ ↓."},
+  {k:"Tâches & RDV › liens",t:"Ajoute un lien (document, dossier ou vidéo) à une tâche. Vérifie qu’il s’ouvre depuis la liste."},
+  {k:"Journal de bord › total",t:"Journal de bord, Durée de travail : vérifie le total depuis le début."},
+  {k:"Fiche de test",t:"Pour finir : touche « Résumé », puis « 📋 Copier mes remarques », et colle-les à Claude pour la V21."}
+]};
 const HISTORY=[
+  {v:"V20",d:"22/11/2026",n:[
+    "🤖 <b>Mon assistant</b> : le petit robot en haut. Des questions toutes prêtes (« Qu’est-ce que je fais aujourd’hui ? », « Mes RDV de la semaine ? », « Où j’en étais ? », « Une petite victoire ? », « Une micro-action ? »), réponse lue à voix haute, et « ➕ Autre… » pour tes propres questions. Nom et visage modifiables (Paramètres).",
+    "💬 <b>Demander à Claude</b> : le carnet prépare ta demande avec ce qu’il sait (organiser ma journée, trier mes pensées, découper une tâche, écrire un message, améliorer mon carnet, ou Autre…), la copie et ouvre Claude.",
+    "✍️ <b>Note rapide</b> : un bouton flottant, pâle quand il ne sert pas. Tu dictes une idée sans quitter ta page, elle part dans Reprendre ici avec le nom de l’onglet devant.",
+    "🎤 Reprendre ici : la case <b>s’agrandit</b> pendant la dictée, les derniers mots restent visibles. Bouton 🎤 pour dicter directement.",
+    "🗂️ Reprendre ici : le <b>sujet trouvé tout seul</b> est plus juste (les mots courants n’entraînent plus un mauvais projet), et « 🔄 Revoir les sujets » corrige les anciennes lignes.",
+    "🎵 Pomodoro : <b>▶ Écouter</b> le morceau proposé, et « 🎵 Mes musiques » pour ajouter tes morceaux avec leur lien.",
+    "🆘 Contacts d’urgence : <b>📝 noter un appel</b> (date, raison). Les appels liés à ta santé vont aussi dans ✚ Santé, nouvelle partie « 🆘 Appels ».",
+    "💳 Abonnements : le <b>nom en menu</b> (avec Autre…), un <b>rappel pour résilier</b> avant le renouvellement (fenêtre rouge à l’ouverture, et 🔔 agenda), et le statut <b>« Résilié, encore actif jusqu’au… »</b>.",
+    "⚙️ « Aller à » : si rien n’est trouvé dans la page, le carnet <b>cherche dans tout le carnet</b> (ex. « abonnement »).",
+    "🔎 <b>Mes mots cachés</b> (Paramètres) : ajoute tes propres mots pour retrouver une partie (ex. « SOS » pour tes contacts d’urgence).",
+    "🏆 Mes victoires : <b>ajoute tes victoires passées</b> (date, lieu, avec qui, difficultés, à retenir, photo ou lien), liées si tu veux à un projet ou un loisir.",
+    "🧪 <b>Fiche de test</b> à chaque nouvelle version : lue à voix haute étape par étape, pause et reprise, une remarque par étape, et « Copier mes remarques » pour la version suivante.",
+    "📁 Projets : <b>étape suivante reliée à une tâche</b> (même pour un projet terminé), sans doublon. Les liens se <b>rangent avec ↑ ↓</b>, sans limite de 3.",
+    "🔗 Tâches & RDV : des <b>liens à consulter</b> (document, dossier, fichier, vidéo).",
+    "⏱ Journal de bord : <b>total général depuis le début</b> dans la durée de travail."]},
   {v:"V19",d:"21/11/2026",n:[
     "📱 <b>Écran toujours centré</b> sur le téléphone : plus besoin de le recentrer au doigt, à l’ouverture comme avec la punaise 📌.",
     "💬 Les petits messages (« Copié »…) s’affichent <b>en bas, au centre, en entier</b>.",
@@ -586,8 +663,8 @@ function defaults(){
   return {
     name:"Yas",mode:"neutre",reprendre:"",ideas:[],lastExport:null,lastRestore:null,seeded:false,
     skills:[],targets:[],jobFrom:"",jobBase:"both",skillType:"",lastSkills:null,snooze:{},aidePins:["routine","maj"],
-    contacts:[],subjLearn:{},
-    settings:{tabMode:"adapt",tabCount:{haute:8,neutre:8,basse:5},lockOn:true,lockPass:MOT_DE_PASSE_DE_DEPART,lockHint:"",theme:"auto",noteFreq:"parfois",noteRead:false,pomoNudge:30,bioId:"",rate:"normale",split:{ast:false,alim:false,vet:false,beaute:false,apa:false,pret:false,abo:false},tabNames:{},mergeGap:15,pomo:25,pause:5,longPause:20,cycles:4,remSave:7,remSkills:15,lockIdle:10,lockAway:2,tabOrder:Object.keys(TABS)},
+    contacts:[],subjLearn:{},calls:[],wins:[],music:[],asstQ:[],claudeReq:[],tests:{},
+    settings:{asstName:"Mon assistant",asstIcon:"perso",asstRead:true,kwExtra:{},testAuto:true,tabMode:"adapt",tabCount:{haute:8,neutre:8,basse:5},lockOn:true,lockPass:MOT_DE_PASSE_DE_DEPART,lockHint:"",theme:"auto",noteFreq:"parfois",noteRead:false,pomoNudge:30,bioId:"",rate:"normale",split:{ast:false,alim:false,vet:false,beaute:false,apa:false,pret:false,abo:false},tabNames:{},mergeGap:15,pomo:25,pause:5,longPause:20,cycles:4,remSave:7,remSkills:15,lockIdle:10,lockAway:2,tabOrder:Object.keys(TABS)},
     lists:Object.assign({cats:DEF_CATS.slice(),tools:DEF_TOOLS.slice()},JSON.parse(JSON.stringify(DEF_SANTE)),JSON.parse(JSON.stringify(DEF_Q)),JSON.parse(JSON.stringify(DEF_T))),
     sante:{suivi:[],ess:[],choix:[],mic:[],micDays:{}},seenVersion:"",rep:[],
     q:{ast:[],alim:[],vet:[],bags:[],beaute:[],apa:[],pret:[],abo:[],memo:{},memoMange:{}},
@@ -615,7 +692,9 @@ function fixState(s){
   if(!o.includes("victoires")){const i=o.indexOf("journal");o.splice(i<0?o.length:i+1,0,"victoires");}
   keys.forEach(k=>{if(!o.includes(k))o.push(k);});
   s.settings.tabOrder=o;
-  ["projects","tasks","files","journal","work","urgent","ideas","skills","targets","alerts","contacts"].forEach(k=>{if(!Array.isArray(s[k]))s[k]=[];});
+  ["projects","tasks","files","journal","work","urgent","ideas","skills","targets","alerts","contacts","calls","wins","music","asstQ","claudeReq"].forEach(k=>{if(!Array.isArray(s[k]))s[k]=[];});
+  if(!s.tests||typeof s.tests!=="object")s.tests={};
+  if(!s.settings.kwExtra||typeof s.settings.kwExtra!=="object")s.settings.kwExtra={};
   if(!s.subjLearn||typeof s.subjLearn!=="object")s.subjLearn={};
   s.settings.tabCount=Object.assign({haute:8,neutre:8,basse:5},s.settings.tabCount||{});if(s.settings.tabMode!=="all")s.settings.tabMode="adapt";
   if(!Array.isArray(s.aidePins))s.aidePins=["routine","maj"];s.snooze=s.snooze||{};
@@ -658,13 +737,25 @@ function fixState(s){
   s.chrono=Object.assign({running:false,start:0,lastSeen:0,gap:0,tool:"",cat:"",details:""},s.chrono||{});
   if(s.chrono.nature!==undefined){s.chrono.cat=s.chrono.cat||s.chrono.nature;delete s.chrono.nature;}
   s.pomo=Object.assign({phase:"off",end:0,emoji:"",cycle:0,skips:0,next:1,long:false},s.pomo||{});
+  if(!s.seed20){
+    if(!s.music.length)s.music=[{id:uid(),title:"Canon de Pachelbel",url:"https://www.youtube.com/results?search_query=Canon+de+Pachelbel"},{id:uid(),title:"Musique classique douce",url:"https://www.youtube.com/results?search_query=musique+classique+douce"},{id:uid(),title:"Une de mes playlists Musicolet",url:""}];
+    const L=s.lists.aboSt;if(!L.some(x=>norm(x)===norm("Résilié, encore actif"))){const i=L.findIndex(x=>norm(x)===norm("Résilié"));L.splice(i<0?L.length:i,0,"Résilié, encore actif");}
+    Object.keys(s.subjLearn).forEach(w=>{if(w.length<5||GEN_W.has(w))delete s.subjLearn[w];});
+    s.seed20=true;
+  }
+  s.projects.forEach(p=>{if(p.nextTask===undefined)p.nextTask="";});
+  s.tasks.forEach(t=>{if(!Array.isArray(t.links))t.links=[];});
   sortWork(s);
   return s;
 }
 function sortWork(s){s.work.sort((a,b)=>(b.date+(b.start||"")).localeCompare(a.date+(a.start||"")));}
+/* V20 : mots trop courants pour deviner un sujet */
+const GEN_W=new Set("ajouter ajout possibilite possible pouvoir pourrait pourrai mettre autre aussi comme quand avoir etre pour avec plus tout tous toute toute chose exemple ainsi donc peut faut faudrait serait encore apres avant cette celle celui leur entre partie nouveau nouvelle remarque idee directement automatiquement ensuite toujours jamais bien merci quelque chose lors fois egalement notamment simplement".split(" "));
+const WEAK_W=new Set(["carnet","suivi","projet","atelier","version","demande","creer","creation","faire","hebdomadaire","personnel","nouveau"]);
 let state;
 try{const raw=localStorage.getItem(KEY);state=fixState(raw?JSON.parse(raw):null);}catch(e){state=fixState(null);}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+let saveWarned=false;
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state));saveWarned=false;}catch(e){if(!saveWarned){saveWarned=true;setTimeout(()=>toast("⚠️ Mémoire du carnet pleine : rien n’a pu être enregistré. Retire une photo (Mes victoires), puis fais une sauvegarde .json.",8000),50);}}}
 
 let cur="accueil",taskFilter="Tous",lastHits=[],pendingIdea=null,actx=null,justDragged=false,tickCount=0;
 
@@ -719,7 +810,8 @@ function selVal(id,addIt){
 function applyTheme(){const t=state.settings.theme;if(t==="auto")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",t);}
 function applyPhase(){document.documentElement.setAttribute("data-phase",state.mode||"neutre");}
 function longDate(){const d=new Intl.DateTimeFormat("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(new Date());return d.charAt(0).toUpperCase()+d.slice(1);}
-function renderHeader(){const d=longDate();$("#today").textContent=(state.name||"Moi")+", "+d.charAt(0).toLowerCase()+d.slice(1);const lb=$("#lockNowBtn");if(lb)lb.hidden=!canLock();}
+function renderHeader(){const d=longDate();$("#today").textContent=(state.name||"Moi")+", "+d.charAt(0).toLowerCase()+d.slice(1);const lb=$("#lockNowBtn");if(lb)lb.hidden=!canLock();
+  const ab=$("#asstBtn");if(ab){ab.innerHTML=robotSvg(state.settings.asstIcon,42);ab.setAttribute("aria-label",asstName());ab.title=asstName();}}
 function tabVisible(k){const sp=state.settings.split||{};if(k.startsWith("q_"))return !!sp[k.slice(2)];if(k==="quotidien")return !Object.keys(QPARTS).every(p=>sp[p]);return true;}
 function renderTabs(){
   if(!tabVisible(cur))cur=cur.startsWith("q_")?"quotidien":(Object.keys(QPARTS).map(p=>"q_"+p).find(tabVisible)||"accueil");
@@ -828,10 +920,10 @@ function vAccueil(){
     repList=keys.map(k=>{const l=R.filter(r=>(r.subj||"")===k);return `<p class="subh">${k?"🗂️ "+esc(k):"Sans sujet"} <span class="badge">${l.filter(r=>!r.done).length}</span></p>`+l.map(repRow).join("");}).join("");}
   else repList=R.map(repRow).join("");
   const nSel=R.filter(r=>repSel.has(r.id)).length;
-  const rep=`<div class="bar" style="margin:14px 0 0"><button class="btn sorsbtn" data-act="jeSors">👗 Je sors : quoi prendre ?</button><button class="btn sorsbtn" data-act="mange">🥗 Qu’est-ce que je mange ?</button><button class="btn sorsbtn sos" data-act="contactsOpen">🆘 Mes contacts d’urgence</button></div><section class="block" id="repBlock"><div class="phead"><h3>Reprendre ici ${R.length?`<span class="badge">${pl(left,"ligne")} à reprendre</span>`:""}</h3><div class="tools">${R.length?spkBtn("repBlock"):""}${R.length&&!repSelMode?`<button class="btn ghost spk noread" data-act="repSelStart">📋 Préparer un prompt</button>`:""}${R.length?`<button class="btn ghost spk noread" data-act="repFold" aria-expanded="${!fold}">${fold?"▸ Déplier":"▾ Replier"}</button>`:""}</div></div>
-    <div class="repadd noread"><input id="repIn" placeholder="Où j’en étais, ce que je veux faire ensuite" aria-label="Nouvelle ligne pour Reprendre ici">${subjSelect("repSubj","")}<button class="btn" data-act="repAdd">Ajouter</button></div>
+  const rep=`<div class="bar" style="margin:14px 0 0"><button class="btn sorsbtn" data-act="jeSors">👗 Je sors : quoi prendre ?</button><button class="btn sorsbtn" data-act="mange">🥗 Qu’est-ce que je mange ?</button><button class="btn sorsbtn" data-act="claudeOpen">💬 Demander à Claude</button><button class="btn sorsbtn sos" data-act="contactsOpen">🆘 Mes contacts d’urgence</button></div><section class="block" id="repBlock"><div class="phead"><h3>Reprendre ici ${R.length?`<span class="badge">${pl(left,"ligne")} à reprendre</span>`:""}</h3><div class="tools">${R.length?spkBtn("repBlock"):""}${R.length&&!repSelMode?`<button class="btn ghost spk noread" data-act="repSelStart">📋 Préparer un prompt</button>`:""}${R.length?`<button class="btn ghost spk noread" data-act="repFold" aria-expanded="${!fold}">${fold?"▸ Déplier":"▾ Replier"}</button>`:""}</div></div>
+    <div class="repadd noread"><textarea id="repIn" class="grow-ta" rows="1" placeholder="Où j’en étais, ce que je veux faire ensuite" aria-label="Nouvelle ligne pour Reprendre ici"></textarea>${micBtn("repIn")}${subjSelect("repSubj","")}<button class="btn" data-act="repAdd">Ajouter</button></div>
     ${fold&&R.length?`<p class="meta">Liste repliée : ${pl(left,"ligne")} à reprendre.</p>`:`
-    ${R.length?`<div class="chips noread" style="margin:10px 0 4px"><button class="chip ${grp?"":"on"}" data-act="repGroup" data-id="0">🕒 Par date</button><button class="chip ${grp?"on":""}" data-act="repGroup" data-id="1">🗂️ Par sujet</button></div>`:exBox("Compléter où est rangé le coussin chauffant.<br>Ma mémoire de vie : ajouter la frise. (sujet : Ma mémoire de vie)")}
+    ${R.length?`<div class="chips noread" style="margin:10px 0 4px"><button class="chip ${grp?"":"on"}" data-act="repGroup" data-id="0">🕒 Par date</button><button class="chip ${grp?"on":""}" data-act="repGroup" data-id="1">🗂️ Par sujet</button><button class="chip" data-act="repResubj">🔄 Revoir les sujets</button></div>`:exBox("Compléter où est rangé le coussin chauffant.<br>Ma mémoire de vie : ajouter la frise. (sujet : Ma mémoire de vie)")}
     ${repSelMode?`<div class="warn noread">📋 Coche ⬜ les lignes à donner à Claude, puis « Copier pour Claude ».</div>`:""}
     ${repList}
     ${repSelMode?`<textarea id="repOut" rows="4" readonly hidden aria-label="Texte copié"></textarea>`:""}
@@ -877,7 +969,7 @@ function vLoisirs(){
   ${spaceSec("loisirs",list.length?projList(list):`<p class="meta">Aucun loisir noté. Ajoute ce qui te fait du bien, même petit.</p>`,`<span class="badge">${list.length}</span>`)}`;
 }
 function linksHtml(links,pname){
-  return links.map(l=>{const u=safeUrl(l.url);const name=l.name||((l.type==="dossier"?"Dossier ":"Fichier ")+(pname||"Drive"));
+  return links.map(l=>{const u=safeUrl(l.url);const name=l.name||(({dossier:"Dossier ",video:"Vidéo ",lien:"Lien "}[l.type]||"Fichier ")+(pname||"Drive"));
     return `<p>${LINK_TYPE[l.type]||"📄"} ${u?`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(name)}</a>`:`${esc(name)} <span class="meta">(lien à ajouter)</span>`}</p>`;}).join("");
 }
 function projCard(p){
@@ -888,7 +980,9 @@ function projCard(p){
     <button class="icon" data-act="editProject" data-id="${p.id}" aria-label="Modifier">✎</button><button class="icon" data-act="delProject" data-id="${p.id}" aria-label="Supprimer">🗑</button></div></div>
     ${ended?(p.bilan?`<p><b>Bilan :</b> ${esc(p.bilan)}</p>`:""):(p.why?`<p><b>Pourquoi ça compte :</b> ${esc(p.why)}</p>`:`<p class="meta">Pourquoi ça compte : à écrire en bonne phase, pour les jours de doute.</p>`)}
     ${p.kind==="carnet"&&p.stage?`<p><b>Étape :</b> ${esc(p.stage)}</p>`:""}
-    ${p.next&&!ended?`<p><b>Prochaine étape :</b> ${esc(p.next)}</p>`:""}
+    ${(()=>{const nt=p.nextTask&&state.tasks.find(t=>t.id===p.nextTask);if(!p.next&&!nt)return "";
+      return `<p><b>${ended?"Étape suivante":"Prochaine étape"} :</b> ${esc(p.next||nt.title)}${nt?` <button class="btn ghost spk noread" data-act="gotoTask" data-id="${nt.id}">${nt.done?"✓ Tâche faite":"✅ Voir la tâche"}</button>`:""}</p>`;})()}
+    ${(()=>{const W=state.wins.filter(w=>w.project===p.id);return W.length?`<p class="meta">🌟 ${W.map(w=>esc(w.title)).join(" · ")}</p>`:"";})()}
     ${p.notes?`<p class="meta">${esc(p.notes).replace(/\n/g,"<br>")}</p>`:""}
     ${linksHtml(p.links,p.name)}
     ${p.otherFiles?`<p class="meta">Autres fichiers : ${esc(p.otherFiles)}</p>`:""}
@@ -897,10 +991,7 @@ function projCard(p){
 function projectForm(p){
   p=p||{id:"",name:"",status:"classer",why:"",bilan:"",next:"",links:[],otherFiles:"",notes:"",space:"pro",kind:"projet"};
   const isL=p.space==="loisirs",ended=p.status==="termine";
-  const links=[0,1,2].map(i=>{const l=p.links[i]||{name:"",url:"",type:"dossier"};
-    return `<div class="linkrow"><input id="lkN${i}" value="${esc(l.name)}" placeholder="Nom (ex. Devis)" aria-label="Nom du lien ${i+1}">
-    <select id="lkT${i}" aria-label="Type du lien ${i+1}"><option value="dossier" ${l.type==="dossier"?"selected":""}>📁 Dossier</option><option value="fichier" ${l.type==="fichier"?"selected":""}>📄 Fichier</option></select>
-    <input id="lkU${i}" type="url" value="${esc(l.url)}" placeholder="https://drive.google.com/…" aria-label="Adresse du lien ${i+1}"></div>`;}).join("");
+  const nextOpts=state.tasks.filter(t=>!t.done||t.id===p.nextTask).map(t=>`<option value="${t.id}" ${p.nextTask===t.id?"selected":""}>✅ ${esc(t.title.length>60?t.title.slice(0,60)+"…":t.title)}</option>`).join("");
   return `<h2>${p.id?"Modifier":isL?"Nouveau loisir":"Nouveau projet ou objectif"}</h2>
   <label for="fName">Nom</label><input id="fName" value="${esc(p.name)}">
   ${selField("fKind","Type","projKind",KIND_LBL[p.kind]||p.kind||"Projet")}
@@ -908,12 +999,14 @@ function projectForm(p){
   ${selField("fStage","Étape","carnetStage",p.stage||"")}</div>
   <div class="inline"><div><label for="fSpace">Espace</label><select id="fSpace">${Object.keys(SPACES).map(k=>`<option value="${k}" ${p.space===k?"selected":""}>${SPACES[k]}</option>`).join("")}</select></div></div>
   <label for="fStatus">Statut</label><select id="fStatus">${STATUS_ORDER.map(s=>`<option value="${s}" ${p.status===s?"selected":""}>${STATUS[s]}</option>`).join("")}</select>
-  <div id="fWhyWrap" ${ended?"hidden":""}><label for="fWhy">Pourquoi ça compte pour moi</label><textarea id="fWhy" rows="3">${esc(p.why)}</textarea>
-  <label for="fNext">Prochaine étape (une seule)</label><input id="fNext" value="${esc(p.next)}"></div>
+  <div id="fWhyWrap" ${ended?"hidden":""}><label for="fWhy">Pourquoi ça compte pour moi</label><textarea id="fWhy" rows="3">${esc(p.why)}</textarea></div>
   <div id="fBilanWrap" ${ended?"":"hidden"}><label for="fBilan">Bilan</label><textarea id="fBilan" rows="3" placeholder="Ce que je retiens, pourquoi c’est terminé…">${esc(p.bilan)}</textarea></div>
-  <label>Liens Drive importants (dossier ou fichier), 3 maximum</label>
-  <p class="hint">Dans Drive : ⋮ à côté du dossier ou du fichier, puis « Copier le lien ».</p>
-  ${links}
+  <label for="fNext">Prochaine étape, ou la suite si c’est terminé (une seule)</label><input id="fNext" value="${esc(p.next)}" placeholder="Ex. : demander une PMSMP">
+  <label for="fNextLink">Relier cette étape à une tâche <span class="hint">(pour ne pas la noter deux fois)</span></label>
+  <select id="fNextLink"><option value="">Pas de tâche liée</option><option value="__new">➕ Autre… : créer la tâche avec cette étape</option>${nextOpts}</select>
+  <label>Liens importants (dossier, fichier, vidéo…)</label>
+  <p class="hint">Dans Drive : ⋮ à côté du dossier ou du fichier, puis « Copier le lien ». ↑ ↓ pour changer l’ordre.</p>
+  ${linksEditor("fLinks",p.links)}
   <label for="fOther">Autres fichiers (noms à retenir)</label><textarea id="fOther" rows="2">${esc(p.otherFiles)}</textarea>
   <label for="fNotes">Notes</label><textarea id="fNotes" rows="3">${esc(p.notes)}</textarea>
   <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="saveProject" data-id="${p.id}">Enregistrer</button></div>`;
@@ -940,7 +1033,7 @@ function taskRow(t){
     <input type="checkbox" data-act="toggleTask" data-id="${t.id}" ${t.done?"checked":""} aria-label="Marquer comme fait">
     <button class="dot ${t.urg}" data-act="cycleUrg" data-id="${t.id}" title="${URG_LABEL[t.urg]} (toucher pour changer)" aria-label="Urgence : ${URG_LABEL[t.urg]}"></button>
     <div class="grow"><div class="ttl">${t.type==="rdv"?"📅 ":""}${esc(t.title)}${ctype}${t.micro?`<span class="badge">10 min</span>`:""}${t.follow&&!t.done?`<span class="badge todo">⏳ ${esc(t.follow)}</span>`:""}</div>
-      <div class="meta">${esc(meta)}</div>${t.followNote?`<div class="meta">↪ ${esc(t.followNote)}</div>`:""}${t.note?`<div class="meta">${esc(t.note)}</div>`:""}${t.created?`<div class="meta added">Ajouté${t.type==="rdv"?"":"e"} le ${fmt(t.created)}</div>`:""}</div>
+      <div class="meta">${esc(meta)}</div>${t.followNote?`<div class="meta">↪ ${esc(t.followNote)}</div>`:""}${t.note?`<div class="meta">${esc(t.note)}</div>`:""}${(t.links||[]).some(l=>safeUrl(l.url))?`<div class="noread">${t.links.map(l=>{const u=safeUrl(l.url);return u?`<a class="tlink" href="${esc(u)}" target="_blank" rel="noopener">${LINK_TYPE[l.type]||"🔗"} ${esc(l.name||"Ouvrir")}</a>`:"";}).join("")}</div>`:""}${t.created?`<div class="meta added">Ajouté${t.type==="rdv"?"":"e"} le ${fmt(t.created)}</div>`:""}</div>
     ${t.date?`<button class="icon" data-act="ics" data-id="${t.id}" title="Ajouter à mon agenda" aria-label="Ajouter à mon agenda">🔔</button>`:""}
     <button class="icon" data-act="editTask" data-id="${t.id}" aria-label="Modifier">✎</button>
     <button class="icon" data-act="delTask" data-id="${t.id}" aria-label="Supprimer">🗑</button></div>`;
@@ -997,6 +1090,8 @@ function taskForm(t){
   <p class="hint">Il sera créé « À classer » dans cet espace. Tu pourras le compléter ensuite avec ✎ dans Projets.</p></div>
   <label style="display:flex;gap:10px;align-items:center;color:var(--ink)"><input type="checkbox" id="tMicro" ${t.micro?"checked":""} style="margin:0"> Faisable en 10 minutes (idéal en phase basse)</label>
   <label for="tNote">Note</label><textarea id="tNote" rows="2">${esc(t.note)}</textarea>
+  <label>Liens à consulter <span class="hint">(document, dossier, fichier, vidéo…)</span></label>
+  ${linksEditor("tLinks",t.links)}
   <p class="hint">${t.created?"Ajouté le "+fmt(t.created):"La date d’ajout sera notée toute seule : "+fmt(today())}.</p>
   <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="saveTask" data-id="${t.id}">Enregistrer</button></div>`;
 }
@@ -1030,9 +1125,10 @@ function essRow(x){
 }
 function vSante(){
   const S=state.sante,sv=santeView,aliS=state.q.alim.filter(x=>x.ali);
-  const tabs=partBar("sante","Partie de l’onglet Santé",[["suivi","📋 Suivi",S.suivi.length,"santeView"],["ess","🧰 Mes essentiels",S.ess.length+aliS.length,"santeView"],["choix","✅ Mes choix validés",S.choix.length,"santeView"],["mic","🚽 Calendrier mictionnel",S.mic.length,"santeView"]],sv);
+  const tabs=partBar("sante","Partie de l’onglet Santé",[["suivi","📋 Suivi",S.suivi.length,"santeView"],["ess","🧰 Mes essentiels",S.ess.length+aliS.length,"santeView"],["choix","✅ Mes choix validés",S.choix.length,"santeView"],["mic","🚽 Calendrier mictionnel",S.mic.length,"santeView"],["appels","🆘 Appels",state.calls.filter(c=>c.sante).length,"santeView"]],sv);
   let body;
-  if(sv==="suivi"){
+  if(sv==="appels"){body=callsBody();}
+  else if(sv==="suivi"){
     const list=S.suivi.slice().sort((a,b)=>(b.date+(b.time||"")).localeCompare(a.date+(a.time||"")));
     const last30=list.filter(x=>daysSince(x.date)<30);
     const avg=last30.length?Math.round(last30.reduce((s,x)=>s+(+x.int||0),0)/last30.length*10)/10:0;
@@ -1115,7 +1211,8 @@ function newsModal(){
   const h=HISTORY[0];
   openModal(`<span class="em" aria-hidden="true">🎉</span><h2 class="center">Nouveautés de la ${h.v}</h2><p class="center meta">du ${h.d}</p><div class="center">${spkBtn("newsBody")}</div><div id="newsBody">${histHtml([h]).replace('<div class="histv"><b>'+h.v+'</b> <span class="meta">du '+h.d+'</span>','<div class="histv">')}</div>
   <p class="meta">Tu retrouves cette liste, et toutes les versions d’avant, dans ⚙️ Paramètres, Historique des versions.</p>
-  <div class="actions"><button class="btn" data-act="closeModal">C’est noté</button></div>`,"news");
+  ${TESTS[VERSION]?`<p class="meta">🧪 Une fiche de test t’attend : elle se lit à voix haute, étape par étape, et garde tes remarques pour la version suivante.</p>`:""}
+  <div class="actions">${TESTS[VERSION]?`<button class="btn ghost" data-act="testOpen">🧪 Tester les nouveautés</button>`:""}<button class="btn" data-act="closeModal">C’est noté</button></div>`,"news");
 }
 let opened=false;
 function onOpen(){
@@ -1200,12 +1297,15 @@ function withToc(html,page){
   const nav=`<nav class="block toc noread" id="tocNav" aria-label="Sommaire"><h3>Aller à</h3>
   ${all?"":`<input id="tocQ" type="search" placeholder="Tape un mot pour trouver la partie" aria-label="Chercher une partie" autocomplete="off" style="margin-bottom:8px">`}
   <div class="chips wrap" id="tocChips">${items.map(([id,l])=>`<button class="chip${all||fav.includes(id)?"":" tmore"}" data-act="jump" data-id="${id}" ${all||fav.includes(id)?"":"hidden"}>${esc(l)}</button>`).join("")}</div>
-  ${all?"":`<p class="meta" id="tocNone" hidden>Aucune partie trouvée. Essaie un autre mot.</p><div class="bar" style="margin:8px 0 0"><button class="btn ghost spk" data-act="tocAll" data-id="${items.length}" aria-expanded="false">▸ Toutes les parties (${items.length})</button></div><p class="hint">Les parties proposées sont celles que tu ouvres le plus souvent.</p>`}</nav>`;
+  ${all?"":`<div class="meta" id="tocNone" hidden></div><div class="bar" style="margin:8px 0 0"><button class="btn ghost spk" data-act="tocAll" data-id="${items.length}" aria-expanded="false">▸ Toutes les parties (${items.length})</button></div><p class="hint">Les parties proposées sont celles que tu ouvres le plus souvent.</p>`}</nav>`;
   const p=out.indexOf("</p>");return p<0?nav+out:out.slice(0,p+4)+nav+out.slice(p+4);
 }
 function tocFilter(){const q=norm(val("tocQ"));let n=0;
   document.querySelectorAll("#tocChips .chip").forEach(c=>{let show;if(!q)show=tocOpen||!c.classList.contains("tmore");else{const sec=document.getElementById(c.dataset.id);show=norm(c.textContent).includes(q)||!!(sec&&norm(sec.textContent).includes(q));}c.hidden=!show;if(show)n++;});
-  const no=$("#tocNone");if(no)no.hidden=!q||n>0;}
+  const no=$("#tocNone");if(!no)return;no.hidden=!q;if(!q)return;
+  const all=searchHits(val("tocQ")),top=all.filter(h=>(h.fn||/^(Onglet|Partie) /.test(h.title))&&h.tab!==cur),H=(top.length?top:n?[]:all).slice(0,5);lastHits=H;
+  no.innerHTML=H.length?`<p class="meta" style="margin:8px 0 0">${n?"Ailleurs dans le carnet :":"Rien dans cette page. Dans tout le carnet :"}</p><span class="chips wrap" style="margin-top:6px">${H.map((h,i)=>`<button class="chip" data-act="goto" data-id="${i}">${esc(h.title)}</button>`).join("")}</span>`
+    :n?"":`Aucune partie trouvée. <button class="btn ghost spk" data-act="kwFromSearch" data-id="${esc(val("tocQ"))}">🔎 En faire un mot caché</button>`;}
 function jumpTo(el){if(!el)return;if(el.tagName==="DETAILS")el.open=true;const hd=document.querySelector("header");const st=hd&&/sticky|fixed/.test(getComputedStyle(hd).position)?hd.getBoundingClientRect().height:0;
   window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-st-10,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});}
 
@@ -1448,7 +1548,7 @@ function showAlert(a){const p=$("#alertPop"),lv=ALERT_LVL[a.level]?a.level:"impo
   <div class="bar" style="justify-content:center;margin:16px 0 0"><button class="btn ghost" data-act="speak" data-id="alertTxt" aria-label="Écouter">🔊</button><button class="btn ghost" data-act="alertDone" data-id="${a.id}">✓ C’est réglé</button><button class="btn" data-act="alertSeen">Vu 👍</button></div></div>`;
   p.classList.add("show");}
 function alertCheck(force){const t=today(),rank={urgent:0,important:1,normal:2};
-  const hit=state.alerts.filter(a=>(!a.until||a.until>=t)&&(force||Math.random()<(ALERT_FREQ[a.freq]||ALERT_FREQ.souvent)[1])).sort((a,b)=>(rank[a.level]??1)-(rank[b.level]??1));
+  const hit=state.alerts.filter(a=>(!a.until||a.until>=t)&&(force||!a.from||a.from<=t)&&(force||Math.random()<(ALERT_FREQ[a.freq]||ALERT_FREQ.souvent)[1])).sort((a,b)=>(rank[a.level]??1)-(rank[b.level]??1));
   if(!hit.length)return false;showAlert(hit[0]);return true;}
 
 /* ---------- V18 : mes victoires ---------- */
@@ -1467,7 +1567,11 @@ function vVictoires(){
   <section class="block center" id="vicTop">${m?`<div class="medal" aria-hidden="true">${m[1]}</div><p><b>Médaille ${m[2]}</b> : ${pl(done.length,"tâche faite","tâches faites")} !</p>`:`<div class="medal" aria-hidden="true">🌱</div><p>${done.length?pl(done.length,"tâche faite","tâches faites")+" : c’est un début !":"Ta première tâche faite t’attend."}</p>`}
   ${next?`<p class="meta">Prochaine médaille ${next[1]} à ${next[0]} tâches faites (encore ${next[0]-done.length}).</p>`:`<p class="meta">Toutes les médailles sont à toi 👑</p>`}</section>
   <section class="block" id="vicGlob"><div class="phead"><h3>Vue d’ensemble</h3>${spkBtn("vicGlob")}</div><p>${done.length} faite${done.length>1?"s":""} sur ${tot} (${pct} %)</p>${barH(pct)}
-  <p class="meta">Cette semaine : ${pl(week,"tâche faite","tâches faites")}. ${pl(ended.length,"projet terminé","projets terminés")}. ${pl(state.journal.length,"note","notes")} dans le journal.${jobsOk?" "+pl(jobsOk,"compétence acquise","compétences acquises")+" (Métier visé).":""}</p></section>
+  <p class="meta">Cette semaine : ${pl(week,"tâche faite","tâches faites")}. ${pl(ended.length,"projet terminé","projets terminés")}. ${pl(state.journal.length,"note","notes")} dans le journal.${state.wins.length?" "+pl(state.wins.length,"victoire à moi","victoires à moi")+".":""}${jobsOk?" "+pl(jobsOk,"compétence acquise","compétences acquises")+" (Métier visé).":""}</p></section>
+  <section class="block" id="vicWins"><div class="phead"><h3>🌟 Mes victoires à moi <span class="badge">${state.wins.length}</span></h3>${state.wins.length?spkBtn("vicWins"):""}</div>
+  <p class="meta noread">Tout ce que tu as réussi, même avant le carnet : une randonnée, un examen, un défi…</p>
+  <div class="bar noread"><button class="btn" data-act="winNew">➕ Ajouter une victoire</button></div>
+  ${state.wins.length?state.wins.slice().sort((a,b)=>(b.date||"").localeCompare(a.date||"")).map(winRow).join(""):exBox("Randonnée en forêt, le 12/03/2023, avec deux amies. Difficultés : la montée sous le soleil. À retenir : partir tôt, 2 litres d’eau.")}</section>
   ${domRows?`<section class="block" id="vicDom"><div class="phead"><h3>Par domaine</h3>${spkBtn("vicDom")}</div>${domRows}</section>`:""}
   ${projRows?`<section class="block" id="vicProj"><div class="phead"><h3>Par projet</h3>${spkBtn("vicProj")}</div>${projRows}</section>`:""}
   ${ended.length?`<section class="block"><h3>🏆 Projets terminés</h3>${ended.map(p=>`<div class="row"><div class="grow"><b>🏆 ${esc(p.name)}</b>${p.bilan?`<div class="meta">${esc(p.bilan)}</div>`:""}</div></div>`).join("")}</section>`:""}
@@ -1477,7 +1581,7 @@ function vVictoires(){
 
 /* ---------- V18 : quotidien, nouvelles parties ---------- */
 const QPRE={beaute:"qbe-",apa:"qap-",pret:"qp-",abo:"qo-"},QFIELD={beaute:"name",apa:"act",pret:"what",abo:"name"};
-const QMSG={beaute:"Écris le soin ou le produit",apa:"Choisis l’activité",pret:"Écris ce qui est prêté ou emprunté",abo:"Écris le nom de l’abonnement"};
+const QMSG={beaute:"Écris le soin ou le produit",apa:"Choisis l’activité",pret:"Écris ce qui est prêté ou emprunté",abo:"Choisis ou écris le nom de l’abonnement"};
 const qBtns=(k,id)=>`<div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="qSave" data-id="${k}|${id}">Enregistrer</button></div>`;
 const qIco=(k,x)=>`<button class="icon" data-act="qEdit" data-id="${k}|${x.id}" aria-label="Modifier">✎</button><button class="icon" data-act="qDel" data-id="${k}|${x.id}" aria-label="Supprimer">🗑</button>`;
 function beauteRow(x){return `<div class="row" id="qbe-${x.id}"><div class="grow"><b>${esc(x.name)}</b>${x.freq?`<span class="badge">${esc(x.freq)}</span>`:""}
@@ -1525,29 +1629,38 @@ function pretBody(){const L=state.q.pret,on=L.filter(x=>!isBack(x)).sort((a,b)=>
   return `<p class="lead">Ce que tu as prêté ou emprunté : quoi, à qui, quand, et le retour prévu. Une fois rendu, c’est barré.</p><div class="bar"><button class="btn" data-act="qNew" data-id="pret">Ajouter un prêt ou un emprunt</button></div>
   ${on.length?`<section class="block" id="pretOn"><div class="phead"><h3>En cours <span class="badge">${on.length}</span></h3>${spkBtn("pretOn")}</div>${on.map(pretRow).join("")}</section>`:L.length?`<p class="meta">Rien en cours : tout est rendu ✓</p>`:empty("Rien pour l’instant.")+exBox("Prêté : livre de cuisine, à ma voisine, le 02/11. Retour prévu : fin novembre.")}
   ${off.length?`<details class="block"><summary>✓ Rendus <span class="badge">${off.length}</span></summary>${off.map(pretRow).join("")}</details>`:""}`;}
-const aboOff=x=>/resili|termin|arret|annul/.test(norm(x.st||""));
+const aboStop=x=>/resili|termin|arret|annul/.test(norm(x.st||""));
+const aboOff=x=>aboStop(x)&&!(x.until&&x.until>=today());
+function syncAboAlert(x){state.alerts=state.alerts.filter(a=>a.abo!==x.id);
+  if(x.remind&&!aboStop(x)){const d=new Date(x.remind+"T12:00:00");d.setDate(d.getDate()-3);
+    state.alerts.unshift({id:uid(),abo:x.id,date:today(),text:"Résilier « "+x.name+" » avant le "+fmt(x.remind)+", sinon il se renouvelle.",level:"important",freq:"chaque",from:isoOf(d),until:x.remind});}}
 const numOf=v=>{const n=parseFloat(String(v||"").replace(",",".").replace(/[^\d.]/g,""));return isNaN(n)?0:n;};
 function aboMonthly(x){const p=numOf(x.price),per=norm(x.per||"");if(!p)return 0;if(/mens|mois/.test(per))return p;if(/annu|\ban\b/.test(per))return p/12;if(/trim/.test(per))return p/3;if(/hebdo|semaine/.test(per))return p*52/12;return 0;}
 function aboRow(x){const off=aboOff(x),left=x.end?Math.round((new Date(x.end+"T12:00:00")-new Date(today()+"T12:00:00"))/86400000):null;
   const dates=[x.start?"Depuis le "+fmt(x.start):"",x.end?"Fin ou renouvellement : "+fmt(x.end):"",x.dur?"Durée : "+esc(x.dur):""].filter(Boolean).join(" · ");
   return `<div class="row ${off?"gone":""}" id="qo-${x.id}"><div class="grow"><b>${esc(x.name)}</b>${x.cat?`<span class="badge">${esc(x.cat)}</span>`:""}${x.st?`<span class="badge ${off?"":"goal"}">${esc(x.st)}</span>`:""}
   ${x.price||x.per?`<div class="meta">💶 ${esc(euro(x.price))}${x.price&&x.per?" · ":""}${esc(x.per)}</div>`:""}${x.pay?`<div class="meta">💳 Payé avec : ${esc(x.pay)}</div>`:""}${dates?`<div class="meta">${dates}</div>`:""}
-  ${!off&&left!==null&&left>=0&&left<=7?`<div class="warn" style="margin:6px 0 0">⚠️ ${left===0?"Se termine aujourd’hui":"Se termine dans "+pl(left,"jour")} : à renouveler ou à résilier ?</div>`:""}${!off&&left!==null&&left<0?`<div class="meta">Date passée : mets à jour la date ou le statut (✎).</div>`:""}
+  ${!off&&x.until&&aboStop(x)?`<div class="meta">🛑 Résilié : encore actif jusqu’au <b>${fmt(x.until)}</b>, ne sera pas renouvelé.</div>`:""}
+  ${!off&&x.remind&&!aboStop(x)?`<div class="meta">⏰ Résilier avant le <b>${fmt(x.remind)}</b> <button class="btn ghost spk noread" data-act="aboIcs" data-id="${x.id}">🔔 Agenda</button></div>`:""}
+  ${!off&&!aboStop(x)&&left!==null&&left>=0&&left<=7?`<div class="warn" style="margin:6px 0 0">⚠️ ${left===0?"Se termine aujourd’hui":"Se termine dans "+pl(left,"jour")} : à renouveler ou à résilier ?</div>`:""}${!off&&!aboStop(x)&&left!==null&&left<0?`<div class="meta">Date passée : mets à jour la date ou le statut (✎).</div>`:""}
   ${x.note?`<div class="meta">${esc(x.note)}</div>`:""}</div>${qIco("abo",x)}</div>`;}
 function euro(v){v=String(v||"").trim();if(!v||!/\d/.test(v))return v;if(/€|eur|\$|£/i.test(v))return v.replace(/\s*€/," €");return v.replace(/(\d)\.(\d)/g,"$1,$2")+" €";}
-function aboForm(x){x=Object.assign({id:"",name:"",cat:"",start:"",price:"",per:"",end:"",dur:"",st:"Actif",note:"",pay:""},x||{});
+function aboForm(x){x=Object.assign({id:"",name:"",cat:"",start:"",price:"",per:"",end:"",dur:"",st:"Actif",note:"",pay:"",until:"",remind:""},x||{});
   return `<h2>${x.id?"Modifier l’abonnement":"💳 Nouvel abonnement"}</h2>
-  <label for="oName">Nom</label><input id="oName" value="${esc(x.name)}" placeholder="Ex. : assistant IA">
+  ${selField("oName","Nom","aboName",x.name)}
   ${selField("oCat","Type","aboCat",x.cat)}
   <div class="inline"><div><label for="oPrice">Tarif <span class="hint">(le € s’ajoute tout seul)</span></label><input id="oPrice" value="${esc(String(x.price||"").replace(/\s*€\s*$/,""))}" inputmode="decimal" placeholder="Ex. : 20"></div><div>${selField("oPer","Périodicité","aboPer",x.per)}</div></div>
   ${selField("oPay","Payé avec","aboPay",x.pay)}
   <div class="inline"><div><label for="oStart">Début</label><input id="oStart" type="date" value="${esc(x.start)}"></div><div><label for="oEnd">Fin ou renouvellement</label><input id="oEnd" type="date" value="${esc(x.end)}"></div></div>
   <label for="oDur">Durée <span class="hint">(facultatif)</span></label><input id="oDur" value="${esc(x.dur)}" placeholder="Ex. : 1 mois, 1 an, essai 7 jours">
+  <label for="oRemind">⏰ Me rappeler de résilier avant le <span class="hint">(conseillé pour un essai gratuit ou un nouvel abonnement)</span></label><div class="inline"><input id="oRemind" type="date" value="${esc(x.remind)}"><button type="button" class="btn ghost" data-act="aboRemind2">2 jours avant la fin</button></div>
+  <p class="hint">Un rappel rouge s’affichera à chaque ouverture, les 3 jours avant cette date.</p>
   ${selField("oSt","Statut","aboSt",x.st)}
+  <label for="oUntil">Encore actif jusqu’au <span class="hint">(si tu as résilié mais que tu peux encore l’utiliser)</span></label><input id="oUntil" type="date" value="${esc(x.until)}">
   <label for="oNote">Note</label><input id="oNote" value="${esc(x.note)}" placeholder="Ex. : résilier dans les paramètres du compte">${qBtns("abo",x.id)}`;}
-function aboBody(){const L=state.q.abo,on=L.filter(x=>!aboOff(x)).sort((a,b)=>(a.end||"9999").localeCompare(b.end||"9999")),off=L.filter(aboOff),tot=on.reduce((s,x)=>s+aboMonthly(x),0);
+function aboBody(){const L=state.q.abo,on=L.filter(x=>!aboOff(x)).sort((a,b)=>(a.end||"9999").localeCompare(b.end||"9999")),off=L.filter(aboOff),onPay=on.filter(x=>!aboStop(x)),tot=onPay.reduce((s,x)=>s+aboMonthly(x),0);
   return `<p class="lead">Tes abonnements (IA et autres) : tarif, dates, et ceux qui arrivent à leur fin.</p><div class="bar"><button class="btn" data-act="qNew" data-id="abo">Ajouter un abonnement</button></div>
-  ${on.length?`<div class="modebox neutre"><strong>${pl(on.length,"abonnement actif","abonnements actifs")}</strong><p>${tot?`Environ <b>${tot.toFixed(2).replace(".",",")} € par mois</b>.`:"Ajoute le tarif et la périodicité pour voir le total par mois."}</p>${(()=>{const by={};on.forEach(x=>{const m=aboMonthly(x);if(m){const k=x.pay||"Compte non précisé";by[k]=(by[k]||0)+m;}});const E=Object.entries(by);return E.length>1||(E.length===1&&E[0][0]!=="Compte non précisé")?`<p><b>Par compte :</b></p>`+E.sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<p>💳 ${esc(k)} : <b>${v.toFixed(2).replace(".",",")} € par mois</b></p>`).join(""):"";})()}</div>
+  ${on.length?`<div class="modebox neutre"><strong>${pl(on.length,"abonnement actif","abonnements actifs")}</strong><p>${tot?`Environ <b>${tot.toFixed(2).replace(".",",")} € par mois</b>.`:"Ajoute le tarif et la périodicité pour voir le total par mois."}${on.length>onPay.length?` <span class="meta">(sans ${pl(on.length-onPay.length,"abonnement résilié","abonnements résiliés")}, encore actif${on.length-onPay.length>1?"s":""})</span>`:""}</p>${(()=>{const by={};onPay.forEach(x=>{const m=aboMonthly(x);if(m){const k=x.pay||"Compte non précisé";by[k]=(by[k]||0)+m;}});const E=Object.entries(by);return E.length>1||(E.length===1&&E[0][0]!=="Compte non précisé")?`<p><b>Par compte :</b></p>`+E.sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<p>💳 ${esc(k)} : <b>${v.toFixed(2).replace(".",",")} € par mois</b></p>`).join(""):"";})()}</div>
   <section class="block" id="aboOn"><div class="phead"><h3>Actifs</h3>${spkBtn("aboOn")}</div>${on.map(aboRow).join("")}</section>`:empty("Aucun abonnement actif.")+(L.length?"":exBox("Assistant IA (IA) : 20 € par mois, payé avec : compte par défaut, depuis le 01/10. Renouvellement : 01/12.<br>Par compte : Bred, 20 € par mois."))}
   ${off.length?`<details class="block"><summary>Résiliés ou terminés <span class="badge">${off.length}</span></summary>${off.map(aboRow).join("")}</details>`:""}`;}
 const QFORM={beaute:beauteForm,apa:apaForm,pret:pretForm,abo:aboForm};
@@ -1555,7 +1668,7 @@ const QDATA={
   beaute:()=>({cat:selVal("bCat",true),name:val("bName2"),use:val("bUse"),freq:selVal("bFreq",true),how:val("bHow"),shop:val("bShop"),price:val("bPrice"),where:val("bWhere")}),
   apa:()=>({date:val("apDate")||today(),act:selVal("apAct",true),min:val("apMin"),feel:selVal("apFeel",true),note:val("apNote")}),
   pret:()=>({kind:selVal("pKind",true)||"Prêté",what:val("pWhat"),who:val("pWho"),date:val("pDate"),ret:val("pRet"),retTxt:val("pRetTxt"),where:val("pWhere"),st:selVal("pSt",true)||"En cours",note:val("pNote")}),
-  abo:()=>({name:val("oName"),cat:selVal("oCat",true),price:euro(val("oPrice")),pay:selVal("oPay",true),per:selVal("oPer",true),start:val("oStart"),end:val("oEnd"),dur:val("oDur"),st:selVal("oSt",true)||"Actif",note:val("oNote")})
+  abo:()=>({name:selVal("oName",true),cat:selVal("oCat",true),price:euro(val("oPrice")),pay:selVal("oPay",true),per:selVal("oPer",true),start:val("oStart"),end:val("oEnd"),dur:val("oDur"),st:selVal("oSt",true)||"Actif",note:val("oNote"),until:val("oUntil"),remind:val("oRemind")})
 };
 
 /* ---------- V18 : calendrier mictionnel ---------- */
@@ -1626,33 +1739,41 @@ const SUBJ_KW={
   "Loisirs":"crochet,lecture,livre,tricot,dessin,jardinage,film,série,musique,couture",
   "Quotidien":"courses,ménage,lessive,repas,cuisine,vêtements,rangement,maison,linge"
 };
-const CARNET_KW="carnet,onglet,onglets,version,bouton,prompt,punaise,pomodoro,chrono,chronomètre,paramètres,aide-mémoire,historique,menu déroulant,application,github";
+const CARNET_KW="carnet pilote,onglet,onglets,version,bouton,boutons,bouton flottant,prompt,punaise,pomodoro,minuteur,chrono,chronomètre,paramètres,aide-mémoire,historique,menu déroulant,application,github,reprendre ici,barre de recherche,mots cachés,mot caché,mes victoires,journal de bord,durée de travail,contact d’urgence,contacts d’urgence,contact d'urgence,contacts d'urgence,pense-bête,fiche de test,dictée vocale,assistant";
+/* V20 : mots utiles pour apprendre un sujet (pas les mots courants) */
+const learnWords=t=>sigWords(t).filter(w=>w.length>=5&&!GEN_W.has(w)&&!WEAK_W.has(w));
 function guessSubj(text){
-  const k=" "+dupKey(text)+" ",T=sigWords(text);if(k.trim().length<2)return "";
+  const k=" "+dupKey(text)+" ",T=sigWords(text),TL=learnWords(text);if(k.trim().length<2)return "";
   const sc={},add=(n,v)=>{if(n)sc[n]=(sc[n]||0)+v;};
   const has=x=>{const q=dupKey(x);return !!q&&k.includes(" "+q+" ");};
   const live=state.projects.filter(p=>p.status!=="termine");
-  live.forEach(p=>{const W=sigWords(p.name);if(W.length){const hit=W.filter(w=>k.includes(" "+w)).length;if(hit)add(p.name,hit===W.length?10+hit:hit*3);}
-    sigWords([p.next,p.why,p.notes].join(" ")).filter(w=>w.length>=5).slice(0,40).forEach(w=>{if(T.includes(w))add(p.name,1);});});
-  const L=state.subjLearn||{};T.forEach(w=>{const m=L[w];if(m)Object.entries(m).forEach(([s,c])=>add(s,Math.min(4,c)*1.5));});
+  live.forEach(p=>{const W=sigWords(p.name);if(W.length){const hw=W.filter(w=>k.includes(" "+w));
+      if(hw.length===W.length)add(p.name,10+hw.length);else{const strong=hw.filter(w=>!WEAK_W.has(w)&&!GEN_W.has(w));if(strong.length)add(p.name,strong.length*3);}}
+    sigWords([p.next,p.why,p.notes].join(" ")).filter(w=>w.length>=5&&!GEN_W.has(w)&&!WEAK_W.has(w)).slice(0,40).forEach(w=>{if(T.includes(w))add(p.name,1);});});
+  const L=state.subjLearn||{},lt={};TL.forEach(w=>{const m=L[w];if(m)Object.entries(m).forEach(([s,c])=>{lt[s]=(lt[s]||0)+Math.min(3,c);});});
+  Object.entries(lt).forEach(([s,v])=>add(s,Math.min(6,v)));
   Object.entries(SUBJ_KW).forEach(([d,kw])=>{if(state.lists.domains.includes(d))kw.split(",").forEach(x=>{if(has(x))add(d,2.5);});});
-  if(CARNET_KW.split(",").some(has)){const cp=live.find(p=>/carnet pilote/.test(norm(p.name)));add(cp?cp.name:"Carnet Pilote",3);}
+  const ck=CARNET_KW.split(",").filter(has).length;
+  if(ck){const cp=live.find(p=>/carnet pilote/.test(norm(p.name)));add(cp?cp.name:"Carnet Pilote",5+2*Math.min(ck,3)+(has("carnet pilote")?6:0));}
   let best="",bs=2;Object.entries(sc).forEach(([n,v])=>{if(v>bs){bs=v;best=n;}});return best;
 }
 function autoSubj(t){const s=guessSubj(t);if(s&&!state.projects.some(p=>p.name===s)&&!state.lists.domains.includes(s))return addToList("repSubj",s);return s;}
-function learnSubj(text,subj){if(!subj)return;const L=state.subjLearn=state.subjLearn||{};sigWords(text).forEach(w=>{const m=L[w]=L[w]||{};m[subj]=(m[subj]||0)+1;});}
+function learnSubj(text,subj){if(!subj)return;const L=state.subjLearn=state.subjLearn||{};learnWords(text).forEach(w=>{const m=L[w]=L[w]||{};m[subj]=(m[subj]||0)+1;});}
+function unlearnSubj(text,subj){if(!subj)return;const L=state.subjLearn||{};learnWords(text).forEach(w=>{const m=L[w];if(m&&m[subj]){m[subj]--;if(m[subj]<=0)delete m[subj];if(!Object.keys(m).length)delete L[w];}});}
 
 /* ---------- V19 : contacts d’urgence ---------- */
 const SOS=[["15","SAMU, urgence médicale"],["18","Pompiers"],["112","Numéro d’urgence européen"]];
 const telOf=p=>String(p||"").replace(/[^\d+]/g,"");
 function contactsModal(){const C=state.contacts;
   openModal(`<h2>🆘 Mes contacts en cas de problème</h2><p class="meta">Les personnes que tu as choisies, à joindre si ça ne va pas. Touche 📞 pour appeler.</p>
-  <div id="ctList">${C.length?C.map((c,i)=>`<div class="row" id="ct-${c.id}"><div class="grow"><b>${esc(c.name)}</b>${c.rel?`<span class="badge">${esc(c.rel)}</span>`:""}<div class="meta">${esc(c.phone)}</div>${c.note?`<div class="meta">${esc(c.note)}</div>`:""}</div>
-    ${telOf(c.phone)?`<a class="callbtn" href="tel:${esc(telOf(c.phone))}">📞 Appeler</a>`:""}<button class="icon" data-act="contactUp" data-id="${c.id}" aria-label="Monter" ${i?"":"disabled"}>↑</button><button class="icon" data-act="contactEdit" data-id="${c.id}" aria-label="Modifier">✎</button><button class="icon" data-act="contactDel" data-id="${c.id}" aria-label="Supprimer">🗑</button></div>`).join("")
+  <div id="ctList">${C.length?C.map((c,i)=>{const cl=callsOf(c.id);return `<div class="row" id="ct-${c.id}"><div class="grow"><b>${esc(c.name)}</b>${c.rel?`<span class="badge">${esc(c.rel)}</span>`:""}<div class="meta">${esc(c.phone)}</div>${c.note?`<div class="meta">${esc(c.note)}</div>`:""}${cl.length?`<div class="meta">📝 ${pl(cl.length,"appel noté","appels notés")}, le dernier le ${fmt(cl[0].date)}${cl[0].reason?" : "+esc(cl[0].reason):""}</div>`:""}</div>
+    ${telOf(c.phone)?`<a class="callbtn" href="tel:${esc(telOf(c.phone))}" data-act="callDial" data-id="${c.id}">📞 Appeler</a>`:""}<button class="icon" data-act="callNew" data-id="${c.id}" aria-label="Noter un appel à ${esc(c.name)}" title="Noter un appel">📝</button><button class="icon" data-act="contactUp" data-id="${c.id}" aria-label="Monter" ${i?"":"disabled"}>↑</button><button class="icon" data-act="contactDown" data-id="${c.id}" aria-label="Descendre" ${i<C.length-1?"":"disabled"}>↓</button><button class="icon" data-act="contactEdit" data-id="${c.id}" aria-label="Modifier">✎</button><button class="icon" data-act="contactDel" data-id="${c.id}" aria-label="Supprimer">🗑</button></div>`;}).join("")
     :exBox("Marie, ma voisine (Voisin(e)) : 06 00 00 00 00. Note : a un double des clés.")}</div>
-  <div class="bar" style="margin:12px 0 0"><button class="btn" data-act="contactNew">➕ Ajouter un contact</button></div>
+  <div class="bar" style="margin:12px 0 0"><button class="btn" data-act="contactNew">➕ Ajouter un contact</button><button class="btn ghost" data-act="callNew" data-id="">📝 Noter un appel</button></div>
   <h3 style="margin:20px 0 6px">Numéros d’urgence</h3>
-  ${SOS.map(([n,l])=>`<div class="row"><div class="grow"><b>${n}</b><div class="meta">${l}</div></div><a class="callbtn" style="background:var(--red)" href="tel:${n}">📞 ${n}</a></div>`).join("")}
+  ${SOS.map(([n,l])=>`<div class="row"><div class="grow"><b>${n}</b><div class="meta">${l}</div></div><a class="callbtn" style="background:var(--red)" href="tel:${n}" data-act="callDial" data-id="sos|${n}">📞 ${n}</a></div>`).join("")}
+  <h3 style="margin:20px 0 6px">📝 Appels notés <span class="badge">${state.calls.length}</span></h3>
+  ${state.calls.length?sortCalls(state.calls).slice(0,4).map(callLine).join("")+`<div class="bar" style="margin:8px 0 0"><button class="btn ghost" data-act="callsSee">Tout voir dans ✚ Santé, Appels</button></div>`:`<p class="meta">Touche 📝 pour noter quand et pourquoi tu as dû appeler quelqu’un. Après « 📞 Appeler », le carnet te le propose.</p>`}
   <div class="actions"><button class="btn ghost" data-act="closeModal">Fermer</button></div>`,"contacts");}
 function contactForm(c){c=Object.assign({id:"",name:"",phone:"",rel:"",note:""},c||{});
   return `<h2>${c.id?"Modifier le contact":"🆘 Nouveau contact"}</h2>
@@ -1661,6 +1782,250 @@ function contactForm(c){c=Object.assign({id:"",name:"",phone:"",rel:"",note:""},
   ${selField("ctRel","Qui est-ce ?","contactRel",c.rel)}
   <label for="ctNote">Note <span class="hint">(facultatif)</span></label><input id="ctNote" value="${esc(c.note)}" placeholder="Ex. : à appeler en premier, a un double des clés">
   <div class="actions"><button class="btn ghost" data-act="contactsOpen">Annuler</button><button class="btn" data-act="saveContact" data-id="${c.id}">Enregistrer</button></div>`;}
+
+/* ---------- V20 : appels d’urgence ---------- */
+let callBack="contacts";
+const sortCalls=L=>L.slice().sort((a,b)=>((b.date||"")+(b.time||"")).localeCompare((a.date||"")+(a.time||"")));
+const callsOf=cid=>sortCalls(state.calls.filter(x=>x.contact===cid));
+function callWho(contact,other){if(contact&&contact.startsWith("sos|")){const n=contact.slice(4),s=SOS.find(x=>x[0]===n);return n+(s?" ("+s[1]+")":"");}const c=state.contacts.find(x=>x.id===contact);return c?c.name:(other||"?");}
+function callLine(x){return `<div class="row" id="cl-${x.id}"><div class="grow"><b>${fmt(x.date)}${x.time?" à "+hText(x.time):""}</b> · ${esc(x.who||"?")}${x.sante?` <span class="badge">✚ Santé</span>`:""}${x.reason?`<div class="meta">Raison : ${esc(x.reason)}</div>`:""}${x.note?`<div class="meta">${esc(x.note)}</div>`:""}</div><button class="icon" data-act="callEdit" data-id="${x.id}" aria-label="Modifier">✎</button><button class="icon" data-act="callDel" data-id="${x.id}" aria-label="Supprimer">🗑</button></div>`;}
+function callForm(x){x=Object.assign({id:"",contact:"",who:"",date:today(),time:hm(new Date()),reason:"",sante:false,note:""},x||{});
+  const known=x.contact&&(x.contact.startsWith("sos|")||state.contacts.some(c=>c.id===x.contact));
+  return `<h2>${x.id?"Modifier l’appel":"📝 Noter un appel"}</h2>
+  <label for="clWho">Qui a été appelé ?</label><select id="clWho">${state.contacts.map(c=>`<option value="${c.id}" ${x.contact===c.id?"selected":""}>${esc(c.name)}</option>`).join("")}${SOS.map(([n,l])=>`<option value="sos|${n}" ${x.contact==="sos|"+n?"selected":""}>${n} : ${esc(l)}</option>`).join("")}<option value="__autre" ${known?"":"selected"}>➕ Autre…</option></select>
+  <input id="clWhoO" placeholder="Qui ? (ex. le médecin de garde)" aria-label="Qui a été appelé : autre" value="${known?"":esc(x.who)}" ${known?"hidden":""}>
+  <div class="inline"><div><label for="clDate">Date</label><input id="clDate" type="date" value="${esc(x.date)}"></div><div><label for="clTime">Heure</label><input id="clTime" type="time" value="${esc(x.time)}"></div></div>
+  ${selField("clReason","Raison de l’appel","callReason",x.reason)}
+  <label style="display:flex;gap:10px;align-items:center;color:var(--ink);margin-top:14px"><input type="checkbox" id="clSante" ${x.sante?"checked":""} style="margin:0"> ✚ Lié à ma santé (aussi dans Santé, Appels)</label>
+  <label for="clNote">Note <span class="hint">(facultatif : ce qui s’est passé, ce qui a aidé)</span></label><textarea id="clNote" rows="2">${esc(x.note)}</textarea>
+  <div class="actions"><button class="btn ghost" data-act="callCancel">Annuler</button><button class="btn" data-act="saveCall" data-id="${x.id}">Enregistrer</button></div>`;}
+let callsFilter="sante";
+function callsBody(){const all=sortCalls(state.calls),L=callsFilter==="sante"?all.filter(x=>x.sante):all;
+  return `<p class="meta">Quand et pourquoi tu as dû appeler un de tes contacts d’urgence. Coche « Lié à ma santé » pour les voir ici.</p>
+  <div class="bar"><button class="btn" data-act="callNew" data-id="">📝 Noter un appel</button><button class="btn ghost" data-act="contactsOpen">🆘 Mes contacts</button></div>
+  <div class="chips noread"><button class="chip ${callsFilter==="sante"?"on":""}" data-act="callsFilt" data-id="sante">✚ Liés à ma santé (${all.filter(x=>x.sante).length})</button><button class="chip ${callsFilter==="all"?"on":""}" data-act="callsFilt" data-id="all">Tous (${all.length})</button></div>
+  ${L.length?`<section class="block" id="callsBlock"><div class="phead"><h3>Mes appels <span class="badge">${L.length}</span></h3>${spkBtn("callsBlock")}</div>${L.map(callLine).join("")}</section><div class="bar"><button class="btn ghost" data-act="callsCopy">📋 Copier la liste</button></div>`
+  :empty("Aucun appel noté ici pour l’instant.")+exBox("12/11, 21 h 30 · Marie (voisine). Raison : malaise. ✚ Santé. Note : elle est restée avec moi une heure.")}`;}
+
+/* ---------- V20 : liens à ranger ---------- */
+function linkRowHtml(l){l=l||{name:"",url:"",type:"dossier"};
+  return `<div class="linkrow" data-lk="1"><input class="lkN" value="${esc(l.name)}" placeholder="Nom (ex. Devis)" aria-label="Nom du lien"><select class="lkT" aria-label="Type du lien">${Object.entries(LINK_LBL).map(([k,v])=>`<option value="${k}" ${l.type===k?"selected":""}>${v}</option>`).join("")}</select><input class="lkU" type="url" value="${esc(l.url)}" placeholder="https://…" aria-label="Adresse du lien"><div class="lkTools"><button type="button" class="icon" data-act="lkMove" data-id="-1" aria-label="Monter ce lien">↑</button><button type="button" class="icon" data-act="lkMove" data-id="1" aria-label="Descendre ce lien">↓</button><button type="button" class="icon" data-act="lkDel" aria-label="Retirer ce lien">✕</button></div></div>`;}
+function linksEditor(id,links){const L=(links||[]).slice();if(!L.length)L.push(null);
+  return `<div id="${id}">${L.map(linkRowHtml).join("")}</div><div class="bar" style="margin:4px 0 0"><button type="button" class="btn ghost spk" data-act="lkAdd" data-id="${id}">➕ Ajouter un lien</button></div>`;}
+function linksVal(id){const b=document.getElementById(id);if(!b)return [];
+  return [...b.querySelectorAll("[data-lk]")].map(r=>({name:r.querySelector(".lkN").value.trim(),url:r.querySelector(".lkU").value.trim(),type:r.querySelector(".lkT").value||"fichier"})).filter(l=>l.url||l.name);}
+
+/* ---------- V20 : dictée ---------- */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null;
+const micBtn=id=>SR?`<button type="button" class="btn ghost noread" data-act="dictate" data-id="${id}" aria-label="Dicter" title="Dicter">🎤</button>`:"";
+function autoGrow(t){if(!t||t.tagName!=="TEXTAREA"||!t.classList.contains("grow-ta"))return;t.style.height="auto";t.style.height=Math.min(t.scrollHeight+2,260)+"px";t.scrollTop=t.scrollHeight;}
+function toEnd(t){if(!t)return;autoGrow(t);try{const n=t.value.length;t.setSelectionRange(n,n);}catch(e){}t.scrollTop=t.scrollHeight;}
+function dictate(id,btn){
+  if(!SR){toast("Utilise le micro 🎤 de ton clavier",3500);return;}
+  if(rec){try{rec.stop();}catch(e){}return;}
+  const el=document.getElementById(id);if(!el)return;
+  const base=el.value.trim()?el.value.replace(/\s*$/," "):"";
+  rec=new SR();rec.lang="fr-FR";rec.interimResults=true;rec.continuous=false;
+  rec.onresult=e=>{let txt="";for(let i=0;i<e.results.length;i++)txt+=e.results[i][0].transcript;const t=document.getElementById(id);if(!t)return;t.value=(base+txt).replace(/\s{2,}/g," ");toEnd(t);if(modalKind==="form")modalDirty=true;};
+  rec.onend=()=>{rec=null;document.querySelectorAll(".rec").forEach(b=>b.classList.remove("rec"));const t=document.getElementById(id);if(t){try{t.focus({preventScroll:true});}catch(e){}toEnd(t);}};
+  rec.onerror=e=>{if(e.error==="not-allowed"||e.error==="service-not-allowed")toast("Le micro n’est pas autorisé ici : utilise le micro 🎤 de ton clavier",5000);};
+  try{rec.start();if(btn)btn.classList.add("rec");toast("Je t’écoute… (touche 🎤 pour arrêter)",2500);}catch(e){rec=null;toast("Utilise le micro 🎤 de ton clavier",3500);}
+}
+
+/* ---------- V20 : note rapide ---------- */
+function placeLabel(){
+  if(cur==="quotidien")return "Quotidien › "+partLabel(qView).replace(/^\S+\s/,"");
+  if(cur.startsWith("q_"))return partLabel(cur.slice(2)).replace(/^\S+\s/,"");
+  if(cur==="sante"){const m={suivi:"Suivi",ess:"Mes essentiels",choix:"Mes choix validés",mic:"Calendrier mictionnel",appels:"Appels"};return "Santé › "+(m[santeView]||"");}
+  return tabLabel(cur).replace(/^[^\p{L}\d]+/u,"");
+}
+function quickNote(){
+  const q=$("#qnote");if(q.classList.contains("show")){qnClose();return;}
+  q.innerHTML=`<div class="phead"><h3 id="qnTitle">✍️ Note pour Reprendre ici</h3><button class="x" data-act="qnClose" aria-label="Fermer">×</button></div>
+  <textarea id="qnIn" class="grow-ta" rows="2" placeholder="Dicte ou écris ton idée…" aria-label="Ma note" style="margin-top:6px"></textarea>
+  <label class="chip check" style="margin-top:8px"><input type="checkbox" id="qnCtx" checked> Noter l’endroit : <b>[${esc(placeLabel())}]</b></label>
+  <div class="bar">${micBtn("qnIn")}<button class="btn" data-act="qnAdd">Ajouter</button><button class="btn ghost" data-act="qnClose">Fermer</button></div>
+  <p class="hint" style="margin:6px 0 0">Tu restes sur ta page. Une ligne par idée : elle arrive en haut de Reprendre ici, avec son sujet trouvé tout seul.</p>`;
+  q.classList.add("show");$("#fabNote").classList.add("on");setTimeout(()=>{const t=$("#qnIn");if(t)t.focus({preventScroll:true});},80);
+}
+function qnClose(){$("#qnote").classList.remove("show");$("#fabNote").classList.remove("on");if(rec){try{rec.stop();}catch(e){}}}
+
+/* ---------- V20 : musique du Pomodoro ---------- */
+function musicPlayBtn(m,big){const u=m&&safeUrl(m.url);return u?`<a class="btn ${big?"":"ghost spk"}" href="${esc(u)}" target="_blank" rel="noopener">▶ Écouter</a>`:`<span class="meta">(pas de lien : ouvre ton appli)</span>`;}
+function musicModal(){const M=state.music;
+  openModal(`<h2>🎵 Mes musiques</h2><p class="meta">Le minuteur 🍅 te propose une de ces musiques. Touche ▶ pour l’écouter (YouTube, Spotify, Deezer… s’ouvre à côté).</p>
+  ${M.length?M.map((m,i)=>`<div class="row"><div class="grow"><b>${esc(m.title)}</b>${m.url?`<div class="meta">${esc(m.url.replace(/^https?:\/\/(www\.)?/,"").slice(0,48))}${m.url.length>56?"…":""}</div>`:""}</div>${musicPlayBtn(m)}<button class="icon" data-act="musicMove" data-id="${m.id}|-1" aria-label="Monter" ${i?"":"disabled"}>↑</button><button class="icon" data-act="musicMove" data-id="${m.id}|1" aria-label="Descendre" ${i<M.length-1?"":"disabled"}>↓</button><button class="icon" data-act="musicDel" data-id="${m.id}" aria-label="Retirer">✕</button></div>`).join(""):exBox("Canon de Pachelbel : lien YouTube.")}
+  <h3 style="margin:18px 0 4px">➕ Ajouter une musique</h3>
+  <label for="muT">Titre</label><input id="muT" placeholder="Ex. : Clair de lune, Debussy">
+  <label for="muU">Lien <span class="hint">(facultatif)</span></label><input id="muU" type="url" placeholder="https://…">
+  <p class="hint">Dans YouTube, Spotify ou Deezer : « Partager », puis « Copier le lien ».</p>
+  <div class="bar"><button class="btn" data-act="musicAdd">Ajouter</button></div>
+  <div class="actions">${state.pomo.phase!=="off"?`<button class="btn ghost" data-act="musicBack">↩ Minuteur</button>`:""}<button class="btn" data-act="closeModal">Fermer</button></div>`,"music");}
+
+/* ---------- V20 : mes victoires à moi ---------- */
+let winPhoto=null;
+function winRow(w){const p=state.projects.find(x=>x.id===w.project),u=safeUrl(w.url);
+  return `<div class="row" id="w20-${w.id}"><div class="grow winc">${w.photo?`<img src="${w.photo}" alt="Photo : ${esc(w.title)}">`:""}<div style="min-width:0"><b>🌟 ${esc(w.title)}</b>
+  <div class="meta">${[w.date?fmt(w.date):"",w.place?"📍 "+esc(w.place):"",p?"📁 "+esc(p.name):""].filter(Boolean).join(" · ")}</div>
+  ${w.people?`<div class="meta">👥 Avec : ${esc(w.people)}</div>`:""}${w.hard?`<div class="meta">⛰️ Difficultés : ${esc(w.hard)}</div>`:""}${w.learn?`<div class="meta">💡 À retenir : ${esc(w.learn)}</div>`:""}${w.note?`<div class="meta">${esc(w.note).replace(/\n/g,"<br>")}</div>`:""}
+  ${u?`<div class="noread"><a href="${esc(u)}" target="_blank" rel="noopener">🔗 Voir la photo ou le lien</a></div>`:""}</div></div>
+  ${spkBtn("w20-"+w.id,1)}<button class="icon" data-act="winEdit" data-id="${w.id}" aria-label="Modifier">✎</button><button class="icon" data-act="winDel" data-id="${w.id}" aria-label="Supprimer">🗑</button></div>`;}
+function winForm(w){w=Object.assign({id:"",title:"",date:"",place:"",people:"",hard:"",learn:"",note:"",url:"",photo:"",project:""},w||{});winPhoto=w.photo||null;
+  return `<h2>${w.id?"Modifier la victoire":"🌟 Nouvelle victoire"}</h2>
+  <p class="hint">Même une chose passée, d’avant le carnet : une randonnée, un examen, un défi…</p>
+  <label for="wiT">Ma victoire</label><input id="wiT" value="${esc(w.title)}" placeholder="Ex. : randonnée jusqu’au sommet">
+  <div class="inline"><div><label for="wiD">Date</label><input id="wiD" type="date" value="${esc(w.date)}"></div><div><label for="wiP">Lieu</label><input id="wiP" value="${esc(w.place)}"></div></div>
+  <label for="wiW">Avec qui</label><input id="wiW" value="${esc(w.people)}" placeholder="Ex. : des amis">
+  <label for="wiH">Les difficultés</label><textarea id="wiH" rows="2">${esc(w.hard)}</textarea>
+  <label for="wiL">Ce que je retiens</label><textarea id="wiL" rows="2">${esc(w.learn)}</textarea>
+  <label for="wiN">Autres détails</label><textarea id="wiN" rows="2">${esc(w.note)}</textarea>
+  ${projSelect("wiProj",w.project||"","Projet ou loisir lié (facultatif)")}
+  <label for="wiU">Lien vers une photo, un album ou une vidéo <span class="hint">(facultatif, ex. Drive)</span></label><input id="wiU" type="url" value="${esc(w.url)}" placeholder="https://…">
+  <label for="wiPh">Ou une petite photo du téléphone <span class="hint">(réduite pour ne pas remplir le carnet)</span></label><input id="wiPh" type="file" accept="image/*">
+  <div class="wprev" id="wiPrev">${w.photo?`<img src="${w.photo}" alt="Aperçu"><button type="button" class="btn ghost spk" data-act="winPhotoDel">Retirer la photo</button>`:""}</div>
+  <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="saveWin" data-id="${w.id}">Enregistrer</button></div>`;}
+function shrinkPhoto(file){return new Promise((ok,ko)=>{const r=new FileReader();r.onerror=ko;r.onload=()=>{const im=new Image();im.onerror=ko;im.onload=()=>{const max=520,k=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);ok(c.toDataURL("image/jpeg",.6));};im.src=r.result;};r.readAsDataURL(file);});}
+
+/* ---------- V20 : fiche de test ---------- */
+const testRun=()=>{const T=state.tests[VERSION]=state.tests[VERSION]||{i:0,notes:{}};if(!T.notes)T.notes={};return T;};
+function testModal(i){const L=TESTS[VERSION]||[];if(!L.length){toast("Pas de fiche de test pour cette version");return;}
+  const T=testRun();if(i===undefined)i=T.i||0;
+  if(i>=L.length){testSummary();return;}
+  i=Math.max(0,i);T.i=i;save();const s=L[i],n=T.notes[i]||{};
+  openModal(`<h2>🧪 Tester la ${VERSION}</h2><p class="meta">Étape ${i+1} sur ${L.length}</p>${barH(Math.round(i*100/L.length))}
+  <div class="teststep" id="testTxt"><p><b>${esc(s.k)}</b></p><p>${esc(s.t)}</p></div>
+  <div class="bar noread"><button class="btn ghost" data-act="testRead">▶ Lire</button><button class="btn ghost" data-act="speakStop">⏸ Pause</button></div>
+  <p class="hint noread">« Pause » arrête la lecture. « ▶ Lire » reprend l’étape au début, quand tu es prête.</p>
+  <label>Résultat</label><div class="seg" id="testRes" role="group" aria-label="Résultat">${[["ok","✓ Ça marche"],["ko","✗ Problème"]].map(([k,l])=>`<button type="button" class="${n.r===k?"on":""}" data-act="testMark" data-id="${i}|${k}">${l}</button>`).join("")}</div>
+  <label for="testNote">Ma remarque pour la version suivante <span class="hint">(facultatif)</span></label>
+  <div class="inline" style="align-items:flex-start"><textarea id="testNote" class="grow-ta" rows="2" data-i="${i}" placeholder="Ce qui ne va pas, ce que je voudrais…">${esc(n.note||"")}</textarea>${micBtn("testNote")}</div>
+  <div class="actions"><button class="btn ghost" data-act="testGo" data-id="${i-1}" ${i?"":"disabled"}>‹ Précédente</button><button class="btn ghost" data-act="testSum">Résumé</button><button class="btn" data-act="testGo" data-id="${i+1}">${i===L.length-1?"Terminer":"Suivante ›"}</button></div>`,"test");
+  if(state.settings.testAuto)setTimeout(()=>{if(modalKind==="test")speak(s.k+". "+s.t);},350);}
+function testText(){const L=TESTS[VERSION]||[],T=testRun();const out=[];
+  L.forEach((s,i)=>{const n=T.notes[i]||{};if(n.note||n.r==="ko")out.push("- ["+s.k+"]"+(n.r==="ko"?" ✗ problème":"")+(n.note?" : "+n.note:""));});
+  const ok=L.filter((s,i)=>(T.notes[i]||{}).r==="ok").length;
+  return "Remarques après les tests de la "+VERSION+" :\n"+(out.length?out.join("\n"):"- Tout fonctionne, rien à signaler.")+"\n("+ok+" étape"+(ok>1?"s":"")+" sur "+L.length+" validée"+(ok>1?"s":"")+")";}
+function testSummary(){speakStop();const L=TESTS[VERSION]||[],T=testRun();
+  openModal(`<h2>🧪 Résumé du test de la ${VERSION}</h2>
+  ${L.map((s,i)=>{const n=T.notes[i]||{};return `<div class="row"><span class="pic">${n.r==="ok"?"✓":n.r==="ko"?"✗":"·"}</span><div class="grow"><b>${esc(s.k)}</b>${n.note?`<div class="meta">${esc(n.note)}</div>`:""}</div><button class="icon" data-act="testGo" data-id="${i}" aria-label="Revoir l’étape">↩</button></div>`;}).join("")}
+  <label for="testOut">Texte pour Claude</label><textarea id="testOut" rows="5" readonly>${esc(testText())}</textarea>
+  <div class="bar"><button class="btn" data-act="testCopy">📋 Copier mes remarques</button><button class="btn ghost" data-act="testToRep">☑️ Mettre dans Reprendre ici</button></div>
+  <div class="actions"><button class="btn ghost" data-act="testReset">Recommencer à zéro</button><button class="btn" data-act="closeModal">Fermer</button></div>`,"test");}
+
+/* ---------- V20 : mots cachés ---------- */
+const KW_FN={contacts:"🆘 Mes contacts d’urgence",jeSors:"👗 Je sors : quoi prendre ?",mange:"🥗 Qu’est-ce que je mange ?",asst:"🤖 Mon assistant",claude:"💬 Demander à Claude",note:"✍️ Note rapide",music:"🎵 Mes musiques",test:"🧪 Fiche de test"};
+const kwx=k=>((state.settings.kwExtra||{})[k]||[]).join(" ");
+function kwTargets(){return [...state.settings.tabOrder.map(k=>[k,"Onglet "+tabLabel(k)]),...Object.entries(KW_FN)];}
+function kwLabel(k){return KW_FN[k]||(TABS[k]?"Onglet "+tabLabel(k):k);}
+function addKw(k,w){if(!k||!w)return 0;const L=state.settings.kwExtra[k]=state.settings.kwExtra[k]||[];let n=0;
+  w.split(/[,;]+/).map(x=>x.trim()).filter(Boolean).forEach(x=>{if(!L.some(y=>norm(y)===norm(x))){L.push(x);n++;}});save();return n;}
+function kwModal(word){openModal(`<h2>🔎 Nouveau mot caché</h2><p class="meta">La prochaine fois que tu tapes ce mot dans la recherche, il t’emmènera au bon endroit.</p>
+  <label for="kwW2">Mot(s) caché(s)</label><input id="kwW2" value="${esc(word||"")}">
+  <label for="kwT2">Où doit-il t’emmener ?</label><select id="kwT2">${kwTargets().map(([k,l])=>`<option value="${k}">${esc(l)}</option>`).join("")}</select>
+  <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="saveKw">Enregistrer</button></div>`,"form");}
+
+/* ---------- V20 : mon assistant (sans IA) ---------- */
+const ROBOTS={perso:"Ma version",a:"A · Douce",b:"B · Élégante",c:"C · Pétillante"};
+let svgN=0;
+function robotSvg(kind,px){const u="rb"+(++svgN),s=px||40;
+  const defs=`<defs><linearGradient id="${u}h" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6F8FA"/><stop offset=".55" stop-color="#C5CCD3"/><stop offset="1" stop-color="#8F98A0"/></linearGradient><linearGradient id="${u}i" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF9AD5"/><stop offset=".5" stop-color="#9AD8FF"/><stop offset="1" stop-color="#C6FFB8"/></linearGradient></defs>`;
+  const head=`<circle cx="32" cy="35" r="23" fill="url(#${u}h)" stroke="#7E8890" stroke-width="1.2"/>`;
+  const ears=`<rect x="5.5" y="30" width="4" height="10" rx="2" fill="#A9B1B8"/><rect x="54.5" y="30" width="4" height="10" rx="2" fill="#A9B1B8"/>`;
+  const ant=`<line x1="32" y1="12" x2="32" y2="6.5" stroke="#8E979F" stroke-width="2" stroke-linecap="round"/><circle cx="32" cy="5" r="2.6" fill="url(#${u}h)" stroke="#7E8890" stroke-width=".8"/>`;
+  const eye=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="#121417"/><circle cx="${(x+r*.38).toFixed(2)}" cy="${(y-r*.4).toFixed(2)}" r="${(r*.24).toFixed(2)}" fill="url(#${u}i)"/>`;
+  let b;
+  if(kind==="a")b=ant+ears+head+`<rect x="15" y="27" width="34" height="16" rx="8" fill="#2B3640"/><ellipse cx="25" cy="35" rx="3.6" ry="4.2" fill="#BFEFFF"/><ellipse cx="39" cy="35" rx="3.6" ry="4.2" fill="#BFEFFF"/><path d="M27 49 Q32 52 37 49" fill="none" stroke="#5E6870" stroke-width="1.8" stroke-linecap="round"/>`;
+  else if(kind==="b")b=`<line x1="32" y1="13" x2="36" y2="6" stroke="#8E979F" stroke-width="1.5" stroke-linecap="round"/><circle cx="36.5" cy="4.8" r="2.4" fill="#F6F0FA" stroke="#B9A9C9" stroke-width=".8"/>`+ears+`<ellipse cx="32" cy="35" rx="21" ry="23" fill="url(#${u}h)" stroke="#7E8890" stroke-width="1.2"/><rect x="16" y="27" width="32" height="15" rx="7.5" fill="#E6EAEE" stroke="#B4BCC3" stroke-width=".8"/><path d="M20 35 Q25 29.5 30 35 Q25 38.5 20 35Z" fill="#121417"/><path d="M34 35 Q39 29.5 44 35 Q39 38.5 34 35Z" fill="#121417"/><circle cx="26.3" cy="33.4" r="1.1" fill="url(#${u}i)"/><circle cx="40.3" cy="33.4" r="1.1" fill="url(#${u}i)"/><path d="M28.5 49 Q32 51 35.5 49" fill="none" stroke="#6C767E" stroke-width="1.5" stroke-linecap="round"/>`;
+  else if(kind==="c")b=`<line x1="22" y1="15" x2="17" y2="7" stroke="#8E979F" stroke-width="2" stroke-linecap="round"/><circle cx="16.5" cy="5.5" r="3" fill="#FF8FC7"/><line x1="42" y1="15" x2="47" y2="7" stroke="#8E979F" stroke-width="2" stroke-linecap="round"/><circle cx="47.5" cy="5.5" r="3" fill="#8FD8FF"/>`+ears+head+`<rect x="14" y="26" width="36" height="18" rx="9" fill="#2E3742"/><circle cx="25" cy="35" r="5.2" fill="#FFF"/><circle cx="39" cy="35" r="5.2" fill="#FFF"/><circle cx="25.6" cy="35.6" r="3" fill="#121417"/><circle cx="39.6" cy="35.6" r="3" fill="#121417"/><circle cx="26.6" cy="34.4" r="1" fill="#FFF"/><circle cx="40.6" cy="34.4" r="1" fill="#FFF"/><circle cx="18" cy="48" r="3" fill="#FFB3CF" opacity=".8"/><circle cx="46" cy="48" r="3" fill="#FFB3CF" opacity=".8"/><path d="M26 49 Q32 54 38 49" fill="none" stroke="#5E6870" stroke-width="2" stroke-linecap="round"/>`;
+  else b=ant+ears+head+`<rect x="14.5" y="26" width="35" height="18" rx="9" fill="#DDE3E8" stroke="#AEB7BF" stroke-width=".9"/>`+eye(24.5,35.5,4.6)+eye(39.5,35.5,4.6)+`<path d="M21.3 30.4 L19.8 27.7 M24.1 29.7 L23.6 26.9" stroke="#2A2F35" stroke-width="1.2" stroke-linecap="round"/><path d="M42.7 30.4 L44.2 27.7 M39.9 29.7 L40.4 26.9" stroke="#2A2F35" stroke-width="1.2" stroke-linecap="round"/><path d="M28 50 Q32 52.5 36 50" fill="none" stroke="#6C767E" stroke-width="1.6" stroke-linecap="round"/>`;
+  return `<svg viewBox="0 0 64 64" width="${s}" height="${s}" aria-hidden="true" focusable="false">${defs}${b}</svg>`;}
+const asstName=()=>state.settings.asstName||"Mon assistant";
+const ASST_Q=[{id:"today",q:"Qu’est-ce que je fais aujourd’hui ?"},{id:"week",q:"Mes RDV de la semaine ?"},{id:"where",q:"Où j’en étais ?"},{id:"win",q:"Une petite victoire ?"},{id:"micro",q:"Une micro-action ?"}];
+const ASST_SRC={today:"Ce que je fais aujourd’hui",week:"Mes RDV de la semaine",where:"Où j’en étais",win:"Une petite victoire",micro:"Une micro-action",prio:"Mes 3 priorités",urgent:"Mes notes urgentes et rappels",abo:"Mes abonnements qui se terminent",pret:"Mes prêts en cours",ess:"Un de mes essentiels",txt:"Ma réponse à moi (je l’écris)"};
+const ASST_GO={today:"taches",week:"taches",micro:"taches",where:"accueil",win:"victoires",prio:"projets",abo:"abo",pret:"pret",ess:"sante"};
+const byWhen=(a,b)=>((a.date||"9999")+(a.time||"")).localeCompare((b.date||"9999")+(b.time||""));
+function microPick(){const O=state.tasks.filter(t=>!t.done);return O.find(t=>t.micro)||O.filter(t=>t.urg!=="rouge").sort(byWhen)[0]||null;}
+function asstAnswer(src,txt){
+  const td=today(),O=state.tasks.filter(t=>!t.done),li=a=>a.map(x=>`<p>• ${x}</p>`).join("");
+  const tl=t=>esc(t.title)+(t.date?` <span class="meta">(${t.date===td?"aujourd’hui":fmt(t.date)}${t.time?" à "+hText(t.time):""})</span>`:"");
+  if(src==="today"){const now=O.filter(t=>t.date===td).sort(byWhen),late=O.filter(t=>t.date&&t.date<td).sort(byWhen),urg=O.filter(t=>t.urg==="rouge"&&!t.date);let h="";
+    if(now.length)h+=`<p><b>Aujourd’hui :</b></p>`+li(now.map(tl));if(late.length)h+=`<p><b>Date passée, encore à faire :</b></p>`+li(late.slice(0,4).map(tl));if(urg.length)h+=`<p><b>Urgent, sans date :</b></p>`+li(urg.slice(0,3).map(tl));
+    if(!h){const m=microPick();h=`<p>Rien de prévu aujourd’hui.</p>${m?`<p>Une idée : <b>${esc(m.title)}</b>.</p>`:""}`;}
+    const tip={basse:"Phase basse : une seule chose, 10 minutes maximum. Le reste peut attendre.",haute:"Phase haute : note tes idées, mais ne lance rien de nouveau."}[state.mode]||"Une chose à la fois, avec le minuteur 🍅.";
+    return h+`<p class="meta">${tip}</p>`;}
+  if(src==="week"){const end=isoOf(new Date(Date.now()+7*86400000)),L=O.filter(t=>t.date&&t.date>=td&&t.date<=end&&(t.type==="rdv"||t.time)).sort(byWhen);
+    return L.length?`<p><b>${pl(L.length,"rendez-vous","rendez-vous")} dans les 7 prochains jours :</b></p>`+li(L.map(t=>`${longDay(t.date)}${t.time?" à "+hText(t.time):""} : ${esc(t.title)}`)):`<p>Aucun rendez-vous dans les 7 prochains jours.</p>`;}
+  if(src==="where"){const R=state.rep.filter(r=>!r.done).slice(0,5),j=state.journal[0],w=state.work.find(x=>x.cat!=="Visite"&&(x.details||x.cat));let h="";
+    if(R.length)h+=`<p><b>Reprendre ici :</b></p>`+li(R.map(r=>esc(r.text)));
+    if(w)h+=`<p><b>Dernière séance de travail</b> (${fmt(w.date)}) : ${esc([w.cat,w.details].filter(Boolean).join(", "))}.</p>`;
+    if(j)h+=`<p><b>Dernière note du journal</b> (${fmt(j.date)}) : ${esc(j.text.slice(0,160))}${j.text.length>160?"…":""}</p>`;
+    return h||`<p>Rien de noté pour l’instant. Écris où tu en es dans « Reprendre ici », sur l’Accueil.</p>`;}
+  if(src==="win"){const C=[];state.tasks.filter(t=>t.done).forEach(t=>C.push(`Tu as fait : <b>${esc(t.title)}</b>${t.doneDate?" (le "+fmt(t.doneDate)+")":""}.`));
+    state.wins.forEach(w=>C.push(`Tu te souviens ? <b>${esc(w.title)}</b>${w.date?" (le "+fmt(w.date)+")":""}${w.learn?". À retenir : "+esc(w.learn):""}.`));
+    state.projects.filter(p=>p.status==="termine").forEach(p=>C.push(`Projet terminé : <b>${esc(p.name)}</b>.`));
+    const wk=state.tasks.filter(t=>t.done&&t.doneDate&&daysSince(t.doneDate)<7).length;
+    return C.length?`<p>${pick(C)}</p><p>Bravo 👏</p><p class="meta">Cette semaine : ${pl(wk,"tâche faite","tâches faites")}.</p>`:`<p>Ta première victoire t’attend : coche une petite tâche, même de 5 minutes. Tu peux aussi ajouter une victoire passée dans « Mes victoires ».</p>`;}
+  if(src==="micro"){const m=microPick();return m?`<p>Une seule chose, 10 minutes maximum :</p><p><b>${esc(m.title)}</b></p><p class="meta">Lance le minuteur 🍅 si tu veux. Et si c’est trop aujourd’hui, c’est OK aussi.</p>`:`<p>Écris une phrase dans ton journal de bord : ce que tu as fait, ou ce que tu ressens.</p>`;}
+  if(src==="prio"){const S=state.projects.filter(p=>p.star&&p.status!=="termine");return S.length?li(S.map(p=>`<b>${esc(p.name)}</b>${p.next?" : "+esc(p.next):""}`)):`<p>Aucune priorité choisie. Dans Projets, touche ☆ sur 3 projets maximum.</p>`;}
+  if(src==="urgent"){const U=state.urgent.map(u=>esc(u.text)),A=state.alerts.filter(a=>(!a.until||a.until>=td)&&(!a.from||a.from<=td)).map(a=>esc(a.text));
+    return U.length||A.length?(U.length?`<p><b>Notes urgentes :</b></p>`+li(U):"")+(A.length?`<p><b>Rappels importants :</b></p>`+li(A):""):`<p>Rien d’urgent. Respire.</p>`;}
+  if(src==="abo"){const lim=isoOf(new Date(Date.now()+30*86400000)),L=state.q.abo.filter(x=>!aboOff(x)&&((x.end&&x.end<=lim)||(x.remind&&x.remind<=lim)||(x.until&&x.until<=lim)));
+    return L.length?li(L.map(x=>`<b>${esc(x.name)}</b>${x.remind?" : résilier avant le "+fmt(x.remind):x.until?" : actif jusqu’au "+fmt(x.until):x.end?" : fin ou renouvellement le "+fmt(x.end):""}`)):`<p>Aucun abonnement ne se termine dans les 30 prochains jours.</p>`;}
+  if(src==="pret"){const L=state.q.pret.filter(x=>!isBack(x));return L.length?li(L.map(x=>`<b>${esc(x.what)}</b> (${esc(x.kind||"Prêté")}${x.who?", "+esc(x.who):""}${x.ret?", retour le "+fmt(x.ret):""})`)):`<p>Rien en cours : tout est rendu ✓</p>`;}
+  if(src==="ess"){const E=state.sante.ess.concat(state.q.alim.filter(a=>a.ali));if(!E.length)return `<p>Aucun essentiel noté pour l’instant (✚ Santé, Mes essentiels).</p>`;const x=pick(E);return `<p>N’oublie pas : <b>${esc(x.name)}</b>${x.use?", pour "+esc(x.use):""}.</p>${x.where?`<p>📍 Rangé : ${esc(x.where)}</p>`:""}`;}
+  return `<p>${esc(txt||"").replace(/\n/g,"<br>")||"(réponse vide : modifie ta question)"}</p>`;}
+function asstModal(){const Q=[...ASST_Q,...state.asstQ];
+  openModal(`<div class="asstHead">${robotSvg(state.settings.asstIcon,60)}<div><h2>${esc(asstName())}</h2><p class="meta" style="margin:2px 0 0">Pose-moi une question : je réponds avec ce qui est dans ton carnet.</p></div></div>
+  <div class="chips wrap qparts">${Q.map(q=>`<button class="chip" data-act="asstAsk" data-id="${q.id}">${esc(q.q)}</button>`).join("")}<button class="chip" data-act="asstNewQ">➕ Autre…</button></div>
+  <div id="asstAns" class="teststep" hidden></div>
+  <div class="bar" style="margin:12px 0 0"><button class="btn" data-act="claudeOpen">💬 Demander à Claude</button></div>
+  ${state.asstQ.length?`<details><summary>Mes questions à moi (${state.asstQ.length})</summary>${state.asstQ.map(q=>`<div class="row"><div class="grow">${esc(q.q)}<div class="meta">Réponse : ${esc(ASST_SRC[q.src]||"")}</div></div><button class="icon" data-act="asstEditQ" data-id="${q.id}" aria-label="Modifier">✎</button><button class="icon" data-act="asstDelQ" data-id="${q.id}" aria-label="Supprimer">🗑</button></div>`).join("")}</details>`:""}
+  <p class="hint">✎ Tu peux changer mon nom (ex. « Pilotias ») et mon visage quand tu veux : <button class="btn ghost spk" data-act="asstSettings">⚙️ Réglages</button></p>
+  <div class="actions"><button class="btn" data-act="closeModal">Fermer</button></div>`,"asst");}
+function asstQForm(q){q=Object.assign({id:"",q:"",src:"today",txt:""},q||{});
+  return `<h2>${q.id?"Modifier ma question":"➕ Ma question à moi"}</h2>
+  <label for="aqQ">Ma question</label><input id="aqQ" value="${esc(q.q)}" placeholder="Ex. : Qu’est-ce que je dois rendre ?">
+  <label for="aqSrc">D’où vient la réponse ?</label><select id="aqSrc">${Object.entries(ASST_SRC).map(([k,l])=>`<option value="${k}" ${q.src===k?"selected":""}>${esc(l)}</option>`).join("")}</select>
+  <div id="aqTxtWrap" ${q.src==="txt"?"":"hidden"}><label for="aqTxt">Ma réponse</label><textarea id="aqTxt" rows="3" placeholder="Ex. : Bois un verre d’eau, puis relis tes 3 priorités.">${esc(q.txt)}</textarea></div>
+  <p class="hint">Sans IA : la réponse vient de ton carnet, ou du texte que tu écris.</p>
+  <div class="actions"><button class="btn ghost" data-act="asstOpen">Annuler</button><button class="btn" data-act="saveAsstQ" data-id="${q.id}">Enregistrer</button></div>`;}
+
+/* ---------- V20 : demander à Claude ---------- */
+const CLAUDE_REQ=[{id:"jour",label:"🗓️ Organiser ma journée"},{id:"vrac",label:"🧠 Trier mes pensées en vrac"},{id:"decoupe",label:"🪜 Découper une tâche en petits pas"},{id:"message",label:"✉️ Écrire un message ou un mail"},{id:"carnet",label:"🛠️ Améliorer mon carnet"}];
+let claudeCur="",claudeEdited=false;
+function ctxBase(){const ph={haute:"phase haute",basse:"phase basse",neutre:"journée neutre"}[state.mode]||"journée neutre";
+  const S=state.projects.filter(p=>p.star&&p.status!=="termine").map(p=>p.name+(p.next?" (prochaine étape : "+p.next+")":""));
+  const ld=longDate();return "Aujourd’hui : "+ld.charAt(0).toLowerCase()+ld.slice(1)+", "+ph+"."+(S.length?"\nMes priorités : "+S.join(" ; ")+".":"");}
+function claudeText(id){const td=today(),O=state.tasks.filter(t=>!t.done),tl=t=>"- "+t.title+(t.date?" ("+(t.date===td?"aujourd’hui":fmt(t.date))+(t.time?" à "+hText(t.time):"")+")":"")+(t.urg==="rouge"?" [urgent]":"");
+  const R=state.rep.filter(r=>!r.done);
+  if(id==="jour"){const L=O.filter(t=>(t.date&&t.date<=td)||t.urg==="rouge").sort(byWhen).slice(0,10);
+    return "Aide-moi à organiser ma journée, simplement, étape par étape, avec des pauses. Tiens compte de ma phase : en phase basse, peu de choses et courtes.\n\n"+ctxBase()+(L.length?"\n\nMes tâches et RDV du jour (ou en retard, ou urgents) :\n"+L.map(tl).join("\n"):"\n\nRien de daté aujourd’hui.")+(R.length?"\n\nOù j’en étais :\n"+R.slice(0,5).map(r=>"- "+r.text).join("\n"):"")+(val("clX")?"\n\nCe que j’ai en tête : "+val("clX"):"");}
+  if(id==="vrac")return "Voici mes pensées en vrac. Trie-les pour moi : Projet, Idée, Tâche, À abandonner, Plus tard. Garde 3 priorités maximum. Réponds simplement, sans long texte.\n\n"+ctxBase()+"\n\nMES PENSÉES :\n"+(val("clX")||"…");
+  if(id==="decoupe"){const sel=val("clTask"),t=state.tasks.find(x=>x.id===sel),name=t?t.title:(val("clTaskO")||"…");
+    return "Découpe cette tâche en petits pas de 10 minutes maximum, simples et concrets, dans l’ordre : « "+name+" »."+(t?"\n"+[tDoms(t).length?"Domaine : "+tDoms(t).join(", "):"",t.date?"Échéance : "+fmt(t.date):"",t.note?"Note : "+t.note:"",t.followNote?"Suivi : "+t.followNote:""].filter(Boolean).join("\n"):"")+"\n\n"+ctxBase();}
+  if(id==="message")return "Aide-moi à écrire un message (ou un mail) simple, clair et poli. Propose une version courte.\nDestinataire : "+(val("clTo")||"…")+"\nCe que je veux dire : "+(val("clX")||"…");
+  if(id==="carnet"){const C=R.filter(r=>/carnet/i.test(r.subj||"")||/carnet/i.test(r.text));const L=C.length?C:R;
+    return "Voici des idées pour améliorer mon Carnet Pilote (version "+VERSION+"). Dis-moi simplement ce que tu proposes pour chacune :\n"+(L.length?L.map(r=>"- "+r.text).join("\n"):"- …")+(val("clX")?"\n- "+val("clX"):"");}
+  const c=state.claudeReq.find(x=>x.id===id);if(!c)return "";
+  return c.txt+"\n\n"+ctxBase()+(val("clX")?"\n\nPrécisions : "+val("clX"):"");}
+function claudeFields(id){
+  if(id==="jour")return `<label for="clX">Ce que j’ai en tête <span class="hint">(facultatif)</span></label><div class="inline" style="align-items:flex-start"><textarea id="clX" class="grow-ta" rows="2"></textarea>${micBtn("clX")}</div>`;
+  if(id==="vrac")return `<label for="clX">Mes pensées en vrac</label><div class="inline" style="align-items:flex-start"><textarea id="clX" class="grow-ta" rows="3" placeholder="Dicte tout, dans le désordre"></textarea>${micBtn("clX")}</div>`;
+  if(id==="decoupe")return `<label for="clTask">Quelle tâche ?</label><select id="clTask">${state.tasks.filter(t=>!t.done).map(t=>`<option value="${t.id}">${esc(t.title)}</option>`).join("")}<option value="__autre" ${state.tasks.some(t=>!t.done)?"":"selected"}>➕ Autre…</option></select><input id="clTaskO" placeholder="Écris la tâche" ${state.tasks.some(t=>!t.done)?"hidden":""}>`;
+  if(id==="message")return `<label for="clTo">À qui ?</label><input id="clTo" placeholder="Ex. : la mairie, mon médecin"><label for="clX">Ce que je veux dire</label><div class="inline" style="align-items:flex-start"><textarea id="clX" class="grow-ta" rows="2"></textarea>${micBtn("clX")}</div>`;
+  if(id==="carnet")return `<p class="meta">Le texte reprend tes lignes de « Reprendre ici » qui parlent du carnet.</p><label for="clX">Une idée en plus <span class="hint">(facultatif)</span></label><input id="clX">`;
+  return `<label for="clX">Précisions <span class="hint">(facultatif)</span></label><div class="inline" style="align-items:flex-start"><textarea id="clX" class="grow-ta" rows="2"></textarea>${micBtn("clX")}</div>`;}
+function claudeModal(id){claudeCur=id||"";claudeEdited=false;const all=[...CLAUDE_REQ,...state.claudeReq];
+  const sel=all.find(x=>x.id===claudeCur);
+  openModal(`<h2>💬 Demander à Claude</h2><p class="meta">Je prépare ta demande avec ce que je sais, je la copie, et j’ouvre Claude : tu n’as plus qu’à coller.</p>
+  <div class="chips wrap qparts">${all.map(x=>`<button class="chip ${x.id===claudeCur?"on":""}" data-act="claudePick" data-id="${x.id}">${esc(x.label)}</button>`).join("")}<button class="chip" data-act="claudeNew">➕ Autre…</button></div>
+  ${sel?`<div id="claudeForm">${claudeFields(claudeCur)}</div>
+  <label for="clOut">Texte préparé <span class="hint">(relis-le, tu peux le modifier)</span></label><textarea id="clOut" rows="7">${esc(claudeText(claudeCur))}</textarea>
+  <div class="bar" style="margin:10px 0 0"><button class="btn" data-act="claudeGo">📋 Copier et ouvrir Claude</button><button class="btn ghost" data-act="claudeCopy">📋 Copier seulement</button></div>`:`<p class="meta">Choisis une demande ci-dessus.</p>`}
+  ${state.claudeReq.length?`<details><summary>Mes demandes à moi (${state.claudeReq.length})</summary>${state.claudeReq.map(c=>`<div class="row"><div class="grow">${esc(c.label)}<div class="meta">${esc(c.txt.slice(0,90))}${c.txt.length>90?"…":""}</div></div><button class="icon" data-act="claudeDel" data-id="${c.id}" aria-label="Supprimer">🗑</button></div>`).join("")}</details>`:""}
+  <div class="actions"><button class="btn" data-act="closeModal">Fermer</button></div>`,"claude");
+  if(sel)claudeRefresh();}
+function claudeRefresh(){if(claudeEdited||!claudeCur)return;const o=$("#clOut");if(o)o.value=claudeText(claudeCur);}
 
 /* ---------- fichiers ---------- */
 function fileRow(f,g){const u=safeUrl(f.url),p=state.projects.find(x=>x.id===f.project);
@@ -1703,6 +2068,7 @@ function vJournal0(){
   const t=today();
   const totToday=state.work.filter(w=>w.date===t).reduce((s,w)=>s+wSec(w),0);
   const tot7=state.work.filter(w=>daysSince(w.date)<7).reduce((s,w)=>s+wSec(w),0);
+  const totAll=state.work.reduce((s,w)=>s+wSec(w),0),first=state.work.length?state.work[state.work.length-1].date:"";
   const byCat={};state.work.forEach(w=>{const k=w.cat||"Sans précision";byCat[k]=(byCat[k]||0)+wSec(w);});
   const catRows=Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
   return `<h2>Journal de bord</h2><p class="lead">Une phrase suffit. Les jours de doute, relis ce que tu as accompli.</p>
@@ -1710,9 +2076,10 @@ function vJournal0(){
   <div class="bar" style="margin:10px 0 0"><button class="btn" data-act="addJournal">Ajouter au journal</button></div></section>
   ${state.journal.length?`<section class="block">${state.journal.map(j=>`<div class="row" id="j-${j.id}"><div class="grow"><div class="meta">${fmt(j.date)}</div>${esc(j.text).replace(/\n/g,"<br>")}</div><button class="icon" data-act="delJournal" data-id="${j.id}" aria-label="Supprimer">🗑</button></div>`).join("")}</section>`:""}
   <section class="block" id="workBlock"><h3>Durée de travail</h3>
-  <p class="meta">Aujourd’hui : ${fmtSec(totToday)}. Sur 7 jours : ${fmtSec(tot7)}. Le chronomètre ⏱ remplit ce tableau tout seul (séances d’au moins 1 minute). Une séance à plusieurs natures compte une seule fois dans ces totaux.</p>
+  <div class="resume"><div><b>${fmtSec(totToday)}</b><span>aujourd’hui</span></div><div><b>${fmtSec(tot7)}</b><span>sur 7 jours</span></div><div><b>${fmtSec(totAll)}</b><span>depuis le début${first?" ("+fmt(first)+")":""}</span></div></div>
+  <p class="meta">Le chronomètre ⏱ remplit ce tableau tout seul (séances d’au moins 1 minute). Une séance à plusieurs natures compte une seule fois dans ces totaux.</p>
   ${catRows.length?`<details open><summary>Totaux par nature</summary><div class="tablewrap"><table style="min-width:0"><thead><tr><th>Nature</th><th>Total</th></tr></thead><tbody>
-    ${catRows.map(([k,m])=>`<tr><td>${esc(k)}</td><td class="nowrap"><b>${fmtSec(m)}</b></td></tr>`).join("")}</tbody></table></div></details>`:""}
+    ${catRows.map(([k,m])=>`<tr><td>${esc(k)}</td><td class="nowrap"><b>${fmtSec(m)}</b></td></tr>`).join("")}<tr class="mark"><td>Total général, depuis le début</td><td class="nowrap">${fmtSec(totAll)}</td></tr></tbody></table></div></details>`:""}
   <div class="bar" style="margin:10px 0"><button class="btn ghost" data-act="newWork">Ajouter une séance</button></div>
   ${state.work.length?`<div class="tablewrap"><table><thead><tr><th>Date</th><th>Outils</th><th>Nature</th><th>Détails</th><th>Durée</th><th></th></tr></thead><tbody>
   ${state.work.map(w=>`<tr id="w-${w.id}"><td class="nowrap">${fmt(w.date)}</td><td>${esc(w.tool)}</td><td>${esc(w.cat||"Sans précision")}</td><td>${esc(w.details)}</td>
@@ -1954,14 +2321,30 @@ DURÉES : les minuteurs et les durées affichent les secondes en plus des minute
 
 SOMMAIRES ET ONGLETS ADAPTÉS : « Aller à » montre les parties les plus utilisées, avec « Toutes les parties » et une case pour taper un mot. La barre des onglets montre les onglets les plus utilisés, moins en phase basse, avec « ☰ +… » pour tout voir.
 
-CONTACTS D’URGENCE : les personnes que je choisis, avec un bouton 📞 Appeler, et les numéros d’urgence.
+CONTACTS D’URGENCE : les personnes que je choisis, avec un bouton 📞 Appeler, et les numéros d’urgence. Je peux noter chaque appel (date, raison), relié à la santé si besoin.
+
+DURÉE DE TRAVAIL : le récapitulatif montre aussi le total général depuis le début.
+
+ORDRE MODIFIABLE : tout ce qui est une liste (liens, ressources, contacts, musiques, listes des menus…) peut changer d’ordre avec ↑ ↓, partout dans le carnet.
+
+LIENS : projets, tâches et rendez-vous peuvent avoir des liens à consulter (document, dossier, fichier, vidéo), sans limite.
+
+ÉTAPE SUIVANTE : un projet, même terminé, peut avoir une étape suivante reliée à une tâche, sans la noter deux fois.
+
+NOTE RAPIDE ET DICTÉE : un bouton flottant ✍️, pâle quand il ne sert pas, pour dicter une idée dans « Reprendre ici » sans quitter l’onglet, avec le nom de l’endroit devant. Les cases de dictée s’agrandissent et gardent toujours les derniers mots visibles.
+
+MOTS CACHÉS : je peux ajouter mes propres mots cachés pour la recherche (Paramètres). Si « Aller à » ne trouve rien dans la page, il cherche dans tout le carnet.
+
+FICHE DE TEST : à chaque nouvelle version, une fiche de test lue à voix haute, étape par étape (pause, reprise), avec une remarque par étape, rangée sous le nom de l’onglet ou de l’étape, et « Copier mes remarques » pour la version suivante.
+
+ASSISTANT ET DEMANDER À CLAUDE : un petit assistant sans IA (questions toutes prêtes et « Autre… », réponses tirées de mes données et lues à voix haute, nom et visage modifiables), et un bouton « Demander à Claude » qui prépare la demande avec le contexte, la copie et ouvre Claude.
 
 STYLE : minimaliste et épuré, tableaux et fiches mémo plutôt que texte dense, pictogrammes seulement là où ils aident. Boutons flottants déplaçables au doigt (chronomètre, minuteur, notes urgentes). Explications simples, étape par étape.
 
 MON PROFIL : pragmatique, méthodique, minimaliste. Des tâches courtes, des pauses, et des repères pour reprendre facilement après une phase basse.
 
 EN LIGNE ET APPLICATION MOBILE : prévoir dès le départ que le carnet sera mis en ligne sur GitHub Pages et installé comme une application. Donc : un fichier index.html (en plus du fichier avec la version d’abord, à garder sur le Drive), les lignes du manifest.json et du Service Worker (sw.js) dans le fichier, et des icônes à partir du logo. Rien de personnel ni de médical écrit dans le fichier, car il est public : mes données restent dans le téléphone et dans le .json.`;
-const UPDATE_PROMPT="Voici mon Carnet Pilote (fichier HTML joint). Prépare la version suivante en gardant tout ce qui existe, ajoute ses nouveautés datées dans l’Historique des versions, et donne-moi les 2 fichiers : la version (ex. V20Carnet_Pilote.html) et index.html pour GitHub. Mes remarques : …";
+const UPDATE_PROMPT="Voici mon Carnet Pilote (fichier HTML joint). Prépare la version suivante en gardant tout ce qui existe, ajoute ses nouveautés datées dans l’Historique des versions, et donne-moi les 2 fichiers : la version (ex. V21Carnet_Pilote.html) et index.html pour GitHub. Mes remarques : …";
 function vAide(){
   const s=state.settings,P=state.aidePins;
   const S=[
@@ -2017,7 +2400,7 @@ function vAide(){
   ["maj","🔄 Mettre à jour le carnet (en ligne)",`<ol class="steps">
     <li><span><span class="pic">⚙️</span> Par sécurité : Paramètres, <b>Sauvegarder</b>.</span></li>
     <li><span><span class="pic">💬</span> Envoie ta version actuelle à Claude (projet Carnet Pilote) avec le message ci-dessous.</span></li>
-    <li><span><span class="pic">📄</span> Claude te donne <b>2 fichiers</b> : la nouvelle version, ex. <b>V20Carnet_Pilote.html</b> (version d’abord, à ranger sur le Drive) et <b>index.html</b> (pour GitHub). Télécharge les deux.</span></li>
+    <li><span><span class="pic">📄</span> Claude te donne <b>2 fichiers</b> : la nouvelle version, ex. <b>V21Carnet_Pilote.html</b> (version d’abord, à ranger sur le Drive) et <b>index.html</b> (pour GitHub). Télécharge les deux.</span></li>
     <li><span><span class="pic">🌐</span> Chrome : <b>github.com/carnet-personnalise/pilote-yas</b>. Touche les <b>trois petits points ⋮</b>, puis <b>Upload files</b>.</span></li>
     <li><span><span class="pic">⬆️</span> <b>Choose your files</b> : choisis <b>index.html</b> dans Téléchargements, puis <b>Commit changes</b>. Il remplace l’ancien tout seul.</span></li>
     <li><span><span class="pic">⏳</span> Attends <b>2 à 5 minutes</b>.</span></li>
@@ -2043,7 +2426,7 @@ function vAide(){
     <p><b>💄 Beauté :</b> tes soins et produits (pour quoi, fréquence, comment, où, combien, rangé où).</p>
     <p><b>🏃‍♀️ APA perso :</b> tes séances d’activité physique (date, activité, durée, ressenti), avec le total sur 7 et 30 jours.</p>
     <p><b>🤝 Prêté :</b> ce que tu as prêté ou emprunté, à qui, et le retour prévu. « ✓ Rendu » : la ligne est barrée et rangée à part.</p>
-    <p><b>💳 Abonnements :</b> IA et autres, tarif, dates, total par mois. Une alerte apparaît 7 jours avant la fin.</p>
+    <p><b>💳 Abonnements :</b> IA et autres, tarif, dates, total par mois. Une alerte apparaît 7 jours avant la fin. « ⏰ Me rappeler de résilier avant le » : un rappel rouge les 3 jours avant (conseillé pour un essai gratuit). Statut « Résilié, encore actif » avec sa date de fin d’accès.</p>
     <p>Une partie très utilisée peut devenir un <b>onglet à part</b> : ⚙️ Paramètres, Mon quotidien.</p>`],
   ["sors","👗 Je sors : quoi prendre ?",`<ol class="steps">
     <li><span><span class="pic">👗</span> Sur l’Accueil, touche <b>« Je sors : quoi prendre ? »</b> (ou tape « sortie » dans la recherche).</span></li>
@@ -2081,6 +2464,7 @@ function vAide(){
     <p class="meta">Différent du Pense-bête jaune 🟨, qui te rappelle doucement tes essentiels et ta méthode.</p>`],
   ["victoires","🏆 Mes victoires",`<p>L’onglet <b>Mes victoires</b> compte tes tâches faites et à faire : au total, par domaine et par projet, avec une barre de progression.</p>
     <p>Médailles : 🥉 5 tâches faites, 🥈 15, 🥇 30, 🏆 50, 👑 100. 🏅 quand toutes les tâches d’un domaine sont faites.</p>
+    <p><b>🌟 Mes victoires à moi :</b> ajoute aussi tes réussites passées, même d’avant le carnet (date, lieu, avec qui, difficultés, à retenir, photo ou lien).</p>
     <p class="meta">En phase basse, c’est la page à relire.</p>`],
   ["mic","🚽 Calendrier mictionnel",`<ol class="steps"><li><span>✚ Santé, <b>Calendrier mictionnel</b>.</span></li>
     <li><span>Note l’heure du <b>lever</b> et du <b>coucher</b> du jour.</span></li>
@@ -2090,8 +2474,24 @@ function vAide(){
     <p class="meta">Ces notes restent dans ton téléphone et dans ton .json, jamais en ligne.</p>`],
   ["contacts","🆘 Mes contacts d’urgence",`<ol class="steps"><li><span>Sur l’Accueil, touche <b>« 🆘 Mes contacts d’urgence »</b> (aussi dans la punaise 📌).</span></li>
     <li><span><b>➕ Ajouter un contact</b> : nom, téléphone, qui c’est (famille, voisine, médecin… ou Autre…), et une note si besoin.</span></li>
-    <li><span>Touche <b>📞 Appeler</b> : le téléphone compose le numéro. ↑ pour mettre un contact en premier.</span></li></ol>
+    <li><span>Touche <b>📞 Appeler</b> : le téléphone compose le numéro. ↑ ↓ pour changer l’ordre.</span></li>
+    <li><span><b>📝 Noter un appel</b> : la date et la raison. Après « 📞 Appeler », le carnet te le propose. Coche « Lié à ma santé » : l’appel apparaît aussi dans ✚ Santé, partie « 🆘 Appels ».</span></li></ol>
     <p class="meta">Les numéros d’urgence (15, 18, 112) sont toujours en bas de la liste. Tes contacts restent dans ton téléphone, jamais en ligne.</p>`],
+  ["asst","🤖 Mon assistant et 💬 Demander à Claude",`<p><b>🤖 Mon assistant</b> : le petit robot en haut de l’écran. Touche une question toute prête (« Qu’est-ce que je fais aujourd’hui ? », « Où j’en étais ? »…) : il répond avec ce qui est dans ton carnet, et lit la réponse à voix haute. Sans IA, sans Internet.</p>
+    <p><b>➕ Autre…</b> : ta question à toi. Tu choisis d’où vient la réponse (tes RDV, tes priorités, tes prêts…) ou tu l’écris toi-même.</p>
+    <p><b>💬 Demander à Claude</b> (Accueil ou robot) : choisis une demande (organiser ma journée, trier mes pensées, découper une tâche, écrire un message, améliorer mon carnet, ou ➕ Autre…). Le carnet prépare le texte avec ce qu’il sait. Relis-le, puis « Copier et ouvrir Claude » : colle dans Claude.</p>
+    <p class="meta">Nom (ex. « Pilotias »), visage et lecture à voix haute : ⚙️ Paramètres, Mon assistant.</p>`],
+  ["note20","✍️ Note rapide et dictée",`<ol class="steps"><li><span>Dans n’importe quel onglet, touche le bouton flottant <b>✍️</b> (pâle quand il ne sert pas).</span></li>
+    <li><span>Dicte ton idée (🎤 ou le micro du clavier). La case s’agrandit : tu vois toujours les derniers mots.</span></li>
+    <li><span><b>Ajouter</b> : la ligne arrive en haut de Reprendre ici, avec l’endroit devant (ex. [Paramètres]) et son sujet trouvé tout seul. Tu restes sur ta page.</span></li></ol>
+    <p class="meta">Un sujet faux ? ✎ sur la ligne pour le corriger : le carnet apprend. « 🔄 Revoir les sujets » corrige toutes les lignes au sujet automatique.</p>`],
+  ["test20","🧪 Tester une nouvelle version",`<ol class="steps"><li><span>À l’ouverture d’une nouvelle version : <b>« 🧪 Tester les nouveautés »</b> (ou ⚙️ Paramètres, Historique).</span></li>
+    <li><span>Chaque étape se lit à voix haute. <b>⏸ Pause</b> quand tu veux, <b>▶ Lire</b> pour reprendre l’étape.</span></li>
+    <li><span>Note « ✓ Ça marche » ou « ✗ Problème », et ta remarque (tu peux dicter). Elle est rangée sous le nom de l’étape.</span></li>
+    <li><span><b>Résumé</b>, puis <b>📋 Copier mes remarques</b> : colle-les à Claude pour la version suivante. Ou « ☑️ Mettre dans Reprendre ici ».</span></li></ol>
+    <p class="meta">Tu peux t’arrêter et reprendre plus tard : le carnet garde ta place et tes remarques.</p>`],
+  ["mots20","🔎 Mes mots cachés",`<p>Tu tapes un mot dans la recherche et rien n’apparaît ? Touche <b>« Ajouter comme mot caché »</b>, ou va dans ⚙️ Paramètres, <b>Mes mots cachés</b> : choisis la partie, écris le mot (ex. « SOS » pour tes contacts d’urgence).</p>
+    <p>Dans « Aller à » (Paramètres, Journal, Compétences) : si rien n’est trouvé dans la page, le carnet cherche dans tout le carnet.</p>`],
   ["barre19","☰ Onglets et sommaires adaptés",`<p><b>Barre des onglets :</b> elle montre l’Accueil, les Paramètres et tes onglets les plus utilisés, moins en phase basse. Touche <b>« ☰ +… »</b> au bout de la barre pour tout voir, <b>« ▴ Moins »</b> pour revenir. Réglages : ⚙️ Paramètres, Barre des onglets.</p>
     <p><b>« Aller à »</b> (Paramètres, Journal, Compétences) : tes parties les plus ouvertes d’abord. <b>« ▸ Toutes les parties »</b> pour tout voir, ou tape un mot dans la case.</p>
     <p><b>Barres qui restent en haut :</b> les filtres de Tâches & RDV, les parties de Quotidien et de Santé. « ▾ Replier » pour gagner de la place.</p>
@@ -2136,7 +2536,7 @@ function vAide(){
 /* ---------- paramètres ---------- */
 function stampText(x){if(!x)return "Aucune pour l’instant.";return fmt(x.date)+(x.time?" à "+hText(x.time):"")+(x.file?"<br><span class=\"meta\">Fichier : "+esc(x.file)+"</span>":"");}
 const LC={cats:["Nouvelle catégorie","Ajouter une catégorie"],tools:["Nouvel outil","Ajouter un outil"],domains:["Nouveau domaine","Ajouter un domaine"]};
-function listChips(kind){const lab=LC[kind]||["Nouveau","Ajouter"];return `<div class="chips wrap">${state.lists[kind].map((x,i)=>`<span class="chip tag">${esc(x)}<button data-act="delListItem" data-id="${kind}|${i}" aria-label="Retirer ${esc(x)}">✕</button></span>`).join("")}</div>
+function listChips(kind){const lab=LC[kind]||["Nouveau","Ajouter"];return `<div class="chips wrap">${state.lists[kind].map((x,i)=>`<span class="chip tag">${i?`<button data-act="listMove" data-id="${kind}|${i}" aria-label="Avancer ${esc(x)} d’une place">‹</button>`:""}${esc(x)}<button data-act="delListItem" data-id="${kind}|${i}" aria-label="Retirer ${esc(x)}">✕</button></span>`).join("")}</div>
   <div class="inline"><input id="add_${kind}" placeholder="${lab[0]}" aria-label="${lab[1]}"><button class="btn ghost" data-act="addListItem" data-id="${kind}">Ajouter</button></div>`;}
 function vParams(){return withToc(vParams0(),"params");}
 function vParams0(){
@@ -2158,7 +2558,20 @@ function vParams0(){
   <p class="meta">Ce qui a changé à chaque version. La liste des nouveautés s’affiche une fois, à la première ouverture d’une nouvelle version.</p>
   ${histHtml(HISTORY.slice(0,1))}
   <details><summary>Versions précédentes (V1 à ${HISTORY[1].v})</summary>${histHtml(HISTORY.slice(1))}<p class="meta">Les versions 1 à 6 sont résumées à partir de tes notes de conception.</p></details>
-  <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="showNews">Revoir les nouveautés de la ${VERSION}</button></div></section>
+  <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="showNews">Revoir les nouveautés de la ${VERSION}</button>${TESTS[VERSION]?`<button class="btn ghost" data-act="testOpen">🧪 Fiche de test de la ${VERSION}</button>`:""}</div>
+  <label>Fiche de test : lire chaque étape toute seule</label><div class="seg" role="group" aria-label="Lire chaque étape toute seule">${[["1","Oui"],["0","Non"]].map(([k,l])=>`<button class="${(s.testAuto?"1":"0")===k?"on":""}" data-act="setTestAuto" data-id="${k}">${l}</button>`).join("")}</div></section>
+  <section class="block" id="asstSet"><h3>🤖 Mon assistant</h3>
+  <p class="meta">Le petit robot en haut de l’écran. Sans IA : il répond avec ce qui est dans ton carnet.</p>
+  <label for="sAsstName" style="margin-top:0">Son nom</label><input id="sAsstName" data-set="asstName" value="${esc(asstName())}">
+  <p class="hint">Tu peux le changer quand tu veux (ex. « Pilotias »).</p>
+  <label>Son visage</label><div class="chips wrap">${Object.entries(ROBOTS).map(([k,l])=>`<button class="chip robotpick ${s.asstIcon===k?"on":""}" data-act="setRobot" data-id="${k}" aria-pressed="${s.asstIcon===k}">${robotSvg(k,46)}<span>${l}</span></button>`).join("")}</div>
+  <label>Lire ses réponses à voix haute toute seule</label><div class="seg" role="group" aria-label="Lire ses réponses toute seule">${[["1","Oui"],["0","Non"]].map(([k,l])=>`<button class="${(s.asstRead?"1":"0")===k?"on":""}" data-act="setAsstRead" data-id="${k}">${l}</button>`).join("")}</div>
+  <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="asstOpen">🤖 Ouvrir l’assistant</button><button class="btn ghost" data-act="claudeOpen">💬 Demander à Claude</button></div></section>
+  <section class="block" id="kwSet"><h3>🔎 Mes mots cachés</h3>
+  <p class="meta">Un mot que tu tapes dans la recherche, mais qui ne trouve rien ? Ajoute-le à la bonne partie. Ex. : « SOS » pour Mes contacts d’urgence.</p>
+  <label for="kwT" style="margin-top:0">Où doit-il t’emmener ?</label><select id="kwT">${kwTargets().map(([k,l])=>`<option value="${k}">${esc(l)}</option>`).join("")}</select>
+  <label for="kwW">Mot(s) caché(s) <span class="hint">(sépare-les par une virgule)</span></label><div class="inline"><input id="kwW" placeholder="Ex. : SOS, secours"><button class="btn ghost" data-act="kwAdd">Ajouter</button></div>
+  ${Object.entries(s.kwExtra||{}).filter(([k,L])=>L&&L.length).map(([k,L])=>`<p class="subh">${esc(kwLabel(k))}</p><div class="chips wrap">${L.map((w,i)=>`<span class="chip tag">${esc(w)}<button data-act="kwDel" data-id="${k}|${i}" aria-label="Retirer ${esc(w)}">✕</button></span>`).join("")}</div>`).join("")||`<p class="meta">Aucun mot caché à toi pour l’instant.</p>`}</section>
   <section class="block"><h3>🔊 Lecture à voix haute</h3>
   <p class="meta">Le bouton « 🔊 Écouter » lit seulement le contenu de la partie, sans les émoticônes ni les boutons.</p>
   <label style="margin-top:0">Vitesse</label><div class="seg" role="group" aria-label="Vitesse de lecture">${Object.entries(RATES).map(([k,[l]])=>`<button class="${s.rate===k?"on":""}" data-act="setRate" data-id="${k}" aria-pressed="${s.rate===k}">${l}</button>`).join("")}</div>
@@ -2189,7 +2602,8 @@ function vParams0(){
   <div class="inline"><div><label for="sPomo">Travail (min)</label><input id="sPomo" type="number" min="5" max="90" data-set="pomo" value="${s.pomo}"></div>
   <div><label for="sPause">Petite pause (min)</label><input id="sPause" type="number" min="1" max="30" data-set="pause" value="${s.pause}"></div></div>
   <div class="inline"><div><label for="sLong">Grande pause (min)</label><input id="sLong" type="number" min="5" max="60" data-set="longPause" value="${s.longPause}"></div>
-  <div><label for="sCycles">Cycles avant la grande pause</label><input id="sCycles" type="number" min="2" max="8" data-set="cycles" value="${s.cycles}"></div></div></section>
+  <div><label for="sCycles">Cycles avant la grande pause</label><input id="sCycles" type="number" min="2" max="8" data-set="cycles" value="${s.cycles}"></div></div>
+  <div class="bar" style="margin:12px 0 0"><button class="btn ghost" data-act="musicOpen">🎵 Mes musiques (${state.music.length})</button></div></section>
   <section class="block"><h3>🌿 Rappels doux</h3>
   <p class="meta">Ils apparaissent dans la punaise 📌, sans rouge.</p>
   <div class="inline"><div><label for="sRemSave">Sauvegarde : tous les (jours)</label><input id="sRemSave" type="number" min="1" max="60" data-set="remSave" value="${s.remSave}"></div>
@@ -2206,7 +2620,7 @@ function vParams0(){
   <p class="meta">Astuce : garde au moins 2 min, pour aller coller un texte à Claude sans que le carnet se verrouille. Le bouton « 🔒 Verrouiller », en haut, verrouille tout de suite.</p>
   <p class="meta">Mot de passe oublié ? Ouvre ta dernière sauvegarde .json avec un éditeur de texte : il y est écrit après « lockPass ».</p></section>
   <section class="block"><h3>Mes listes</h3>
-  <p class="meta">Pour en ajouter : écris dans la case puis « Ajouter ». Pour en retirer : ✕.</p>
+  <p class="meta">Pour en ajouter : écris dans la case puis « Ajouter ». Pour en retirer : ✕. Pour changer l’ordre : ‹ avance d’une place.</p>
   <label>Catégories</label>${listChips("cats")}
   <label>Outils</label>${listChips("tools")}
   <label>Domaines (Tâches & RDV, Fichiers Drive)</label>${listChips("domains")}
@@ -2259,7 +2673,7 @@ function pinModal(){
     :`<p class="meta">Rien pour l’instant. Sauvegarde tous les ${st.remSave} jours, point compétences tous les ${st.remSkills} jours (réglable dans Paramètres).</p>`}
   <h3 style="margin:22px 0 6px">🔴 Rappels importants</h3>
   <p class="meta">Ils s’affichent en grand, sur fond rouge, quand tu ouvres le carnet, selon la fréquence choisie.</p>
-  ${state.alerts.map(a=>`<div class="row"><div class="grow">${esc(a.text)}<span class="lvlA ${a.level}">${ALERT_LVL[a.level]||"Important"}</span><div class="meta">${(ALERT_FREQ[a.freq]||ALERT_FREQ.souvent)[0]}${a.until?" · jusqu’au "+fmt(a.until):""}</div></div><button class="icon" data-act="alertShow" data-id="${a.id}" aria-label="Voir le rappel">👁</button><button class="icon" data-act="alertEdit" data-id="${a.id}" aria-label="Modifier">✎</button><button class="icon" data-act="alertDel" data-id="${a.id}" aria-label="Supprimer">🗑</button></div>`).join("")||exBox("Important, souvent : renouveler l’ordonnance avant la fin du mois.")}
+  ${state.alerts.map(a=>`<div class="row"><div class="grow">${esc(a.text)}<span class="lvlA ${a.level}">${ALERT_LVL[a.level]||"Important"}</span><div class="meta">${(ALERT_FREQ[a.freq]||ALERT_FREQ.souvent)[0]}${a.from?" · à partir du "+fmt(a.from):""}${a.until?" · jusqu’au "+fmt(a.until):""}${a.abo?" · 💳 abonnement":""}</div></div><button class="icon" data-act="alertShow" data-id="${a.id}" aria-label="Voir le rappel">👁</button><button class="icon" data-act="alertEdit" data-id="${a.id}" aria-label="Modifier">✎</button><button class="icon" data-act="alertDel" data-id="${a.id}" aria-label="Supprimer">🗑</button></div>`).join("")||exBox("Important, souvent : renouveler l’ordonnance avant la fin du mois.")}
   <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="alertNew">➕ Ajouter un rappel important</button></div>
   <h3 style="margin:22px 0 6px">🆘 En cas de problème</h3>
   <div class="bar"><button class="btn sos" data-act="contactsOpen">🆘 Mes contacts d’urgence (${state.contacts.length})</button></div>
@@ -2315,9 +2729,11 @@ function pomoModal(){
   const p=state.pomo,s=state.settings,n=nCycles();
   if(p.phase==="work"){
     openModal(`<h2>${p.emoji||"💪"} Cycle ${p.cycle} sur ${n}</h2>${dots(p.cycle)}<p class="center meta">Pause dans</p><div class="big" id="pomoDisp">${hms(p.end-Date.now())}</div>
+    <div class="bar" style="justify-content:center"><button class="btn ghost spk" data-act="musicOpen">🎵 Choisir une musique</button></div>
     <div class="actions"><button class="btn ghost" data-act="pomoStop">Arrêter</button><button class="btn ghost" data-act="pomoPauseNow">Pause maintenant</button><button class="btn" data-act="closeModal">Continuer</button></div>`,"pomo");
   }else if(p.phase==="pause"){
     openModal(`<h2>${p.emoji||"⏳"} ${p.long?"Grande pause":"Pause"} en cours</h2>${dots(p.cycle)}<p class="center">Bouge, bois un verre d’eau 💧, repose tes yeux.</p><div class="big" id="pomoDisp">${hms(p.end-Date.now())}</div>
+    <div class="bar" style="justify-content:center"><button class="btn ghost spk" data-act="musicOpen">🎵 Choisir une musique</button></div>
     <div class="actions"><button class="btn ghost" data-act="pomoStop">Arrêter</button><button class="btn" data-act="pomoResume">Reprendre le travail</button></div>`,"pomo");
   }else{
     const cont=p.next>1;
@@ -2328,12 +2744,12 @@ function pomoModal(){
 }
 function startWork(cycle){
   ensureAudio();const n=nCycles();cycle=cycle>n||cycle<1?1:cycle;
-  const m=pick(WORK_MSG);const music=Math.random()<0.35?pick(MUSIC):"";const em=music?pick(["🎵","🎶"]):m.e;
+  const m=pick(WORK_MSG);const mu=Math.random()<0.35&&state.music.length?pick(state.music):null;const em=mu?pick(["🎵","🎶"]):m.e;
   Object.assign(state.pomo,{phase:"work",end:Date.now()+state.settings.pomo*60000,emoji:em,cycle,long:false});save();updateFabs();
   openModal(`<span class="em" aria-hidden="true">${em}</span><h2 class="center">Cycle ${cycle} sur ${n} : ${state.settings.pomo} min de concentration</h2>${dots(cycle)}
-  <p class="center">${m.t}</p>${music?`<p class="center meta">🎵 ${music}</p>`:""}
-  <div class="actions" style="justify-content:center"><button class="btn" data-act="closeModal">C’est parti</button></div>`,"start");
-  setTimeout(()=>{if(modalKind==="start")closeModal();},9000);
+  <p class="center">${m.t}</p>${mu?`<p class="center">🎵 Envie de musique ? <b>${esc(mu.title)}</b></p><div class="bar" style="justify-content:center">${musicPlayBtn(mu,true)}</div>`:""}
+  <div class="actions" style="justify-content:center"><button class="btn ghost" data-act="musicOpen">🎵 Choisir une musique</button><button class="btn" data-act="closeModal">C’est parti</button></div>`,"start");
+  if(!mu)setTimeout(()=>{if(modalKind==="start")closeModal();},9000);
 }
 function startPause(alert){
   const p=state.pomo,long=p.cycle>=nCycles(),m=pick(PAUSE_MSG);
@@ -2342,6 +2758,7 @@ function startPause(alert){
     beep();const left=2-(p.skips||0);
     openModal(`<span class="em" aria-hidden="true">${m.e}</span><h2 class="center">${long?"C’est l’heure de la grande pause":"C’est l’heure de la pause"}</h2>${dots(p.cycle)}
     <p class="center">${m.t}</p><p class="center meta">Et pense à boire un verre d’eau 💧</p>
+    ${(()=>{const mu=state.music.length&&Math.random()<0.5?pick(state.music):null;return mu?`<p class="center">🎵 Une musique pour la pause ? <b>${esc(mu.title)}</b></p><div class="bar" style="justify-content:center">${musicPlayBtn(mu)}<button class="btn ghost spk" data-act="musicOpen">🎵 Autre musique</button></div>`:`<div class="bar" style="justify-content:center"><button class="btn ghost spk" data-act="musicOpen">🎵 Choisir une musique</button></div>`;})()}
     ${left>0?`<p class="center meta">Pas prête ? Tu peux passer la pause (encore ${left} fois).</p>`:`<div class="warn center">Tu as déjà passé 2 pauses de suite : celle-ci est obligatoire 🌿</div>`}
     <div class="actions" style="justify-content:center">${left>0?`<button class="btn ghost" data-act="pomoSkip">Passer la pause</button>`:""}<button class="btn ghost" data-act="pomoStop">Arrêter le minuteur</button><button class="btn" data-act="closeModal">OK, je prends ma pause</button></div>`,"pause");
   }
@@ -2357,7 +2774,7 @@ function endPause(){
 }
 
 /* ---------- boutons flottants ---------- */
-const FABS={fabChrono:chronoModal,fabPomo:pomoModal,fabPin:pinModal};
+const FABS={fabChrono:chronoModal,fabPomo:pomoModal,fabPin:pinModal,fabNote:()=>quickNote()};
 function placeFab(el,x,y){
   const w=el.offsetWidth||56,h=el.offsetHeight||56;
   const vw=document.documentElement.clientWidth||innerWidth;
@@ -2400,20 +2817,34 @@ function tick(){
 function doSearch(q){
   const box=$("#results"),n=norm(q.trim());
   if(n.length<2){box.hidden=true;box.innerHTML="";return;}
+  lastHits=searchHits(q).slice(0,30);
+  box.innerHTML=lastHits.length?lastHits.map((h,i)=>`<button class="res" data-act="goto" data-id="${i}">${esc(h.title)}<small>${esc(h.sub)}</small></button>`).join("")
+    :`<div class="res"><p style="margin:0">Rien trouvé pour « ${esc(q)} ». Essaie un mot proche : un thème, un lieu, une personne.</p><button class="btn ghost spk" style="margin-top:8px" data-act="kwFromSearch" data-id="${esc(q.trim())}">🔎 Ajouter « ${esc(q.trim())} » comme mot caché</button></div>`;
+  box.hidden=false;
+}
+function searchHits(q){
+  const n=norm(String(q||"").trim());if(n.length<2)return [];
   const has=(...xs)=>xs.some(x=>norm(x).includes(n));
   const hits=[];
-  const partHit=Object.keys(QPARTS).map(p=>"q_"+p).some(k=>has(TABS[k].label,TABS[k].kw,tabLabel(k)));
-  state.settings.tabOrder.forEach(k=>{const t=TABS[k];if(!has(t.label,t.kw,tabLabel(k)))return;if(k==="quotidien"&&partHit)return;
+  const partHit=Object.keys(QPARTS).map(p=>"q_"+p).some(k=>has(TABS[k].label,TABS[k].kw,tabLabel(k),kwx(k)));
+  state.settings.tabOrder.forEach(k=>{const t=TABS[k];if(!has(t.label,t.kw,tabLabel(k),kwx(k)))return;if(k==="quotidien"&&partHit)return;
     if(k.startsWith("q_")){const p=k.slice(2);hits.push({tab:qTab(p),qv:p,title:"Partie "+tabLabel(k),sub:tabVisible(k)?"Aller à l’onglet":"Dans l’onglet Quotidien"});}
     else if(tabVisible(k))hits.push({tab:k,title:"Onglet "+tabLabel(k),sub:"Aller à l’onglet"});});
-  if(has("je sors sortie sortir m’habiller m'habiller habiller tenue quoi mettre quoi prendre"))hits.push({fn:"jeSors",title:"👗 Je sors : quoi prendre ?",sub:"Tenue, chaussures, sac et fiche mémo"});
-  if(has("manger mange faim quoi manger repas collation encas en-cas grignoter"))hits.push({fn:"mange",title:"🥗 Qu’est-ce que je mange ?",sub:"Selon ton envie ou ton repas"});
-  if(has("urgence urgences sos secours contact contacts appeler téléphone numéro samu pompiers"))hits.push({fn:"contactsOpen",title:"🆘 Mes contacts d’urgence",sub:"Appeler une personne de confiance ou les secours"});
+  if(has("je sors sortie sortir m’habiller m'habiller habiller tenue quoi mettre quoi prendre "+kwx("jeSors")))hits.push({fn:"jeSors",title:"👗 Je sors : quoi prendre ?",sub:"Tenue, chaussures, sac et fiche mémo"});
+  if(has("manger mange faim quoi manger repas collation encas en-cas grignoter "+kwx("mange")))hits.push({fn:"mange",title:"🥗 Qu’est-ce que je mange ?",sub:"Selon ton envie ou ton repas"});
+  if(has("urgence urgences sos secours contact contacts appeler téléphone numéro samu pompiers appel appels "+kwx("contacts")))hits.push({fn:"contactsOpen",title:"🆘 Mes contacts d’urgence",sub:"Appeler une personne de confiance ou les secours"});
+  if(has("assistant robot question questions aide aujourd’hui aujourd'hui micro-action "+asstName()+" "+kwx("asst")))hits.push({fn:"asstOpen",title:"🤖 "+asstName(),sub:"Questions toutes prêtes sur ton carnet"});
+  if(has("demander claude ia organiser journée trier pensées vrac découper message mail améliorer "+kwx("claude")))hits.push({fn:"claudeOpen",title:"💬 Demander à Claude",sub:"Le carnet prépare ta demande et ouvre Claude"});
+  if(has("note rapide dicter dictée idée noter "+kwx("note")))hits.push({fn:"qnOpen",title:"✍️ Note rapide",sub:"Une idée pour Reprendre ici, sans quitter ta page"});
+  if(has("musique musiques pachelbel playlist écouter morceau "+kwx("music")))hits.push({fn:"musicOpen",title:"🎵 Mes musiques",sub:"Pour le minuteur Pomodoro"});
+  if(has("test tester fiche de test essai remarques "+kwx("test"))&&TESTS[VERSION])hits.push({fn:"testOpen",title:"🧪 Fiche de test de la "+VERSION,sub:"Lue à voix haute, avec tes remarques"});
+  state.calls.forEach(c=>{if(has(c.who,c.reason,c.note))hits.push({tab:"sante",view:"appels",id:"cl-"+c.id,title:"🆘 "+(c.who||"Appel")+(c.reason?" : "+c.reason:""),sub:"Appel noté, "+fmt(c.date),callsAll:true});});
+  state.wins.forEach(w=>{if(has(w.title,w.place,w.people,w.hard,w.learn,w.note))hits.push({tab:"victoires",id:"w20-"+w.id,title:"🌟 "+w.title,sub:"Ma victoire"+(w.date?", "+fmt(w.date):"")});});
   state.contacts.forEach(c=>{if(has(c.name,c.rel,c.note,c.phone))hits.push({fn:"contactsOpen",title:"🆘 "+c.name,sub:"Contact d’urgence"+(c.rel?", "+c.rel:"")});});
   state.lists.repas.forEach(s=>{if(has(s))hits.push({fn:"mangeGo",arg:s,title:"🥗 "+s,sub:"Ce que j’ai noté pour cette envie"});});
   state.lists.sorties.forEach(s=>{if(has(s))hits.push({fn:"sorsGo",arg:s,title:"👗 Je sors : "+s,sub:"Ce que j’ai prévu pour cette sortie"});});
   state.projects.forEach(p=>{if(has(p.name,p.why,p.bilan,p.next,p.notes,p.otherFiles,...p.links.map(l=>l.name)))hits.push({tab:p.space==="loisirs"?"loisirs":"projets",id:"p-"+p.id,title:p.name,sub:(p.kind==="objectif"?"Objectif, ":"")+(SPACE_TXT[p.space]||"Projet")+", "+STATUS[p.status]+(p.star?", ⭐":"")});});
-  state.tasks.forEach(t=>{if(has(t.title,t.note,t.followNote,t.follow,...tDoms(t)))hits.push({tab:"taches",id:"t-"+t.id,filter:t.done?"Faites":"Tous",title:t.title,sub:(t.type==="rdv"?"RDV, ":"Tâche, ")+tDoms(t).join(", ")+(t.done?", faite":t.follow?", "+t.follow:"")});});
+  state.tasks.forEach(t=>{if(has(t.title,t.note,t.followNote,t.follow,...tDoms(t),...(t.links||[]).map(l=>l.name)))hits.push({tab:"taches",id:"t-"+t.id,filter:t.done?"Faites":"Tous",title:t.title,sub:(t.type==="rdv"?"RDV, ":"Tâche, ")+tDoms(t).join(", ")+(t.done?", faite":t.follow?", "+t.follow:"")});});
   state.alerts.forEach(a=>{if(has(a.text))hits.push({pin:true,title:a.text,sub:"Rappel important"});});
   state.q.beaute.forEach(x=>{if(has(x.name,x.use,x.how,x.shop,x.where,x.cat))hits.push({tab:qTab("beaute"),qv:"beaute",id:"qbe-"+x.id,title:x.name,sub:"Beauté"+(x.where?", rangé : "+x.where:"")});});
   state.q.apa.forEach(x=>{if(has(x.act,x.note,x.feel))hits.push({tab:qTab("apa"),qv:"apa",id:"qap-"+x.id,title:x.act+(x.min?" ("+fmtDur(+x.min)+")":""),sub:"APA perso, "+fmt(x.date)});});
@@ -2433,10 +2864,7 @@ function doSearch(q){
   state.sante.ess.forEach(x=>{if(has(x.name,x.use,x.where,x.cat))hits.push({tab:"sante",view:"ess",id:"e-"+x.id,title:x.name,sub:"Mes essentiels"+(x.where?", rangé : "+x.where:"")});});
   state.sante.suivi.forEach(x=>{if(has(x.loc,x.type,x.trig,x.relief,x.note))hits.push({tab:"sante",view:"suivi",id:"s-h-"+x.id,title:x.loc+" ("+(+x.int||0)+"/10)",sub:"Suivi santé, "+fmt(x.date)});});
   state.skills.forEach(k=>{if(has(k.name,k.proof))hits.push({tab:"competences",id:"s-"+k.id,title:k.name,sub:"Compétence, "+fmt(k.date)});});
-  lastHits=hits.slice(0,30);
-  box.innerHTML=lastHits.length?lastHits.map((h,i)=>`<button class="res" data-act="goto" data-id="${i}">${esc(h.title)}<small>${esc(h.sub)}</small></button>`).join("")
-    :`<p class="res">Rien trouvé pour « ${esc(q)} ». Essaie un mot proche : un thème, un lieu, une personne.</p>`;
-  box.hidden=false;
+  return hits;
 }
 function clearSearch(){$("#q").value="";$("#results").hidden=true;$("#results").innerHTML="";}
 
@@ -2482,12 +2910,20 @@ const ACT={
       if(others>=3&&!confirm("Tu as déjà 3 projets actifs dans l’espace "+SPACE_TXT[space]+". Le passer en actif quand même ?"))return;
     }
     if(!id){const sim=similarProject(name);if(sim&&!confirm("Ça ressemble à « "+sim.name+" ». Le créer quand même ?"))return;}
-    const links=[0,1,2].map(i=>({name:val("lkN"+i),url:val("lkU"+i),type:val("lkT"+i)||"dossier"})).filter(l=>l.url||l.name);
-    const data={name,status,space,star:status==="termine"?false:undefined,kind:(k=>KIND_VAL[k]||k||"projet")(selVal("fKind",true)),ver:val("fVer"),stage:selVal("fStage",true),why:val("fWhy"),bilan:val("fBilan"),next:val("fNext"),links,otherFiles:val("fOther"),notes:val("fNotes")};
+    const links=linksVal("fLinks");
+    let nl=val("fNextLink"),madeTask="";const nextTxt=val("fNext");
+    if(nl==="__new"){if(!nextTxt){toast("Écris d’abord l’étape, puis « Créer la tâche »");return;}
+      const ex=dupOf(state.tasks.filter(t=>!t.done),nextTxt,"","title");
+      if(ex){nl=ex.id;madeTask="lien";}
+      else{const want=space==="pro"?"Démarches professionnelles":space==="loisirs"?"Loisirs":"Projets";const dm=state.lists.domains.includes(want)?want:(state.lists.domains[0]||"Projets");
+        nl=uid();state.tasks.push({id:nl,title:nextTxt,domain:dm,domains:[dm],type:"tache",date:"",time:"",urg:"vert",project:"",micro:false,note:"",follow:"",followNote:"",done:false,created:today(),doneDate:"",links:[]});madeTask="new";}}
+    const data={name,status,space,star:status==="termine"?false:undefined,kind:(k=>KIND_VAL[k]||k||"projet")(selVal("fKind",true)),ver:val("fVer"),stage:selVal("fStage",true),why:val("fWhy"),bilan:val("fBilan"),next:nextTxt,nextTask:nl,links,otherFiles:val("fOther"),notes:val("fNotes")};
     let pid=id;
     if(data.star===undefined)delete data.star;
     if(id)Object.assign(state.projects.find(p=>p.id===id),data);
     else{pid=uid();state.projects.push(Object.assign({id:pid,date:today(),star:false},data));}
+    if(nl){const tk=state.tasks.find(t=>t.id===nl);if(tk&&!tk.project)tk.project=pid;}
+    if(madeTask)setTimeout(()=>toast(madeTask==="new"?"Tâche créée dans Tâches & RDV, reliée au projet":"Cette tâche existait déjà : je l’ai reliée, sans doublon",4500),2700);
     if(pendingIdea)state.ideas=state.ideas.filter(i=>i.id!==pendingIdea);
     save();closeModal();if(cur!=="accueil")cur=space==="loisirs"?"loisirs":"projets";render();flash("p-"+pid);toast("Enregistré");
   },
@@ -2504,7 +2940,7 @@ const ACT={
       const sim=similarProject(newName);if(sim&&!confirm("Ça ressemble à « "+sim.name+" ». Créer quand même un nouveau projet ?"))return;
       project=uid();state.projects.push({id:project,name:newName,status:"classer",why:"",bilan:"",next:"",links:[],otherFiles:"",notes:"",date:today(),space:val("tProjSpace")||"pro",kind:"projet",star:false});}
     const st=selVal("tSt",true)||"À faire",done=norm(st)===norm("Fait");
-    const data={title,type:(v=>TYPE_VAL[v]||v||"tache")(selVal("tType",true)),domain:domains[0],domains,date:val("tDate"),time:val("tTime"),urg:val("tUrg"),project,micro:$("#tMicro").checked,note:val("tNote"),follow:done||norm(st)===norm("À faire")?"":st,followNote:val("tFollow"),done};
+    const data={title,type:(v=>TYPE_VAL[v]||v||"tache")(selVal("tType",true)),domain:domains[0],domains,date:val("tDate"),time:val("tTime"),urg:val("tUrg"),project,micro:$("#tMicro").checked,note:val("tNote"),links:linksVal("tLinks"),follow:done||norm(st)===norm("À faire")?"":st,followNote:val("tFollow"),done};
     let tid=id;
     if(id){const o=state.tasks.find(t=>t.id===id);if(done&&!o.done)data.doneDate=today();if(!done)data.doneDate="";Object.assign(o,data);}
     else{tid=uid();state.tasks.push(Object.assign({id:tid,created:today(),doneDate:done?today():""},data));}
@@ -2513,7 +2949,7 @@ const ACT={
     if(cur!=="accueil"){cur="taches";if((taskFilter==="Faites"&&!done)||(taskFilter==="À suivre"&&!data.follow)||(!["Tous","Faites","À suivre"].includes(taskFilter)&&!domains.includes(taskFilter)))taskFilter="Tous";}
     render();flash("t-"+tid);if(!id)setTimeout(()=>offerRep(title),300);toast(newName?"Enregistré, avec le nouveau projet « "+newName+" »":data.date?"Enregistré. Touche 🔔 pour l’agenda":"Enregistré",newName?4000:2600);
   },
-  delTask:id=>{const t=state.tasks.find(x=>x.id===id);if(!t||!confirm("Supprimer « "+t.title+" » ?"))return;state.tasks=state.tasks.filter(x=>x.id!==id);save();render();},
+  delTask:id=>{const t=state.tasks.find(x=>x.id===id);if(!t||!confirm("Supprimer « "+t.title+" » ?"))return;state.tasks=state.tasks.filter(x=>x.id!==id);state.projects.forEach(p=>{if(p.nextTask===id)p.nextTask="";});save();render();},
   toggleTask:id=>{const t=state.tasks.find(x=>x.id===id);if(!t)return;t.done=!t.done;t.doneDate=t.done?today():"";save();render();if(t.done)toast("Bravo, c’est fait ✓");},
   cycleUrg:id=>{const t=state.tasks.find(x=>x.id===id);if(!t)return;t.urg=URG[(URG.indexOf(t.urg)+1)%3];save();render();flash("t-"+id);toast(URG_LABEL[t.urg]);},
   ics:id=>{const t=state.tasks.find(x=>x.id===id);if(!t||!t.date)return;downloadFile("agenda-"+t.date+".ics",makeIcs(t),"text/calendar");toast("Fichier agenda téléchargé : ouvre-le pour l’ajouter");},
@@ -2586,8 +3022,10 @@ const ACT={
   jump:id=>{const U=state.ui.tocUse=state.ui.tocUse||{};U[id]=(U[id]||0)+1;save();jumpTo(document.getElementById(id));},
   jumpTop:()=>jumpTo(document.getElementById("tocNav")),
   repAdd:()=>{const v=val("repIn");if(!v){toast("Écris d’abord une ligne");return;}const sj=subjVal("repSubj");
-    v.split(/\n+/).map(x=>x.trim()).filter(Boolean).reverse().forEach(t=>{if(sj)learnSubj(t,sj);state.rep.unshift({id:uid(),text:t,done:false,date:today(),subj:sj||autoSubj(t)});});
+    v.split(/\n+/).map(x=>x.trim()).filter(Boolean).reverse().forEach(t=>{if(sj)learnSubj(t,sj);state.rep.unshift({id:uid(),text:t,done:false,date:today(),subj:sj||autoSubj(t),auto:!sj});});
     state.ui.repFold=false;save();keepPos("repBlock",render);const i=$("#repIn");if(i)i.focus({preventScroll:true});},
+  repResubj:()=>{let n=0;state.rep.forEach(r=>{if(r.auto===false)return;const s=autoSubj(r.text);if(s!==(r.subj||"")){r.subj=s;n++;}r.auto=true;});save();keepPos("repBlock",render);
+    toast(n?pl(n,"sujet corrigé","sujets corrigés")+". Les sujets choisis à la main n’ont pas bougé.":"Les sujets étaient déjà bons ✓",4500);},
   repTick:id=>{const r=state.rep.find(x=>x.id===id);if(!r)return;r.done=!r.done;save();keepPos("repBlock",render);if(r.done)toast("Bravo ✓");repCheck();},
   repDel:id=>{const old=state.rep.slice();state.rep=state.rep.filter(x=>x.id!==id);save();keepPos("repBlock",render);ask("Ligne retirée",[["Annuler",()=>{state.rep=old;save();keepPos("repBlock",render);},true]],12000);},
   repClear:()=>repClear("Reprendre ici effacé"),
@@ -2678,7 +3116,7 @@ const ACT={
   goto:i=>{const h=lastHits[+i];if(!h)return;clearSearch();
     if(h.pin){pinModal();return;}
     if(h.fn){ACT[h.fn](h.arg);return;}
-    cur=h.tab;useTab(cur);if(h.filter)taskFilter=h.filter;if(h.view)santeView=h.view;if(h.qv)qView=h.qv;render();
+    closeModal();cur=h.tab;useTab(cur);if(h.filter)taskFilter=h.filter;if(h.view)santeView=h.view;if(h.qv)qView=h.qv;if(h.callsAll)callsFilter="all";render();
     if(h.later){const d=$("#ideasBlock details");if(d)d.open=true;}
     if(h.id)setTimeout(()=>flash(h.id),60);else window.scrollTo(0,0);},
   toggleStar:id=>{const p=state.projects.find(x=>x.id===id);if(!p||p.status==="termine")return;
@@ -2735,7 +3173,9 @@ const ACT={
   skillView:id=>{const y=window.scrollY;state.skillView=id;save();render();window.scrollTo(0,y);},
   /* V18 */
   repEdit:id=>{const r=state.rep.find(x=>x.id===id);if(r)openModal(repForm(r),"form");},
-  saveRep:id=>{const r=state.rep.find(x=>x.id===id);if(!r)return;const t=val("rpText");if(!t){toast("La ligne est vide");return;}const sj=subjVal("rpSubj");if(sj)learnSubj(t,sj);r.text=t;r.subj=sj||autoSubj(t);save();closeModal();render();flash("r-"+id);toast("Ligne modifiée");},
+  saveRep:id=>{const r=state.rep.find(x=>x.id===id);if(!r)return;const t=val("rpText");if(!t){toast("La ligne est vide");return;}const sj=subjVal("rpSubj");
+    if(sj&&sj===r.subj&&r.auto!==false)r.text=t;
+    else{if(sj&&r.subj&&r.subj!==sj)unlearnSubj(r.text,r.subj);if(sj)learnSubj(t,sj);r.text=t;r.subj=sj||autoSubj(t);r.auto=!sj;}save();closeModal();render();flash("r-"+id);toast("Ligne modifiée");},
   repGroup:v=>{state.ui.repGroup=v==="1";save();keepPos("repBlock",render);},
   repFold:()=>{state.ui.repFold=!state.ui.repFold;save();keepPos("repBlock",render);},
   repSelStart:()=>{repSelMode=true;repSel=new Set();state.ui.repFold=false;keepPos("repBlock",render);toast("Coche ⬜ les lignes à donner à Claude");},
@@ -2789,11 +3229,14 @@ const ACT={
   alertTest:()=>{if(!alertCheck(true))toast("Aucun rappel important pour l’instant (📌 pour en ajouter)",4000);},
   qNew:k=>openModal(QFORM[k](),"form"),
   qEdit:id=>{const [k,i]=id.split("|");const x=state.q[k].find(e=>e.id===i);if(x)openModal(QFORM[k](x),"form");},
-  qDel:id=>{const [k,i]=id.split("|");const x=state.q[k].find(e=>e.id===i);if(!x||!confirm("Supprimer « "+(x[QFIELD[k]]||"cet élément")+" » ?"))return;state.q[k]=state.q[k].filter(e=>e.id!==i);save();render();},
+  qDel:id=>{const [k,i]=id.split("|");const x=state.q[k].find(e=>e.id===i);if(!x||!confirm("Supprimer « "+(x[QFIELD[k]]||"cet élément")+" » ?"))return;state.q[k]=state.q[k].filter(e=>e.id!==i);if(k==="abo")state.alerts=state.alerts.filter(a=>a.abo!==i);save();render();},
   qSave:id=>{const [k,xid0]=id.split("|");const data=QDATA[k](),f=QFIELD[k],L=state.q[k];if(!data[f]){toast(QMSG[k]);return;}
     if(!xid0&&k!=="apa"){const d=dupOf(L,data[f],"",f);if(d&&dupWarn("qSave",`Tu as déjà « ${esc(d[f])} ».`,{tab:qTab(k),qv:k,el:QPRE[k]+d.id,name:d[f]}))return;}
     let xid=xid0;if(xid)Object.assign(L.find(x=>x.id===xid),data);else{xid=uid();L.push(Object.assign({id:xid,added:today()},data));}
-    qView=k;cur=qTab(k);save();closeModal();render();flash(QPRE[k]+xid);toast("Enregistré");if(!xid0&&k!=="apa")offerRep(data[f]);},
+    let aboAsk=null;if(k==="abo"){const x=L.find(e=>e.id===xid);syncAboAlert(x);updateFabs();if(!xid0&&!x.remind&&x.end&&!aboStop(x))aboAsk=x;}
+    qView=k;cur=qTab(k);save();closeModal();render();flash(QPRE[k]+xid);toast(k==="abo"&&data.remind?"Enregistré, avec le rappel pour résilier ⏰":"Enregistré");if(!xid0&&k!=="apa")setTimeout(()=>offerRep(data[f]),aboAsk?13000:0);
+    if(aboAsk){const d=new Date(aboAsk.end+"T12:00:00");d.setDate(d.getDate()-2);const r=isoOf(d);
+      setTimeout(()=>ask("Me rappeler de résilier « "+esc(aboAsk.name)+" » avant le "+fmt(r)+" ? (2 jours avant la fin)",[["Oui",()=>{aboAsk.remind=r;syncAboAlert(aboAsk);save();render();toast("Rappel ajouté ⏰ (il s’affichera les 3 jours avant)",4000);},true],["Non",null]],12000),500);}},
   pretBack:id=>{const x=state.q.pret.find(e=>e.id===id);if(!x)return;x.st="Rendu";x.backDate=today();save();render();toast("Noté comme rendu ✓");},
   newMic:m=>openModal(micForm(null,m),"form"),
   editMic:id=>{const x=state.sante.mic.find(e=>e.id===id);if(x)openModal(micForm(x),"form");},
@@ -2807,6 +3250,86 @@ const ACT={
   micGo:d=>{micDay=d;render();},
   micQuick:v=>{const i=$("#mDvol");if(i){i.value=v;modalDirty=true;}},
   micCopy:w=>{const days=w==="all"?[...new Set(state.sante.mic.map(x=>x.date))].sort():[micDay||today()];const t=days.map(micText).join("\n\n");copyText(t,null,w==="all"?"Tous les jours copiés":"Jour copié");},
+  /* V20 */
+  asstOpen:()=>{modalDirty=false;asstModal();},
+  asstAsk:id=>{const q=ASST_Q.find(x=>x.id===id)||state.asstQ.find(x=>x.id===id);if(!q)return;const src=q.src||q.id,a=$("#asstAns");if(!a)return;
+    a.innerHTML=`<p class="subh" style="margin-top:0">${esc(q.q)}</p><div id="asstTxt">${asstAnswer(src,q.txt)}</div><div class="bar noread" style="margin:8px 0 0">${spkBtn("asstTxt")}${ASST_GO[src]?`<button class="btn ghost spk" data-act="asstGo" data-id="${ASST_GO[src]}">Aller voir</button>`:""}</div>`;
+    a.hidden=false;document.querySelectorAll("#sheet .chip[data-act=asstAsk]").forEach(c=>c.classList.toggle("on",c.dataset.id===id));a.scrollIntoView({block:"nearest"});
+    if(state.settings.asstRead)speak(textOf($("#asstTxt")));},
+  asstGo:k=>{speakStop();closeModal();if(k==="abo"||k==="pret"){qView=k;cur=qTab(k);}else{cur=k;if(k==="sante")santeView="ess";}useTab(cur);render();window.scrollTo(0,0);if(k==="accueil")setTimeout(()=>flash("repBlock"),80);},
+  asstNewQ:()=>openModal(asstQForm(),"form"),
+  asstEditQ:id=>{const q=state.asstQ.find(x=>x.id===id);if(q)openModal(asstQForm(q),"form");},
+  saveAsstQ:id=>{const q=val("aqQ");if(!q){toast("Écris ta question");return;}const src=val("aqSrc")||"today",txt=val("aqTxt");if(src==="txt"&&!txt){toast("Écris ta réponse");return;}
+    const data={q,src,txt};if(id)Object.assign(state.asstQ.find(x=>x.id===id),data);else state.asstQ.push(Object.assign({id:uid()},data));save();asstModal();toast("Question enregistrée");},
+  asstDelQ:id=>{const q=state.asstQ.find(x=>x.id===id);if(!q||!confirm("Supprimer la question « "+q.q+" » ?"))return;state.asstQ=state.asstQ.filter(x=>x.id!==id);save();asstModal();},
+  asstSettings:()=>{speakStop();closeModal();cur="params";useTab(cur);render();setTimeout(()=>{const e=document.getElementById("asstSet");if(e){jumpTo(e);flash("asstSet");}},80);},
+  setRobot:k=>{state.settings.asstIcon=k;save();renderHeader();const y=window.scrollY;render();window.scrollTo(0,y);toast("Nouveau visage : "+ROBOTS[k]);},
+  setAsstRead:v=>{state.settings.asstRead=v==="1";save();const y=window.scrollY;render();window.scrollTo(0,y);toast(v==="1"?"Réponses lues à voix haute":"Réponses non lues");},
+  claudeOpen:()=>{speakStop();modalDirty=false;claudeModal("");},
+  claudePick:id=>claudeModal(id),
+  claudeNew:()=>openModal(`<h2>➕ Ma demande pour Claude</h2><label for="crL">Nom de la demande</label><input id="crL" placeholder="Ex. : préparer un rendez-vous médical">
+    <label for="crT">Ce que je demande à Claude</label><textarea id="crT" class="grow-ta" rows="3" placeholder="Ex. : Aide-moi à préparer mes questions pour ce rendez-vous, en phrases courtes."></textarea>
+    <p class="hint">Le carnet ajoutera tout seul la date, ta phase et tes priorités.</p>
+    <div class="actions"><button class="btn ghost" data-act="claudeOpen">Annuler</button><button class="btn" data-act="saveClaudeReq">Enregistrer</button></div>`,"form"),
+  saveClaudeReq:()=>{const l=val("crL"),t=val("crT");if(!l||!t){toast("Écris le nom et la demande");return;}const id=uid();state.claudeReq.push({id,label:"⭐ "+l,txt:t});save();claudeModal(id);toast("Demande enregistrée");},
+  claudeDel:id=>{const c=state.claudeReq.find(x=>x.id===id);if(!c||!confirm("Supprimer « "+c.label+" » ?"))return;state.claudeReq=state.claudeReq.filter(x=>x.id!==id);save();claudeModal(claudeCur===id?"":claudeCur);},
+  claudeCopy:()=>{const t=val("clOut");if(!t)return;copyText(t,"#clOut","Copié : colle-le dans Claude");},
+  claudeGo:()=>{const t=val("clOut");if(!t)return;copyText(t,"#clOut","Copié : colle-le dans Claude");try{window.open("https://claude.ai/new","_blank","noopener");}catch(e){}},
+  qnOpen:()=>{if(!$("#qnote").classList.contains("show"))quickNote();},
+  qnClose:()=>qnClose(),
+  qnAdd:()=>{const v=val("qnIn");if(!v){toast("Écris ou dicte d’abord ton idée");return;}const ctx=$("#qnCtx")&&$("#qnCtx").checked?"["+placeLabel()+"] ":"";
+    const L=v.split(/\n+/).map(x=>x.trim()).filter(Boolean);L.reverse().forEach(t=>{const txt=ctx+t;state.rep.unshift({id:uid(),text:txt,done:false,date:today(),subj:autoSubj(txt),auto:true});});
+    state.ui.repFold=false;save();if(cur==="accueil")keepPos("repBlock",render);const i=$("#qnIn");if(i){i.value="";autoGrow(i);i.focus({preventScroll:true});}
+    toast(L.length>1?L.length+" lignes ajoutées à Reprendre ici ✓":"Ajouté à Reprendre ici ✓");},
+  dictate:(id,b)=>dictate(id,b),
+  musicOpen:()=>musicModal(),
+  musicBack:()=>pomoModal(),
+  musicAdd:()=>{const t=val("muT"),u=val("muU");if(!t){toast("Écris le titre");return;}if(u&&!safeUrl(u)){toast("Le lien doit commencer par https://");return;}
+    if(state.music.some(m=>dupKey(m.title)===dupKey(t))){toast("« "+t+" » est déjà dans tes musiques");return;}state.music.push({id:uid(),title:t,url:u});save();musicModal();toast("Musique ajoutée 🎵");},
+  musicDel:id=>{const m=state.music.find(x=>x.id===id);if(!m||!confirm("Retirer « "+m.title+" » ?"))return;state.music=state.music.filter(x=>x.id!==id);save();musicModal();},
+  musicMove:id=>{const [mid,d]=id.split("|"),a=state.music,i=a.findIndex(x=>x.id===mid),j=i+(+d);if(i<0||j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];save();const y=$("#sheet").scrollTop;musicModal();$("#sheet").scrollTop=y;},
+  callNew:id=>{callBack=modalKind==="contacts"?"contacts":cur==="sante"?"sante":"contacts";const c=id||(state.contacts[0]||{}).id||"";openModal(callForm({contact:c}),"form");},
+  callEdit:id=>{const x=state.calls.find(c=>c.id===id);if(!x)return;callBack=modalKind==="contacts"?"contacts":"sante";openModal(callForm(x),"form");},
+  callCancel:()=>{modalDirty=false;if(callBack==="sante")closeModal();else contactsModal();},
+  saveCall:id=>{const w=val("clWho"),other=val("clWhoO");if(w==="__autre"&&!other){toast("Écris qui a été appelé");return;}
+    const contact=w==="__autre"?"":w,data={contact,who:callWho(contact,other),date:val("clDate")||today(),time:val("clTime"),reason:selVal("clReason",true),sante:$("#clSante").checked,note:val("clNote")};
+    if(id)Object.assign(state.calls.find(c=>c.id===id),data);else state.calls.unshift(Object.assign({id:uid()},data));save();
+    if(callBack==="sante"){closeModal();cur="sante";santeView="appels";if(!data.sante)callsFilter="all";render();}else contactsModal();toast(data.sante?"Appel noté, aussi dans ✚ Santé":"Appel noté");},
+  callDel:id=>{if(!confirm("Supprimer cet appel noté ?"))return;state.calls=state.calls.filter(c=>c.id!==id);save();if(modalKind==="contacts")contactsModal();else render();},
+  callDial:id=>{setTimeout(()=>{closeModal();ask("Tu as appelé "+esc(callWho(id))+". Noter la date et la raison ?",[["📝 Noter",()=>{callBack="contacts";openModal(callForm({contact:id}),"form");},true],["Non",null]],25000);},900);},
+  callsSee:()=>{closeModal();cur="sante";santeView="appels";callsFilter="all";useTab(cur);render();window.scrollTo(0,0);},
+  callsFilt:v=>{callsFilter=v;render();},
+  callsCopy:()=>{const L=sortCalls(callsFilter==="sante"?state.calls.filter(x=>x.sante):state.calls);const t="Appels à mes contacts d’urgence :\n"+L.map(x=>"- "+fmt(x.date)+(x.time?" à "+hText(x.time):"")+" : "+(x.who||"?")+(x.reason?", raison : "+x.reason:"")+(x.note?". "+x.note:"")).join("\n");copyText(t,null,"Liste copiée");},
+  contactDown:id=>{const a=state.contacts,i=a.findIndex(x=>x.id===id);if(i>=0&&i<a.length-1){[a[i+1],a[i]]=[a[i],a[i+1]];save();contactsModal();}},
+  lkAdd:id=>{const b=document.getElementById(id);if(!b)return;b.insertAdjacentHTML("beforeend",linkRowHtml(null));modalDirty=true;const r=b.lastElementChild;if(r)r.querySelector(".lkN").focus();},
+  lkMove:(d,b)=>{const r=b.closest("[data-lk]");if(!r)return;if(+d<0&&r.previousElementSibling)r.parentNode.insertBefore(r,r.previousElementSibling);else if(+d>0&&r.nextElementSibling)r.parentNode.insertBefore(r.nextElementSibling,r);modalDirty=true;r.scrollIntoView({block:"nearest"});},
+  lkDel:(_,b)=>{const r=b.closest("[data-lk]");if(!r)return;const box=r.parentNode;r.remove();if(!box.children.length)box.insertAdjacentHTML("beforeend",linkRowHtml(null));modalDirty=true;},
+  gotoTask:id=>{const t=state.tasks.find(x=>x.id===id);if(!t)return;cur="taches";useTab(cur);taskFilter=t.done?"Faites":"Tous";render();setTimeout(()=>flash("t-"+id),60);},
+  winNew:()=>openModal(winForm(),"form"),
+  winEdit:id=>{const w=state.wins.find(x=>x.id===id);if(w)openModal(winForm(w),"form");},
+  winDel:id=>{const w=state.wins.find(x=>x.id===id);if(!w||!confirm("Supprimer « "+w.title+" » ?"))return;state.wins=state.wins.filter(x=>x.id!==id);save();render();},
+  winPhotoDel:()=>{winPhoto=null;const p=$("#wiPrev");if(p)p.innerHTML="";modalDirty=true;},
+  saveWin:id=>{const title=val("wiT");if(!title){toast("Écris ta victoire");return;}
+    const data={title,date:val("wiD"),place:val("wiP"),people:val("wiW"),hard:val("wiH"),learn:val("wiL"),note:val("wiN"),url:val("wiU"),photo:winPhoto||"",project:projVal("wiProj")};let wid=id;
+    if(id)Object.assign(state.wins.find(x=>x.id===id),data);else{wid=uid();state.wins.push(Object.assign({id:wid,added:today()},data));}
+    save();closeModal();cur="victoires";render();setTimeout(()=>flash("w20-"+wid),60);toast("Victoire enregistrée 🌟");},
+  testOpen:()=>{speakStop();modalDirty=false;testModal();},
+  testRead:()=>{const L=TESTS[VERSION]||[],s=L[testRun().i||0];if(s)speak(s.k+". "+s.t);},
+  testMark:id=>{const [i,r]=id.split("|"),T=testRun(),n=T.notes[i]=T.notes[i]||{};n.r=n.r===r?"":r;save();document.querySelectorAll("#testRes button").forEach(b=>b.classList.toggle("on",b.dataset.id===i+"|"+n.r));},
+  testGo:i=>{speakStop();testModal(+i);},
+  testSum:()=>testSummary(),
+  testCopy:()=>copyText(testText(),"#testOut","Remarques copiées : colle-les à Claude"),
+  testToRep:()=>{const L=TESTS[VERSION]||[],T=testRun();let n=0;L.forEach((s,i)=>{const x=T.notes[i]||{};if(x.note||x.r==="ko"){const txt="["+s.k+"] "+(x.r==="ko"?"✗ problème":"")+(x.note?(x.r==="ko"?" : ":"")+x.note:"");if(!state.rep.some(r=>r.text===txt)){state.rep.unshift({id:uid(),text:txt,done:false,date:today(),subj:autoSubj("carnet pilote "+txt),auto:true});n++;}}});
+    save();toast(n?pl(n,"remarque ajoutée","remarques ajoutées")+" à Reprendre ici":"Aucune remarque à ajouter",4000);},
+  testReset:()=>{if(!confirm("Effacer tes réponses et recommencer la fiche au début ?"))return;state.tests[VERSION]={i:0,notes:{}};save();testModal(0);},
+  setTestAuto:v=>{state.settings.testAuto=v==="1";save();const y=window.scrollY;render();window.scrollTo(0,y);toast(v==="1"?"Chaque étape sera lue toute seule":"Les étapes ne seront pas lues toutes seules");},
+  kwAdd:()=>{const k=val("kwT"),w=val("kwW");if(!w){toast("Écris le mot caché");return;}const n=addKw(k,w);const y=window.scrollY;render();window.scrollTo(0,y);toast(n?"Mot caché ajouté pour « "+kwLabel(k)+" »":"Ce mot y est déjà",4000);},
+  kwDel:id=>{const [k,i]=id.split("|"),L=state.settings.kwExtra[k];if(!L)return;L.splice(+i,1);if(!L.length)delete state.settings.kwExtra[k];save();const y=window.scrollY;render();window.scrollTo(0,y);},
+  kwFromSearch:w=>{clearSearch();kwModal(w);},
+  saveKw:()=>{const w=val("kwW2"),k=val("kwT2");if(!w){toast("Écris le mot caché");return;}const n=addKw(k,w);closeModal();if(cur==="params")render();toast(n?"C’est noté : « "+w+" » t’emmènera vers « "+kwLabel(k)+" »":"Ce mot y est déjà",4500);},
+  aboIcs:id=>{const x=state.q.abo.find(e=>e.id===id);if(!x||!x.remind)return;downloadFile("rappel-resilier-"+x.remind+".ics",makeIcs({id:"abo-"+x.id,title:"Résilier "+x.name,date:x.remind,time:"",domain:"Abonnements",note:"Avant le renouvellement"}),"text/calendar");toast("Ouvre le fichier pour l’ajouter à ton agenda",4000);},
+  aboRemind2:()=>{const e=val("oEnd");if(!e){toast("Remplis d’abord la date de fin ou de renouvellement");return;}const d=new Date(e+"T12:00:00");d.setDate(d.getDate()-2);const r=$("#oRemind");if(r){r.value=isoOf(d);modalDirty=true;}},
+  listMove:id=>{const [k,i]=id.split("|"),L=state.lists[k],j=+i;if(!L||j<1)return;[L[j-1],L[j]]=[L[j],L[j-1]];save();const y=window.scrollY;render();window.scrollTo(0,y);},
   copyBase:()=>copyText(BASE_PROMPT,"#basePrompt","Règles copiées"),
   copyPrompt:()=>{const t=$("#promptCopy");const done=()=>toast("Message copié");
     if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(UPDATE_PROMPT).then(done,()=>{t.select();document.execCommand("copy");done();});
@@ -2826,6 +3349,9 @@ document.addEventListener("input",e=>{
   if(modalKind==="form"&&t.closest&&t.closest("#sheet"))modalDirty=true;
   if(t.id==="q")doSearch(t.value);
   if(t.id==="tocQ")tocFilter();
+  if(t.classList&&t.classList.contains("grow-ta"))autoGrow(t);
+  if(modalKind==="claude"){if(t.id==="clOut")claudeEdited=true;else if(t.closest&&t.closest("#claudeForm"))claudeRefresh();}
+  if(t.id==="testNote"){const T=testRun(),i=t.dataset.i,n=T.notes[i]=T.notes[i]||{};n.note=t.value.trim();save();}
 
   if(state.chrono.running&&["chDet","chToolO","chCatO"].includes(t.id))syncChronoField(t.id);
   if(t.id==="sInt"){const o=$("#sIntOut");if(o)o.textContent=t.value+" / 10";}
@@ -2863,6 +3389,11 @@ document.addEventListener("change",e=>{
   if(t.dataset&&t.dataset.proj){const o=document.getElementById(t.id+"New");if(o){o.hidden=t.value!=="__new";if(!o.hidden)o.focus();}}
   if(t.dataset&&t.dataset.subj){const o=document.getElementById(t.id+"O");if(o){o.hidden=t.value!=="__autre";if(!o.hidden)o.focus();}}
   if(t.id==="micDayIn"&&t.value){micDay=t.value;render();}
+  if(t.id==="clWho"){const o=$("#clWhoO");if(o){o.hidden=t.value!=="__autre";if(!o.hidden)o.focus();}}
+  if(t.id==="clTask"){const o=$("#clTaskO");if(o){o.hidden=t.value!=="__autre";if(!o.hidden)o.focus();}claudeRefresh();}
+  if(t.id==="aqSrc"){const w=$("#aqTxtWrap");if(w)w.hidden=t.value!=="txt";}
+  if(t.id==="wiPh"&&t.files&&t.files[0]){shrinkPhoto(t.files[0]).then(d=>{winPhoto=d;modalDirty=true;const p=$("#wiPrev");if(p)p.innerHTML=`<img src="${d}" alt="Aperçu"><button type="button" class="btn ghost spk" data-act="winPhotoDel">Retirer la photo</button>`;}).catch(()=>toast("Cette photo n’a pas pu être lue"));t.value="";}
+  if(k==="asstName"){state.settings.asstName=t.value.trim()||"Mon assistant";save();renderHeader();toast("Nom enregistré : "+asstName());}
   if((t.id==="micLever"||t.id==="micCoucher")&&micDay){const D=state.sante.micDays[micDay]=state.sante.micDays[micDay]||{};D[t.id==="micLever"?"lever":"coucher"]=t.value;save();render();toast("Enregistré");}
   if(t.id==="mUri"){const w=$("#mUriWrap");if(w)w.hidden=!t.checked;}
   if(t.id==="mNm"){const v=$("#mVol");if(v){v.disabled=t.checked;if(t.checked)v.value="";}}
@@ -2889,11 +3420,12 @@ document.addEventListener("change",e=>{
 });
 document.addEventListener("toggle",e=>{const d=e.target;if(d&&d.dataset&&d.dataset.sp){state.ui.foldSp[d.dataset.sp]=!d.open;save();}if(d&&d.dataset&&d.dataset.fg!==undefined){state.ui.fileFold[d.dataset.fg]=!d.open;save();}if(d&&d.id==="jobRech")jobSec.r=d.open;if(d&&d.id==="jobRes")jobSec.s=d.open;if(d&&d.classList&&d.classList.contains("jobc")){const id=d.dataset.job;if(d.open){jobOpen.add(id);jobOpen.delete("x"+id);}else{jobOpen.delete(id);jobOpen.add("x"+id);}}},true);
 document.addEventListener("keydown",e=>{
-  if(e.key==="Escape"){speakStop();if($("#alertPop").classList.contains("show"))$("#alertPop").classList.remove("show");else if($("#modal").classList.contains("open"))tryClose();else if($("#note").classList.contains("show"))hideNote();else{$("#results").hidden=true;}}
+  if(e.key==="Escape"){speakStop();if($("#qnote").classList.contains("show")&&!$("#modal").classList.contains("open"))qnClose();else if($("#alertPop").classList.contains("show"))$("#alertPop").classList.remove("show");else if($("#modal").classList.contains("open"))tryClose();else if($("#note").classList.contains("show"))hideNote();else{$("#results").hidden=true;}}
   if(e.key==="Enter"&&!e.shiftKey){
     if(e.target.id==="ideaIn"){e.preventDefault();ACT.addIdea();}
     else if(e.target.id==="uIn"){e.preventDefault();ACT.addUrgent();}
     else if(e.target.id==="repIn"){e.preventDefault();ACT.repAdd();}
+    else if(e.target.id==="qnIn"){e.preventDefault();ACT.qnAdd();}
     else if(e.target.id&&e.target.id.startsWith("bagIn-")){e.preventDefault();ACT.bagAdd(e.target.id.slice(6));}
   }
 });
