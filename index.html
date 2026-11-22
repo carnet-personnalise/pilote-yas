@@ -343,6 +343,12 @@ html.locked #photoBox{visibility:hidden}
 #speakBar button.rate{padding:5px 10px}
 #speakBar button.rate.on{background:var(--bg);color:var(--ink);font-weight:700}
 .ctrow{display:block}
+/* ---------- V22 ---------- */
+#testBack{position:fixed;left:12px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:90;display:flex;align-items:stretch;border-radius:999px;background:var(--accent);color:var(--on-accent);box-shadow:0 4px 14px rgba(0,0,0,.25);overflow:hidden}
+#testBack[hidden]{display:none}
+#testBack button{border:0;background:transparent;color:inherit;font:inherit;font-weight:700;padding:10px 14px;min-height:44px;cursor:pointer}
+#testBack .tb-x{padding:10px 12px;border-left:1px solid rgba(255,255,255,.35);font-weight:400}
+html.locked #testBack{visibility:hidden}
 .ctrow .cthead{display:flex;gap:10px;align-items:flex-start}
 .ctrow .tel{white-space:nowrap;font-variant-numeric:tabular-nums}
 .ctrow .cttools{display:flex;flex-wrap:wrap;gap:2px 4px;align-items:center;margin-top:6px}
@@ -396,6 +402,7 @@ html.locked #lock{display:flex;position:fixed;inset:0;z-index:200;background:var
 <div id="qnote" role="dialog" aria-labelledby="qnTitle"></div>
 <div id="speakBar" role="status"></div>
 <div id="photoBox" role="dialog" aria-modal="true" aria-label="Photo en grand"></div>
+<div id="testBack" class="noread" hidden><button class="tb-go" data-act="testBack">🧪 Retour au test</button><button class="tb-x" data-act="testBackOff" aria-label="Cacher le bouton du test">✕</button></div>
 <div id="askBar" role="alertdialog"></div>
 <div id="alertPop" role="alertdialog" aria-modal="true" aria-labelledby="alertTitle"></div>
 
@@ -416,7 +423,7 @@ html.locked #lock{display:flex;position:fixed;inset:0;z-index:200;background:var
 
 <script>
 "use strict";
-const VERSION="V21",VERSION_DATE="22/11/2026",FILE_NAME="V21Carnet_Pilote.html";
+const VERSION="V22",VERSION_DATE="22/11/2026",FILE_NAME="V22Carnet_Pilote.html";
 const MOT_DE_PASSE_DE_DEPART="1234"; // 🔒 Mot de passe provisoire : change "1234" ici (garde les guillemets). Ensuite, change-le plutôt dans ⚙️ Paramètres.
 const LOGO="data:image/png;base64,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";
 const KEY="carnetPilotageYasmine";
@@ -505,7 +512,7 @@ const DEF_Q={
 const DEF_T={taskType:["Tâche","Rendez-vous"],taskStatus:["À faire","À suivre","Fait"],domains:DOMAINS.slice(),repSubj:[]};
 const KIND_VAL={Projet:"projet",Objectif:"objectif",Carnet:"carnet"},KIND_LBL={projet:"Projet",objectif:"Objectif",carnet:"Carnet"};
 const QPARTS={ast:"💡 Astuces",alim:"🥗 Alimentation",vet:"👗 Vêtements & sacs",beaute:"💄 Beauté",apa:"🏃‍♀️ APA perso",pret:"🤝 Prêté",abo:"💳 Abonnements"};
-const RATES={lente:["Lente",1],normale:["Normale",1.2],rapide:["Rapide",1.45]};
+const RATES={lente:["Lente",1.2],normale:["Normale",1.45],rapide:["Rapide",1.75]};
 const NOTE_FREQ={jamais:["Jamais",0],rarement:["Rarement",.2],parfois:["Parfois",.4],souvent:["Souvent",.75]};
 const TIPS=[
   {e:"💡",t:"Une idée pour améliorer ton carnet ? Dis-la directement dans le projet Claude « Carnet Pilote »."},
@@ -533,12 +540,20 @@ const TIPS=[
   {e:"🔎",t:"Un mot que tu tapes souvent ne trouve rien ? Ajoute-le comme mot caché : ⚙️ Paramètres, Mes mots cachés."},
   {e:"🧪",t:"Nouvelle version ? Lance la fiche de test : elle se lit à voix haute, étape par étape, et garde tes remarques pour la version suivante."},
   {e:"🔍",t:"Une photo trop petite ? Touche-la : elle s’ouvre en grand."},
-  {e:"🐇",t:"Pendant une lecture à voix haute, change la vitesse dans la barre noire : 🐢 Lente, Normale, 🐇 Rapide."},
+  {e:"🐇",t:"Pendant une lecture à voix haute, change la vitesse dans la barre noire : 🐢 Lente, Normale, 🐇 Rapide. La lecture reprend à la phrase en cours."},
   {e:"🎶",t:"Pendant une pause du minuteur 🍅 : « 🎶 Ouvrir Musicolet », puis choisis ta playlist."},
-  {e:"↕️",t:"Une tâche à voir en premier ? Flèches ↑ ↓ à côté d’elle, dans Tâches & RDV. « ↺ Ordre automatique » remet le classement par couleur."},
+  {e:"↕️",t:"Une tâche à voir en premier ? Flèches ↑ ↓ à côté d’elle, dans Tâches & RDV. Chaque domaine garde son ordre. « ↺ Ordre automatique » remet le classement par couleur."},
+  {e:"🧪",t:"Pendant un test, tu peux fermer la fiche pour aller vérifier dans un onglet. Le bouton « 🧪 Retour au test », en bas à gauche, te ramène à ton étape."},
   {e:"🗂️",t:"Une partie trop longue ? Touche son titre pour la replier : le carnet s’en souvient."}
 ];
-const TESTS={V21:[
+const TESTS={V22:[
+  {k:"Retour au test",t:"Ici, touche ✕ en haut de cette fenêtre pour la fermer, et va dans un autre onglet, par exemple Tâches & RDV. En bas à gauche, touche « 🧪 Retour au test » : tu reviens à cette étape."},
+  {k:"Tâches & RDV › ordre",t:"Dans Tâches & RDV, dans un domaine, touche ↑ sur une tâche, même si elle est aussi dans un autre domaine : elle monte d’une place à chaque appui. Regarde l’autre domaine : son ordre n’a pas bougé. Puis « ↺ Ordre automatique »."},
+  {k:"Mes musiques › Musicolet",t:"Dans « 🎵 Mes musiques », touche ▶ sur ta playlist Musicolet, ou « 🎶 Ouvrir Musicolet ». Musicolet doit s’ouvrir directement, sans t’arrêter sur le Play Store. Note si le Play Store reste affiché."},
+  {k:"Lecture › reprise",t:"Touche 🔊 Écouter sur un long texte, par exemple dans l’Aide-mémoire. Après deux ou trois phrases, change la vitesse dans la barre noire : la lecture reprend à la phrase en cours, pas au début."},
+  {k:"Lecture › vitesses",t:"Essaie les 3 vitesses. 🐢 Lente correspond à l’ancienne Normale. Normale correspond à l’ancienne Rapide. 🐇 Rapide va un peu plus vite."},
+  {k:"Fiche de test",t:"Pour finir : touche « Résumé », puis « 📋 Copier mes remarques », et colle-les à Claude pour la V23."}
+],V21:[
   {k:"Mon assistant › visage",t:"Dans Paramètres, partie Mon assistant, choisis « Ma version perso » : visière claire, yeux ronds noirs avec un reflet irisé, antenne en cœur. Regarde le robot en haut de l’écran. Essaie aussi A, B et C."},
   {k:"Photos en grand",t:"Onglet Mes victoires : touche la photo d’une victoire. Elle s’ouvre en grand. Touche Fermer, ou l’image, pour revenir."},
   {k:"Lecture › vitesse",t:"Touche 🔊 Écouter, par exemple dans l’Aide-mémoire. Dans la barre noire en bas, touche 🐇 Rapide, puis 🐢 Lente. La lecture continue à la nouvelle vitesse."},
@@ -575,6 +590,12 @@ const TESTS={V21:[
   {k:"Fiche de test",t:"Pour finir : touche « Résumé », puis « 📋 Copier mes remarques », et colle-les à Claude pour la V21."}
 ]};
 const HISTORY=[
+  {v:"V22",d:"22/11/2026",n:[
+    "🧪 <b>Retour au test</b> : pendant un test, ferme la fiche pour aller vérifier dans n’importe quel onglet. Le bouton « 🧪 Retour au test », en bas à gauche, te ramène à ton étape. ✕ pour le cacher.",
+    "↕️ <b>Tâches & RDV</b> : les flèches ↑ ↓ ne bloquent plus. Chaque domaine garde son propre ordre, même pour une tâche rangée dans plusieurs domaines. Une nouvelle tâche arrive en haut.",
+    "🎶 <b>Musicolet</b> : le bouton ▶ demande l’ouverture directe de Musicolet, sans t’arrêter sur la page du Play Store.",
+    "🔊 <b>Lecture à voix haute</b> : quand tu changes la vitesse, la lecture <b>reprend à la phrase en cours</b>, plus au début.",
+    "🐇 <b>Vitesses décalées d’un cran</b> : 🐢 Lente = l’ancienne Normale, Normale = l’ancienne Rapide, 🐇 Rapide un peu plus vite. Ton réglage a été décalé tout seul."]},
   {v:"V21",d:"22/11/2026",n:[
     "🤖 <b>Mon assistant</b> : ton robot perso validé (visière claire, yeux ronds noirs à reflet irisé, antenne en cœur), et A Douce, B Élégante, C Pétillante comme sur ta fiche. Le visage de la V20 reste au choix.",
     "🧪 <b>Fenêtre de test</b> : elle revient à chaque ouverture tant que toutes les étapes de la fiche ne sont pas testées. Rappel aussi sur l’Accueil.",
@@ -805,6 +826,9 @@ function fixState(s){
   }
   s.projects.forEach(p=>{if(p.nextTask===undefined)p.nextTask="";});
   s.tasks.forEach(t=>{if(!Array.isArray(t.links))t.links=[];});
+  /* V22 : ordre des tâches propre à chaque domaine, et vitesses décalées d’un cran */
+  if(!s.taskOrd||typeof s.taskOrd!=="object")s.taskOrd={};
+  if(!s.v22){s.tasks.forEach(t=>{delete t.prio;});const r=s.settings.rate;s.settings.rate=r==="rapide"?"normale":"lente";s.v22=true;}
   sortWork(s);
   return s;
 }
@@ -899,7 +923,7 @@ function barTabs(){
 }
 function useTab(k){const U=state.ui.tabUse=state.ui.tabUse||{};U[k]=(U[k]||0)+1;}
 const VIEWS={accueil:vAccueil,projets:vProjets,loisirs:vLoisirs,sante:vSante,quotidien:()=>vQuot(null),q_ast:()=>vQuot("ast"),q_alim:()=>vQuot("alim"),q_vet:()=>vQuot("vet"),q_beaute:()=>vQuot("beaute"),q_apa:()=>vQuot("apa"),q_pret:()=>vQuot("pret"),q_abo:()=>vQuot("abo"),victoires:vVictoires,taches:vTaches,fichiers:vFichiers,journal:vJournal,competences:vCompetences,aide:vAide,params:vParams};
-function render(){applyPhase();renderHeader();renderTabs();$("#main").innerHTML=VIEWS[cur]();hsArrows($("#main"));setHdr();updateFabs();recenter();}
+function render(){applyPhase();renderHeader();renderTabs();$("#main").innerHTML=VIEWS[cur]();hsArrows($("#main"));setHdr();updateFabs();recenter();testBackSync();}
 /* V19 : écran centré, hauteur de l’en-tête, flèches de défilement, position gardée */
 function recenter(){if(window.scrollX)window.scrollTo(0,window.scrollY);}
 function setHdr(){const h=document.querySelector("header");if(h)document.documentElement.style.setProperty("--hdrH",h.offsetHeight+"px");}
@@ -1112,9 +1136,12 @@ function taskGroup(l,sec){
 }
 /* V21 : ordre perso des tâches (au-delà du code couleur) */
 const URK={rouge:0,orange:1,vert:2};
-function taskSort(a,b){return (b.prio||0)-(a.prio||0)||(URK[a.urg]??2)-(URK[b.urg]??2)||((a.date||"9999")+(a.time||"")).localeCompare((b.date||"9999")+(b.time||""));}
-function secList(sec){const O=state.tasks.filter(t=>!t.done);const l=sec==="__suivre"?O.filter(t=>t.follow):sec==="__nodom"?O.filter(t=>!tDoms(t).length):O.filter(t=>tDoms(t).includes(sec));return l.sort(taskSort);}
-const autoBtn=(sec,l)=>l.some(t=>t.prio)?`<button class="btn ghost spk noread" data-act="taskAuto" data-id="${esc(sec)}">↺ Ordre automatique</button>`:"";
+function taskSort(a,b){return (URK[a.urg]??2)-(URK[b.urg]??2)||((a.date||"9999")+(a.time||"")).localeCompare((b.date||"9999")+(b.time||""));}
+/* V22 : chaque domaine garde son propre ordre ; une tâche nouvelle arrive en haut */
+function secList(sec){const O=state.tasks.filter(t=>!t.done);const l=(sec==="__suivre"?O.filter(t=>t.follow):sec==="__nodom"?O.filter(t=>!tDoms(t).length):O.filter(t=>tDoms(t).includes(sec))).sort(taskSort);
+  const ord=(state.taskOrd||{})[sec];if(!Array.isArray(ord)||!ord.length)return l;
+  const pos=t=>{const k=ord.indexOf(t.id);return k<0?-1:k;};return l.map((t,k)=>[t,k]).sort((a,b)=>pos(a[0])-pos(b[0])||a[1]-b[1]).map(x=>x[0]);}
+const autoBtn=(sec,l)=>Array.isArray((state.taskOrd||{})[sec])&&state.taskOrd[sec].length?`<button class="btn ghost spk noread" data-act="taskAuto" data-id="${esc(sec)}">↺ Ordre automatique</button>`:"";
 function vTaches(){
   const f=taskFilter;
   const doms=state.lists.domains.slice();state.tasks.forEach(t=>tDoms(t).forEach(d=>{if(!doms.includes(d))doms.push(d);}));
@@ -1126,16 +1153,16 @@ function vTaches(){
     const l=state.tasks.filter(t=>t.done);
     body=l.length?`<section class="block">${taskGroup(l)}</section>`:empty("Aucune tâche terminée pour l’instant.");
   }else if(f==="À suivre"){
-    const l=state.tasks.filter(t=>!t.done&&t.follow).sort(sorter);
+    const l=secList("__suivre");
     body=l.length?`<section class="block"><div class="phead"><h3>⏳ À suivre</h3>${autoBtn("__suivre",l)}</div>${taskGroup(l,"__suivre")}</section>`:empty("Rien à suivre pour l’instant. Dans une tâche, « Où j’en suis » : À suivre (par exemple, tu attends une réponse).")+exBox("Candidature mairie : à suivre. Mail envoyé le 18/11, relancer le 25/11.");
   }else{
     const ds=f==="Tous"?doms:[f];
     body=ds.map(d=>{
-      const l=state.tasks.filter(t=>!t.done&&tDoms(t).includes(d)).sort(sorter);
+      const l=secList(d);
       if(f==="Tous"&&!l.length)return "";
       return `<section class="block"><div class="phead"><h3>${esc(d)}</h3>${autoBtn(d,l)}</div>${l.length?taskGroup(l,d):`<p class="meta">Rien à faire ici pour l’instant.</p>`}</section>`;
     }).join("");
-    if(f==="Tous"){const nd=state.tasks.filter(t=>!t.done&&!tDoms(t).length).sort(sorter);if(nd.length)body+=`<section class="block"><div class="phead"><h3>Sans domaine</h3>${autoBtn("__nodom",nd)}</div>${taskGroup(nd,"__nodom")}</section>`;}
+    if(f==="Tous"){const nd=secList("__nodom");if(nd.length)body+=`<section class="block"><div class="phead"><h3>Sans domaine</h3>${autoBtn("__nodom",nd)}</div>${taskGroup(nd,"__nodom")}</section>`;}
     body=body||empty("Aucune tâche en cours. Ajoute ta prochaine démarche ou ton prochain RDV.");
   }
   return `<h2>Tâches & RDV</h2>
@@ -1315,17 +1342,23 @@ function textOf(el){
 let spkTok=0,lastSpeak="",spkPos=0;
 const RATE_ICO={lente:"🐢 ",rapide:"🐇 "};
 function speakBarFill(){const r=state.settings.rate;$("#speakBar").innerHTML=`<span>🔊 Lecture…</span>`+Object.entries(RATES).map(([k,[l]])=>`<button class="rate ${r===k?"on":""}" data-act="speakRate" data-id="${k}" aria-pressed="${r===k}">${RATE_ICO[k]||""}${l}</button>`).join("")+`<button data-act="speakStop">⏹ Arrêter</button>`;}
+function speakChunks(t){const out=[];let buf="";(t.match(/[^.!?;:\n]+[.!?;:\n]*\s*/g)||[t]).forEach(p=>{if((buf+p).length>220&&buf){out.push(buf);buf="";}buf+=p;while(buf.length>300){let k=buf.lastIndexOf(" ",280);if(k<50)k=280;out.push(buf.slice(0,k));buf=buf.slice(k);}});if(buf.trim())out.push(buf);return out.filter(x=>x.trim());}
+let spkList=[],spkIdx=0;
 function speak(txt,from){
   if(!("speechSynthesis" in window)||!window.SpeechSynthesisUtterance){toast("La lecture à voix haute n’est pas disponible sur cet appareil");return;}
-  const t=from!==undefined?txt:cleanSpeech(txt);if(!t){toast("Rien à lire ici");return;}
-  from=from||0;lastSpeak=t;spkPos=from;
+  if(from===undefined){const t=cleanSpeech(txt);if(!t){toast("Rien à lire ici");return;}lastSpeak=t;spkList=speakChunks(t);spkIdx=0;}
+  else spkIdx=Math.max(0,Math.min(from,spkList.length-1));
   try{speechSynthesis.cancel();}catch(e){}
-  const tok=++spkTok,u=new SpeechSynthesisUtterance(t.slice(from));u.lang="fr-FR";u.rate=(RATES[state.settings.rate]||RATES.normale)[1];
-  const v=(speechSynthesis.getVoices()||[]).find(x=>/^fr(-|_|$)/i.test(x.lang));if(v)u.voice=v;
-  u.onboundary=e=>{if(tok===spkTok&&e.charIndex!=null)spkPos=from+e.charIndex;};
-  u.onend=u.onerror=()=>{if(tok===spkTok)$("#speakBar").classList.remove("show");};
-  speakBarFill();$("#speakBar").classList.add("show");speechSynthesis.speak(u);
+  const tok=++spkTok;speakBarFill();$("#speakBar").classList.add("show");
+  setTimeout(()=>speakPart(tok),60);
 }
+/* V22 : une phrase après l’autre, pour reprendre au bon endroit quand la vitesse change */
+function speakPart(tok){if(tok!==spkTok)return;if(spkIdx>=spkList.length){$("#speakBar").classList.remove("show");return;}
+  const u=new SpeechSynthesisUtterance(spkList[spkIdx]);u.lang="fr-FR";u.rate=(RATES[state.settings.rate]||RATES.normale)[1];
+  const v=(speechSynthesis.getVoices()||[]).find(x=>/^fr(-|_|$)/i.test(x.lang));if(v)u.voice=v;
+  u.onend=()=>{if(tok!==spkTok)return;spkIdx++;speakPart(tok);};
+  u.onerror=e=>{if(tok!==spkTok)return;if(e&&(e.error==="interrupted"||e.error==="canceled"))return;spkIdx++;speakPart(tok);};
+  speechSynthesis.speak(u);}
 function speakStop(){spkTok++;try{speechSynthesis.cancel();}catch(e){}$("#speakBar").classList.remove("show");}
 let askFns=[];
 function ask(msg,btns,ms){
@@ -1937,13 +1970,14 @@ function quickNote(){
 function qnClose(){$("#qnote").classList.remove("show");$("#fabNote").classList.remove("on");if(rec){try{rec.stop();}catch(e){}}}
 
 /* ---------- V20 : musique du Pomodoro ---------- */
-const MUSICOLET="intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=in.krosbits.musicolet;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Din.krosbits.musicolet;end";
+/* V22 : le navigateur ne peut pas lancer une appli directement ; le lien « launch » demande au Play Store d’ouvrir Musicolet tout de suite */
+const MUSICOLET="intent://launch?id=in.krosbits.musicolet#Intent;scheme=market;package=com.android.vending;S.browser_fallback_url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Din.krosbits.musicolet;end";
 const musicoBtn=(big,lbl)=>`<a class="btn ${big?"":"ghost spk"} noread" href="${MUSICOLET}" data-act="musicoGo">${lbl||"🎶 Ouvrir Musicolet"}</a>`;
 const isMusico=m=>!!m&&(m.app==="musicolet"||(!safeUrl(m.url)&&/musicolet/i.test(m.title||"")));
 function musicPlayBtn(m,big){if(isMusico(m))return musicoBtn(big,"▶ Ouvrir Musicolet");const u=m&&safeUrl(m.url);return u?`<a class="btn ${big?"":"ghost spk"}" href="${esc(u)}" target="_blank" rel="noopener">▶ Écouter</a>`:`<span class="meta">(pas de lien : ouvre ton appli)</span>`;}
 function musicModal(){const M=state.music;
   openModal(`<h2>🎵 Mes musiques</h2><p class="meta">Le minuteur 🍅 te propose une de ces musiques. Touche ▶ pour l’écouter (YouTube, Spotify, Deezer… s’ouvre à côté).</p>
-  <div class="bar">${musicoBtn(true)}</div><p class="hint">Musicolet s’ouvre (ou sa page Play Store : touche alors « Ouvrir »). Choisis ensuite ta playlist dans l’appli : le carnet ne peut pas la choisir à ta place.</p>
+  <div class="bar">${musicoBtn(true)}</div><p class="hint">Musicolet s’ouvre directement (parfois après un très court passage par le Play Store). Choisis ensuite ta playlist dans l’appli : le carnet ne peut pas la choisir à ta place.</p>
   ${M.length?M.map((m,i)=>`<div class="row"><div class="grow"><b>${esc(m.title)}</b>${isMusico(m)?`<div class="meta">🎶 Playlist Musicolet</div>`:m.url?`<div class="meta">${esc(m.url.replace(/^https?:\/\/(www\.)?/,"").slice(0,48))}${m.url.length>56?"…":""}</div>`:""}</div>${musicPlayBtn(m)}<button class="icon" data-act="musicMove" data-id="${m.id}|-1" aria-label="Monter" ${i?"":"disabled"}>↑</button><button class="icon" data-act="musicMove" data-id="${m.id}|1" aria-label="Descendre" ${i<M.length-1?"":"disabled"}>↓</button><button class="icon" data-act="musicDel" data-id="${m.id}" aria-label="Retirer">✕</button></div>`).join(""):exBox("Canon de Pachelbel : lien YouTube.")}
   <h3 style="margin:18px 0 4px">➕ Ajouter une musique</h3>
   <label for="muT">Titre</label><input id="muT" placeholder="Ex. : Clair de lune, Debussy">
@@ -1987,7 +2021,7 @@ const testRun=()=>{const T=state.tests[VERSION]=state.tests[VERSION]||{i:0,notes
 function testModal(i){const L=TESTS[VERSION]||[];if(!L.length){toast("Pas de fiche de test pour cette version");return;}
   const T=testRun();if(i===undefined){const f=L.findIndex((x,k)=>!(T.notes[k]||{}).r);i=f>=0?f:(T.i||0);}
   if(i>=L.length){testSummary();return;}
-  i=Math.max(0,i);T.i=i;save();const s=L[i],n=T.notes[i]||{};
+  i=Math.max(0,i);T.i=i;T.back=true;save();const s=L[i],n=T.notes[i]||{};
   openModal(`<h2>🧪 Tester la ${VERSION}</h2><p class="meta">Étape ${i+1} sur ${L.length}</p>${barH(Math.round(i*100/L.length))}
   <div class="teststep" id="testTxt"><p><b>${esc(s.k)}</b></p><p>${esc(s.t)}</p></div>
   <div class="bar noread"><button class="btn ghost" data-act="testRead">▶ Lire</button><button class="btn ghost" data-act="speakStop">⏸ Pause</button></div>
@@ -2383,7 +2417,7 @@ HISTORIQUE DES VERSIONS : à chaque nouvelle version, la liste des nouveautés a
 
 MENUS DÉROULANTS : toujours un choix « Autre… » pour ajouter ce que je veux. Si le mot existe déjà, écrit autrement (accent, pluriel), le carnet le dit et choisit celui qui existe.
 
-LECTURE À VOIX HAUTE : un bouton « 🔊 Écouter » sur les parties utiles, qui lit seulement le contenu (sans émoticônes, dates d’en-tête ni boutons), vitesse réglable, et modifiable directement pendant la lecture (Lente, Normale, Rapide), sans aller dans Paramètres.
+LECTURE À VOIX HAUTE : un bouton « 🔊 Écouter » sur les parties utiles, qui lit seulement le contenu (sans émoticônes, dates d’en-tête ni boutons), vitesse réglable, et modifiable directement pendant la lecture (Lente, Normale, Rapide), sans aller dans Paramètres. Quand je change la vitesse, la lecture reprend à la phrase en cours, pas au début. Vitesses : Lente = 1,2, Normale = 1,45, Rapide = 1,75.
 
 DOUBLONS : prévenir quand j’ajoute une chose déjà notée (nom proche), avec « Voir » et « Ajouter quand même ».
 
@@ -2431,7 +2465,7 @@ CONTACTS D’URGENCE : les personnes que je choisis, avec un bouton 📞 Appeler
 
 DURÉE DE TRAVAIL : le récapitulatif montre aussi le total général depuis le début.
 
-ORDRE MODIFIABLE : tout ce qui est une liste (liens, ressources, contacts, musiques, listes des menus, tâches et RDV, fichiers…) peut changer d’ordre avec ↑ ↓, partout dans le carnet. Pour les tâches, même au-delà du code couleur urgent, avec un bouton « Ordre automatique » pour revenir au classement par couleur.
+ORDRE MODIFIABLE : tout ce qui est une liste (liens, ressources, contacts, musiques, listes des menus, tâches et RDV, fichiers…) peut changer d’ordre avec ↑ ↓, partout dans le carnet. Pour les tâches, même au-delà du code couleur urgent, avec un bouton « Ordre automatique » pour revenir au classement par couleur. Une chose rangée dans plusieurs groupes garde un ordre propre à chaque groupe.
 
 LIENS : projets, tâches et rendez-vous peuvent avoir des liens à consulter (document, dossier, fichier, vidéo), sans limite.
 
@@ -2441,7 +2475,7 @@ NOTE RAPIDE ET DICTÉE : un bouton flottant ✍️, pâle quand il ne sert pas, 
 
 MOTS CACHÉS : je peux ajouter mes propres mots cachés pour la recherche (Paramètres). Si « Aller à » ne trouve rien dans la page, il cherche dans tout le carnet.
 
-FICHE DE TEST : à chaque nouvelle version, une fiche de test lue à voix haute, étape par étape (pause, reprise), avec une remarque par étape, rangée sous le nom de l’onglet ou de l’étape, et « Copier mes remarques » pour la version suivante. Une fenêtre de rappel revient à l’ouverture tant que toutes les étapes ne sont pas testées, puis ne s’ouvre plus.
+FICHE DE TEST : à chaque nouvelle version, une fiche de test lue à voix haute, étape par étape (pause, reprise), avec une remarque par étape, rangée sous le nom de l’onglet ou de l’étape, et « Copier mes remarques » pour la version suivante. Une fenêtre de rappel revient à l’ouverture tant que toutes les étapes ne sont pas testées, puis ne s’ouvre plus. Pendant un test, un bouton « 🧪 Retour au test » visible dans tous les onglets ramène à l’étape en cours.
 
 ASSISTANT ET DEMANDER À CLAUDE : un petit assistant sans IA (questions toutes prêtes et « Autre… », réponses tirées de mes données et lues à voix haute, nom et visage modifiables), et un bouton « Demander à Claude » qui prépare la demande avec le contexte, la copie et ouvre Claude.
 
@@ -2609,6 +2643,10 @@ function vAide(){
     <p><b>🗂️ Replier :</b> touche le titre d’une partie longue (Journal de bord, Historique des versions…) pour la replier ou la déplier. Le carnet se souvient de ton choix.</p>
     <p><b>⏱ Natures du chronomètre :</b> tes 3 natures les plus utilisées sont toujours visibles, les autres sous « Autres natures ».</p>
     <p class="meta">🧪 Après une nouvelle version, la fenêtre de test revient à chaque ouverture tant que toutes les étapes ne sont pas testées.</p>`],
+  ["v22","🧪 Retour au test, ordre et lecture (V22)",`<p><b>🧪 Retour au test :</b> pendant la fiche de test, ferme-la (✕) pour aller vérifier dans un onglet. En bas à gauche, « 🧪 Retour au test » te ramène à la même étape. Il disparaît quand toutes les étapes sont testées. ✕ à côté pour le cacher.</p>
+    <p><b>↕️ Ordre des tâches :</b> chaque domaine a son propre ordre. Une tâche dans deux domaines peut être en haut dans l’un et plus bas dans l’autre. Une nouvelle tâche arrive en haut. « ↺ Ordre automatique » remet le classement par couleur, puis par date.</p>
+    <p><b>🎶 Musicolet :</b> ▶ ouvre Musicolet directement. Sur certains téléphones, le Play Store passe une fraction de seconde avant.</p>
+    <p><b>🔊 Vitesse de lecture :</b> change-la pendant la lecture : elle reprend à la phrase en cours. 🐢 Lente, Normale, 🐇 Rapide.</p>`],
   ["regles","📋 Mes règles pour tout nouveau carnet HTML",`<p>Avant de créer un nouveau carnet (ou de faire évoluer celui de Kay Numérique), copie ce texte et colle-le à Claude <b>avant</b> de décrire ton besoin.</p>
     <label for="basePrompt">Règles communes à copier</label><textarea id="basePrompt" rows="8" readonly>${esc(BASE_PROMPT)}</textarea>
     <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="copyBase">Copier les règles</button></div>`],
@@ -2754,7 +2792,7 @@ function vParams0(){
 let modalKind="";
 function openModal(html,kind){$("#sheet").innerHTML=html;modalKind=kind||"";const m=$("#modal");m.classList.add("open");m.setAttribute("aria-hidden","false");
   m.classList.toggle("mid",["chrono","pomo","start","pause","news"].includes(modalKind));
-  modalDirty=false;$("#sheet").scrollTop=0;hsArrows($("#sheet"));recenter();}
+  modalDirty=false;$("#sheet").scrollTop=0;hsArrows($("#sheet"));recenter();testBackSync();}
 let modalDirty=false;
 function tryClose(){
   if(modalDirty&&modalKind==="form"&&$("#modal").classList.contains("open")){
@@ -2765,7 +2803,11 @@ function tryClose(){
     $("#leaveWarn").scrollIntoView({block:"nearest"});return;}
   closeModal();
 }
-function closeModal(){const m=$("#modal");m.classList.remove("open");m.setAttribute("aria-hidden","true");modalKind="";pendingIdea=null;}
+function closeModal(){const m=$("#modal");m.classList.remove("open");m.setAttribute("aria-hidden","true");modalKind="";pendingIdea=null;testBackSync();}
+/* V22 : bouton « Retour au test », visible dans tous les onglets pendant un test */
+function testBackSync(){const b=document.getElementById("testBack");if(!b||!state)return;const T=(state.tests||{})[VERSION];
+  const on=!!(TESTS[VERSION]&&T&&T.back&&testLeft()>0&&!(modalKind==="test"&&$("#modal").classList.contains("open")));b.hidden=!on;
+  if(on){const n=(T.i||0)+1;b.querySelector(".tb-go").textContent="🧪 Retour au test (étape "+n+")";}}
 
 /* ---------- notes urgentes ---------- */
 function dueReminders(){
@@ -3428,6 +3470,8 @@ const ACT={
     if(id)Object.assign(state.wins.find(x=>x.id===id),data);else{wid=uid();state.wins.push(Object.assign({id:wid,added:today()},data));}
     save();closeModal();cur="victoires";render();setTimeout(()=>flash("w20-"+wid),60);toast("Victoire enregistrée 🌟");},
   testOpen:()=>{speakStop();modalDirty=false;testModal();},
+  testBack:()=>{speakStop();modalDirty=false;const T=testRun();testModal(T.i||0);},
+  testBackOff:()=>{const T=testRun();T.back=false;save();testBackSync();toast("Bouton caché. Pour reprendre : Paramètres, « 🧪 Tester la "+VERSION+" »",4000);},
   testRead:()=>{const L=TESTS[VERSION]||[],s=L[testRun().i||0];if(s)speak(s.k+". "+s.t);},
   testMark:id=>{const [i,r]=id.split("|"),T=testRun(),n=T.notes[i]=T.notes[i]||{};n.r=n.r===r?"":r;save();document.querySelectorAll("#testRes button").forEach(b=>b.classList.toggle("on",b.dataset.id===i+"|"+n.r));
     if(n.r&&!testLeft())toast("Toutes les étapes sont testées ✓ La fenêtre de test ne reviendra plus.",5000);},
@@ -3449,16 +3493,16 @@ const ACT={
   /* V21 */
   taskMove:x=>{const [id,d,...r]=x.split("|"),sec=r.join("|"),L=secList(sec),i=L.findIndex(t=>t.id===id),j=i+(+d);
     if(i<0)return;if(j<0||j>=L.length){toast(+d<0?"Déjà tout en haut":"Déjà tout en bas");return;}
-    [L[i],L[j]]=[L[j],L[i]];const up=Math.max(i,j),base=Math.max(0,...L.slice(up+1).map(t=>t.prio||0));for(let k=0;k<=up;k++)L[k].prio=base+(up-k)+1;
+    [L[i],L[j]]=[L[j],L[i]];if(!state.taskOrd)state.taskOrd={};state.taskOrd[sec]=L.map(t=>t.id);
     save();keepPos("t-"+id,render);const el=document.getElementById("t-"+id);if(el){el.classList.remove("flash");void el.offsetWidth;el.classList.add("flash");}},
-  taskAuto:sec=>{secList(sec).forEach(t=>{t.prio=0;});save();keepPos("main",render);toast("Ordre automatique : par couleur, puis par date");},
+  taskAuto:sec=>{if(state.taskOrd)delete state.taskOrd[sec];save();keepPos("main",render);toast("Ordre automatique : par couleur, puis par date");},
   fileMove:x=>{const [id,d]=x.split("|"),g=state.ui.fileGroup||"domaine",F=state.files,f=F.find(z=>z.id===id);if(!f)return;const k=fileKey(f,g),sib=F.filter(z=>fileKey(z,g)===k),i=sib.indexOf(f),j=i+(+d);
     if(j<0||j>=sib.length){toast(+d<0?"Déjà tout en haut":"Déjà tout en bas");return;}const a=F.indexOf(sib[i]),b=F.indexOf(sib[j]);[F[a],F[b]]=[F[b],F[a]];save();keepPos("f-"+id,render);},
   photoZoom:(cap,b)=>{const src=b&&b.getAttribute("src");if(!src)return;const p=$("#photoBox");
     p.innerHTML=`<img src="${esc(src)}" alt="${esc(cap||"Photo")}">${cap?`<p>${esc(cap)}</p>`:""}<button class="btn" data-act="photoClose">✕ Fermer</button>`;p.classList.add("show");},
   photoClose:()=>$("#photoBox").classList.remove("show"),
   speakRate:k=>{if(!RATES[k])return;state.settings.rate=k;save();
-    if($("#speakBar").classList.contains("show")&&lastSpeak){const p=Math.max(lastSpeak.lastIndexOf(". ",spkPos),lastSpeak.lastIndexOf(", ",spkPos));speak(lastSpeak,p<0?0:p+2);}
+    if($("#speakBar").classList.contains("show")&&spkList.length)speak(null,spkIdx);
     toast("Vitesse : "+RATES[k][0].toLowerCase());if(cur==="params"){const y=window.scrollY;render();window.scrollTo(0,y);}},
   copyPrompt:()=>{const t=$("#promptCopy");const done=()=>toast("Message copié");
     if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(UPDATE_PROMPT).then(done,()=>{t.select();document.execCommand("copy");done();});
