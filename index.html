@@ -263,6 +263,43 @@ tr.mark td{background:var(--accent-soft);font-weight:700;color:var(--accent)}
 html.locked #alertPop{visibility:hidden}
 .lvlA{display:inline-block;border-radius:999px;padding:1px 8px;font-size:.8rem;color:#fff;margin-left:6px}
 .lvlA.normal{background:#C8661F}.lvlA.important{background:#C8433C}.lvlA.urgent{background:#8E1B16}
+/* ---------- V19 : écran toujours centré ---------- */
+html,body{max-width:100%;overflow-x:clip}
+@supports not (overflow:clip){html{overflow-x:hidden}}
+select{min-width:0;max-width:100%;text-overflow:ellipsis}
+.repadd select{min-width:0}
+main,.sheet{overflow-wrap:break-word}
+#toast{left:12px;right:12px;margin:0 auto;width:fit-content;max-width:calc(100vw - 24px);transform:none;bottom:calc(24px + env(safe-area-inset-bottom,0px));box-shadow:0 6px 18px rgba(0,0,0,.25);line-height:1.35}
+.fab .b{right:-6px}
+#modal.mid{align-items:center}
+#modal.mid .sheet{border-radius:18px;width:calc(100% - 24px)}
+/* barres toujours visibles en haut */
+.stick{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--hdrH,150px));z-index:15;background:var(--bg);margin:0 -16px 12px;padding:8px 16px 8px;border-bottom:1px solid var(--line);transition:background-color .5s}
+.stick .chips{margin-bottom:0}
+.pbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pbar .pt{flex:1 1 160px;min-width:0;font-size:.92rem;color:var(--muted)}
+.pbar .pt b{color:var(--ink)}
+/* petites flèches pour faire défiler */
+.hs{position:relative}
+.hsb{position:absolute;top:50%;transform:translateY(-50%);display:none;width:36px;height:36px;padding:0;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--accent);font-size:1.4rem;line-height:1;box-shadow:0 2px 8px rgba(0,0,0,.18);z-index:4;cursor:pointer}
+.hs.t>.hsb{top:22px;transform:none}
+.hs.canL>.hsb.l{display:block;left:-4px}
+.hs.canR>.hsb.r{display:block;right:-4px}
+/* Reprendre ici : barre du prompt */
+#repSelBar{position:fixed;left:12px;right:12px;margin:0 auto;max-width:560px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:96;background:var(--ink);color:var(--bg);border-radius:14px;padding:10px 12px;box-shadow:0 8px 20px rgba(0,0,0,.3);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+#repSelBar span{flex:1 1 140px;font-size:.92rem}
+#repSelBar button{border:1px solid var(--bg);background:transparent;color:var(--bg);border-radius:999px;padding:7px 12px;font:inherit;font-size:.9rem;cursor:pointer}
+#repSelBar button.main{background:var(--bg);color:var(--ink);font-weight:700}
+html.locked #repSelBar{visibility:hidden}
+/* contacts d'urgence */
+.callbtn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:999px;background:var(--green);color:#fff;font-weight:700;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.btn.sos{background:transparent;border-color:var(--red);color:var(--red)}
+/* résumé du jour */
+.resume{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:6px 0 14px}
+.resume div{background:var(--accent-soft);border-radius:10px;padding:8px 10px}
+.resume b{display:block;font-size:1.15rem;color:var(--ink)}
+.resume span{font-size:.82rem;color:var(--muted)}
+.tab.tabmore{color:var(--accent);font-weight:700}
 /* ---------- écran du mot de passe ---------- */
 html.locked header,html.locked main,html.locked .fab{visibility:hidden}
 #lock{display:none}
@@ -324,7 +361,7 @@ html.locked #lock{display:flex;position:fixed;inset:0;z-index:200;background:var
 
 <script>
 "use strict";
-const VERSION="V18",VERSION_DATE="21/11/2026",FILE_NAME="V18Carnet_Pilote.html";
+const VERSION="V19",VERSION_DATE="21/11/2026",FILE_NAME="V19Carnet_Pilote.html";
 const MOT_DE_PASSE_DE_DEPART="1234"; // 🔒 Mot de passe provisoire : change "1234" ici (garde les guillemets). Ensuite, change-le plutôt dans ⚙️ Paramètres.
 const LOGO="data:image/png;base64,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";
 const KEY="carnetPilotageYasmine";
@@ -339,7 +376,7 @@ const SPACES={pro:"💼 Professionnel",perso:"🏠 Personnel",loisirs:"🎨 Lois
 const SPACE_TXT={pro:"Professionnel",perso:"Personnel",loisirs:"Loisir"};
 const LINK_TYPE={dossier:"📁",fichier:"📄"};
 const TABS={
-  accueil:{label:"Accueil",kw:"début maison reprendre priorités aujourd’hui mode phase haute basse neutre idées boîte bonjour plus tard ambiance couleur"},
+  accueil:{label:"Accueil",kw:"début maison reprendre priorités aujourd’hui mode phase haute basse neutre idées boîte bonjour plus tard ambiance couleur urgence urgences contact contacts appeler téléphone sos secours"},
   projets:{label:"Projets",kw:"priorité pourquoi actif attente pause classer livre mémoire objectif bilan terminé"},
   loisirs:{label:"Loisirs",kw:"loisir crochet sac lecture livre détente plaisir créatif ressource hobby objectif"},
   sante:{label:"Santé",kw:"santé douleur douleurs dos épaule nuque suivi symptôme intensité soulage soulager essentiels chaufferette lotion pommade objet astuce rangé placard bien-être médical calendrier mictionnel miction uriner urine vessie fuite fuites protection boisson boissons bilan urodynamique"},
@@ -357,7 +394,7 @@ const TABS={
   journal:{label:"Journal de bord",kw:"date tableau calendrier historique activité suivi durée travail chronomètre temps heures outils catégorie visite"},
   competences:{label:"Compétences",kw:"compétences cv recrutement savoir-faire savoir-être point bilan valoriser métier synthèse détail doublon regrouper dates copier liste étiquette technique transversale transférable métier visé reconversion comparer"},
   aide:{label:"🧠 Aide-mémoire",kw:"favori favoris installer installation fichiers téléchargements mode d’emploi comment aide procédure mise à jour version sauvegarde json restaurer drive lien mémoire claude maison porte pensées vrac routine raccourci pomodoro règles nouveau carnet prompt base modèle application appli pwa github pages en ligne héberger hébergement dépôt icône écran d’accueil manifest service worker"},
-  params:{label:"⚙️ Paramètres",kw:"réglages mot de passe verrou verrouiller verrouillage automatique inactivité quitter indice code sauvegarde restauration export import prénom pomodoro pause cycles thème sombre clair ordre onglets version listes catégories outils"}
+  params:{label:"⚙️ Paramètres",kw:"réglages mot de passe verrou verrouiller verrouillage automatique inactivité quitter indice code sauvegarde restauration export import prénom pomodoro pause cycles thème sombre clair ordre onglets version listes catégories outils barre adaptée phase plus utilisés"}
 };
 const STOP=new Set(["projet","avec","dans","pour","atelier","ateliers","faire","sur","mon","mes","une","des"]);
 const WORK_MSG=[
@@ -403,7 +440,9 @@ const DEF_Q={
   pretSt:["En cours","Rendu"],
   aboCat:["IA","Musique","Vidéo","Logiciel","Stockage","Presse"],
   aboPer:["Mensuel","Annuel","Trimestriel","Paiement unique","Gratuit"],
-  aboSt:["Actif","Essai gratuit","Résilié","Terminé"]
+  aboSt:["Actif","Essai gratuit","Résilié","Terminé"],
+  aboPay:["Compte par défaut","Bred","Crédit Agricole"],
+  contactRel:["Famille","Compagnon","Ami(e)","Voisin(e)","Médecin","Infirmier(e)","Pharmacie"]
 };
 const DEF_T={taskType:["Tâche","Rendez-vous"],taskStatus:["À faire","À suivre","Fait"],domains:DOMAINS.slice(),repSubj:[]};
 const KIND_VAL={Projet:"projet",Objectif:"objectif",Carnet:"carnet"},KIND_LBL={projet:"Projet",objectif:"Objectif",carnet:"Carnet"};
@@ -425,9 +464,28 @@ const TIPS=[
   {e:"🔴",t:"Une chose à ne surtout pas oublier ? Punaise 📌, puis « Ajouter un rappel important » : il s’affiche en grand, sur fond rouge, à l’ouverture."},
   {e:"🏆",t:"Un coup de mou ? Va voir l’onglet « Mes victoires » : tout ce que tu as déjà fait."},
   {e:"📋",t:"Des idées pour le carnet dans « Reprendre ici » ? « Préparer un prompt » : tu coches les lignes, le texte pour Claude est prêt."},
-  {e:"🆕",t:"Nouveau carnet ou nouveau projet ? Repars des instructions d’un projet qui marche bien, et de « Mes règles pour tout nouveau carnet » (Aide-mémoire)."}
+  {e:"🆕",t:"Nouveau carnet ou nouveau projet ? Repars des instructions d’un projet qui marche bien, et de « Mes règles pour tout nouveau carnet » (Aide-mémoire)."},
+  {e:"🆘",t:"Tes contacts en cas de problème sont sur l’Accueil : bouton « 🆘 Mes contacts d’urgence », puis 📞 Appeler."},
+  {e:"☰",t:"La barre des onglets montre tes onglets les plus utilisés, moins en phase basse. « ☰ +… » pour tout voir. Réglable dans Paramètres."},
+  {e:"🧪",t:"Après un test, pense à effacer les éléments de test (✎ ou 🗑)."}
 ];
 const HISTORY=[
+  {v:"V19",d:"21/11/2026",n:[
+    "📱 <b>Écran toujours centré</b> sur le téléphone : plus besoin de le recentrer au doigt, à l’ouverture comme avec la punaise 📌.",
+    "💬 Les petits messages (« Copié »…) s’affichent <b>en bas, au centre, en entier</b>.",
+    "📍 Reprendre ici : l’écran <b>ne bouge plus</b> après « Préparer un prompt », « Effacer tout » ou une case cochée.",
+    "📋 Reprendre ici : « Préparer un prompt » est en haut de la partie, et « Copier pour Claude » reste <b>toujours visible</b> en bas de l’écran.",
+    "🗂️ Reprendre ici : le <b>sujet est trouvé tout seul</b> plus souvent, même sans le nom du projet (mots du domaine, et le carnet apprend de tes choix).",
+    "🔴 Rappel important : après « C’est réglé », le bouton <b>« ↩ Annuler »</b> apparaît dans la fenêtre rouge.",
+    "⏱ Chronomètre et 🍅 minuteur : fenêtre au centre de l’écran. Le bouton flottant 🍅 affiche les <b>secondes</b>, et les durées du journal aussi.",
+    "✅ Tâches & RDV : la <b>barre des filtres reste en haut</b> quand tu descends.",
+    "🏠 Quotidien et ✚ Santé : la <b>barre des parties reste en haut</b>, avec leur nombre, et se replie.",
+    "‹ › <b>Petites flèches</b> pour faire défiler les tableaux et les barres qui dépassent de l’écran.",
+    "⚙️ Paramètres (et Journal, Compétences) : « Aller à » montre <b>tes parties les plus utilisées</b>, un bouton « Toutes les parties » et une case pour taper un mot.",
+    "☰ <b>Barre des onglets adaptée</b> : tes onglets les plus utilisés, moins en phase basse. « ☰ +… » pour tout voir. Réglages dans Paramètres.",
+    "💳 Abonnements : le <b>€ s’ajoute tout seul</b>, nouveau menu <b>« Payé avec »</b> (Bred, Crédit Agricole, compte par défaut, Autre…) et le <b>total par mois pour chaque compte</b>.",
+    "🚽 Calendrier mictionnel : la date en titre, puis le <b>📊 Résumé du jour</b>, puis le tableau.",
+    "🆘 <b>Mes contacts d’urgence</b> (Accueil et punaise 📌) : les personnes que tu choisis, avec un bouton <b>📞 Appeler</b>, et les numéros d’urgence (15, 18, 112)."]},
   {v:"V18",d:"21/11/2026",n:[
     "☑️ <b>Reprendre ici</b> : la case pour écrire est en haut, et chaque nouvelle ligne arrive en haut. Date d’ajout en petit, nombre de lignes à reprendre, ✎ pour corriger une faute, Replier / Déplier.",
     "🗂️ Reprendre ici : chaque ligne a un <b>sujet</b> (projet ou domaine, trouvé tout seul quand c’est possible). « Par sujet » regroupe les lignes du même projet, même notées à des heures différentes.",
@@ -510,6 +568,8 @@ function fmt(iso){if(!iso)return "";const [y,m,d]=iso.split("-");return d+"/"+m+
 const norm=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 const safeUrl=u=>/^https?:\/\//i.test(u||"")?u:"";
 function fmtDur(min){min=Math.max(0,Math.round(min||0));const h=Math.floor(min/60),m=min%60;return h?(h+" h "+pad(m)):(m+" min");}
+function fmtSec(s){s=Math.max(0,Math.round(s||0));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),ss=s%60;return h?h+" h "+pad(m)+" min "+pad(ss)+" s":m?m+" min "+pad(ss)+" s":ss+" s";}
+const wSec=w=>w.sec!=null&&w.sec!==""?+w.sec:(w.min||0)*60;
 function daysSince(iso){if(!iso)return 999;return Math.floor((new Date(today())-new Date(iso))/86400000);}
 function hms(ms){ms=Math.max(0,ms);const s=Math.floor(ms/1000);const h=Math.floor(s/3600);const m=Math.floor(s%3600/60);const ss=s%60;return (h?h+":"+pad(m):pad(m))+":"+pad(ss);}
 function minutesBetween(s,e){if(!s||!e)return 0;const [a,b]=s.split(":").map(Number),[c,d]=e.split(":").map(Number);let x=(c*60+d)-(a*60+b);if(x<0)x+=1440;return x;}
@@ -526,7 +586,8 @@ function defaults(){
   return {
     name:"Yas",mode:"neutre",reprendre:"",ideas:[],lastExport:null,lastRestore:null,seeded:false,
     skills:[],targets:[],jobFrom:"",jobBase:"both",skillType:"",lastSkills:null,snooze:{},aidePins:["routine","maj"],
-    settings:{lockOn:true,lockPass:MOT_DE_PASSE_DE_DEPART,lockHint:"",theme:"auto",noteFreq:"parfois",noteRead:false,pomoNudge:30,bioId:"",rate:"normale",split:{ast:false,alim:false,vet:false,beaute:false,apa:false,pret:false,abo:false},tabNames:{},mergeGap:15,pomo:25,pause:5,longPause:20,cycles:4,remSave:7,remSkills:15,lockIdle:10,lockAway:2,tabOrder:Object.keys(TABS)},
+    contacts:[],subjLearn:{},
+    settings:{tabMode:"adapt",tabCount:{haute:8,neutre:8,basse:5},lockOn:true,lockPass:MOT_DE_PASSE_DE_DEPART,lockHint:"",theme:"auto",noteFreq:"parfois",noteRead:false,pomoNudge:30,bioId:"",rate:"normale",split:{ast:false,alim:false,vet:false,beaute:false,apa:false,pret:false,abo:false},tabNames:{},mergeGap:15,pomo:25,pause:5,longPause:20,cycles:4,remSave:7,remSkills:15,lockIdle:10,lockAway:2,tabOrder:Object.keys(TABS)},
     lists:Object.assign({cats:DEF_CATS.slice(),tools:DEF_TOOLS.slice()},JSON.parse(JSON.stringify(DEF_SANTE)),JSON.parse(JSON.stringify(DEF_Q)),JSON.parse(JSON.stringify(DEF_T))),
     sante:{suivi:[],ess:[],choix:[],mic:[],micDays:{}},seenVersion:"",rep:[],
     q:{ast:[],alim:[],vet:[],bags:[],beaute:[],apa:[],pret:[],abo:[],memo:{},memoMange:{}},
@@ -554,7 +615,9 @@ function fixState(s){
   if(!o.includes("victoires")){const i=o.indexOf("journal");o.splice(i<0?o.length:i+1,0,"victoires");}
   keys.forEach(k=>{if(!o.includes(k))o.push(k);});
   s.settings.tabOrder=o;
-  ["projects","tasks","files","journal","work","urgent","ideas","skills","targets","alerts"].forEach(k=>{if(!Array.isArray(s[k]))s[k]=[];});
+  ["projects","tasks","files","journal","work","urgent","ideas","skills","targets","alerts","contacts"].forEach(k=>{if(!Array.isArray(s[k]))s[k]=[];});
+  if(!s.subjLearn||typeof s.subjLearn!=="object")s.subjLearn={};
+  s.settings.tabCount=Object.assign({haute:8,neutre:8,basse:5},s.settings.tabCount||{});if(s.settings.tabMode!=="all")s.settings.tabMode="adapt";
   if(!Array.isArray(s.aidePins))s.aidePins=["routine","maj"];s.snooze=s.snooze||{};
   s.lists=Object.assign({cats:DEF_CATS.slice(),tools:DEF_TOOLS.slice()},s.lists||{});
   Object.keys(DEF_SANTE).forEach(k=>{if(!Array.isArray(s.lists[k]))s.lists[k]=DEF_SANTE[k].slice();});
@@ -660,11 +723,42 @@ function renderHeader(){const d=longDate();$("#today").textContent=(state.name||
 function tabVisible(k){const sp=state.settings.split||{};if(k.startsWith("q_"))return !!sp[k.slice(2)];if(k==="quotidien")return !Object.keys(QPARTS).every(p=>sp[p]);return true;}
 function renderTabs(){
   if(!tabVisible(cur))cur=cur.startsWith("q_")?"quotidien":(Object.keys(QPARTS).map(p=>"q_"+p).find(tabVisible)||"accueil");
-  $("#tabs").innerHTML=state.settings.tabOrder.filter(tabVisible).map(k=>`<button class="tab ${k===cur?"on":""}" role="tab" aria-selected="${k===cur}" data-act="tab" data-id="${k}">${k==="sante"?`<span class="gcross" aria-hidden="true">✚</span>`:""}${esc(tabLabel(k))}</button>`).join("");
-  const on=$("#tabs .tab.on");if(on)on.scrollIntoView({block:"nearest",inline:"nearest"});
+  const B=barTabs();
+  $("#tabs").innerHTML=B.show.map(k=>`<button class="tab ${k===cur?"on":""}" role="tab" aria-selected="${k===cur}" data-act="tab" data-id="${k}">${k==="sante"?`<span class="gcross" aria-hidden="true">✚</span>`:""}${esc(tabLabel(k))}</button>`).join("")
+    +(B.hidden?`<button class="tab tabmore" data-act="tabsAll" aria-label="Voir tous les onglets (${B.hidden} de plus)">☰ +${B.hidden}</button>`:B.less?`<button class="tab tabmore" data-act="tabsAll" aria-label="Revenir à mes onglets les plus utilisés">▴ Moins</button>`:"");
+  const on=$("#tabs .tab.on");if(on){const T=$("#tabs"),l=on.offsetLeft-T.offsetLeft;if(l<T.scrollLeft||l+on.offsetWidth>T.scrollLeft+T.clientWidth)T.scrollLeft=Math.max(0,l-20);}
 }
+/* V19 : barre des onglets adaptée (phase + onglets les plus utilisés) */
+let tabsAll=false;
+function barTabs(){
+  const vis=state.settings.tabOrder.filter(tabVisible),s=state.settings;
+  const n=Math.max(3,(s.tabCount||{})[state.mode||"neutre"]||8);
+  if(s.tabMode!=="adapt"||vis.length<=n+1)return {show:vis,hidden:0,less:false};
+  if(tabsAll)return {show:vis,hidden:0,less:true};
+  const U=state.ui.tabUse||{},fixed=["accueil","params"].filter(k=>vis.includes(k));
+  const keep=new Set(fixed);if(vis.includes(cur))keep.add(cur);
+  vis.filter(k=>!keep.has(k)).map((k,i)=>({k,sc:(U[k]||0)-i*.001})).sort((a,b)=>b.sc-a.sc).forEach(r=>{if(keep.size<n)keep.add(r.k);});
+  return {show:vis.filter(k=>keep.has(k)),hidden:vis.length-keep.size,less:false};
+}
+function useTab(k){const U=state.ui.tabUse=state.ui.tabUse||{};U[k]=(U[k]||0)+1;}
 const VIEWS={accueil:vAccueil,projets:vProjets,loisirs:vLoisirs,sante:vSante,quotidien:()=>vQuot(null),q_ast:()=>vQuot("ast"),q_alim:()=>vQuot("alim"),q_vet:()=>vQuot("vet"),q_beaute:()=>vQuot("beaute"),q_apa:()=>vQuot("apa"),q_pret:()=>vQuot("pret"),q_abo:()=>vQuot("abo"),victoires:vVictoires,taches:vTaches,fichiers:vFichiers,journal:vJournal,competences:vCompetences,aide:vAide,params:vParams};
-function render(){applyPhase();renderHeader();renderTabs();$("#main").innerHTML=VIEWS[cur]();updateFabs();}
+function render(){applyPhase();renderHeader();renderTabs();$("#main").innerHTML=VIEWS[cur]();hsArrows($("#main"));setHdr();updateFabs();recenter();}
+/* V19 : écran centré, hauteur de l’en-tête, flèches de défilement, position gardée */
+function recenter(){if(window.scrollX)window.scrollTo(0,window.scrollY);}
+function setHdr(){const h=document.querySelector("header");if(h)document.documentElement.style.setProperty("--hdrH",h.offsetHeight+"px");}
+function hsUpd(w){const el=w.firstElementChild;if(!el)return;const max=el.scrollWidth-el.clientWidth;w.classList.toggle("canL",el.scrollLeft>4);w.classList.toggle("canR",el.scrollLeft<max-4);}
+function hsArrows(root){if(!root)return;
+  root.querySelectorAll(".tablewrap,.chips:not(.wrap)").forEach(el=>{
+    if(el.parentElement.classList.contains("hs"))return;
+    const w=document.createElement("div");w.className="hs"+(el.classList.contains("tablewrap")?" t":"");el.parentNode.insertBefore(w,el);w.appendChild(el);
+    w.insertAdjacentHTML("beforeend",`<button class="hsb l noread" data-act="hsGo" data-id="-1" aria-label="Faire défiler vers la gauche">‹</button><button class="hsb r noread" data-act="hsGo" data-id="1" aria-label="Faire défiler vers la droite">›</button>`);
+    el.addEventListener("scroll",()=>hsUpd(w),{passive:true});hsUpd(w);});}
+function keepPos(id,fn){const a=document.getElementById(id),t=a?a.getBoundingClientRect().top:null;fn();const b=document.getElementById(id);if(b&&t!==null)window.scrollBy(0,b.getBoundingClientRect().top-t);}
+/* V19 : barre des parties (Quotidien, Santé), toujours visible en haut */
+function partBar(id,label,items,curKey){
+  const fold=!!(state.ui.pbFold||{})[id],c=items.find(x=>x[0]===curKey);
+  return `<div class="stick noread" id="pb-${id}"><div class="pbar"><span class="pt">🗂️ <b>${pl(items.length,"partie")}</b>${c?` · ici : <b>${esc(c[1])}</b>`:""}</span><button class="btn ghost spk" data-act="pbFold" data-id="${id}" aria-expanded="${!fold}">${fold?"▸ Voir les parties":"▾ Replier"}</button></div>
+  ${fold?"":`<div class="chips qparts" role="group" aria-label="${esc(label)}" style="margin-top:8px">${items.map(([k,l,n,act])=>`<button class="chip ${k===curKey?"on":""}" data-act="${act}" data-id="${k}">${esc(l)} (${n})</button>`).join("")}</div>`}</div>`;}
 const qTab=p=>state.settings.split&&state.settings.split[p]?"q_"+p:"quotidien";
 const empty=msg=>`<div class="block"><p class="meta">${msg}</p></div>`;
 const exBox=txt=>`<div class="example noread"><b>Exemple (fictif)</b><br>${txt}</div>`;
@@ -699,7 +793,7 @@ function vAccueil(){
     const doneN=state.tasks.filter(t=>t.done).length;
     const micro=open.find(t=>t.micro)||open[0];
     const whys=(stars.length?stars:act).filter(p=>p.why);
-    const totW=state.work.reduce((s,w)=>s+(w.min||0),0);
+    const totW=state.work.reduce((s,w)=>s+wSec(w),0)/60;
     box=`<div class="modebox basse"><strong>Phase basse : pas de grande décision aujourd’hui.</strong>
     <p><b>Ce que tu as déjà fait :</b> ${doneN} tâche${doneN>1?"s":""} terminée${doneN>1?"s":""}${state.journal.length?", "+state.journal.length+" note"+(state.journal.length>1?"s":"")+" dans ton journal":""}${totW?", "+fmtDur(totW)+" de travail enregistrées":""}.</p>
     ${state.journal.slice(0,2).map(j=>`<p class="meta">${fmt(j.date)} : ${esc(j.text.slice(0,140))}${j.text.length>140?"…":""}</p>`).join("")}
@@ -734,15 +828,16 @@ function vAccueil(){
     repList=keys.map(k=>{const l=R.filter(r=>(r.subj||"")===k);return `<p class="subh">${k?"🗂️ "+esc(k):"Sans sujet"} <span class="badge">${l.filter(r=>!r.done).length}</span></p>`+l.map(repRow).join("");}).join("");}
   else repList=R.map(repRow).join("");
   const nSel=R.filter(r=>repSel.has(r.id)).length;
-  const rep=`<div class="bar" style="margin:14px 0 0"><button class="btn sorsbtn" data-act="jeSors">👗 Je sors : quoi prendre ?</button><button class="btn sorsbtn" data-act="mange">🥗 Qu’est-ce que je mange ?</button></div><section class="block" id="repBlock"><div class="phead"><h3>Reprendre ici ${R.length?`<span class="badge">${pl(left,"ligne")} à reprendre</span>`:""}</h3><div class="tools">${R.length?spkBtn("repBlock"):""}${R.length?`<button class="btn ghost spk noread" data-act="repFold" aria-expanded="${!fold}">${fold?"▸ Déplier":"▾ Replier"}</button>`:""}</div></div>
+  const rep=`<div class="bar" style="margin:14px 0 0"><button class="btn sorsbtn" data-act="jeSors">👗 Je sors : quoi prendre ?</button><button class="btn sorsbtn" data-act="mange">🥗 Qu’est-ce que je mange ?</button><button class="btn sorsbtn sos" data-act="contactsOpen">🆘 Mes contacts d’urgence</button></div><section class="block" id="repBlock"><div class="phead"><h3>Reprendre ici ${R.length?`<span class="badge">${pl(left,"ligne")} à reprendre</span>`:""}</h3><div class="tools">${R.length?spkBtn("repBlock"):""}${R.length&&!repSelMode?`<button class="btn ghost spk noread" data-act="repSelStart">📋 Préparer un prompt</button>`:""}${R.length?`<button class="btn ghost spk noread" data-act="repFold" aria-expanded="${!fold}">${fold?"▸ Déplier":"▾ Replier"}</button>`:""}</div></div>
     <div class="repadd noread"><input id="repIn" placeholder="Où j’en étais, ce que je veux faire ensuite" aria-label="Nouvelle ligne pour Reprendre ici">${subjSelect("repSubj","")}<button class="btn" data-act="repAdd">Ajouter</button></div>
     ${fold&&R.length?`<p class="meta">Liste repliée : ${pl(left,"ligne")} à reprendre.</p>`:`
     ${R.length?`<div class="chips noread" style="margin:10px 0 4px"><button class="chip ${grp?"":"on"}" data-act="repGroup" data-id="0">🕒 Par date</button><button class="chip ${grp?"on":""}" data-act="repGroup" data-id="1">🗂️ Par sujet</button></div>`:exBox("Compléter où est rangé le coussin chauffant.<br>Ma mémoire de vie : ajouter la frise. (sujet : Ma mémoire de vie)")}
     ${repSelMode?`<div class="warn noread">📋 Coche ⬜ les lignes à donner à Claude, puis « Copier pour Claude ».</div>`:""}
     ${repList}
-    ${repSelMode?`<div class="bar noread" style="margin:10px 0 0"><button class="btn ghost" data-act="repPickAll">Tout choisir</button><button class="btn" data-act="repCopy">📋 Copier pour Claude (${nSel})</button><button class="btn ghost" data-act="repSelEnd">Terminer</button></div><textarea id="repOut" rows="4" readonly hidden aria-label="Texte copié"></textarea>`:""}
+    ${repSelMode?`<textarea id="repOut" rows="4" readonly hidden aria-label="Texte copié"></textarea>`:""}
     <p class="meta noread">Une chose par ligne, la nouvelle arrive en haut. Coche ce qui est fait : la ligne se barre. Quand tout est barré, la liste s’efface toute seule.</p>
-    ${R.length&&!repSelMode?`<div class="bar noread" style="margin:8px 0 0"><button class="btn ghost" data-act="repSelStart">📋 Préparer un prompt</button><button class="btn ghost" data-act="repClear">Effacer tout</button></div>`:""}`}</section>`;
+    ${R.length&&!repSelMode?`<div class="bar noread" style="margin:8px 0 0"><button class="btn ghost" data-act="repClear">Effacer tout</button></div>`:""}`}</section>
+    ${repSelMode&&R.length?`<div id="repSelBar" class="noread" role="toolbar" aria-label="Préparer un prompt"><span>📋 ${pl(nSel,"ligne choisie","lignes choisies")}</span><button data-act="repPickAll">Tout choisir</button><button class="main" data-act="repCopy">Copier pour Claude (${nSel})</button><button data-act="repSelEnd">Terminer</button></div>`:""}`;
   const prio=`<section class="block"><h3>⭐ Mes 3 priorités du moment <span class="badge">${stars.length} / 3</span></h3>
     ${stars.length?stars.map(p=>`<div class="row"><div class="grow"><b>${esc(p.name)}</b>${p.kind==="objectif"?`<span class="badge goal">🎯 Objectif</span>`:""}<div class="meta">${SPACE_TXT[p.space]||""}${p.next?", prochaine étape : "+esc(p.next):""}</div></div></div>`).join(""):`<p class="meta">Aucune priorité choisie. Dans Projets ou Loisirs, touche ☆ sur 3 projets maximum.</p>`}
     <p class="meta" style="margin-top:12px">Projets actifs : professionnel ${cnt("pro")}/3, personnel ${cnt("perso")}/3, loisirs ${cnt("loisirs")}/3.</p>
@@ -881,7 +976,7 @@ function vTaches(){
   return `<h2>Tâches & RDV</h2>
   <p class="lead">Pastille : vert peut attendre, orange bientôt, rouge urgent. Touche-la pour changer. La cloche 🔔 ajoute la date à l’agenda de ton téléphone, avec rappel la veille. Une tâche à plusieurs domaines apparaît dans chacun. Les tâches du même nom sont regroupées (×2…).</p>
   <div class="bar"><button class="btn" data-act="newTask">Ajouter une tâche ou un RDV</button></div>
-  <div class="chips" role="group" aria-label="Filtrer par domaine">${chips}</div>${body}`;
+  <div class="stick noread"><div class="chips" role="group" aria-label="Filtrer par domaine">${chips}</div></div>${body}`;
 }
 function taskForm(t){
   t=t||{id:"",title:"",domains:[state.lists.domains.includes(taskFilter)?taskFilter:"Administratif"],type:"tache",date:"",time:"",urg:"vert",project:"",micro:false,note:"",follow:"",followNote:""};
@@ -935,11 +1030,7 @@ function essRow(x){
 }
 function vSante(){
   const S=state.sante,sv=santeView,aliS=state.q.alim.filter(x=>x.ali);
-  const tabs=`<div class="chips" role="group" aria-label="Partie de l’onglet Santé">
-    <button class="chip ${sv==="suivi"?"on":""}" data-act="santeView" data-id="suivi">📋 Suivi (${S.suivi.length})</button>
-    <button class="chip ${sv==="ess"?"on":""}" data-act="santeView" data-id="ess">🧰 Mes essentiels (${S.ess.length+aliS.length})</button>
-    <button class="chip ${sv==="choix"?"on":""}" data-act="santeView" data-id="choix">✅ Mes choix validés (${S.choix.length})</button>
-    <button class="chip ${sv==="mic"?"on":""}" data-act="santeView" data-id="mic">🚽 Calendrier mictionnel (${S.mic.length})</button></div>`;
+  const tabs=partBar("sante","Partie de l’onglet Santé",[["suivi","📋 Suivi",S.suivi.length,"santeView"],["ess","🧰 Mes essentiels",S.ess.length+aliS.length,"santeView"],["choix","✅ Mes choix validés",S.choix.length,"santeView"],["mic","🚽 Calendrier mictionnel",S.mic.length,"santeView"]],sv);
   let body;
   if(sv==="suivi"){
     const list=S.suivi.slice().sort((a,b)=>(b.date+(b.time||"")).localeCompare(a.date+(a.time||"")));
@@ -1083,24 +1174,38 @@ function repCheck(){
   clearTimeout(repCheck.h);repCheck.h=setTimeout(()=>{if(state.rep.length&&state.rep.every(r=>r.done))repClear("Bravo, tout est fait ✓");},1600);
 }
 function repClear(msg){
-  const old=state.rep.slice();state.rep=[];save();if(cur==="accueil")render();
-  ask(esc(msg),[["Annuler",()=>{state.rep=old;save();if(cur==="accueil")render();toast("Liste remise");},true]],15000);
+  const old=state.rep.slice();state.rep=[];repSelMode=false;repSel.clear();save();if(cur==="accueil")keepPos("repBlock",render);
+  ask(esc(msg),[["Annuler",()=>{state.rep=old;save();if(cur==="accueil")keepPos("repBlock",render);toast("Liste remise");},true]],15000);
 }
 const TOPBTN=`<div class="bar noread" style="margin:12px 0 0"><button class="btn ghost" data-act="jumpTop">↑ Sommaire</button></div>`;
-function withToc(html){
-  const items=[];let n=0;
+const TOC_DEF={params:["Sauvegarde","Mot de passe","Historique","Mes listes"]};
+let tocOpen=false;
+function withToc(html,page){
+  const items=[],used=new Set();let n=0;tocOpen=false;
   const out=html.split('<section class="block"').map((chunk,i)=>{
     if(i===0)return chunk;
     const m=chunk.match(/^( id="([^"]+)")?>(\s*<div class="phead">)?\s*<h3>([\s\S]*?)<\/h3>/);
     if(!m)return '<section class="block"'+chunk;
-    const id=m[2]||("sec"+(++n));items.push([id,m[4].replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim()]);
+    const label=m[4].replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
+    let id=m[2]||("sec-"+(dupKey(label).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,30)||(++n)));
+    while(used.has(id))id+="-"+(++n);used.add(id);items.push([id,label]);
     let c=m[1]?chunk:' id="'+id+'"'+chunk;const e=c.indexOf("</section>");if(e>=0)c=c.slice(0,e)+TOPBTN+c.slice(e);
     return '<section class="block"'+c;
   }).join("");
   if(items.length<3)return out;
-  const nav=`<nav class="block toc noread" id="tocNav" aria-label="Sommaire"><h3>Aller à</h3><div class="chips wrap">${items.map(([id,l])=>`<button class="chip" data-act="jump" data-id="${id}">${esc(l)}</button>`).join("")}</div></nav>`;
+  let fav=[];
+  if(items.length>5){const U=state.ui.tocUse||{},def=TOC_DEF[page]||[];
+    fav=items.map(([id,l],i)=>({id,s:(U[id]||0)*10+(def.some(d=>norm(l).includes(norm(d)))?5:0)-i*.01})).sort((a,b)=>b.s-a.s).slice(0,4).map(x=>x.id);}
+  const all=!fav.length;
+  const nav=`<nav class="block toc noread" id="tocNav" aria-label="Sommaire"><h3>Aller à</h3>
+  ${all?"":`<input id="tocQ" type="search" placeholder="Tape un mot pour trouver la partie" aria-label="Chercher une partie" autocomplete="off" style="margin-bottom:8px">`}
+  <div class="chips wrap" id="tocChips">${items.map(([id,l])=>`<button class="chip${all||fav.includes(id)?"":" tmore"}" data-act="jump" data-id="${id}" ${all||fav.includes(id)?"":"hidden"}>${esc(l)}</button>`).join("")}</div>
+  ${all?"":`<p class="meta" id="tocNone" hidden>Aucune partie trouvée. Essaie un autre mot.</p><div class="bar" style="margin:8px 0 0"><button class="btn ghost spk" data-act="tocAll" data-id="${items.length}" aria-expanded="false">▸ Toutes les parties (${items.length})</button></div><p class="hint">Les parties proposées sont celles que tu ouvres le plus souvent.</p>`}</nav>`;
   const p=out.indexOf("</p>");return p<0?nav+out:out.slice(0,p+4)+nav+out.slice(p+4);
 }
+function tocFilter(){const q=norm(val("tocQ"));let n=0;
+  document.querySelectorAll("#tocChips .chip").forEach(c=>{let show;if(!q)show=tocOpen||!c.classList.contains("tmore");else{const sec=document.getElementById(c.dataset.id);show=norm(c.textContent).includes(q)||!!(sec&&norm(sec.textContent).includes(q));}c.hidden=!show;if(show)n++;});
+  const no=$("#tocNone");if(no)no.hidden=!q||n>0;}
 function jumpTo(el){if(!el)return;if(el.tagName==="DETAILS")el.open=true;const hd=document.querySelector("header");const st=hd&&/sticky|fixed/.test(getComputedStyle(hd).position)?hd.getBoundingClientRect().height:0;
   window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-st-10,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});}
 
@@ -1128,7 +1233,7 @@ function vQuot(fixed){
   const vis=Object.keys(QPARTS).filter(p=>!sp[p]);
   const p=fixed||(vis.includes(qView)?qView:vis[0]||"ast");
   const cnt={};Object.keys(QPARTS).forEach(k=>cnt[k]=(Q[k]||[]).length);
-  const chips=!fixed&&vis.length>1?`<div class="chips wrap qparts" role="group" aria-label="Partie de Mon quotidien">${vis.map(k=>`<button class="chip ${p===k?"on":""}" data-act="qView" data-id="${k}">${esc(partLabel(k))} (${cnt[k]})</button>`).join("")}</div>`:"";
+  const chips=!fixed&&vis.length>1?partBar("quot","Partie de Mon quotidien",vis.map(k=>[k,partLabel(k),cnt[k],"qView"]),p):"";
   const td=allTodo().filter(o=>o.k===p).length;
   let body="";
   if(p==="ast"){
@@ -1159,7 +1264,7 @@ function vQuot(fixed){
     ${vAst.map(astRow).join("")||`<p class="meta">Ex. : « un vêtement, 2 ou 3 usages ».</p>`}
     <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="newAstVet">Ajouter une astuce vêtements</button></div></section>`;
   }
-  return `<h2>${fixed?esc(partLabel(fixed)):"🏠 Quotidien"}</h2>${fixed?"":`<p class="meta" style="margin-top:-6px">Choisis une partie :</p>`}${chips}${body}`;
+  return `<h2>${fixed?esc(partLabel(fixed)):"🏠 Quotidien"}</h2>${chips}${body}`;
 }
 function astForm(x){x=x||{id:"",cat:"",title:"",detail:"",kw:""};
   return `<h2>${x.id?"Modifier l’astuce":"Nouvelle astuce"}</h2>${selField("aCat","Catégorie","astCat",x.cat)}
@@ -1289,7 +1394,7 @@ function importAdd(o){
   put(Q.ast,o.ast||o.astuces,"title",x=>{const c=s(x.cat||x.categorie);if(c)addToList("astCat",c);return {cat:c,title:s(x.title||x.titre),detail:s(x.detail),kw:s(x.kw||x.mots),url:s(x.url||x.lien)};});
   put(Q.vet,o.vet||o.vetements,"name",x=>{const u=s(x.use||x.usage);if(u)addToList("vetUse",u);return {name:s(x.name||x.nom),use:u,where:s(x.where||x.range),note:s(x.note)};});
   put(state.tasks,o.tasks||o.taches,"title",x=>{const dm=state.lists.domains.find(d=>norm(d)===norm(x.domain||x.domaine||""))||"Quotidien";return {title:s(x.title||x.titre),type:x.type==="rdv"?"rdv":"tache",domain:dm,domains:[dm],date:s(x.date),time:s(x.time),urg:URG.includes(x.urg)?x.urg:"vert",project:"",micro:false,note:s(x.note),done:false,created:today()};});
-  (Array.isArray(o.rep||o.reprendre)?(o.rep||o.reprendre):[]).forEach(t=>{t=s(t);if(t&&!state.rep.some(r=>dupKey(r.text)===dupKey(t))){state.rep.unshift({id:uid(),text:t,done:false,date:today(),subj:(guessProj(t)||{}).name||""});add++;}else if(t)skip++;});
+  (Array.isArray(o.rep||o.reprendre)?(o.rep||o.reprendre):[]).forEach(t=>{t=s(t);if(t&&!state.rep.some(r=>dupKey(r.text)===dupKey(t))){state.rep.unshift({id:uid(),text:t,done:false,date:today(),subj:autoSubj(t)});add++;}else if(t)skip++;});
   return {add,skip};
 }
 
@@ -1329,6 +1434,7 @@ function ideaForm(i){return `<h2>Modifier l’idée</h2><label for="idText">L’
 
 /* ---------- V18 : rappels importants ---------- */
 const ALERT_LVL={normal:"Normal",important:"Important",urgent:"Urgent"},ALERT_ICO={normal:"🟠",important:"🔴",urgent:"🚨"};
+let alertUndo=null,alertUndoT=0;
 const ALERT_FREQ={rarement:["Rarement",.2],souvent:["Souvent",.5],tres:["Très souvent",.85],chaque:["À chaque ouverture",1]};
 function alertForm(a){a=Object.assign({id:"",text:"",level:"important",freq:"souvent",until:""},a||{});
   return `<h2>${a.id?"Modifier le rappel":"🔴 Nouveau rappel important"}</h2>
@@ -1425,29 +1531,31 @@ function aboMonthly(x){const p=numOf(x.price),per=norm(x.per||"");if(!p)return 0
 function aboRow(x){const off=aboOff(x),left=x.end?Math.round((new Date(x.end+"T12:00:00")-new Date(today()+"T12:00:00"))/86400000):null;
   const dates=[x.start?"Depuis le "+fmt(x.start):"",x.end?"Fin ou renouvellement : "+fmt(x.end):"",x.dur?"Durée : "+esc(x.dur):""].filter(Boolean).join(" · ");
   return `<div class="row ${off?"gone":""}" id="qo-${x.id}"><div class="grow"><b>${esc(x.name)}</b>${x.cat?`<span class="badge">${esc(x.cat)}</span>`:""}${x.st?`<span class="badge ${off?"":"goal"}">${esc(x.st)}</span>`:""}
-  ${x.price||x.per?`<div class="meta">💶 ${esc(x.price)}${x.price&&x.per?" · ":""}${esc(x.per)}</div>`:""}${dates?`<div class="meta">${dates}</div>`:""}
+  ${x.price||x.per?`<div class="meta">💶 ${esc(euro(x.price))}${x.price&&x.per?" · ":""}${esc(x.per)}</div>`:""}${x.pay?`<div class="meta">💳 Payé avec : ${esc(x.pay)}</div>`:""}${dates?`<div class="meta">${dates}</div>`:""}
   ${!off&&left!==null&&left>=0&&left<=7?`<div class="warn" style="margin:6px 0 0">⚠️ ${left===0?"Se termine aujourd’hui":"Se termine dans "+pl(left,"jour")} : à renouveler ou à résilier ?</div>`:""}${!off&&left!==null&&left<0?`<div class="meta">Date passée : mets à jour la date ou le statut (✎).</div>`:""}
   ${x.note?`<div class="meta">${esc(x.note)}</div>`:""}</div>${qIco("abo",x)}</div>`;}
-function aboForm(x){x=Object.assign({id:"",name:"",cat:"",start:"",price:"",per:"",end:"",dur:"",st:"Actif",note:""},x||{});
+function euro(v){v=String(v||"").trim();if(!v||!/\d/.test(v))return v;if(/€|eur|\$|£/i.test(v))return v.replace(/\s*€/," €");return v.replace(/(\d)\.(\d)/g,"$1,$2")+" €";}
+function aboForm(x){x=Object.assign({id:"",name:"",cat:"",start:"",price:"",per:"",end:"",dur:"",st:"Actif",note:"",pay:""},x||{});
   return `<h2>${x.id?"Modifier l’abonnement":"💳 Nouvel abonnement"}</h2>
   <label for="oName">Nom</label><input id="oName" value="${esc(x.name)}" placeholder="Ex. : assistant IA">
   ${selField("oCat","Type","aboCat",x.cat)}
-  <div class="inline"><div><label for="oPrice">Tarif</label><input id="oPrice" value="${esc(x.price)}" placeholder="Ex. : 20 €"></div><div>${selField("oPer","Périodicité","aboPer",x.per)}</div></div>
+  <div class="inline"><div><label for="oPrice">Tarif <span class="hint">(le € s’ajoute tout seul)</span></label><input id="oPrice" value="${esc(String(x.price||"").replace(/\s*€\s*$/,""))}" inputmode="decimal" placeholder="Ex. : 20"></div><div>${selField("oPer","Périodicité","aboPer",x.per)}</div></div>
+  ${selField("oPay","Payé avec","aboPay",x.pay)}
   <div class="inline"><div><label for="oStart">Début</label><input id="oStart" type="date" value="${esc(x.start)}"></div><div><label for="oEnd">Fin ou renouvellement</label><input id="oEnd" type="date" value="${esc(x.end)}"></div></div>
   <label for="oDur">Durée <span class="hint">(facultatif)</span></label><input id="oDur" value="${esc(x.dur)}" placeholder="Ex. : 1 mois, 1 an, essai 7 jours">
   ${selField("oSt","Statut","aboSt",x.st)}
   <label for="oNote">Note</label><input id="oNote" value="${esc(x.note)}" placeholder="Ex. : résilier dans les paramètres du compte">${qBtns("abo",x.id)}`;}
 function aboBody(){const L=state.q.abo,on=L.filter(x=>!aboOff(x)).sort((a,b)=>(a.end||"9999").localeCompare(b.end||"9999")),off=L.filter(aboOff),tot=on.reduce((s,x)=>s+aboMonthly(x),0);
   return `<p class="lead">Tes abonnements (IA et autres) : tarif, dates, et ceux qui arrivent à leur fin.</p><div class="bar"><button class="btn" data-act="qNew" data-id="abo">Ajouter un abonnement</button></div>
-  ${on.length?`<div class="modebox neutre"><strong>${pl(on.length,"abonnement actif","abonnements actifs")}</strong><p>${tot?`Environ <b>${tot.toFixed(2).replace(".",",")} € par mois</b>.`:"Ajoute le tarif et la périodicité pour voir le total par mois."}</p></div>
-  <section class="block" id="aboOn"><div class="phead"><h3>Actifs</h3>${spkBtn("aboOn")}</div>${on.map(aboRow).join("")}</section>`:empty("Aucun abonnement actif.")+(L.length?"":exBox("Assistant IA (IA) : 20 € par mois, depuis le 01/10. Renouvellement : 01/12."))}
+  ${on.length?`<div class="modebox neutre"><strong>${pl(on.length,"abonnement actif","abonnements actifs")}</strong><p>${tot?`Environ <b>${tot.toFixed(2).replace(".",",")} € par mois</b>.`:"Ajoute le tarif et la périodicité pour voir le total par mois."}</p>${(()=>{const by={};on.forEach(x=>{const m=aboMonthly(x);if(m){const k=x.pay||"Compte non précisé";by[k]=(by[k]||0)+m;}});const E=Object.entries(by);return E.length>1||(E.length===1&&E[0][0]!=="Compte non précisé")?`<p><b>Par compte :</b></p>`+E.sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<p>💳 ${esc(k)} : <b>${v.toFixed(2).replace(".",",")} € par mois</b></p>`).join(""):"";})()}</div>
+  <section class="block" id="aboOn"><div class="phead"><h3>Actifs</h3>${spkBtn("aboOn")}</div>${on.map(aboRow).join("")}</section>`:empty("Aucun abonnement actif.")+(L.length?"":exBox("Assistant IA (IA) : 20 € par mois, payé avec : compte par défaut, depuis le 01/10. Renouvellement : 01/12.<br>Par compte : Bred, 20 € par mois."))}
   ${off.length?`<details class="block"><summary>Résiliés ou terminés <span class="badge">${off.length}</span></summary>${off.map(aboRow).join("")}</details>`:""}`;}
 const QFORM={beaute:beauteForm,apa:apaForm,pret:pretForm,abo:aboForm};
 const QDATA={
   beaute:()=>({cat:selVal("bCat",true),name:val("bName2"),use:val("bUse"),freq:selVal("bFreq",true),how:val("bHow"),shop:val("bShop"),price:val("bPrice"),where:val("bWhere")}),
   apa:()=>({date:val("apDate")||today(),act:selVal("apAct",true),min:val("apMin"),feel:selVal("apFeel",true),note:val("apNote")}),
   pret:()=>({kind:selVal("pKind",true)||"Prêté",what:val("pWhat"),who:val("pWho"),date:val("pDate"),ret:val("pRet"),retTxt:val("pRetTxt"),where:val("pWhere"),st:selVal("pSt",true)||"En cours",note:val("pNote")}),
-  abo:()=>({name:val("oName"),cat:selVal("oCat",true),price:val("oPrice"),per:selVal("oPer",true),start:val("oStart"),end:val("oEnd"),dur:val("oDur"),st:selVal("oSt",true)||"Actif",note:val("oNote")})
+  abo:()=>({name:val("oName"),cat:selVal("oCat",true),price:euro(val("oPrice")),pay:selVal("oPay",true),per:selVal("oPer",true),start:val("oStart"),end:val("oEnd"),dur:val("oDur"),st:selVal("oSt",true)||"Actif",note:val("oNote")})
 };
 
 /* ---------- V18 : calendrier mictionnel ---------- */
@@ -1472,8 +1580,10 @@ function micBody(){
   <div class="inline"><div><label for="micLever" style="margin-top:0">⏰ Lever</label><input id="micLever" type="time" value="${esc(D.lever||"")}"></div><div><label for="micCoucher" style="margin-top:0">🛏️ Coucher</label><input id="micCoucher" type="time" value="${esc(D.coucher||"")}"></div></div>
   <div class="bar" style="margin:12px 0"><button class="btn" data-act="newMic" data-id="uri">🚽 Miction</button><button class="btn" data-act="newMic" data-id="drink">🥤 Boisson</button></div>
   <section class="block" id="micBlock"><div class="phead"><h3>${longDay(micDay)}</h3>${st.L.length?spkBtn("micBlock"):""}</div>
-  ${st.L.length?`<p><b>${pl(st.n,"miction")}</b>${hasLC?` (dont ${st.nN} la nuit 🌙)`:""}, urine : <b>${st.sumU} ml</b>${st.maxV?" (maximum "+st.maxV+" ml)":""}. Boissons : <b>${st.sumD} ml</b>. Fuites : <b>${st.leaks}</b>. Protections changées : <b>${st.prot}</b>.</p>
+  ${st.L.length?`<p class="subh" style="margin-top:4px">📊 Résumé du jour</p>
+  <div class="resume"><div><b>${st.n}</b><span>${st.n>1?"mictions":"miction"}${hasLC?` (dont ${st.nN} la nuit 🌙)`:""}</span></div><div><b>${st.sumU} ml</b><span>urine au total</span></div>${st.maxV?`<div><b>${st.maxV} ml</b><span>plus grand volume</span></div>`:""}<div><b>${st.sumD} ml</b><span>boissons</span></div><div><b>${st.leaks}</b><span>${st.leaks>1?"fuites":"fuite"}</span></div><div><b>${st.prot}</b><span>${st.prot>1?"protections changées":"protection changée"}</span></div></div>
   ${hasLC?"":`<p class="meta noread">Note l’heure du lever et du coucher pour compter les mictions de nuit 🌙.</p>`}
+  <p class="subh">🕒 Le détail</p>
   <div class="tablewrap"><table><thead><tr><th>Heure</th><th>Urine (ml)</th><th>Besoin</th><th>Fuite</th><th>Protection</th><th>Boisson</th><th>Type</th><th>Note</th><th></th></tr></thead><tbody>
   ${ev.map(e=>e.m?`<tr class="mark"><td colspan="9">${e.m}</td></tr>`:row(e.x)).join("")}</tbody></table></div>`
   :`<p class="meta">Rien de noté ce jour-là.</p>`+exBox("7 h 30 : lever. 7 h 35 : 400 ml, besoin 3. 8 h : café, 300 ml. 19 h : 140 ml, besoin 4, petite fuite, protection changée.")}</section>
@@ -1481,9 +1591,10 @@ function micBody(){
   <div class="bar"><button class="btn ghost" data-act="micCopy" data-id="day">📋 Copier ce jour</button>${days.length>1?`<button class="btn ghost" data-act="micCopy" data-id="all">📋 Copier tous les jours</button>`:""}</div>`;
 }
 function micText(day){const st=micStats(day),D=st.D,hasLC=!!(D.lever&&D.coucher);const L=st.L.slice().sort((a,b)=>micKey(a.time,D).localeCompare(micKey(b.time,D)));
-  const out=["Calendrier mictionnel : "+longDay(day),"Lever : "+(D.lever?hText(D.lever):"?")+" · Coucher : "+(D.coucher?hText(D.coucher):"?"),"Heure | Urine (ml) | Besoin (0-4) | Fuite | Protection changée | Boisson (ml) | Type | Note"];
+  const out=[longDay(day).toUpperCase()+" : calendrier mictionnel","Lever : "+(D.lever?hText(D.lever):"?")+" · Coucher : "+(D.coucher?hText(D.coucher):"?"),
+    "Résumé du jour : "+pl(st.n,"miction")+(hasLC?" (dont "+st.nN+" la nuit)":"")+", urine "+st.sumU+" ml"+(st.maxV?" (maximum "+st.maxV+" ml)":"")+", boissons "+st.sumD+" ml, fuites "+st.leaks+", protections changées "+st.prot+".",
+    "","Heure | Urine (ml) | Besoin (0-4) | Fuite | Protection changée | Boisson (ml) | Type | Note"];
   L.forEach(x=>out.push([hText(x.time)+(micNight(x,D)?" (nuit)":""),x.uri?(x.vol||"non mesuré"):"",hasSens(x)?x.sens:"",x.leak&&norm(x.leak)!=="aucune"?x.leak:"",x.prot?"oui":"",+x.dvol?x.dvol:"",x.dtype||"",[x.ctx,x.note].filter(Boolean).join(", ")].join(" | ")));
-  out.push("Total : "+pl(st.n,"miction")+(hasLC?" (dont "+st.nN+" la nuit)":"")+", urine "+st.sumU+" ml, boissons "+st.sumD+" ml, fuites "+st.leaks+", protections changées "+st.prot+".");
   return out.join("\n");}
 function micForm(x,mode){
   x=Object.assign({id:"",date:micDay||today(),time:hm(new Date()),uri:mode!=="drink",vol:"",sens:"",leak:"Aucune",prot:false,dvol:"",dtype:"",ctx:"",note:""},x||{});
@@ -1504,6 +1615,52 @@ function micForm(x,mode){
   ${selField("mCtx","Contexte (facultatif)","micCtx",x.ctx)}
   <label for="mNote">Note</label><input id="mNote" value="${esc(x.note)}">
   <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="saveMic" data-id="${x.id}">Enregistrer</button></div>`;}
+
+/* ---------- V19 : sujet trouvé tout seul ---------- */
+const SUBJ_KW={
+  "Santé":"médecin,docteur,rdv médical,kiné,kinésithérapeute,pharmacie,ordonnance,douleur,santé,prise de sang,analyse,vaccin,dentiste,ophtalmo,lunettes,infirmière,infirmier,hôpital,neurologue,irm,traitement,médicament,urologue,bilan urodynamique",
+  "Administratif":"caf,impôts,impôt,papiers,dossier,formulaire,ameli,sécurité sociale,mutuelle,banque,assurance,courrier,attestation,justificatif,mdph,préfecture,facture,déclaration,carte vitale",
+  "Démarches professionnelles":"cv,lettre de motivation,candidature,entretien,france travail,pôle emploi,offre,emploi,poste,recrutement,duoday,stage,contrat,mission,employeur",
+  "Reconversion pro":"reconversion,formation,métier,compétences,bilan de compétences,projet professionnel",
+  "Famille":"frère,sœur,soeur,maman,mère,papa,père,famille,fils,fille,cousin,cousine,tante,oncle,neveu,nièce",
+  "Loisirs":"crochet,lecture,livre,tricot,dessin,jardinage,film,série,musique,couture",
+  "Quotidien":"courses,ménage,lessive,repas,cuisine,vêtements,rangement,maison,linge"
+};
+const CARNET_KW="carnet,onglet,onglets,version,bouton,prompt,punaise,pomodoro,chrono,chronomètre,paramètres,aide-mémoire,historique,menu déroulant,application,github";
+function guessSubj(text){
+  const k=" "+dupKey(text)+" ",T=sigWords(text);if(k.trim().length<2)return "";
+  const sc={},add=(n,v)=>{if(n)sc[n]=(sc[n]||0)+v;};
+  const has=x=>{const q=dupKey(x);return !!q&&k.includes(" "+q+" ");};
+  const live=state.projects.filter(p=>p.status!=="termine");
+  live.forEach(p=>{const W=sigWords(p.name);if(W.length){const hit=W.filter(w=>k.includes(" "+w)).length;if(hit)add(p.name,hit===W.length?10+hit:hit*3);}
+    sigWords([p.next,p.why,p.notes].join(" ")).filter(w=>w.length>=5).slice(0,40).forEach(w=>{if(T.includes(w))add(p.name,1);});});
+  const L=state.subjLearn||{};T.forEach(w=>{const m=L[w];if(m)Object.entries(m).forEach(([s,c])=>add(s,Math.min(4,c)*1.5));});
+  Object.entries(SUBJ_KW).forEach(([d,kw])=>{if(state.lists.domains.includes(d))kw.split(",").forEach(x=>{if(has(x))add(d,2.5);});});
+  if(CARNET_KW.split(",").some(has)){const cp=live.find(p=>/carnet pilote/.test(norm(p.name)));add(cp?cp.name:"Carnet Pilote",3);}
+  let best="",bs=2;Object.entries(sc).forEach(([n,v])=>{if(v>bs){bs=v;best=n;}});return best;
+}
+function autoSubj(t){const s=guessSubj(t);if(s&&!state.projects.some(p=>p.name===s)&&!state.lists.domains.includes(s))return addToList("repSubj",s);return s;}
+function learnSubj(text,subj){if(!subj)return;const L=state.subjLearn=state.subjLearn||{};sigWords(text).forEach(w=>{const m=L[w]=L[w]||{};m[subj]=(m[subj]||0)+1;});}
+
+/* ---------- V19 : contacts d’urgence ---------- */
+const SOS=[["15","SAMU, urgence médicale"],["18","Pompiers"],["112","Numéro d’urgence européen"]];
+const telOf=p=>String(p||"").replace(/[^\d+]/g,"");
+function contactsModal(){const C=state.contacts;
+  openModal(`<h2>🆘 Mes contacts en cas de problème</h2><p class="meta">Les personnes que tu as choisies, à joindre si ça ne va pas. Touche 📞 pour appeler.</p>
+  <div id="ctList">${C.length?C.map((c,i)=>`<div class="row" id="ct-${c.id}"><div class="grow"><b>${esc(c.name)}</b>${c.rel?`<span class="badge">${esc(c.rel)}</span>`:""}<div class="meta">${esc(c.phone)}</div>${c.note?`<div class="meta">${esc(c.note)}</div>`:""}</div>
+    ${telOf(c.phone)?`<a class="callbtn" href="tel:${esc(telOf(c.phone))}">📞 Appeler</a>`:""}<button class="icon" data-act="contactUp" data-id="${c.id}" aria-label="Monter" ${i?"":"disabled"}>↑</button><button class="icon" data-act="contactEdit" data-id="${c.id}" aria-label="Modifier">✎</button><button class="icon" data-act="contactDel" data-id="${c.id}" aria-label="Supprimer">🗑</button></div>`).join("")
+    :exBox("Marie, ma voisine (Voisin(e)) : 06 00 00 00 00. Note : a un double des clés.")}</div>
+  <div class="bar" style="margin:12px 0 0"><button class="btn" data-act="contactNew">➕ Ajouter un contact</button></div>
+  <h3 style="margin:20px 0 6px">Numéros d’urgence</h3>
+  ${SOS.map(([n,l])=>`<div class="row"><div class="grow"><b>${n}</b><div class="meta">${l}</div></div><a class="callbtn" style="background:var(--red)" href="tel:${n}">📞 ${n}</a></div>`).join("")}
+  <div class="actions"><button class="btn ghost" data-act="closeModal">Fermer</button></div>`,"contacts");}
+function contactForm(c){c=Object.assign({id:"",name:"",phone:"",rel:"",note:""},c||{});
+  return `<h2>${c.id?"Modifier le contact":"🆘 Nouveau contact"}</h2>
+  <label for="ctName">Nom</label><input id="ctName" value="${esc(c.name)}" placeholder="Ex. : Marie">
+  <label for="ctPhone">Téléphone</label><input id="ctPhone" type="tel" inputmode="tel" value="${esc(c.phone)}" placeholder="Ex. : 06 12 34 56 78">
+  ${selField("ctRel","Qui est-ce ?","contactRel",c.rel)}
+  <label for="ctNote">Note <span class="hint">(facultatif)</span></label><input id="ctNote" value="${esc(c.note)}" placeholder="Ex. : à appeler en premier, a un double des clés">
+  <div class="actions"><button class="btn ghost" data-act="contactsOpen">Annuler</button><button class="btn" data-act="saveContact" data-id="${c.id}">Enregistrer</button></div>`;}
 
 /* ---------- fichiers ---------- */
 function fileRow(f,g){const u=safeUrl(f.url),p=state.projects.find(x=>x.id===f.project);
@@ -1541,25 +1698,25 @@ function fileForm(f){
 }
 
 /* ---------- journal & durée de travail ---------- */
-function vJournal(){return withToc(vJournal0());}
+function vJournal(){return withToc(vJournal0(),"journal");}
 function vJournal0(){
   const t=today();
-  const totToday=state.work.filter(w=>w.date===t).reduce((s,w)=>s+(w.min||0),0);
-  const tot7=state.work.filter(w=>daysSince(w.date)<7).reduce((s,w)=>s+(w.min||0),0);
-  const byCat={};state.work.forEach(w=>{const k=w.cat||"Sans précision";byCat[k]=(byCat[k]||0)+(w.min||0);});
+  const totToday=state.work.filter(w=>w.date===t).reduce((s,w)=>s+wSec(w),0);
+  const tot7=state.work.filter(w=>daysSince(w.date)<7).reduce((s,w)=>s+wSec(w),0);
+  const byCat={};state.work.forEach(w=>{const k=w.cat||"Sans précision";byCat[k]=(byCat[k]||0)+wSec(w);});
   const catRows=Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
   return `<h2>Journal de bord</h2><p class="lead">Une phrase suffit. Les jours de doute, relis ce que tu as accompli.</p>
   <section class="block"><label for="jIn" style="margin-top:0">Aujourd’hui (${fmt(t)})</label><textarea id="jIn" rows="3" placeholder="Ce que j’ai fait, ressenti, appris…"></textarea>
   <div class="bar" style="margin:10px 0 0"><button class="btn" data-act="addJournal">Ajouter au journal</button></div></section>
   ${state.journal.length?`<section class="block">${state.journal.map(j=>`<div class="row" id="j-${j.id}"><div class="grow"><div class="meta">${fmt(j.date)}</div>${esc(j.text).replace(/\n/g,"<br>")}</div><button class="icon" data-act="delJournal" data-id="${j.id}" aria-label="Supprimer">🗑</button></div>`).join("")}</section>`:""}
   <section class="block" id="workBlock"><h3>Durée de travail</h3>
-  <p class="meta">Aujourd’hui : ${fmtDur(totToday)}. Sur 7 jours : ${fmtDur(tot7)}. Le chronomètre ⏱ remplit ce tableau tout seul (séances d’au moins 1 minute). Une séance à plusieurs natures compte une seule fois dans ces totaux.</p>
+  <p class="meta">Aujourd’hui : ${fmtSec(totToday)}. Sur 7 jours : ${fmtSec(tot7)}. Le chronomètre ⏱ remplit ce tableau tout seul (séances d’au moins 1 minute). Une séance à plusieurs natures compte une seule fois dans ces totaux.</p>
   ${catRows.length?`<details open><summary>Totaux par nature</summary><div class="tablewrap"><table style="min-width:0"><thead><tr><th>Nature</th><th>Total</th></tr></thead><tbody>
-    ${catRows.map(([k,m])=>`<tr><td>${esc(k)}</td><td class="nowrap"><b>${fmtDur(m)}</b></td></tr>`).join("")}</tbody></table></div></details>`:""}
+    ${catRows.map(([k,m])=>`<tr><td>${esc(k)}</td><td class="nowrap"><b>${fmtSec(m)}</b></td></tr>`).join("")}</tbody></table></div></details>`:""}
   <div class="bar" style="margin:10px 0"><button class="btn ghost" data-act="newWork">Ajouter une séance</button></div>
   ${state.work.length?`<div class="tablewrap"><table><thead><tr><th>Date</th><th>Outils</th><th>Nature</th><th>Détails</th><th>Durée</th><th></th></tr></thead><tbody>
   ${state.work.map(w=>`<tr id="w-${w.id}"><td class="nowrap">${fmt(w.date)}</td><td>${esc(w.tool)}</td><td>${esc(w.cat||"Sans précision")}</td><td>${esc(w.details)}</td>
-    <td class="nowrap">${w.start&&w.end?hText(w.start)+" – "+hText(w.end)+"<br>":""}<b>${fmtDur(w.min)}</b></td>
+    <td class="nowrap">${w.start&&w.end?hText(w.start)+" – "+hText(w.end)+"<br>":""}<b>${fmtSec(wSec(w))}</b></td>
     <td class="nowrap"><button class="icon" data-act="editWork" data-id="${w.id}" aria-label="Modifier">✎</button><button class="icon" data-act="delWork" data-id="${w.id}" aria-label="Supprimer">🗑</button></td></tr>`).join("")}
   </tbody></table></div>`:`<p class="meta">Aucune séance enregistrée.</p>`}</section>`;
 }
@@ -1585,7 +1742,7 @@ function skillsSource(){
   const j=state.journal.filter(x=>ok(x.date));
   if(j.length){L.push("","JOURNAL DE BORD :");j.forEach(x=>L.push("- "+fmt(x.date)+" : "+x.text.replace(/\n/g," ")));}
   const w=state.work.filter(x=>ok(x.date)&&x.cat!=="Visite");
-  if(w.length){L.push("","DURÉE DE TRAVAIL :");w.forEach(x=>L.push("- "+fmt(x.date)+", "+[x.tool,x.cat,x.details].filter(Boolean).join(", ")+" ("+fmtDur(x.min)+")"));}
+  if(w.length){L.push("","DURÉE DE TRAVAIL :");w.forEach(x=>L.push("- "+fmt(x.date)+", "+[x.tool,x.cat,x.details].filter(Boolean).join(", ")+" ("+fmtSec(wSec(x))+")"));}
   const done=state.tasks.filter(t=>t.done&&ok(t.doneDate||t.created));
   if(done.length){L.push("","TÂCHES TERMINÉES :");done.forEach(t=>L.push("- "+t.title+" ("+t.domain+")"));}
   const b=state.projects.filter(p=>p.status==="termine"&&(p.bilan||p.notes));
@@ -1694,7 +1851,7 @@ function skillsText(view){
   if(view==="synth")return skillGroups().map(G=>"- "+G.name+" : "+G.items.filter(k=>k.proof).map(k=>k.proof.replace(/[.\s]+$/,"")).join(" ; ")+" ("+G.dates.map(fmt).join(", ")+")").join("\n");
   return state.skills.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(k=>"- "+k.name+(k.proof?" : "+k.proof:"")+" ("+fmt(k.date)+")").join("\n");
 }
-function vCompetences(){return withToc(vCompetences0());}
+function vCompetences(){return withToc(vCompetences0(),"competences");}
 function vCompetences0(){
   const ls=state.lastSkills;
   const list=state.skills.slice().sort((a,b)=>b.date.localeCompare(a.date));
@@ -1787,12 +1944,24 @@ COMPÉTENCES : un espace « Mes compétences » avec un bouton qui prépare un t
 
 RECHERCHE : une case recherche qui trouve aussi les onglets grâce à des mots-clés cachés.
 
+AFFICHAGE TÉLÉPHONE : toujours centré et adapté à la largeur de l’écran, jamais de décalage sur le côté à recentrer au doigt. Les petits messages (« Copié »…) en bas, au centre, en entier. Après une action (cocher, effacer, préparer un texte), l’écran ne bouge pas.
+
+BARRES TOUJOURS VISIBLES : les filtres et les barres de parties restent en haut quand je descends, avec le nombre de parties, et se replient. Les boutons importants d’une action en cours (ex. « Copier pour Claude ») restent visibles à l’écran.
+
+FLÈCHES DE DÉFILEMENT : des petites flèches ‹ › sur les tableaux et tout ce qui dépasse de l’écran.
+
+DURÉES : les minuteurs et les durées affichent les secondes en plus des minutes (ex. bouton flottant du Pomodoro).
+
+SOMMAIRES ET ONGLETS ADAPTÉS : « Aller à » montre les parties les plus utilisées, avec « Toutes les parties » et une case pour taper un mot. La barre des onglets montre les onglets les plus utilisés, moins en phase basse, avec « ☰ +… » pour tout voir.
+
+CONTACTS D’URGENCE : les personnes que je choisis, avec un bouton 📞 Appeler, et les numéros d’urgence.
+
 STYLE : minimaliste et épuré, tableaux et fiches mémo plutôt que texte dense, pictogrammes seulement là où ils aident. Boutons flottants déplaçables au doigt (chronomètre, minuteur, notes urgentes). Explications simples, étape par étape.
 
 MON PROFIL : pragmatique, méthodique, minimaliste. Des tâches courtes, des pauses, et des repères pour reprendre facilement après une phase basse.
 
 EN LIGNE ET APPLICATION MOBILE : prévoir dès le départ que le carnet sera mis en ligne sur GitHub Pages et installé comme une application. Donc : un fichier index.html (en plus du fichier avec la version d’abord, à garder sur le Drive), les lignes du manifest.json et du Service Worker (sw.js) dans le fichier, et des icônes à partir du logo. Rien de personnel ni de médical écrit dans le fichier, car il est public : mes données restent dans le téléphone et dans le .json.`;
-const UPDATE_PROMPT="Voici mon Carnet Pilote (fichier HTML joint). Prépare la version suivante en gardant tout ce qui existe, ajoute ses nouveautés datées dans l’Historique des versions, et donne-moi les 2 fichiers : la version (ex. V19Carnet_Pilote.html) et index.html pour GitHub. Mes remarques : …";
+const UPDATE_PROMPT="Voici mon Carnet Pilote (fichier HTML joint). Prépare la version suivante en gardant tout ce qui existe, ajoute ses nouveautés datées dans l’Historique des versions, et donne-moi les 2 fichiers : la version (ex. V20Carnet_Pilote.html) et index.html pour GitHub. Mes remarques : …";
 function vAide(){
   const s=state.settings,P=state.aidePins;
   const S=[
@@ -1848,7 +2017,7 @@ function vAide(){
   ["maj","🔄 Mettre à jour le carnet (en ligne)",`<ol class="steps">
     <li><span><span class="pic">⚙️</span> Par sécurité : Paramètres, <b>Sauvegarder</b>.</span></li>
     <li><span><span class="pic">💬</span> Envoie ta version actuelle à Claude (projet Carnet Pilote) avec le message ci-dessous.</span></li>
-    <li><span><span class="pic">📄</span> Claude te donne <b>2 fichiers</b> : la nouvelle version, ex. <b>V19Carnet_Pilote.html</b> (version d’abord, à ranger sur le Drive) et <b>index.html</b> (pour GitHub). Télécharge les deux.</span></li>
+    <li><span><span class="pic">📄</span> Claude te donne <b>2 fichiers</b> : la nouvelle version, ex. <b>V20Carnet_Pilote.html</b> (version d’abord, à ranger sur le Drive) et <b>index.html</b> (pour GitHub). Télécharge les deux.</span></li>
     <li><span><span class="pic">🌐</span> Chrome : <b>github.com/carnet-personnalise/pilote-yas</b>. Touche les <b>trois petits points ⋮</b>, puis <b>Upload files</b>.</span></li>
     <li><span><span class="pic">⬆️</span> <b>Choose your files</b> : choisis <b>index.html</b> dans Téléchargements, puis <b>Commit changes</b>. Il remplace l’ancien tout seul.</span></li>
     <li><span><span class="pic">⏳</span> Attends <b>2 à 5 minutes</b>.</span></li>
@@ -1919,6 +2088,14 @@ function vAide(){
     <li><span>Le carnet fait le <b>résumé du jour</b> (mictions de jour et de nuit 🌙, totaux).</span></li>
     <li><span><b>📋 Copier ce jour</b>, ou tous les jours, pour l’envoyer ou l’imprimer.</span></li></ol>
     <p class="meta">Ces notes restent dans ton téléphone et dans ton .json, jamais en ligne.</p>`],
+  ["contacts","🆘 Mes contacts d’urgence",`<ol class="steps"><li><span>Sur l’Accueil, touche <b>« 🆘 Mes contacts d’urgence »</b> (aussi dans la punaise 📌).</span></li>
+    <li><span><b>➕ Ajouter un contact</b> : nom, téléphone, qui c’est (famille, voisine, médecin… ou Autre…), et une note si besoin.</span></li>
+    <li><span>Touche <b>📞 Appeler</b> : le téléphone compose le numéro. ↑ pour mettre un contact en premier.</span></li></ol>
+    <p class="meta">Les numéros d’urgence (15, 18, 112) sont toujours en bas de la liste. Tes contacts restent dans ton téléphone, jamais en ligne.</p>`],
+  ["barre19","☰ Onglets et sommaires adaptés",`<p><b>Barre des onglets :</b> elle montre l’Accueil, les Paramètres et tes onglets les plus utilisés, moins en phase basse. Touche <b>« ☰ +… »</b> au bout de la barre pour tout voir, <b>« ▴ Moins »</b> pour revenir. Réglages : ⚙️ Paramètres, Barre des onglets.</p>
+    <p><b>« Aller à »</b> (Paramètres, Journal, Compétences) : tes parties les plus ouvertes d’abord. <b>« ▸ Toutes les parties »</b> pour tout voir, ou tape un mot dans la case.</p>
+    <p><b>Barres qui restent en haut :</b> les filtres de Tâches & RDV, les parties de Quotidien et de Santé. « ▾ Replier » pour gagner de la place.</p>
+    <p><b>‹ ›</b> : les petites flèches font défiler un tableau ou une barre trop large.</p>`],
   ["regles","📋 Mes règles pour tout nouveau carnet HTML",`<p>Avant de créer un nouveau carnet (ou de faire évoluer celui de Kay Numérique), copie ce texte et colle-le à Claude <b>avant</b> de décrire ton besoin.</p>
     <label for="basePrompt">Règles communes à copier</label><textarea id="basePrompt" rows="8" readonly>${esc(BASE_PROMPT)}</textarea>
     <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="copyBase">Copier les règles</button></div>`],
@@ -1961,7 +2138,7 @@ function stampText(x){if(!x)return "Aucune pour l’instant.";return fmt(x.date)
 const LC={cats:["Nouvelle catégorie","Ajouter une catégorie"],tools:["Nouvel outil","Ajouter un outil"],domains:["Nouveau domaine","Ajouter un domaine"]};
 function listChips(kind){const lab=LC[kind]||["Nouveau","Ajouter"];return `<div class="chips wrap">${state.lists[kind].map((x,i)=>`<span class="chip tag">${esc(x)}<button data-act="delListItem" data-id="${kind}|${i}" aria-label="Retirer ${esc(x)}">✕</button></span>`).join("")}</div>
   <div class="inline"><input id="add_${kind}" placeholder="${lab[0]}" aria-label="${lab[1]}"><button class="btn ghost" data-act="addListItem" data-id="${kind}">Ajouter</button></div>`;}
-function vParams(){return withToc(vParams0());}
+function vParams(){return withToc(vParams0(),"params");}
 function vParams0(){
   const s=state.settings;
   return `<h2>⚙️ Paramètres</h2><p class="lead">Les réglages et la sauvegarde du carnet.</p>
@@ -1998,6 +2175,9 @@ function vParams0(){
   <p class="meta">À l’ouverture du carnet, de temps en temps, un de tes essentiels ou une astuce de ta méthode.</p>
   <div class="seg" role="group" aria-label="Fréquence du pense-bête">${Object.entries(NOTE_FREQ).map(([k,[l]])=>`<button class="${s.noteFreq===k?"on":""}" data-act="setNoteFreq" data-id="${k}" aria-pressed="${s.noteFreq===k}">${l}</button>`).join("")}</div>
   <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="noteTest">Voir un pense-bête maintenant</button></div></section>
+  <section class="block"><h3>🆘 Mes contacts d’urgence</h3>
+  <p class="meta">Tu en as ${state.contacts.length}. Ils sont sur l’Accueil (bouton 🆘) et dans la punaise 📌, avec un bouton pour appeler.</p>
+  <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="contactsOpen">🆘 Gérer mes contacts</button></div></section>
   <section class="block"><h3>🔴 Rappels importants</h3>
   <p class="meta">Tu en as ${state.alerts.length}. Ils s’ajoutent et se modifient dans la punaise 📌. Ils s’affichent en grand, sur fond rouge, à l’ouverture du carnet, selon la fréquence choisie.</p>
   <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="pinOpen">📌 Gérer mes rappels</button><button class="btn ghost" data-act="alertTest">Voir un rappel maintenant</button></div></section>
@@ -2031,6 +2211,11 @@ function vParams0(){
   <label>Outils</label>${listChips("tools")}
   <label>Domaines (Tâches & RDV, Fichiers Drive)</label>${listChips("domains")}
   <p class="meta" style="margin-top:14px">Les autres listes (Santé, Quotidien, Projets, types de tâches, Métier visé…) se complètent avec « ➕ Autre… » dans les formulaires. Si le mot existe déjà, écrit autrement, le carnet choisit celui qui existe.</p></section>
+  <section class="block"><h3>☰ Barre des onglets</h3>
+  <p class="meta">« Adaptée » : la barre montre l’Accueil, les Paramètres et tes onglets les plus utilisés, en nombre selon ta phase du jour. « ☰ +… » au bout de la barre pour tout voir. La recherche, en haut, trouve aussi tous les onglets.</p>
+  <div class="seg" role="group" aria-label="Barre des onglets">${[["adapt","Adaptée à ma phase"],["all","Tous les onglets"]].map(([k,l])=>`<button class="${s.tabMode===k?"on":""}" data-act="setTabMode" data-id="${k}" aria-pressed="${s.tabMode===k}">${l}</button>`).join("")}</div>
+  ${s.tabMode==="adapt"?[["haute","Phase haute"],["neutre","Neutre"],["basse","Phase basse"]].map(([ph,l])=>`<label>${l} : nombre d’onglets dans la barre</label><div class="seg" role="group" aria-label="${l}">${[[4,"4"],[5,"5"],[6,"6"],[8,"8"],[10,"10"],[99,"Tous"]].map(([v,t])=>`<button class="${(s.tabCount[ph]||8)===v?"on":""}" data-act="setTabCount" data-id="${ph}|${v}">${t}</button>`).join("")}</div>`).join(""):""}
+  <div class="bar" style="margin:12px 0 0"><button class="btn ghost" data-act="tabUseReset">Remettre à zéro mes onglets les plus utilisés</button></div></section>
   <section class="block"><h3>Ordre et nom des onglets</h3>
   <p class="meta">✎ pour renommer un onglet (laisse vide pour revenir au nom d’origine). ↑ ↓ pour changer l’ordre.</p>
   ${s.tabOrder.map((k,i)=>`<div class="row"><div class="grow">${esc(tabLabel(k))}${s.tabNames[k]?`<div class="meta">Nom d’origine : ${TABS[k].label}</div>`:""}${tabVisible(k)?"":`<div class="meta">Caché : ${k==="quotidien"?"toutes ses parties sont en onglets à part":"rangé dans Mon quotidien"}</div>`}</div><button class="icon" data-act="tabRename" data-id="${k}" aria-label="Renommer l’onglet">✎</button><button class="icon" data-act="tabUp" data-id="${i}" aria-label="Monter" ${i===0?"disabled":""}>↑</button><button class="icon" data-act="tabDown" data-id="${i}" aria-label="Descendre" ${i===s.tabOrder.length-1?"disabled":""}>↓</button></div>`).join("")}
@@ -2042,7 +2227,8 @@ function vParams0(){
 /* ---------- fenêtre (modale) ---------- */
 let modalKind="";
 function openModal(html,kind){$("#sheet").innerHTML=html;modalKind=kind||"";const m=$("#modal");m.classList.add("open");m.setAttribute("aria-hidden","false");
-  modalDirty=false;$("#sheet").scrollTop=0;}
+  m.classList.toggle("mid",["chrono","pomo","start","pause","news"].includes(modalKind));
+  modalDirty=false;$("#sheet").scrollTop=0;hsArrows($("#sheet"));recenter();}
 let modalDirty=false;
 function tryClose(){
   if(modalDirty&&modalKind==="form"&&$("#modal").classList.contains("open")){
@@ -2075,16 +2261,18 @@ function pinModal(){
   <p class="meta">Ils s’affichent en grand, sur fond rouge, quand tu ouvres le carnet, selon la fréquence choisie.</p>
   ${state.alerts.map(a=>`<div class="row"><div class="grow">${esc(a.text)}<span class="lvlA ${a.level}">${ALERT_LVL[a.level]||"Important"}</span><div class="meta">${(ALERT_FREQ[a.freq]||ALERT_FREQ.souvent)[0]}${a.until?" · jusqu’au "+fmt(a.until):""}</div></div><button class="icon" data-act="alertShow" data-id="${a.id}" aria-label="Voir le rappel">👁</button><button class="icon" data-act="alertEdit" data-id="${a.id}" aria-label="Modifier">✎</button><button class="icon" data-act="alertDel" data-id="${a.id}" aria-label="Supprimer">🗑</button></div>`).join("")||exBox("Important, souvent : renouveler l’ordonnance avant la fin du mois.")}
   <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="alertNew">➕ Ajouter un rappel important</button></div>
+  <h3 style="margin:22px 0 6px">🆘 En cas de problème</h3>
+  <div class="bar"><button class="btn sos" data-act="contactsOpen">🆘 Mes contacts d’urgence (${state.contacts.length})</button></div>
   <div class="actions"><button class="btn ghost" data-act="closeModal">Fermer</button></div>`,"pin");
 }
 
 /* ---------- chronomètre ---------- */
 function recordWork(c,start,end){
-  const min=Math.round((end-start-(c.gap||0))/60000);if(min<1)return 0;
+  const sec=Math.round((end-start-(c.gap||0))/1000);if(sec<60)return 0;const min=Math.round(sec/60);
   const s=new Date(start),e=new Date(end);
   addToList("tools",c.tool);splitCats(c.cat).forEach(x=>addToList("cats",x));
-  state.work.push({id:uid(),date:isoOf(s),tool:c.tool||"",cat:c.cat||"",details:c.details||"",start:hm(s),end:hm(e),min});
-  sortWork(state);return min;
+  state.work.push({id:uid(),date:isoOf(s),tool:c.tool||"",cat:c.cat||"",details:c.details||"",start:hm(s),end:hm(e),min,sec});
+  sortWork(state);return sec;
 }
 const chronoMs=()=>Date.now()-state.chrono.start-(state.chrono.gap||0);
 function startVisit(){const n=Date.now();state.chrono={running:true,start:n,lastSeen:n,gap:0,tool:"Carnet Pilote",cat:"Visite",details:""};save();}
@@ -2172,7 +2360,8 @@ function endPause(){
 const FABS={fabChrono:chronoModal,fabPomo:pomoModal,fabPin:pinModal};
 function placeFab(el,x,y){
   const w=el.offsetWidth||56,h=el.offsetHeight||56;
-  x=Math.max(4,Math.min(innerWidth-w-4,x));y=Math.max(4,Math.min(innerHeight-h-4,y));
+  const vw=document.documentElement.clientWidth||innerWidth;
+  x=Math.max(4,Math.min(vw-w-14,x));y=Math.max(12,Math.min(innerHeight-h-4,y));
   el.style.left=x+"px";el.style.top=y+"px";el.style.right="auto";el.style.bottom="auto";
 }
 function restoreFabs(){
@@ -2194,7 +2383,7 @@ function updateFabs(){
   const c=state.chrono;setBadge($("#fabChrono"),c.running?hms(chronoMs()):"");
   const p=state.pomo,pf=$("#fabPomo");
   pf.querySelector(".ic").textContent=p.phase!=="off"&&p.emoji?p.emoji:"🍅";
-  setBadge(pf,p.phase!=="off"?Math.max(0,Math.ceil((p.end-Date.now())/60000))+" min":"");
+  setBadge(pf,p.phase!=="off"?hms(p.end-Date.now()):"");
 }
 function tick(){
   const p=state.pomo,now=Date.now();
@@ -2219,6 +2408,8 @@ function doSearch(q){
     else if(tabVisible(k))hits.push({tab:k,title:"Onglet "+tabLabel(k),sub:"Aller à l’onglet"});});
   if(has("je sors sortie sortir m’habiller m'habiller habiller tenue quoi mettre quoi prendre"))hits.push({fn:"jeSors",title:"👗 Je sors : quoi prendre ?",sub:"Tenue, chaussures, sac et fiche mémo"});
   if(has("manger mange faim quoi manger repas collation encas en-cas grignoter"))hits.push({fn:"mange",title:"🥗 Qu’est-ce que je mange ?",sub:"Selon ton envie ou ton repas"});
+  if(has("urgence urgences sos secours contact contacts appeler téléphone numéro samu pompiers"))hits.push({fn:"contactsOpen",title:"🆘 Mes contacts d’urgence",sub:"Appeler une personne de confiance ou les secours"});
+  state.contacts.forEach(c=>{if(has(c.name,c.rel,c.note,c.phone))hits.push({fn:"contactsOpen",title:"🆘 "+c.name,sub:"Contact d’urgence"+(c.rel?", "+c.rel:"")});});
   state.lists.repas.forEach(s=>{if(has(s))hits.push({fn:"mangeGo",arg:s,title:"🥗 "+s,sub:"Ce que j’ai noté pour cette envie"});});
   state.lists.sorties.forEach(s=>{if(has(s))hits.push({fn:"sorsGo",arg:s,title:"👗 Je sors : "+s,sub:"Ce que j’ai prévu pour cette sortie"});});
   state.projects.forEach(p=>{if(has(p.name,p.why,p.bilan,p.next,p.notes,p.otherFiles,...p.links.map(l=>l.name)))hits.push({tab:p.space==="loisirs"?"loisirs":"projets",id:"p-"+p.id,title:p.name,sub:(p.kind==="objectif"?"Objectif, ":"")+(SPACE_TXT[p.space]||"Projet")+", "+STATUS[p.status]+(p.star?", ⭐":"")});});
@@ -2264,7 +2455,7 @@ const ACT={
   lockNow:()=>lockNow(),
   lockChange:()=>{const v=val("sLockNew");if(!v){toast("Écris d’abord le nouveau mot de passe");return;}
     state.settings.lockPass=v;state.settings.lockOn=true;save();renderHeader();const i=$("#sLockNew");if(i)i.value="";const o=$("#sLockOn");if(o)o.value="1";toast("Mot de passe changé : "+v.replace(/./g,"•")+" ("+v.length+" caractères)",4000);},
-  tab:id=>{cur=id;render();window.scrollTo(0,0);},
+  tab:id=>{cur=id;useTab(id);save();render();window.scrollTo(0,0);},
   tabPrev:()=>$("#tabs").scrollBy({left:-180}),
   tabNext:()=>$("#tabs").scrollBy({left:180}),
   setMode:id=>{state.mode=id;save();render();},
@@ -2326,7 +2517,9 @@ const ACT={
   toggleTask:id=>{const t=state.tasks.find(x=>x.id===id);if(!t)return;t.done=!t.done;t.doneDate=t.done?today():"";save();render();if(t.done)toast("Bravo, c’est fait ✓");},
   cycleUrg:id=>{const t=state.tasks.find(x=>x.id===id);if(!t)return;t.urg=URG[(URG.indexOf(t.urg)+1)%3];save();render();flash("t-"+id);toast(URG_LABEL[t.urg]);},
   ics:id=>{const t=state.tasks.find(x=>x.id===id);if(!t||!t.date)return;downloadFile("agenda-"+t.date+".ics",makeIcs(t),"text/calendar");toast("Fichier agenda téléchargé : ouvre-le pour l’ajouter");},
-  filter:id=>{taskFilter=id;render();},
+  filter:id=>{taskFilter=id;const was=window.scrollY;render();
+    const n=$("#main .stick .chip.on");if(n){const C=n.parentElement;C.scrollLeft=Math.max(0,n.offsetLeft-C.offsetLeft-40);hsUpd(C.parentElement);}
+    const b=$("#main .bar"),hd=document.querySelector("header");if(b&&hd){const target=b.getBoundingClientRect().bottom+window.scrollY-hd.getBoundingClientRect().bottom;if(was>target)window.scrollTo(0,Math.max(0,target));}},
   newFile:()=>openModal(fileForm(),"form"),
   editFile:id=>openModal(fileForm(state.files.find(f=>f.id===id)),"form"),
   saveFile:id=>{const name=val("lName");if(!name){toast("Donne un nom au lien");return;}
@@ -2336,7 +2529,7 @@ const ACT={
   delFile:id=>{const f=state.files.find(x=>x.id===id);if(!f||!confirm("Supprimer « "+f.name+" » ?"))return;state.files=state.files.filter(x=>x.id!==id);save();render();},
   addJournal:()=>{const v=val("jIn");if(!v){toast("Écris au moins une phrase");return;}state.journal.unshift({id:uid(),date:today(),text:v});save();render();toast("Ajouté au journal");},
   delJournal:id=>{if(!confirm("Supprimer cette note du journal ?"))return;state.journal=state.journal.filter(j=>j.id!==id);save();render();},
-  santeView:id=>{santeView=id;render();},
+  santeView:id=>{santeView=id;render();window.scrollTo(0,0);},
   newSuivi:()=>openModal(suiviForm(),"form"),
   editSuivi:id=>openModal(suiviForm(state.sante.suivi.find(x=>x.id===id)),"form"),
   saveSuivi:id=>{
@@ -2390,15 +2583,15 @@ const ACT={
   setSplit:id=>{const [k,v]=id.split("|");state.settings.split[k]=v==="1";save();render();toast(v==="1"?QPARTS[k]+" : onglet à part":QPARTS[k]+" : dans Mon quotidien");},
   askBtn:i=>{const f=askFns[+i];$("#askBar").classList.remove("show");if(f)f();},
   dupSee:()=>{const g=dupGo;modalDirty=false;closeModal();if(!g)return;cur=g.tab;if(g.sv)santeView=g.sv;if(g.qv)qView=g.qv;if(g.filter)taskFilter=g.filter;render();setTimeout(()=>flash(g.el),60);toast("Rien n’a été ajouté en double. Voici « "+(g.name||"")+" ».",4500);},
-  jump:id=>jumpTo(document.getElementById(id)),
+  jump:id=>{const U=state.ui.tocUse=state.ui.tocUse||{};U[id]=(U[id]||0)+1;save();jumpTo(document.getElementById(id));},
   jumpTop:()=>jumpTo(document.getElementById("tocNav")),
   repAdd:()=>{const v=val("repIn");if(!v){toast("Écris d’abord une ligne");return;}const sj=subjVal("repSubj");
-    v.split(/\n+/).map(x=>x.trim()).filter(Boolean).reverse().forEach(t=>{state.rep.unshift({id:uid(),text:t,done:false,date:today(),subj:sj||((guessProj(t)||{}).name)||""});});
-    state.ui.repFold=false;save();render();const i=$("#repIn");if(i)i.focus();},
-  repTick:id=>{const r=state.rep.find(x=>x.id===id);if(!r)return;r.done=!r.done;save();render();if(r.done)toast("Bravo ✓");repCheck();},
-  repDel:id=>{const old=state.rep.slice();state.rep=state.rep.filter(x=>x.id!==id);save();render();ask("Ligne retirée",[["Annuler",()=>{state.rep=old;save();render();},true]],12000);},
+    v.split(/\n+/).map(x=>x.trim()).filter(Boolean).reverse().forEach(t=>{if(sj)learnSubj(t,sj);state.rep.unshift({id:uid(),text:t,done:false,date:today(),subj:sj||autoSubj(t)});});
+    state.ui.repFold=false;save();keepPos("repBlock",render);const i=$("#repIn");if(i)i.focus({preventScroll:true});},
+  repTick:id=>{const r=state.rep.find(x=>x.id===id);if(!r)return;r.done=!r.done;save();keepPos("repBlock",render);if(r.done)toast("Bravo ✓");repCheck();},
+  repDel:id=>{const old=state.rep.slice();state.rep=state.rep.filter(x=>x.id!==id);save();keepPos("repBlock",render);ask("Ligne retirée",[["Annuler",()=>{state.rep=old;save();keepPos("repBlock",render);},true]],12000);},
   repClear:()=>repClear("Reprendre ici effacé"),
-  qView:id=>{qView=id;render();},
+  qView:id=>{qView=id;render();window.scrollTo(0,0);},
   newAst:()=>openModal(astForm(),"form"),
   newAstVet:()=>openModal(astForm({id:"",cat:"Vêtements",title:"",detail:"",kw:""}),"form"),
   editAst:id=>openModal(astForm(state.q.ast.find(x=>x.id===id)),"form"),
@@ -2452,7 +2645,8 @@ const ACT={
     const date=val("wDate")||today(),start=val("wStart"),end=val("wEnd");
     const min=start&&end?minutesBetween(start,end):parseInt(val("wMin"),10)||0;
     if(!min){toast("Indique les heures de début et de fin, ou une durée");return;}
-    const data={date,tool:selVal("wTool",true),cat:catVal("wCat",true),details:val("wDet"),start:start&&end?start:"",end:start&&end?end:"",min};
+    const data={date,tool:selVal("wTool",true),cat:catVal("wCat",true),details:val("wDet"),start:start&&end?start:"",end:start&&end?end:"",min,sec:min*60};
+    if(id){const o=state.work.find(w=>w.id===id);if(o&&o.sec!=null&&o.min===min&&(o.start||"")===data.start&&(o.end||"")===data.end)data.sec=o.sec;}
     let wid=id;
     if(id)Object.assign(state.work.find(w=>w.id===id),data);else{wid=uid();state.work.push(Object.assign({id:wid},data));}
     sortWork(state);save();closeModal();cur="journal";render();flash("w-"+wid);toast("Séance enregistrée");
@@ -2466,16 +2660,16 @@ const ACT={
     if(c.running&&c.start){const n=Date.now();added=recordWork(c,c.start,n);if(added)state.chrono=Object.assign({},c,{start:n,lastSeen:n,gap:0});}
     const d=new Date();const file=VERSION+"Carnet_Pilote_sauvegarde_"+isoOf(d)+"_"+pad(d.getHours())+"h"+pad(d.getMinutes())+".json";
     state.lastExport={date:isoOf(d),time:hm(d),file};save();downloadFile(file,JSON.stringify(state,null,2),"application/json");render();
-    toast(added?"Sauvegarde téléchargée, avec "+fmtDur(added)+" de chrono enregistrées":"Sauvegarde téléchargée",3500);},
+    toast(added?"Sauvegarde téléchargée, avec "+fmtSec(added)+" de chrono enregistrées":"Sauvegarde téléchargée",3500);},
   resetAll:()=>{if(!confirm("Tout effacer ? As-tu bien sauvegardé avant ?"))return;state=fixState(null);startVisit();save();applyTheme();restoreFabs();cur="accueil";render();toast("Carnet remis à zéro");},
   addUrgent:()=>{const v=val("uIn");if(!v)return;state.urgent.unshift({id:uid(),text:v,date:today()});save();pinModal();updateFabs();},
   delUrgent:id=>{state.urgent=state.urgent.filter(u=>u.id!==id);save();pinModal();updateFabs();toast("Réglé ✓");},
   chronoStart:()=>{const n=Date.now();state.chrono={running:true,start:n,lastSeen:n,gap:0,tool:selVal("chTool",true),cat:catVal("chCat",true),details:val("chDet")};save();chronoModal();updateFabs();},
   chronoStop:()=>{const c=state.chrono;const min=recordWork(c,c.start,Date.now());state.chrono={running:false,start:0,lastSeen:0,tool:"",cat:"",details:""};
-    toast(min?fmtDur(min)+" ajoutées à la durée de travail":"Moins d’une minute : non enregistré");save();closeModal();render();},
+    toast(min?fmtSec(min)+" ajoutées à la durée de travail":"Moins d’une minute : non enregistré");save();closeModal();render();},
   chronoNext:()=>{const c=state.chrono;const min=recordWork(c,c.start,Date.now());const n=Date.now();
     state.chrono={running:true,start:n,lastSeen:n,tool:c.tool,cat:"",details:""};save();render();chronoModal();
-    toast(min?fmtDur(min)+" enregistrées. Nouvelle séance lancée":"Nouvelle séance lancée");},
+    toast(min?fmtSec(min)+" enregistrées. Nouvelle séance lancée":"Nouvelle séance lancée");},
   pomoFresh:()=>{Object.assign(state.pomo,{skips:0,next:1});startWork(1);},
   pomoResume:()=>{const p=state.pomo;const c=p.phase==="pause"?(p.long?1:(p.cycle||0)+1):(p.next||1);p.skips=0;startWork(c);},
   pomoSkip:()=>{const p=state.pomo;p.skips=(p.skips||0)+1;startWork(nextCycle());},
@@ -2484,7 +2678,7 @@ const ACT={
   goto:i=>{const h=lastHits[+i];if(!h)return;clearSearch();
     if(h.pin){pinModal();return;}
     if(h.fn){ACT[h.fn](h.arg);return;}
-    cur=h.tab;if(h.filter)taskFilter=h.filter;if(h.view)santeView=h.view;if(h.qv)qView=h.qv;render();
+    cur=h.tab;useTab(cur);if(h.filter)taskFilter=h.filter;if(h.view)santeView=h.view;if(h.qv)qView=h.qv;render();
     if(h.later){const d=$("#ideasBlock details");if(d)d.open=true;}
     if(h.id)setTimeout(()=>flash(h.id),60);else window.scrollTo(0,0);},
   toggleStar:id=>{const p=state.projects.find(x=>x.id===id);if(!p||p.status==="termine")return;
@@ -2541,13 +2735,13 @@ const ACT={
   skillView:id=>{const y=window.scrollY;state.skillView=id;save();render();window.scrollTo(0,y);},
   /* V18 */
   repEdit:id=>{const r=state.rep.find(x=>x.id===id);if(r)openModal(repForm(r),"form");},
-  saveRep:id=>{const r=state.rep.find(x=>x.id===id);if(!r)return;const t=val("rpText");if(!t){toast("La ligne est vide");return;}r.text=t;r.subj=subjVal("rpSubj")||((guessProj(t)||{}).name)||"";save();closeModal();render();flash("r-"+id);toast("Ligne modifiée");},
-  repGroup:v=>{state.ui.repGroup=v==="1";save();render();},
-  repFold:()=>{state.ui.repFold=!state.ui.repFold;save();render();},
-  repSelStart:()=>{repSelMode=true;repSel=new Set();const y=window.scrollY;render();window.scrollTo(0,y);toast("Coche ⬜ les lignes à donner à Claude");},
-  repSelEnd:()=>{repSelMode=false;repSel.clear();const y=window.scrollY;render();window.scrollTo(0,y);},
-  repPick:id=>{if(repSel.has(id))repSel.delete(id);else repSel.add(id);const y=window.scrollY;render();window.scrollTo(0,y);},
-  repPickAll:()=>{const all=state.rep.every(r=>repSel.has(r.id));repSel=new Set(all?[]:state.rep.map(r=>r.id));const y=window.scrollY;render();window.scrollTo(0,y);},
+  saveRep:id=>{const r=state.rep.find(x=>x.id===id);if(!r)return;const t=val("rpText");if(!t){toast("La ligne est vide");return;}const sj=subjVal("rpSubj");if(sj)learnSubj(t,sj);r.text=t;r.subj=sj||autoSubj(t);save();closeModal();render();flash("r-"+id);toast("Ligne modifiée");},
+  repGroup:v=>{state.ui.repGroup=v==="1";save();keepPos("repBlock",render);},
+  repFold:()=>{state.ui.repFold=!state.ui.repFold;save();keepPos("repBlock",render);},
+  repSelStart:()=>{repSelMode=true;repSel=new Set();state.ui.repFold=false;keepPos("repBlock",render);toast("Coche ⬜ les lignes à donner à Claude");},
+  repSelEnd:()=>{repSelMode=false;repSel.clear();keepPos("repBlock",render);},
+  repPick:id=>{if(repSel.has(id))repSel.delete(id);else repSel.add(id);keepPos("r-"+id,render);},
+  repPickAll:()=>{const all=state.rep.every(r=>repSel.has(r.id));repSel=new Set(all?[]:state.rep.map(r=>r.id));keepPos("repBlock",render);},
   repCopy:()=>{const L=state.rep.filter(r=>repSel.has(r.id));if(!L.length){toast("Choisis au moins une ligne ⬜");return;}
     const t=REP_PROMPT+"\n"+L.map(r=>"- "+r.text+(r.subj?" ("+r.subj+")":"")).join("\n");const o=$("#repOut");if(o){o.hidden=false;o.value=t;}copyText(t,"#repOut","Copié : colle-le à Claude (projet Carnet Pilote)");},
   ideaEdit:id=>{const i=state.ideas.find(x=>x.id===id);if(i)openModal(ideaForm(i),"form");},
@@ -2569,7 +2763,29 @@ const ACT={
   alertDel:id=>{if(!confirm("Supprimer ce rappel important ?"))return;state.alerts=state.alerts.filter(a=>a.id!==id);save();pinModal();},
   alertShow:id=>{const a=state.alerts.find(x=>x.id===id);if(a){closeModal();showAlert(a);}},
   alertSeen:()=>$("#alertPop").classList.remove("show"),
-  alertDone:id=>{const old=state.alerts.slice();state.alerts=state.alerts.filter(a=>a.id!==id);save();$("#alertPop").classList.remove("show");ask("Rappel retiré ✓",[["Annuler",()=>{state.alerts=old;save();},true]],12000);},
+  alertDone:id=>{alertUndo=state.alerts.slice();state.alerts=state.alerts.filter(a=>a.id!==id);save();updateFabs();
+    const c=$("#alertPop .card");
+    if(c){c.innerHTML=`<div style="font-size:2.4rem" aria-hidden="true">✓</div><h2 id="alertTitle">Rappel retiré</h2><p>C’est noté comme réglé.</p><div class="bar" style="justify-content:center;margin:16px 0 0"><button class="btn ghost" data-act="alertUndo">↩ Annuler</button><button class="btn" data-act="alertSeen">Fermer</button></div>`;}
+    else ask("Rappel retiré ✓",[["Annuler",()=>ACT.alertUndo(),true]],12000);
+    clearTimeout(alertUndoT);alertUndoT=setTimeout(()=>{$("#alertPop").classList.remove("show");alertUndo=null;},15000);},
+  alertUndo:()=>{if(alertUndo){state.alerts=alertUndo;alertUndo=null;save();}clearTimeout(alertUndoT);$("#alertPop").classList.remove("show");toast("Rappel remis ↩");},
+  /* V19 */
+  hsGo:(d,b)=>{const w=b.closest(".hs"),el=w&&w.firstElementChild;if(!el)return;el.scrollBy({left:(+d)*Math.max(120,el.clientWidth*.8),behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});setTimeout(()=>hsUpd(w),450);},
+  pbFold:id=>{const F=state.ui.pbFold=state.ui.pbFold||{};F[id]=!F[id];save();render();},
+  tabsAll:()=>{tabsAll=!tabsAll;renderTabs();setHdr();},
+  tocAll:(n,b)=>{tocOpen=!tocOpen;const q=$("#tocQ");if(q)q.value="";tocFilter();if(b){b.setAttribute("aria-expanded",tocOpen);b.textContent=tocOpen?"▴ Seulement les plus utilisées":"▸ Toutes les parties ("+n+")";}},
+  setTabMode:v=>{state.settings.tabMode=v;tabsAll=false;save();render();toast(v==="adapt"?"Barre adaptée à ta phase":"Tous les onglets dans la barre");},
+  setTabCount:id=>{const [ph,v]=id.split("|");state.settings.tabCount[ph]=+v;tabsAll=false;save();render();toast("Réglage enregistré");},
+  tabUseReset:()=>{if(!confirm("Remettre à zéro tes onglets les plus utilisés ?"))return;state.ui.tabUse={};save();render();toast("Remis à zéro");},
+  contactsOpen:()=>{modalDirty=false;contactsModal();},
+  contactNew:()=>openModal(contactForm(),"form"),
+  contactEdit:id=>{const c=state.contacts.find(x=>x.id===id);if(c)openModal(contactForm(c),"form");},
+  saveContact:id=>{const name=val("ctName"),phone=val("ctPhone");if(!name){toast("Écris le nom");return;}if(!telOf(phone)){toast("Écris le numéro de téléphone");return;}
+    const data={name,phone,rel:selVal("ctRel",true),note:val("ctNote")};
+    if(id)Object.assign(state.contacts.find(c=>c.id===id),data);else state.contacts.push(Object.assign({id:uid()},data));
+    save();contactsModal();toast("Contact enregistré");},
+  contactDel:id=>{const c=state.contacts.find(x=>x.id===id);if(!c||!confirm("Supprimer « "+c.name+" » de tes contacts d’urgence ?"))return;state.contacts=state.contacts.filter(x=>x.id!==id);save();contactsModal();},
+  contactUp:id=>{const a=state.contacts,i=a.findIndex(x=>x.id===id);if(i>0){[a[i-1],a[i]]=[a[i],a[i-1]];save();contactsModal();}},
   alertTest:()=>{if(!alertCheck(true))toast("Aucun rappel important pour l’instant (📌 pour en ajouter)",4000);},
   qNew:k=>openModal(QFORM[k](),"form"),
   qEdit:id=>{const [k,i]=id.split("|");const x=state.q[k].find(e=>e.id===i);if(x)openModal(QFORM[k](x),"form");},
@@ -2609,6 +2825,7 @@ document.addEventListener("input",e=>{
   const t=e.target;
   if(modalKind==="form"&&t.closest&&t.closest("#sheet"))modalDirty=true;
   if(t.id==="q")doSearch(t.value);
+  if(t.id==="tocQ")tocFilter();
 
   if(state.chrono.running&&["chDet","chToolO","chCatO"].includes(t.id))syncChronoField(t.id);
   if(t.id==="sInt"){const o=$("#sIntOut");if(o)o.textContent=t.value+" / 10";}
@@ -2686,7 +2903,8 @@ document.addEventListener("visibilitychange",()=>{
   if(c.running&&c.lastSeen&&now-c.lastSeen>30*60000){recordWork(c,c.start,c.lastSeen);startVisit();render();toast("Bon retour ! Nouvelle visite lancée.");}
 });
 window.addEventListener("pagehide",()=>{if(state.chrono.running){state.chrono.lastSeen=Date.now();save();}});
-window.addEventListener("resize",()=>{Object.keys(FABS).forEach(k=>{const p=state.fabPos[k];if(p)placeFab(document.getElementById(k),p.x,p.y);});});
+window.addEventListener("resize",()=>{Object.keys(FABS).forEach(k=>{const p=state.fabPos[k];if(p)placeFab(document.getElementById(k),p.x,p.y);});setHdr();document.querySelectorAll(".hs").forEach(hsUpd);recenter();});
+window.addEventListener("scroll",()=>{if(window.scrollX)recenter();},{passive:true});
 
 /* ---------- écran du mot de passe ---------- */
 let lastAct=Date.now(),hiddenAt=0;
@@ -2726,12 +2944,15 @@ if(window.visualViewport){visualViewport.addEventListener("resize",fitViewport);
 
 /* ---------- démarrage ---------- */
 applyTheme();applyPhase();
+if(!state.seed19){try{state.rep.forEach(r=>{if(!r.subj)r.subj=autoSubj(r.text);});}catch(e){}state.seed19=true;save();}
 bootChrono();
 Object.keys(FABS).forEach(k=>setupFab(document.getElementById(k)));
 restoreFabs();
 render();
 setInterval(tick,1000);
 setupLock();
+window.addEventListener("load",()=>{setHdr();recenter();document.querySelectorAll(".hs").forEach(hsUpd);});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{setHdr();document.querySelectorAll(".hs").forEach(hsUpd);});
 if(merged)setTimeout(()=>toast("Bon retour ! Ta séance continue."),600);
 </script>
 <script>
