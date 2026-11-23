@@ -119,6 +119,7 @@ label{display:block;font-size:.92rem;color:var(--muted);margin:12px 0 4px}
 .badge{display:inline-block;font-size:.8rem;font-weight:400;padding:1px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);margin-left:6px;vertical-align:middle}
 .badge.goal{background:var(--sun-soft);color:var(--ink)}
 .warn{background:var(--sun-soft);border-radius:10px;padding:10px 12px;margin:10px 0}
+.okbox{background:var(--accent-soft);color:var(--ink);border-radius:10px;padding:10px 12px;margin:10px 0}
 .phead{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
 .phead h3{margin:0}
 .tools{display:flex;flex-wrap:wrap;justify-content:flex-end}
@@ -312,6 +313,10 @@ html.locked #repSelBar{visibility:hidden}
 #qnote .x{border:0;background:none;font-size:1.3rem;color:var(--muted);cursor:pointer;padding:2px 8px}
 #qnote .bar{margin:8px 0 0}
 html.locked #qnote{visibility:hidden}
+/* V24 : le bouton ✍️ et la note rapide restent au-dessus des fiches ouvertes (fond sombre) */
+#fabNote{z-index:105}
+#qnote{z-index:106}
+body.modal-open #fabNote:not(.on){opacity:.45}
 textarea.grow-ta{resize:none;overflow-y:auto;min-height:46px;line-height:1.4}
 .repadd textarea{flex:1 1 220px;width:auto}
 .btn.rec,.icon.rec{background:var(--red)!important;border-color:var(--red)!important;color:#fff!important}
@@ -331,6 +336,10 @@ textarea.grow-ta{resize:none;overflow-y:auto;min-height:46px;line-height:1.4}
 /* ---------- V21 ---------- */
 .murow{flex-wrap:wrap}.murow>.grow{flex:1 1 100%}.murow .mubtns{display:flex;gap:6px;align-items:center;flex-wrap:wrap;width:100%}.murow .mubtns .end{margin-left:auto}
 .autobar{display:flex;justify-content:flex-end;margin-top:6px}.autobar .btn{padding:6px 12px}
+.autobar{flex-wrap:wrap;gap:6px;align-items:center}
+.tsort{display:flex;align-items:center;gap:8px;margin:0;color:var(--muted);font-size:.85rem;flex:1 1 100%;min-width:0}
+.tsort span{white-space:nowrap}
+.tsort select{flex:1 1 auto;min-width:0;width:auto;margin:0;padding:6px 8px;font-size:.9rem}
 .tico{display:grid;grid-template-columns:repeat(2,34px);flex:0 0 auto;align-content:start}
 .tico .icon{min-width:34px;min-height:32px;padding:2px;font-size:1rem}
 img.zoom{cursor:zoom-in}
@@ -425,7 +434,7 @@ html.locked #lock{display:flex;position:fixed;inset:0;z-index:200;background:var
 
 <script>
 "use strict";
-const VERSION="V23",VERSION_DATE="22/11/2026",FILE_NAME="V23Carnet_Pilote.html";
+const VERSION="V24",VERSION_DATE="23/11/2026",FILE_NAME="V24Carnet_Pilote.html";
 const MOT_DE_PASSE_DE_DEPART="1234"; // 🔒 Mot de passe provisoire : change "1234" ici (garde les guillemets). Ensuite, change-le plutôt dans ⚙️ Paramètres.
 const LOGO="data:image/png;base64,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";
 const KEY="carnetPilotageYasmine";
@@ -453,7 +462,7 @@ const TABS={
   q_apa:{label:"🏃‍♀️ APA perso",kw:"apa activité physique adaptée sport marche étirements exercice séance bouger"},
   q_pret:{label:"🤝 Prêté",kw:"prêté prêt prêter emprunt emprunté emprunter rendre rendu objet livre"},
   q_abo:{label:"💳 Abonnements",kw:"abonnement abonnements ia claude chatgpt gemini tarif prix renouvellement fin essai gratuit résilier résilié rappel"},
-  taches:{label:"Tâches & RDV",kw:"ordre flèches priorité prioritaire monter descendre rendez-vous rdv santé médecin administratif démarche papiers rappel agenda calendrier échéance urgent reconversion emploi candidature famille objectifs loisirs à faire"},
+  taches:{label:"Tâches & RDV",kw:"trier tri récentes plus récent date d’ajout notification ordre flèches priorité prioritaire monter descendre rendez-vous rdv santé médecin administratif démarche papiers rappel agenda calendrier échéance urgent reconversion emploi candidature famille objectifs loisirs à faire"},
   fichiers:{label:"Fichiers Drive",kw:"lien drive dossier document pdf google classement où rangé fichier nom"},
   victoires:{label:"🏆 Mes victoires",kw:"victoires avancées statistiques médaille médailles coupe progrès fait à faire bravo réussite souvenir souvenirs randonnée passé photo"},
   journal:{label:"Journal de bord",kw:"date tableau calendrier historique activité suivi durée travail chronomètre temps heures outils catégorie visite"},
@@ -544,11 +553,21 @@ const TIPS=[
   {e:"🔍",t:"Une photo trop petite ? Touche-la : elle s’ouvre en grand."},
   {e:"🐇",t:"Pendant une lecture à voix haute, change la vitesse dans la barre noire : 🐢 Lente, Normale, 🐇 Rapide. La lecture reprend à la phrase en cours."},
   {e:"🎶",t:"Pendant une pause du minuteur 🍅 : « 🎶 Ouvrir Musicolet », puis choisis ta playlist."},
-  {e:"↕️",t:"Une tâche à voir en premier, tous domaines confondus ? Tâches & RDV, filtre « Une seule liste », puis flèches ↑ ↓. « ↺ Ordre automatique », toujours en haut, remet le classement par couleur."},
+  {e:"↕️",t:"Une tâche à voir en premier, tous domaines confondus ? Tâches & RDV, filtre « Une seule liste », puis flèches ↑ ↓. « ↺ Ordre automatique », toujours en haut, remet ton tri choisi."},
+  {e:"🪟",t:"La pause du minuteur arrive pendant que tu remplis une fiche ? Réponds à la fenêtre : ta fiche revient, telle que tu l’avais laissée."},
+  {e:"↕️",t:"Tâches & RDV : « Trier par », en haut, pour voir les plus récentes, ou l’échéance la plus proche, en premier."},
   {e:"🧪",t:"Pendant un test, tu peux fermer la fiche pour aller vérifier dans un onglet. Le bouton « 🧪 Retour au test », en bas à gauche, te ramène à ton étape."},
   {e:"🗂️",t:"Une partie trop longue ? Touche son titre pour la replier : le carnet s’en souvient."}
 ];
-const TESTS={V23:[
+const TESTS={V24:[
+  {k:"Fiche › fenêtre par-dessus",t:"Dans Paramètres, mets la pause du minuteur à 1 minute. Lance le minuteur 🍅, puis touche « Pause maintenant ». Tout de suite, ouvre une nouvelle tâche et commence à la remplir. Après 1 minute, la fenêtre « Pause terminée » s’affiche par-dessus. Touche « J’arrête pour aujourd’hui » : ta fiche revient, avec tout ce que tu avais écrit. Remets ensuite ta durée de pause."},
+  {k:"Fiche › reprendre",t:"Ouvre une nouvelle tâche, écris un titre, puis ferme complètement le carnet sans enregistrer. Rouvre-le : le carnet te propose de reprendre ta fiche. Touche « Reprendre » : ton titre est là."},
+  {k:"Note rapide ✍️ sur une fiche",t:"Ouvre une fiche, par exemple un nouveau projet, et écris quelque chose. Le bouton ✍️ reste visible, pâle, par-dessus. Touche-le, dicte une idée, puis Ajouter et Fermer. Ta fiche est toujours là, remplie. L’idée est en haut de Reprendre ici."},
+  {k:"Tâches & RDV › Trier par",t:"Dans Tâches & RDV, en haut, choisis « Trier par » : Plus récentes d’abord. Les tâches à la date la plus lointaine sont en haut. Essaie aussi « Échéance la plus proche » et « Date d’ajout »."},
+  {k:"Agenda › 2 rappels",t:"Sur un RDV avec une date et une heure, touche 🔔 et ouvre le fichier dans ton agenda. Regarde les rappels de l’événement : 1 jour avant et 2 heures avant, en notification. Fais pareil avec une tâche : 1 jour avant et 10 minutes avant. Note si ton agenda a mis d’autres rappels."},
+  {k:"Paramètres › fin du test",t:"Termine toutes les étapes avec ✓ ou ✗. Dans Paramètres, Historique des versions : le bouton du test a disparu. À la place : « ✅ Toutes les étapes sont vérifiées », avec la date."},
+  {k:"Fiche de test",t:"Pour finir : touche « Résumé ». Vérifie que toutes tes remarques y sont, puis « 📋 Copier mes remarques », et colle-les à Claude pour la V25."}
+],V23:[
   {k:"Remarques dictées",t:"Ici, touche le 🎤 à côté de la case remarque et dicte une phrase. Touche « Suivante », puis « ‹ Précédente » : ta phrase est toujours là. Elle apparaîtra aussi dans le Résumé."},
   {k:"Tâches & RDV › une seule liste",t:"Dans Tâches & RDV, touche le filtre « Une seule liste ». Toutes tes tâches sont mélangées. Touche ↑ sur une tâche d’un domaine, sous une tâche d’un autre domaine : elle passe au-dessus."},
   {k:"Tâches & RDV › Ordre automatique",t:"Descends tout en bas de Tâches & RDV, puis remonte tout en haut : « ↺ Ordre automatique » reste toujours visible sous les filtres. Touche-le : le classement par couleur revient."},
@@ -600,6 +619,15 @@ const TESTS={V23:[
   {k:"Fiche de test",t:"Pour finir : touche « Résumé », puis « 📋 Copier mes remarques », et colle-les à Claude pour la V21."}
 ]};
 const HISTORY=[
+  {v:"V24",d:"23/11/2026",n:[
+    "🪟 <b>Fiches protégées</b> : une fenêtre qui s’ouvre toute seule (pause, fin de pause du minuteur 🍅) se pose <b>par-dessus</b> ta fiche. Quand tu as répondu, ta fiche revient telle que tu l’avais laissée.",
+    "✍️ <b>Note rapide sur une fiche</b> : le bouton ✍️ reste visible (pâle) par-dessus les fiches. Tu dictes ton idée dans « Reprendre ici » sans fermer ta fiche.",
+    "↕️ <b>Tâches & RDV</b> : nouveau menu <b>« Trier par »</b>. Au départ : les plus récentes en haut. Aussi : échéance la plus proche, date d’ajout, couleur, ou « Autre… » pour ton ordre avec ↑ ↓.",
+    "🔔 <b>Agenda</b> : la cloche met <b>2 rappels en notification</b>, sans e-mail. Tâche : 1 jour et 10 min avant. RDV : 1 jour et 2 h avant. Sans heure : la veille et le jour même à 9 h.",
+    "📝 <b>Fiche pas terminée</b> : ce que tu remplis est gardé au fur et à mesure. Si le carnet se ferme ou se verrouille avant « Enregistrer », il te propose de reprendre ta fiche (sauf les photos).",
+    "🔒 Le verrouillage automatique ne ferme plus ta fiche : elle t’attend derrière le mot de passe.",
+    "🧪 <b>Fin du test</b> : quand toutes les étapes sont faites, le bouton « Tester » disparaît. À la place : « ✅ Toutes les étapes sont vérifiées », avec la date.",
+    "🧠 Aide-mémoire : rappels Google Agenda sans e-mail, et nouvelles règles pour tous les carnets."]},
   {v:"V23",d:"22/11/2026",n:[
     "🧪 <b>Fiche de test</b> : une remarque <b>dictée avec 🎤</b> est maintenant bien enregistrée. Avant, elle se perdait en changeant d’étape, et manquait dans « Copier mes remarques » et « Reprendre ici ».",
     "📋 <b>Tâches & RDV</b> : nouveau filtre <b>« Une seule liste »</b>. Tous les domaines mélangés : ↑ ↓ fait passer une tâche au-dessus de n’importe quelle autre.",
@@ -761,7 +789,7 @@ function defaults(){
     name:"Yas",mode:"neutre",reprendre:"",ideas:[],lastExport:null,lastRestore:null,seeded:false,
     skills:[],targets:[],jobFrom:"",jobBase:"both",skillType:"",lastSkills:null,snooze:{},aidePins:["routine","maj"],
     contacts:[],subjLearn:{},calls:[],wins:[],music:[],asstQ:[],claudeReq:[],tests:{},
-    settings:{asstName:"Mon assistant",asstIcon:"perso",asstRead:true,kwExtra:{},testAuto:true,tabMode:"adapt",tabCount:{haute:8,neutre:8,basse:5},lockOn:true,lockPass:MOT_DE_PASSE_DE_DEPART,lockHint:"",theme:"auto",noteFreq:"parfois",noteRead:false,pomoNudge:30,bioId:"",rate:"normale",split:{ast:false,alim:false,vet:false,beaute:false,apa:false,pret:false,abo:false},tabNames:{},mergeGap:15,pomo:25,pause:5,longPause:20,cycles:4,remSave:7,remSkills:15,lockIdle:10,lockAway:2,tabOrder:Object.keys(TABS)},
+    settings:{asstName:"Mon assistant",asstIcon:"perso",asstRead:true,kwExtra:{},testAuto:true,taskSortBy:"recent",tabMode:"adapt",tabCount:{haute:8,neutre:8,basse:5},lockOn:true,lockPass:MOT_DE_PASSE_DE_DEPART,lockHint:"",theme:"auto",noteFreq:"parfois",noteRead:false,pomoNudge:30,bioId:"",rate:"normale",split:{ast:false,alim:false,vet:false,beaute:false,apa:false,pret:false,abo:false},tabNames:{},mergeGap:15,pomo:25,pause:5,longPause:20,cycles:4,remSave:7,remSkills:15,lockIdle:10,lockAway:2,tabOrder:Object.keys(TABS)},
     lists:Object.assign({cats:DEF_CATS.slice(),tools:DEF_TOOLS.slice()},JSON.parse(JSON.stringify(DEF_SANTE)),JSON.parse(JSON.stringify(DEF_Q)),JSON.parse(JSON.stringify(DEF_T))),
     sante:{suivi:[],ess:[],choix:[],mic:[],micDays:{}},seenVersion:"",rep:[],
     q:{ast:[],alim:[],vet:[],bags:[],beaute:[],apa:[],pret:[],abo:[],memo:{},memoMange:{}},
@@ -1153,7 +1181,19 @@ function taskGroup(l,sec){
 }
 /* V21 : ordre perso des tâches (au-delà du code couleur) */
 const URK={rouge:0,orange:1,vert:2};
-function taskSort(a,b){return (URK[a.urg]??2)-(URK[b.urg]??2)||((a.date||"9999")+(a.time||"")).localeCompare((b.date||"9999")+(b.time||""));}
+function taskSortColor(a,b){return (URK[a.urg]??2)-(URK[b.urg]??2)||((a.date||"9999")+(a.time||"")).localeCompare((b.date||"9999")+(b.time||""));}
+/* V24 : « Trier par » (les plus récentes en haut par défaut) */
+const TSORT={recent:"Plus récentes d’abord",proche:"Échéance la plus proche",ajout:"Date d’ajout (dernières ajoutées en haut)",couleur:"Couleur (urgent d’abord)",perso:"Autre… : mon ordre avec ↑ ↓"};
+const tsMode=()=>TSORT[state.settings.taskSortBy]?state.settings.taskSortBy:"recent";
+const tIdx=t=>state.tasks.indexOf(t);
+const tWhen=t=>t.date?t.date+(t.time||"00:00"):(t.created||"")+"00:00";
+function taskSort(a,b){const m=tsMode();
+  if(m==="couleur")return taskSortColor(a,b);
+  if(m==="proche")return ((a.date||"9999")+(a.time||"")).localeCompare((b.date||"9999")+(b.time||""))||tIdx(b)-tIdx(a);
+  if(m==="recent")return tWhen(b).localeCompare(tWhen(a))||tIdx(b)-tIdx(a);
+  return (b.created||"").localeCompare(a.created||"")||tIdx(b)-tIdx(a);}
+const tsLabel=()=>({recent:"les plus récentes en haut",proche:"échéance la plus proche en haut",ajout:"dernières ajoutées en haut",couleur:"par couleur, puis par date",perso:"dernières ajoutées en haut, puis ton ordre ↑ ↓"})[tsMode()];
+function tsSelect(){return `<label class="tsort"><span>Trier par</span><select id="tSortBy" aria-label="Trier les tâches">${Object.keys(TSORT).map(k=>`<option value="${k}" ${tsMode()===k?"selected":""}>${TSORT[k]}</option>`).join("")}</select></label>`;}
 /* V22 : chaque domaine garde son propre ordre ; une tâche nouvelle arrive en haut */
 function secList(sec){const O=state.tasks.filter(t=>!t.done);const l=(sec==="__all"?O.slice():sec==="__suivre"?O.filter(t=>t.follow):sec==="__nodom"?O.filter(t=>!tDoms(t).length):O.filter(t=>tDoms(t).includes(sec))).sort(taskSort);
   const ord=(state.taskOrd||{})[sec];if(!Array.isArray(ord)||!ord.length)return l;
@@ -1171,7 +1211,7 @@ function vTaches(){
   const sorter=taskSort;
   let body;
   if(f==="Faites"){
-    const l=state.tasks.filter(t=>t.done);
+    const l=state.tasks.filter(t=>t.done).sort(taskSort);
     body=l.length?`<section class="block">${taskGroup(l)}</section>`:empty("Aucune tâche terminée pour l’instant.");
   }else if(f===ONE_LIST){
     const l=secList("__all");
@@ -1190,9 +1230,9 @@ function vTaches(){
     body=body||empty("Aucune tâche en cours. Ajoute ta prochaine démarche ou ton prochain RDV.");
   }
   return `<h2>Tâches & RDV</h2>
-  <p class="lead">Pastille : vert peut attendre, orange bientôt, rouge urgent. Touche-la pour changer. La cloche 🔔 ajoute la date à l’agenda de ton téléphone, avec rappel la veille. Une tâche à plusieurs domaines apparaît dans chacun. Les tâches du même nom sont regroupées (×2…). ↑ ↓ : mettre une tâche en priorité, même au-dessus des urgentes. Pour la monter au-dessus d’une tâche d’un autre domaine, choisis « Une seule liste ». « ↺ Ordre automatique », toujours visible en haut, remet le classement par couleur.</p>
+  <p class="lead">Pastille : vert peut attendre, orange bientôt, rouge urgent. Touche-la pour changer. La cloche 🔔 ajoute la date à ton agenda, avec 2 rappels en notification, sans e-mail : tâche 1 jour et 10 min avant, RDV 1 jour et 2 h avant. Une tâche à plusieurs domaines apparaît dans chacun. Les tâches du même nom sont regroupées (×2…). ↑ ↓ : mettre une tâche en priorité, même au-dessus des urgentes. Pour la monter au-dessus d’une tâche d’un autre domaine, choisis « Une seule liste ». « Trier par », en haut : les plus récentes d’abord, l’échéance la plus proche, la date d’ajout, la couleur, ou ton ordre à toi. « ↺ Ordre automatique » efface tes ↑ ↓ et remet ce tri.</p>
   <div class="bar"><button class="btn" data-act="newTask">Ajouter une tâche ou un RDV</button></div>
-  <div class="stick noread"><div class="chips" role="group" aria-label="Filtrer par domaine">${chips}</div>${f!=="Faites"?`<div class="autobar"><button class="btn ghost spk" data-act="taskAuto" data-id="__view">↺ Ordre automatique</button></div>`:""}</div>${body}`;
+  <div class="stick noread"><div class="chips" role="group" aria-label="Filtrer par domaine">${chips}</div><div class="autobar">${tsSelect()}${f!=="Faites"?`<button class="btn ghost spk" data-act="taskAuto" data-id="__view">↺ Ordre automatique</button>`:""}</div></div>${body}`;
 }
 function taskForm(t){
   t=t||{id:"",title:"",domains:[state.lists.domains.includes(taskFilter)?taskFilter:"Administratif"],type:"tache",date:"",time:"",urg:"vert",project:"",micro:false,note:"",follow:"",followNote:""};
@@ -1225,6 +1265,7 @@ function downloadFile(name,content,type){
   a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href),3000);
 }
+function icsWhen(t){return t.time?(t.type==="rdv"?"1 jour avant et 2 h avant":"1 jour avant et 10 min avant"):"la veille et le jour même à 9 h";}
 function makeIcs(t,atTime){
   const stamp=new Date().toISOString().replace(/[-:]/g,"").split(".")[0]+"Z";
   const L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Carnet Pilote//FR","BEGIN:VEVENT","UID:"+t.id+"@carnet-pilote","DTSTAMP:"+stamp];
@@ -1232,7 +1273,8 @@ function makeIcs(t,atTime){
   else{const s=new Date(t.date+"T12:00:00");const e=new Date(s.getTime()+86400000);L.push("DTSTART;VALUE=DATE:"+t.date.replace(/-/g,""),"DTEND;VALUE=DATE:"+icsLocal(e).slice(0,8));}
   L.push("SUMMARY:"+icsEsc(t.title),"DESCRIPTION:"+icsEsc([t.domain,t.note].filter(Boolean).join(" : ")));
   const alarm=tr=>L.push("BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+icsEsc(t.title),"TRIGGER:"+tr,"END:VALARM");
-  if(atTime)alarm("PT0M");else{alarm("-P1D");if(t.time)alarm("-PT1H");}
+  /* V24 : 2 rappels en notification (jamais d’e-mail) : tâche 1 jour + 10 min avant ; RDV 1 jour + 2 h avant ; sans heure : la veille à 9 h et le jour même à 9 h */
+  if(atTime)alarm("PT0M");else if(t.time){alarm("-P1D");alarm(t.type==="rdv"?"-PT2H":"-PT10M");}else{alarm("-PT15H");alarm("PT9H");}
   L.push("END:VEVENT","END:VCALENDAR");
   return L.join("\r\n");
 }
@@ -1332,23 +1374,26 @@ function hideNote(){$("#note").classList.remove("show");}
 function histParams(){const h=HISTORY[0],li=x=>`<li>${x}</li>`,rest=h.n.slice(3),tl=testLeft();
   return `<div class="histv"><b>${h.v}</b> <span class="meta">du ${h.d}</span><ul>${h.n.slice(0,3).map(li).join("")}</ul>
   ${rest.length?`<details class="fold2" data-fold="histCur" ${foldOpen("histCur",false)?"open":""}><summary>Toutes les nouveautés de la ${h.v} (${h.n.length})</summary><ul>${rest.map(li).join("")}</ul></details>`:""}</div>
-  <div class="bar" style="margin:10px 0 0">${TESTS[VERSION]?`<button class="btn" data-act="testOpen">🧪 Tester la ${VERSION}${tl?" ("+pl(tl,"étape")+" à faire)":" ✓"}</button>`:""}<button class="btn ghost" data-act="showNews">Revoir les nouveautés</button></div>
+  ${TESTS[VERSION]&&!tl?testDoneBox():""}
+  <div class="bar" style="margin:10px 0 0">${TESTS[VERSION]&&tl?`<button class="btn" data-act="testOpen">🧪 Tester la ${VERSION} (${pl(tl,"étape")} à faire)</button>`:""}${TESTS[VERSION]&&!tl?`<button class="btn ghost spk" data-act="testSum">Revoir mes remarques</button>`:""}<button class="btn ghost" data-act="showNews">Revoir les nouveautés</button></div>
   <details class="fold2" data-fold="histOld" ${foldOpen("histOld",false)?"open":""}><summary>Versions précédentes (V1 à ${HISTORY[1].v})</summary>
   ${HISTORY.slice(1).map(v=>`<details class="fold2"><summary>${v.v} · du ${v.d} (${pl(v.n.length,"nouveauté")})</summary><ul>${v.n.map(li).join("")}</ul></details>`).join("")}
   <p class="meta">Les versions 1 à 6 sont résumées à partir de tes notes de conception.</p></details>`;}
+/* V24 : test fini = message clair, plus de bouton « Tester » */
+function testDoneBox(){const T=(state.tests||{})[VERSION]||{};return `<div class="okbox">✅ <b>Toutes les étapes sont vérifiées</b>${T.doneAt?` <span class="meta">(le ${fmt(T.doneAt)})</span>`:""}</div>`;}
 function histHtml(list){return list.map(h=>`<div class="histv"><b>${h.v}</b> <span class="meta">du ${h.d}</span><ul>${h.n.map(x=>`<li>${x}</li>`).join("")}</ul></div>`).join("");}
 function newsModal(){
   const h=HISTORY[0];
   openModal(`<span class="em" aria-hidden="true">🎉</span><h2 class="center">Nouveautés de la ${h.v}</h2><p class="center meta">du ${h.d}</p><div class="center">${spkBtn("newsBody")}</div><div id="newsBody">${histHtml([h]).replace('<div class="histv"><b>'+h.v+'</b> <span class="meta">du '+h.d+'</span>','<div class="histv">')}</div>
   <p class="meta">Tu retrouves cette liste, et toutes les versions d’avant, dans ⚙️ Paramètres, Historique des versions.</p>
-  ${TESTS[VERSION]?`<p class="meta">🧪 Une fiche de test t’attend : elle se lit à voix haute, étape par étape, et garde tes remarques pour la version suivante.</p>`:""}
-  <div class="actions">${TESTS[VERSION]?`<button class="btn ghost" data-act="testOpen">🧪 Tester les nouveautés</button>`:""}<button class="btn" data-act="closeModal">C’est noté</button></div>`,"news");
+  ${TESTS[VERSION]&&testLeft()?`<p class="meta">🧪 Une fiche de test t’attend : elle se lit à voix haute, étape par étape, et garde tes remarques pour la version suivante.</p>`:""}
+  <div class="actions">${TESTS[VERSION]&&testLeft()?`<button class="btn ghost" data-act="testOpen">🧪 Tester les nouveautés</button>`:""}<button class="btn" data-act="closeModal">C’est noté</button></div>`,"news");
 }
 let opened=false;
 function onOpen(){
   if(opened)return;opened=true;
   if(state.seenVersion!==VERSION){state.seenVersion=VERSION;save();setTimeout(newsModal,300);return;}
-  setTimeout(()=>{if(alertCheck())return;if(testLeft()){testPop();return;}const f=NOTE_FREQ[state.settings.noteFreq]||NOTE_FREQ.parfois;if(Math.random()<f[1])showNote();},800);
+  setTimeout(()=>{if(draftOffer())return;if(alertCheck())return;if(testLeft()){testPop();return;}const f=NOTE_FREQ[state.settings.noteFreq]||NOTE_FREQ.parfois;if(Math.random()<f[1])showNote();},800);
 }
 
 /* ---------- V15 : voix, barre de question, doublons, sommaire ---------- */
@@ -2070,7 +2115,7 @@ function testText(){testFlush();const L=TESTS[VERSION]||[],T=testRun();const out
   const ok=L.filter((s,i)=>(T.notes[i]||{}).r==="ok").length;
   return "Remarques après les tests de la "+VERSION+" :\n"+(out.length?out.join("\n"):"- Tout fonctionne, rien à signaler.")+"\n("+ok+" étape"+(ok>1?"s":"")+" sur "+L.length+" validée"+(ok>1?"s":"")+")";}
 function testSummary(){testFlush();speakStop();const L=TESTS[VERSION]||[],T=testRun();
-  openModal(`<h2>🧪 Résumé du test de la ${VERSION}</h2>
+  openModal(`<h2>🧪 Résumé du test de la ${VERSION}</h2>${testLeft()?"":testDoneBox()}
   ${L.map((s,i)=>{const n=T.notes[i]||{};return `<div class="row"><span class="pic">${n.r==="ok"?"✓":n.r==="ko"?"✗":"·"}</span><div class="grow"><b>${esc(s.k)}</b>${n.note?`<div class="meta">${esc(n.note)}</div>`:""}</div><button class="icon" data-act="testGo" data-id="${i}" aria-label="Revoir l’étape">↩</button></div>`;}).join("")}
   <label for="testOut">Texte pour Claude</label><textarea id="testOut" rows="5" readonly>${esc(testText())}</textarea>
   <div class="bar"><button class="btn" data-act="testCopy">📋 Copier mes remarques</button><button class="btn ghost" data-act="testToRep">☑️ Mettre dans Reprendre ici</button></div>
@@ -2519,6 +2564,12 @@ FICHE DE TEST : à chaque nouvelle version, une fiche de test lue à voix haute,
 
 ASSISTANT ET DEMANDER À CLAUDE : un petit assistant sans IA (questions toutes prêtes et « Autre… », réponses tirées de mes données et lues à voix haute, nom et visage modifiables), et un bouton « Demander à Claude » qui prépare la demande avec le contexte, la copie et ouvre Claude.
 
+FICHES PROTÉGÉES : une fenêtre qui s’ouvre toute seule (minuteur, rappel, alarme) se pose par-dessus une fiche en cours, sans l’effacer ; la fiche revient telle quelle. Ce qui est rempli est gardé au fur et à mesure, et proposé à la réouverture si le carnet s’est fermé avant « Enregistrer ». Le bouton de note rapide reste visible par-dessus les fiches.
+
+TRI ET RAPPELS : les listes ont un menu « Trier par » (les plus récentes en haut par défaut, et « Autre… »). Les fichiers agenda mettent des rappels en notification, jamais par e-mail.
+
+FIN DE TEST : quand toutes les étapes de la fiche de test sont faites, le bouton du test disparaît et laisse « Toutes les étapes sont vérifiées », avec la date.
+
 STYLE : minimaliste et épuré, tableaux et fiches mémo plutôt que texte dense, pictogrammes seulement là où ils aident. Boutons flottants déplaçables au doigt (chronomètre, minuteur, notes urgentes). Explications simples, étape par étape.
 
 MON PROFIL : pragmatique, méthodique, minimaliste. Des tâches courtes, des pauses, et des repères pour reprendre facilement après une phase basse.
@@ -2692,6 +2743,15 @@ function vAide(){
     <p><b>🎶 Musicolet :</b> le bouton ouvre sa page Play Store ; touche « Ouvrir ». Une page web ne peut pas faire mieux sur Android. Astuce : icône ou widget Musicolet sur l’écran d’accueil.</p>
     <p><b>🔊 Vitesse :</b> change-la pendant la lecture, elle repart au mot en cours.</p>
     <p class="meta">🧪 Tes remarques dictées avec 🎤 dans la fiche de test sont bien gardées.</p>`],
+  ["v24","🪟 Fiches protégées, tri et rappels (V24)",`<p><b>🪟 Fiches protégées :</b> si la pause du minuteur 🍅 arrive pendant que tu remplis une fiche, sa fenêtre s’affiche par-dessus. Réponds (pause, reprendre…) : ta fiche revient, remplie. Si le carnet se ferme avant « Enregistrer », il te propose de la reprendre à la prochaine ouverture.</p>
+    <p><b>✍️ Note rapide :</b> le bouton ✍️ reste visible sur les fiches. Tu le déplaces au doigt s’il cache une case.</p>
+    <p><b>↕️ Trier par :</b> dans Tâches & RDV, en haut. Changer de tri remplace ton ordre fait avec ↑ ↓ (le carnet te demande d’abord). « Autre… » : tu ranges toi-même avec ↑ ↓.</p>
+    <p><b>🔔 Rappels Google Agenda, sans e-mail :</b> le fichier de la cloche contient 2 rappels. Google Agenda ne les garde pas toujours : règle-le une fois pour toutes.</p>
+    <ol class="steps"><li><span>Ouvre <b>Google Agenda</b>, puis ☰ (en haut à gauche) et <b>Paramètres</b>.</span></li>
+    <li><span>Touche ton agenda (ton adresse Gmail), puis <b>Notifications par défaut</b>.</span></li>
+    <li><span>Garde seulement des <b>Notifications</b> : 1 jour avant, et 10 minutes avant. Supprime toute ligne « E-mail ».</span></li>
+    <li><span>Pour les RDV, change le 2ᵉ rappel en <b>2 heures</b> dans l’événement, si Google ne l’a pas gardé.</span></li></ol>
+    <p class="meta">Un vrai lien direct entre le carnet et Google Agenda est possible plus tard, mais demande un compte Google Cloud et une connexion : à voir si tu en as besoin.</p>`],
   ["regles","📋 Mes règles pour tout nouveau carnet HTML",`<p>Avant de créer un nouveau carnet (ou de faire évoluer celui de Kay Numérique), copie ce texte et colle-le à Claude <b>avant</b> de décrire ton besoin.</p>
     <label for="basePrompt">Règles communes à copier</label><textarea id="basePrompt" rows="8" readonly>${esc(BASE_PROMPT)}</textarea>
     <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="copyBase">Copier les règles</button></div>`],
@@ -2835,9 +2895,36 @@ function vParams0(){
 
 /* ---------- fenêtre (modale) ---------- */
 let modalKind="";
+/* V24 : une fenêtre automatique (pause, fin de pause…) se pose PAR-DESSUS une fiche en cours, sans l’effacer */
+let modalStash=null;
+function stashForm(){const m=$("#modal");if(modalStash||modalKind!=="form"||!m.classList.contains("open"))return;
+  if(rec){try{rec.stop();}catch(e){}}
+  const sh=$("#sheet"),frag=document.createDocumentFragment();const sc=sh.scrollTop;draftSaveNow();
+  while(sh.firstChild)frag.appendChild(sh.firstChild);
+  modalStash={frag,kind:modalKind,dirty:modalDirty,scroll:sc,idea:pendingIdea};}
+function unstashForm(){const S=modalStash;if(!S)return false;modalStash=null;
+  const sh=$("#sheet");sh.innerHTML="";sh.appendChild(S.frag);modalKind=S.kind;modalDirty=S.dirty;pendingIdea=S.idea;
+  const m=$("#modal");m.classList.add("open");m.classList.remove("mid");m.setAttribute("aria-hidden","false");
+  sh.scrollTop=S.scroll;hsArrows(sh);recenter();testBackSync();return true;}
+function openOver(html,kind){stashForm();openModal(html,kind);}
+/* V24 : brouillon de la fiche en cours, gardé au fur et à mesure (si le carnet se ferme avant « Enregistrer ») */
+const DRAFT_KEY="carnetPilote_ficheEnCours";let draftT=0;
+function draftSaveNow(){clearTimeout(draftT);if(modalKind!=="form"||!modalDirty)return;const sh=$("#sheet");if(!sh||!sh.firstChild)return;
+  const vals={};sh.querySelectorAll("input,textarea,select").forEach(el=>{if(!el.id||el.type==="file"||el.type==="password")return;vals[el.id]=(el.type==="checkbox"||el.type==="radio")?{c:el.checked}:{v:el.value};});
+  const h=sh.querySelector("h2");try{localStorage.setItem(DRAFT_KEY,JSON.stringify({t:Date.now(),html:sh.innerHTML,vals,title:h?h.textContent:"Ma fiche"}));}catch(e){}}
+function draftSave(){clearTimeout(draftT);draftT=setTimeout(draftSaveNow,700);}
+function draftClear(){clearTimeout(draftT);try{localStorage.removeItem(DRAFT_KEY);}catch(e){}}
+function draftGet(){try{const d=JSON.parse(localStorage.getItem(DRAFT_KEY)||"null");if(d&&d.html&&Date.now()-d.t<7*86400000)return d;}catch(e){}return null;}
+function draftRestore(){const d=draftGet();if(!d)return;openModal(d.html,"form");const sh=$("#sheet");
+  Object.keys(d.vals||{}).forEach(id=>{let el=null;try{el=sh.querySelector("#"+CSS.escape(id));}catch(e){}if(!el)return;const x=d.vals[id];if("c" in x)el.checked=x.c;else el.value=x.v;});
+  sh.querySelectorAll("select[data-kind]").forEach(x=>{const o=document.getElementById(x.id+"O");if(o)o.hidden=x.value!=="__autre";});
+  sh.querySelectorAll(".chips input[value='__autre']").forEach(x=>{const b=x.closest(".chips"),o=b&&b.id&&document.getElementById(b.id+"O");if(o)o.hidden=!x.checked;});
+  sh.querySelectorAll("textarea.grow-ta").forEach(autoGrow);modalDirty=true;toast("Ta fiche est revenue, telle que tu l’avais laissée",3500);}
+function draftOffer(){const d=draftGet();if(!d)return false;
+  ask(`📝 Une fiche n’était pas terminée : « ${esc(d.title)} ». La reprendre ?`,[["Reprendre",()=>draftRestore(),true],["Non, l’effacer",()=>draftClear()]],30000);return true;}
 function openModal(html,kind){$("#sheet").innerHTML=html;modalKind=kind||"";const m=$("#modal");m.classList.add("open");m.setAttribute("aria-hidden","false");
   m.classList.toggle("mid",["chrono","pomo","start","pause","news"].includes(modalKind));
-  modalDirty=false;$("#sheet").scrollTop=0;hsArrows($("#sheet"));recenter();testBackSync();}
+  modalDirty=false;$("#sheet").scrollTop=0;hsArrows($("#sheet"));recenter();testBackSync();document.body.classList.add("modal-open");}
 let modalDirty=false;
 function tryClose(){
   if(modalDirty&&modalKind==="form"&&$("#modal").classList.contains("open")){
@@ -2848,7 +2935,7 @@ function tryClose(){
     $("#leaveWarn").scrollIntoView({block:"nearest"});return;}
   closeModal();
 }
-function closeModal(){const m=$("#modal");m.classList.remove("open");m.setAttribute("aria-hidden","true");modalKind="";pendingIdea=null;testBackSync();}
+function closeModal(){if(modalKind==="form")draftClear();if(unstashForm())return;document.body.classList.remove("modal-open");const m=$("#modal");m.classList.remove("open");m.setAttribute("aria-hidden","true");modalKind="";pendingIdea=null;testBackSync();}
 /* V22 : bouton « Retour au test », visible dans tous les onglets pendant un test */
 function testBackSync(){const b=document.getElementById("testBack");if(!b||!state)return;const T=(state.tests||{})[VERSION];
   const on=!!(TESTS[VERSION]&&T&&T.back&&testLeft()>0&&!(modalKind==="test"&&$("#modal").classList.contains("open")));b.hidden=!on;
@@ -2956,7 +3043,7 @@ function startPause(alert){
   Object.assign(p,{phase:"pause",end:Date.now()+(long?state.settings.longPause:state.settings.pause)*60000,emoji:m.e,long});save();
   if(alert){
     beep();const left=2-(p.skips||0);
-    openModal(`<span class="em" aria-hidden="true">${m.e}</span><h2 class="center">${long?"C’est l’heure de la grande pause":"C’est l’heure de la pause"}</h2>${dots(p.cycle)}
+    openOver(`<span class="em" aria-hidden="true">${m.e}</span><h2 class="center">${long?"C’est l’heure de la grande pause":"C’est l’heure de la pause"}</h2>${dots(p.cycle)}
     <p class="center">${m.t}</p><p class="center meta">Et pense à boire un verre d’eau 💧</p>
     ${(()=>{const mu=state.music.length&&Math.random()<0.5?pick(state.music):null;return mu?`<p class="center">🎵 Une musique pour la pause ? <b>${esc(mu.title)}</b></p><div class="bar" style="justify-content:center">${musicPlayBtn(mu)}<button class="btn ghost spk" data-act="musicOpen">🎵 Autre musique</button>${isMusico(mu)?"":musicoBtn(false)}</div>`:`<div class="bar" style="justify-content:center">${musicoBtn(true)}<button class="btn ghost spk" data-act="musicOpen">🎵 Choisir une musique</button></div>`;})()}
     ${left>0?`<p class="center meta">Pas prête ? Tu peux passer la pause (encore ${left} fois).</p>`:`<div class="warn center">Tu as déjà passé 2 pauses de suite : celle-ci est obligatoire 🌿</div>`}
@@ -2967,7 +3054,7 @@ function startPause(alert){
 function endPause(){
   const p=state.pomo,next=p.long?1:(p.cycle||0)+1;
   Object.assign(p,{phase:"off",end:0,emoji:"",skips:0,next});save();beep();
-  openModal(`<span class="em" aria-hidden="true">🌤</span><h2 class="center">${p.long?"Grande pause terminée":"Pause terminée"}</h2>
+  openOver(`<span class="em" aria-hidden="true">🌤</span><h2 class="center">${p.long?"Grande pause terminée":"Pause terminée"}</h2>
   <p class="center">Comment tu te sens ? Tu peux reprendre, ou t’arrêter là pour aujourd’hui.</p>
   <div class="actions" style="justify-content:center"><button class="btn ghost" data-act="closeModal">J’arrête pour aujourd’hui</button><button class="btn" data-act="pomoResume">Reprendre (cycle ${next} sur ${nCycles()})</button></div>`,"pause");
   updateFabs();
@@ -3152,7 +3239,7 @@ const ACT={
   delTask:id=>{const t=state.tasks.find(x=>x.id===id);if(!t||!confirm("Supprimer « "+t.title+" » ?"))return;state.tasks=state.tasks.filter(x=>x.id!==id);state.projects.forEach(p=>{if(p.nextTask===id)p.nextTask="";});save();render();},
   toggleTask:id=>{const t=state.tasks.find(x=>x.id===id);if(!t)return;t.done=!t.done;t.doneDate=t.done?today():"";save();render();if(t.done)toast("Bravo, c’est fait ✓");},
   cycleUrg:id=>{const t=state.tasks.find(x=>x.id===id);if(!t)return;t.urg=URG[(URG.indexOf(t.urg)+1)%3];save();render();flash("t-"+id);toast(URG_LABEL[t.urg]);},
-  ics:id=>{const t=state.tasks.find(x=>x.id===id);if(!t||!t.date)return;downloadFile("agenda-"+t.date+".ics",makeIcs(t),"text/calendar");toast("Fichier agenda téléchargé : ouvre-le pour l’ajouter");},
+  ics:id=>{const t=state.tasks.find(x=>x.id===id);if(!t||!t.date)return;downloadFile("agenda-"+t.date+".ics",makeIcs(t),"text/calendar");toast("Fichier agenda téléchargé, avec 2 rappels ("+icsWhen(t)+"). Ouvre-le pour l’ajouter.",4500);},
   filter:id=>{taskFilter=id;const was=window.scrollY;render();
     const n=$("#main .stick .chip.on");if(n){const C=n.parentElement;C.scrollLeft=Math.max(0,n.offsetLeft-C.offsetLeft-40);hsUpd(C.parentElement);}
     const b=$("#main .bar"),hd=document.querySelector("header");if(b&&hd){const target=b.getBoundingClientRect().bottom+window.scrollY-hd.getBoundingClientRect().bottom;if(was>target)window.scrollTo(0,Math.max(0,target));}},
@@ -3519,7 +3606,7 @@ const ACT={
   testBackOff:()=>{const T=testRun();T.back=false;save();testBackSync();toast("Bouton caché. Pour reprendre : Paramètres, « 🧪 Tester la "+VERSION+" »",4000);},
   testRead:()=>{const L=TESTS[VERSION]||[],s=L[testRun().i||0];if(s)speak(s.k+". "+s.t);},
   testMark:id=>{testFlush();const [i,r]=id.split("|"),T=testRun(),n=T.notes[i]=T.notes[i]||{};n.r=n.r===r?"":r;save();document.querySelectorAll("#testRes button").forEach(b=>b.classList.toggle("on",b.dataset.id===i+"|"+n.r));
-    if(n.r&&!testLeft())toast("Toutes les étapes sont testées ✓ La fenêtre de test ne reviendra plus.",5000);},
+    if(n.r&&!testLeft()){if(!T.doneAt){T.doneAt=today();save();}toast("✅ Toutes les étapes sont vérifiées. Le test s’efface : la fenêtre ne reviendra plus.",5000);}},
   testGo:i=>{testFlush();speakStop();testModal(+i);},
   testSum:()=>testSummary(),
   testCopy:()=>copyText(testText(),"#testOut","Remarques copiées : colle-les à Claude"),
@@ -3543,8 +3630,8 @@ const ACT={
     const a=q(),top=a?a.getBoundingClientRect().top:null;render();const el=q();if(el&&top!==null)window.scrollBy(0,el.getBoundingClientRect().top-top);
     if(el){const g=el.closest("details");if(g)g.open=true;el.classList.remove("flash");void el.offsetWidth;el.classList.add("flash");}},
   taskAuto:sec=>{const L=sec==="__view"?viewSecs():[sec];const had=L.some(k=>Array.isArray((state.taskOrd||{})[k])&&state.taskOrd[k].length);
-    if(!had){toast("C’est déjà l’ordre automatique : par couleur, puis par date");return;}
-    L.forEach(k=>{if(state.taskOrd)delete state.taskOrd[k];});save();keepPos("main",render);toast("Ordre automatique : par couleur, puis par date");},
+    if(!had){toast("C’est déjà l’ordre automatique : "+tsLabel());return;}
+    L.forEach(k=>{if(state.taskOrd)delete state.taskOrd[k];});save();keepPos("main",render);toast("Ordre automatique : "+tsLabel());},
   fileMove:x=>{const [id,d]=x.split("|"),g=state.ui.fileGroup||"domaine",F=state.files,f=F.find(z=>z.id===id);if(!f)return;const k=fileKey(f,g),sib=F.filter(z=>fileKey(z,g)===k),i=sib.indexOf(f),j=i+(+d);
     if(j<0||j>=sib.length){toast(+d<0?"Déjà tout en haut":"Déjà tout en bas");return;}const a=F.indexOf(sib[i]),b=F.indexOf(sib[j]);[F[a],F[b]]=[F[b],F[a]];save();keepPos("f-"+id,render);},
   photoZoom:(cap,b)=>{const src=b&&b.getAttribute("src");if(!src)return;const p=$("#photoBox");
@@ -3569,7 +3656,7 @@ document.addEventListener("click",e=>{
 });
 document.addEventListener("input",e=>{
   const t=e.target;
-  if(modalKind==="form"&&t.closest&&t.closest("#sheet"))modalDirty=true;
+  if(modalKind==="form"&&t.closest&&t.closest("#sheet")){modalDirty=true;draftSave();}
   if(t.id==="q")doSearch(t.value);
   if(t.id==="tocQ")tocFilter();
   if(t.classList&&t.classList.contains("grow-ta"))autoGrow(t);
@@ -3591,7 +3678,11 @@ document.addEventListener("change",e=>{
     if(t.value==="__autre"){const o=document.getElementById(box.id+"O");if(o){o.hidden=!t.checked;if(t.checked)o.focus();}}
     if(state.chrono.running&&box.id==="chCat")syncChronoField("chCat");
   }
-  if(modalKind==="form"&&t.closest&&t.closest("#sheet"))modalDirty=true;
+  if(modalKind==="form"&&t.closest&&t.closest("#sheet")){modalDirty=true;draftSave();}
+  if(t.id==="tSortBy"){const v=t.value,had=Object.values(state.taskOrd||{}).some(a=>Array.isArray(a)&&a.length);
+    if(had&&v!=="perso"&&!confirm("Ton ordre fait avec ↑ ↓ sera remplacé par ce tri : « "+TSORT[v]+" ». Continuer ?")){t.value=tsMode();return;}
+    if(v!=="perso")state.taskOrd={};state.settings.taskSortBy=v;save();keepPos("main",render);
+    toast(v==="perso"?"Range tes tâches avec ↑ ↓ : le carnet garde ton ordre. Les nouvelles arrivent en haut.":"Tri : "+TSORT[v],4000);return;}
   if(t.id==="fKind"){const w=$("#fCarnetWrap");if(w)w.hidden=t.value!=="Carnet";}
   if(t.id==="mangeMemo"&&mangeCur){state.q.memoMange[mangeCur]=t.value.trim();save();toast("Fiche mémo enregistrée");}
   if(t.id==="sorsMemo"&&sorsCur){state.q.memo[sorsCur]=t.value.trim();save();toast("Fiche mémo enregistrée");}
@@ -3644,7 +3735,7 @@ document.addEventListener("change",e=>{
 document.addEventListener("toggle",e=>{const d=e.target;if(d&&d.dataset&&d.dataset.fold){state.ui.fold=state.ui.fold||{};state.ui.fold[d.dataset.fold]=d.open;save();}if(d&&d.dataset&&d.dataset.sp){state.ui.foldSp[d.dataset.sp]=!d.open;save();}if(d&&d.dataset&&d.dataset.fg!==undefined){state.ui.fileFold[d.dataset.fg]=!d.open;save();}if(d&&d.id==="jobRech")jobSec.r=d.open;if(d&&d.id==="jobRes")jobSec.s=d.open;if(d&&d.classList&&d.classList.contains("jobc")){const id=d.dataset.job;if(d.open){jobOpen.add(id);jobOpen.delete("x"+id);}else{jobOpen.delete(id);jobOpen.add("x"+id);}}},true);
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"&&$("#photoBox").classList.contains("show")){$("#photoBox").classList.remove("show");return;}
-  if(e.key==="Escape"){speakStop();if($("#qnote").classList.contains("show")&&!$("#modal").classList.contains("open"))qnClose();else if($("#alertPop").classList.contains("show"))$("#alertPop").classList.remove("show");else if($("#modal").classList.contains("open"))tryClose();else if($("#note").classList.contains("show"))hideNote();else{$("#results").hidden=true;}}
+  if(e.key==="Escape"){speakStop();if($("#qnote").classList.contains("show"))qnClose();else if($("#alertPop").classList.contains("show"))$("#alertPop").classList.remove("show");else if($("#modal").classList.contains("open"))tryClose();else if($("#note").classList.contains("show"))hideNote();else{$("#results").hidden=true;}}
   if(e.key==="Enter"&&!e.shiftKey){
     if(e.target.id==="ideaIn"){e.preventDefault();ACT.addIdea();}
     else if(e.target.id==="uIn"){e.preventDefault();ACT.addUrgent();}
@@ -3655,10 +3746,10 @@ document.addEventListener("keydown",e=>{
 });
 document.addEventListener("visibilitychange",()=>{
   const c=state.chrono,now=Date.now();
-  if(document.hidden){if(c.running){c.lastSeen=now;save();}return;}
+  if(document.hidden){draftSaveNow();if(c.running){c.lastSeen=now;save();}return;}
   if(c.running&&c.lastSeen&&now-c.lastSeen>30*60000){recordWork(c,c.start,c.lastSeen);startVisit();render();toast("Bon retour ! Nouvelle visite lancée.");}
 });
-window.addEventListener("pagehide",()=>{if(state.chrono.running){state.chrono.lastSeen=Date.now();save();}});
+window.addEventListener("pagehide",()=>{draftSaveNow();if(state.chrono.running){state.chrono.lastSeen=Date.now();save();}});
 window.addEventListener("resize",()=>{Object.keys(FABS).forEach(k=>{const p=state.fabPos[k];if(p)placeFab(document.getElementById(k),p.x,p.y);});setHdr();document.querySelectorAll(".hs").forEach(hsUpd);recenter();});
 window.addEventListener("scroll",()=>{if(window.scrollX)recenter();},{passive:true});
 
@@ -3666,7 +3757,7 @@ window.addEventListener("scroll",()=>{if(window.scrollX)recenter();},{passive:tr
 let lastAct=Date.now(),hiddenAt=0;
 function canLock(){const s=state.settings;return !!(s.lockOn&&s.lockPass);}
 const isLocked=()=>document.documentElement.classList.contains("locked");
-function lockNow(){if(!canLock()||isLocked())return;closeModal();clearSearch();document.documentElement.classList.add("locked");setupLock();}
+function lockNow(){if(!canLock()||isLocked())return;if(modalKind==="form"||modalStash)draftSaveNow();else closeModal();clearSearch();document.documentElement.classList.add("locked");setupLock();}
 ["pointerdown","keydown","input"].forEach(ev=>document.addEventListener(ev,()=>{lastAct=Date.now();},true));
 window.addEventListener("scroll",()=>{lastAct=Date.now();},{passive:true});
 setInterval(()=>{const m=state.settings.lockIdle;if(m>0&&canLock()&&!isLocked()&&!document.hidden&&Date.now()-lastAct>=m*60000)lockNow();},5000);
