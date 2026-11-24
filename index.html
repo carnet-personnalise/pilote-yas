@@ -119,6 +119,13 @@ label{display:block;font-size:.92rem;color:var(--muted);margin:12px 0 4px}
 .badge{display:inline-block;font-size:.8rem;font-weight:400;padding:1px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);margin-left:6px;vertical-align:middle}
 .badge.goal{background:var(--sun-soft);color:var(--ink)}
 .warn{background:var(--sun-soft);border-radius:10px;padding:10px 12px;margin:10px 0}
+.ktime{font-size:3rem;font-weight:700;text-align:center;margin:14px 0 4px;font-variant-numeric:tabular-nums;color:var(--accent)}
+.kph{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}.kph img{width:84px;height:84px;object-fit:cover;border-radius:10px}
+.kpv{display:inline-flex;flex-direction:column;gap:4px;margin:0 8px 8px 0}.kpv img{width:90px;height:90px;object-fit:cover;border-radius:10px}
+.row.kine.done b{color:var(--muted)}
+.clrow{display:flex;gap:10px;align-items:flex-start;cursor:pointer}.clrow .meta{display:block}
+#cpDays[hidden]{display:none}
+.daycard .row{padding:6px 0}
 .okbox{background:var(--accent-soft);color:var(--ink);border-radius:10px;padding:10px 12px;margin:10px 0}
 .phead{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
 .phead h3{margin:0}
@@ -201,6 +208,7 @@ html.locked #note{visibility:hidden}
 #speakBar,#askBar{position:fixed;left:14px;right:92px;max-width:420px;z-index:95;background:var(--ink);color:var(--bg);border-radius:14px;padding:10px 12px;box-shadow:0 8px 20px rgba(0,0,0,.25);display:none;align-items:center;gap:8px;flex-wrap:wrap}
 #speakBar{bottom:calc(150px + env(safe-area-inset-bottom,0px))}
 #askBar{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+#askBar{z-index:104} /* V25 : visible aussi par-dessus une fenêtre ouverte */
 #speakBar.show,#askBar.show{display:flex}
 #speakBar span,#askBar span{flex:1 1 160px;font-size:.93rem}
 #speakBar button,#askBar button{border:1px solid var(--bg);background:transparent;color:var(--bg);border-radius:999px;padding:6px 12px;font:inherit;font-size:.88rem;cursor:pointer}
@@ -434,7 +442,7 @@ html.locked #lock{display:flex;position:fixed;inset:0;z-index:200;background:var
 
 <script>
 "use strict";
-const VERSION="V24",VERSION_DATE="23/11/2026",FILE_NAME="V24Carnet_Pilote.html";
+const VERSION="V25",VERSION_DATE="23/11/2026",FILE_NAME="V25Carnet_Pilote.html";
 const MOT_DE_PASSE_DE_DEPART="1234"; // 🔒 Mot de passe provisoire : change "1234" ici (garde les guillemets). Ensuite, change-le plutôt dans ⚙️ Paramètres.
 const LOGO="data:image/png;base64,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";
 const KEY="carnetPilotageYasmine";
@@ -453,7 +461,7 @@ const TABS={
   accueil:{label:"Accueil",kw:"début maison reprendre priorités aujourd’hui mode phase haute basse neutre idées boîte bonjour plus tard ambiance couleur urgence urgences contact contacts appeler téléphone sos secours assistant robot demander claude"},
   projets:{label:"Projets",kw:"priorité pourquoi actif attente pause classer livre mémoire objectif bilan terminé"},
   loisirs:{label:"Loisirs",kw:"loisir crochet sac lecture livre détente plaisir créatif ressource hobby objectif"},
-  sante:{label:"Santé",kw:"santé douleur douleurs dos épaule nuque suivi symptôme intensité soulage soulager essentiels chaufferette lotion pommade objet astuce rangé placard bien-être médical calendrier mictionnel miction uriner urine vessie fuite fuites protection boisson boissons bilan urodynamique appel appels appelé urgence"},
+  sante:{label:"Santé",kw:"santé kiné kine kinésithérapeute exercices exercice rééducation bruxisme mâchoire douleur douleurs dos épaule nuque suivi symptôme intensité soulage soulager essentiels chaufferette lotion pommade objet astuce rangé placard bien-être médical calendrier mictionnel miction uriner urine vessie fuite fuites protection boisson boissons bilan urodynamique appel appels appelé urgence"},
   quotidien:{label:"🏠 Quotidien",kw:"mon quotidien astuces astuce alimentation aliments alicaments courses vêtements habits sac valise départ rangé où placard maison filigrane beauté apa prêt emprunt abonnements"},
   q_ast:{label:"💡 Astuces",kw:"astuces astuce validée efficace méthode filigrane papiers"},
   q_alim:{label:"🥗 Alimentation",kw:"alimentation aliments alicaments courses toujours à la maison préférés boissons"},
@@ -464,6 +472,7 @@ const TABS={
   q_abo:{label:"💳 Abonnements",kw:"abonnement abonnements ia claude chatgpt gemini tarif prix renouvellement fin essai gratuit résilier résilié rappel"},
   taches:{label:"Tâches & RDV",kw:"trier tri récentes plus récent date d’ajout notification ordre flèches priorité prioritaire monter descendre rendez-vous rdv santé médecin administratif démarche papiers rappel agenda calendrier échéance urgent reconversion emploi candidature famille objectifs loisirs à faire"},
   fichiers:{label:"Fichiers Drive",kw:"lien drive dossier document pdf google classement où rangé fichier nom"},
+  carnets:{label:"🔗 Mes carnets",kw:"carnets carnet mes autres carnets lien adresse github ouvrir application bilan couple"},
   victoires:{label:"🏆 Mes victoires",kw:"victoires avancées statistiques médaille médailles coupe progrès fait à faire bravo réussite souvenir souvenirs randonnée passé photo"},
   journal:{label:"Journal de bord",kw:"date tableau calendrier historique activité suivi durée travail chronomètre temps heures outils catégorie visite"},
   competences:{label:"Compétences",kw:"compétences cv recrutement savoir-faire savoir-être point bilan valoriser métier synthèse détail doublon regrouper dates copier liste étiquette technique transversale transférable métier visé reconversion comparer"},
@@ -486,6 +495,7 @@ const PAUSE_MSG=[
 ];
 const SEED_WORK=[];
 const DEF_SANTE={
+  kineGrp:["Dos","Bruxisme (mâchoire)"],kineMoment:["Matin","Midi","Après-midi","Soir","Au coucher"],
   loc:["Dos (haut)","Bas du dos","Nuque","Épaule droite","Épaule gauche","Tête","Bras / mains","Jambes / pieds"],
   painType:["Musculaire","Nerveuse","Je ne sais pas"],
   trig:["Stress","Fatigue","Posture","Effort physique","Longtemps assise","Météo","Je ne sais pas"],
@@ -543,7 +553,9 @@ const TIPS=[
   {e:"🆕",t:"Nouveau carnet ou nouveau projet ? Repars des instructions d’un projet qui marche bien, et de « Mes règles pour tout nouveau carnet » (Aide-mémoire)."},
   {e:"🆘",t:"Tes contacts en cas de problème sont sur l’Accueil : bouton « 🆘 Mes contacts d’urgence », puis 📞 Appeler."},
   {e:"☰",t:"La barre des onglets montre tes onglets les plus utilisés, moins en phase basse. « ☰ +… » pour tout voir. Réglable dans Paramètres."},
-  {e:"🧪",t:"Après un test, pense à effacer les éléments de test (✎ ou 🗑)."},
+  {e:"🧪",t:"Pendant un test, nomme ce que tu crées « test à effacer » : le carnet te proposera de tout effacer d’un coup."},
+  {e:"🧘",t:"Santé › Kiné : note chaque exercice après ta séance, avec une photo ou le lien de la vidéo. Le carnet te le rappelle les jours choisis."},
+  {e:"🔗",t:"Onglet 🔗 Mes carnets : colle l’adresse de tes autres carnets en ligne pour les ouvrir d’un toucher."},
   {e:"🤖",t:"Le petit robot en haut, c’est ton assistant : « Qu’est-ce que je fais aujourd’hui ? », « Où j’en étais ? »… Tu peux changer son nom et son visage dans Paramètres."},
   {e:"💬",t:"« Demander à Claude » (Accueil ou robot) : le carnet prépare ta question avec ce qu’il sait, la copie, et ouvre Claude. Tu n’as plus qu’à coller."},
   {e:"✍️",t:"Une idée en plein milieu d’un onglet ? Le bouton flottant ✍️ : tu dictes, ça part dans « Reprendre ici », sans quitter ta page."},
@@ -559,7 +571,16 @@ const TIPS=[
   {e:"🧪",t:"Pendant un test, tu peux fermer la fiche pour aller vérifier dans un onglet. Le bouton « 🧪 Retour au test », en bas à gauche, te ramène à ton étape."},
   {e:"🗂️",t:"Une partie trop longue ? Touche son titre pour la replier : le carnet s’en souvient."}
 ];
-const TESTS={V24:[
+const TESTS={V25:[
+  {k:"Nettoyage « à effacer »",t:"Crée 3 éléments avec « test à effacer » dans leur nom : une tâche, une ligne de Reprendre ici, et un exercice kiné (ou un projet). Ferme puis rouvre le carnet : une barre te propose de les voir. Touche « Voir » : les 3 sont dans la liste, avec leur onglet. Décoche-en un, puis « Effacer les cochés ». Touche « Annuler » dans la barre : tout revient. Recommence et efface pour de bon."},
+  {k:"Nettoyage › Paramètres",t:"Dans Paramètres, « Nettoyer le carnet » : touche « Chercher ». S’il reste un élément, touche « Garder » : il ne te sera plus proposé."},
+  {k:"Santé › Kiné",t:"Dans Santé, partie 🧘 Kiné, touche « Ajouter un exercice ». Remplis le nom, « Pour quoi ? » (Dos, Bruxisme ou Autre…), les jours dont aujourd’hui, le moment, les répétitions, une photo et un lien YouTube. Enregistre : l’exercice est rangé dans son groupe, avec la photo et le bouton ▶️ Vidéo."},
+  {k:"Kiné › Démarrer et Fait",t:"Sur ton exercice, touche ⏱ Démarrer : lance, compte quelques répétitions, puis « ✓ Fini, c’est fait ». L’exercice passe en « Fait aujourd’hui », et le rappel du jour disparaît de l’Accueil."},
+  {k:"Kiné › groupes et agenda",t:"Touche « ✎ Kiné et date » sur un groupe et note le nom de ta kiné. Essaie les boutons de groupe en haut (Tous, Dos…). Touche 🔔 Agenda : l’événement revient chaque semaine, les jours choisis (règle les notifications à la main)."},
+  {k:"Mes carnets",t:"Ouvre l’onglet 🔗 Mes carnets. Ajoute le Bilan du couple sans adresse : il affiche « Fichier à ouvrir dans Chrome ». Ajoute un carnet en ligne, par exemple carnet-personnalise.github.io/lea : le bouton « Ouvrir » l’ouvre."},
+  {k:"Rappel du bilan du couple",t:"Dans Paramètres, « Rappel du bilan du couple », choisis le jour d’aujourd’hui. Va dans l’Accueil : le rappel 💞 est dans « Rappels du jour ». Touche « ✓ C’est fait » : il disparaît. Remets ensuite dimanche."},
+  {k:"Fiche de test",t:"Pour finir : touche « Résumé ». Vérifie que toutes tes remarques y sont, puis « 📋 Copier mes remarques », et colle-les à Claude pour la V26."}
+],V24:[
   {k:"Fiche › fenêtre par-dessus",t:"Dans Paramètres, mets la pause du minuteur à 1 minute. Lance le minuteur 🍅, puis touche « Pause maintenant ». Tout de suite, ouvre une nouvelle tâche et commence à la remplir. Après 1 minute, la fenêtre « Pause terminée » s’affiche par-dessus. Touche « J’arrête pour aujourd’hui » : ta fiche revient, avec tout ce que tu avais écrit. Remets ensuite ta durée de pause."},
   {k:"Fiche › reprendre",t:"Ouvre une nouvelle tâche, écris un titre, puis ferme complètement le carnet sans enregistrer. Rouvre-le : le carnet te propose de reprendre ta fiche. Touche « Reprendre » : ton titre est là."},
   {k:"Note rapide ✍️ sur une fiche",t:"Ouvre une fiche, par exemple un nouveau projet, et écris quelque chose. Le bouton ✍️ reste visible, pâle, par-dessus. Touche-le, dicte une idée, puis Ajouter et Fermer. Ta fiche est toujours là, remplie. L’idée est en haut de Reprendre ici."},
@@ -619,6 +640,13 @@ const TESTS={V24:[
   {k:"Fiche de test",t:"Pour finir : touche « Résumé », puis « 📋 Copier mes remarques », et colle-les à Claude pour la V21."}
 ]};
 const HISTORY=[
+  {v:"V25",d:"23/11/2026",n:[
+    "🧹 <b>Nettoyage</b> : le carnet retrouve partout ce qui est marqué « à effacer » (ex. « test à effacer ») et te propose de l’effacer, à l’ouverture ou dans les Paramètres. Une copie de secours permet d’annuler.",
+    "🧘 <b>Santé › Kiné</b> : une fiche par exercice, rangée par « pour quoi » (Dos, Bruxisme, Autre…), avec photos, lien vidéo, consignes, jours et moment. Minuteur ⏱, bouton ✓ Fait et suivi sur 14 jours.",
+    "🔔 Kiné : rappel à l’ouverture les jours choisis, et événement Google Agenda qui revient chaque semaine.",
+    "💞 <b>Rappel du bilan du couple</b> : le dimanche (jour réglable), un rappel à l’ouverture et dans l’Accueil.",
+    "🔗 <b>Nouvel onglet « Mes carnets »</b> : l’adresse de tes autres carnets en ligne, avec un bouton Ouvrir.",
+    "📌 Accueil : nouvelle partie « Rappels du jour » (kiné, bilan du couple, éléments à effacer)."]},
   {v:"V24",d:"23/11/2026",n:[
     "🪟 <b>Fiches protégées</b> : une fenêtre qui s’ouvre toute seule (pause, fin de pause du minuteur 🍅) se pose <b>par-dessus</b> ta fiche. Quand tu as répondu, ta fiche revient telle que tu l’avais laissée.",
     "✍️ <b>Note rapide sur une fiche</b> : le bouton ✍️ reste visible (pâle) par-dessus les fiches. Tu dictes ton idée dans « Reprendre ici » sans fermer ta fiche.",
@@ -789,7 +817,7 @@ function defaults(){
     name:"Yas",mode:"neutre",reprendre:"",ideas:[],lastExport:null,lastRestore:null,seeded:false,
     skills:[],targets:[],jobFrom:"",jobBase:"both",skillType:"",lastSkills:null,snooze:{},aidePins:["routine","maj"],
     contacts:[],subjLearn:{},calls:[],wins:[],music:[],asstQ:[],claudeReq:[],tests:{},
-    settings:{asstName:"Mon assistant",asstIcon:"perso",asstRead:true,kwExtra:{},testAuto:true,taskSortBy:"recent",tabMode:"adapt",tabCount:{haute:8,neutre:8,basse:5},lockOn:true,lockPass:MOT_DE_PASSE_DE_DEPART,lockHint:"",theme:"auto",noteFreq:"parfois",noteRead:false,pomoNudge:30,bioId:"",rate:"normale",split:{ast:false,alim:false,vet:false,beaute:false,apa:false,pret:false,abo:false},tabNames:{},mergeGap:15,pomo:25,pause:5,longPause:20,cycles:4,remSave:7,remSkills:15,lockIdle:10,lockAway:2,tabOrder:Object.keys(TABS)},
+    settings:{asstName:"Mon assistant",asstIcon:"perso",asstRead:true,kwExtra:{},testAuto:true,taskSortBy:"recent",couple:{on:true,days:[0],text:""},tabMode:"adapt",tabCount:{haute:8,neutre:8,basse:5},lockOn:true,lockPass:MOT_DE_PASSE_DE_DEPART,lockHint:"",theme:"auto",noteFreq:"parfois",noteRead:false,pomoNudge:30,bioId:"",rate:"normale",split:{ast:false,alim:false,vet:false,beaute:false,apa:false,pret:false,abo:false},tabNames:{},mergeGap:15,pomo:25,pause:5,longPause:20,cycles:4,remSave:7,remSkills:15,lockIdle:10,lockAway:2,tabOrder:Object.keys(TABS)},
     lists:Object.assign({cats:DEF_CATS.slice(),tools:DEF_TOOLS.slice()},JSON.parse(JSON.stringify(DEF_SANTE)),JSON.parse(JSON.stringify(DEF_Q)),JSON.parse(JSON.stringify(DEF_T))),
     sante:{suivi:[],ess:[],choix:[],mic:[],micDays:{}},seenVersion:"",rep:[],
     q:{ast:[],alim:[],vet:[],bags:[],beaute:[],apa:[],pret:[],abo:[],memo:{},memoMange:{}},
@@ -815,6 +843,7 @@ function fixState(s){
   QK.forEach((k,j)=>{if(!o.includes(k)){const b=j?o.indexOf(QK[j-1]):o.indexOf("sante");o.splice(b<0?o.length:b+1,0,k);}});
   if(!o.includes("competences")){const i=o.indexOf("journal");o.splice(i<0?o.length:i+1,0,"competences");}
   if(!o.includes("victoires")){const i=o.indexOf("journal");o.splice(i<0?o.length:i+1,0,"victoires");}
+  if(!o.includes("carnets")){const i=o.indexOf("fichiers");o.splice(i<0?o.length:i+1,0,"carnets");}
   keys.forEach(k=>{if(!o.includes(k))o.push(k);});
   s.settings.tabOrder=o;
   ["projects","tasks","files","journal","work","urgent","ideas","skills","targets","alerts","contacts","calls","wins","music","asstQ","claudeReq"].forEach(k=>{if(!Array.isArray(s[k]))s[k]=[];});
@@ -827,6 +856,10 @@ function fixState(s){
   Object.keys(DEF_SANTE).forEach(k=>{if(!Array.isArray(s.lists[k]))s.lists[k]=DEF_SANTE[k].slice();});
   Object.keys(DEF_Q).forEach(k=>{if(!Array.isArray(s.lists[k]))s.lists[k]=DEF_Q[k].slice();});
   Object.keys(DEF_T).forEach(k=>{if(!Array.isArray(s.lists[k]))s.lists[k]=DEF_T[k].slice();});
+  if(!Array.isArray(s.lists.carnetEmo))s.lists.carnetEmo=["📘","💞","🧘","📒","🏠","🌿","💼"];
+  s.kine=Object.assign({ex:[],groups:{},done:{}},s.kine||{});if(!Array.isArray(s.kine.ex))s.kine.ex=[];if(!s.kine.groups||typeof s.kine.groups!=="object")s.kine.groups={};if(!s.kine.done||typeof s.kine.done!=="object")s.kine.done={};
+  if(!Array.isArray(s.carnets))s.carnets=[];if(!Array.isArray(s.cleanKeep))s.cleanKeep=[];
+  s.settings.couple=Object.assign({on:true,days:[0],text:""},s.settings.couple||{});if(!Array.isArray(s.settings.couple.days))s.settings.couple.days=[0];
   if(!s.seed18){if(!s.lists.domains.includes("Démarches professionnelles")){const i=s.lists.domains.indexOf("Reconversion pro");s.lists.domains.splice(i<0?s.lists.domains.length:i+1,0,"Démarches professionnelles");}s.seed18=true;}
   s.settings.split=Object.assign({ast:false,alim:false,vet:false,beaute:false,apa:false,pret:false,abo:false},s.settings.split||{});
   if(!s.settings.tabNames||typeof s.settings.tabNames!=="object")s.settings.tabNames={};
@@ -967,7 +1000,7 @@ function barTabs(){
   return {show:vis.filter(k=>keep.has(k)),hidden:vis.length-keep.size,less:false};
 }
 function useTab(k){const U=state.ui.tabUse=state.ui.tabUse||{};U[k]=(U[k]||0)+1;}
-const VIEWS={accueil:vAccueil,projets:vProjets,loisirs:vLoisirs,sante:vSante,quotidien:()=>vQuot(null),q_ast:()=>vQuot("ast"),q_alim:()=>vQuot("alim"),q_vet:()=>vQuot("vet"),q_beaute:()=>vQuot("beaute"),q_apa:()=>vQuot("apa"),q_pret:()=>vQuot("pret"),q_abo:()=>vQuot("abo"),victoires:vVictoires,taches:vTaches,fichiers:vFichiers,journal:vJournal,competences:vCompetences,aide:vAide,params:vParams};
+const VIEWS={carnets:()=>vCarnets(),accueil:vAccueil,projets:vProjets,loisirs:vLoisirs,sante:vSante,quotidien:()=>vQuot(null),q_ast:()=>vQuot("ast"),q_alim:()=>vQuot("alim"),q_vet:()=>vQuot("vet"),q_beaute:()=>vQuot("beaute"),q_apa:()=>vQuot("apa"),q_pret:()=>vQuot("pret"),q_abo:()=>vQuot("abo"),victoires:vVictoires,taches:vTaches,fichiers:vFichiers,journal:vJournal,competences:vCompetences,aide:vAide,params:vParams};
 function render(){applyPhase();renderHeader();renderTabs();$("#main").innerHTML=VIEWS[cur]();hsArrows($("#main"));setHdr();updateFabs();recenter();testBackSync();}
 /* V19 : écran centré, hauteur de l’en-tête, flèches de défilement, position gardée */
 function recenter(){if(window.scrollX)window.scrollTo(0,window.scrollY);}
@@ -1072,6 +1105,7 @@ function vAccueil(){
   const tl=testLeft();
   return `<div class="hello"><div class="logo"><img src="${LOGO}" alt=""></div><div><h2>Bonjour ${esc(state.name||"")}</h2><p>Ton Carnet Pilote : projets, démarches, RDV et moments à toi, au même endroit.</p></div></div>
     ${tl?`<div class="warn noread">🧪 Test de la ${VERSION} : encore ${pl(tl,"étape")} à tester. <button class="btn ghost spk" data-act="testOpen">▶ Continuer le test</button></div>`:""}
+    ${dayCard()}
     <h3 style="margin:0 0 8px">Comment ça va aujourd’hui ?</h3>
     <div class="mode" role="group" aria-label="Ma phase du jour">${modes}</div>${box}
     ${m==="haute"?ideas+rep+prio+dates:rep+prio+dates+ideas}`;
@@ -1290,9 +1324,10 @@ function essRow(x){
 }
 function vSante(){
   const S=state.sante,sv=santeView,aliS=state.q.alim.filter(x=>x.ali);
-  const tabs=partBar("sante","Partie de l’onglet Santé",[["suivi","📋 Suivi",S.suivi.length,"santeView"],["ess","🧰 Mes essentiels",S.ess.length+aliS.length,"santeView"],["choix","✅ Mes choix validés",S.choix.length,"santeView"],["mic","🚽 Calendrier mictionnel",S.mic.length,"santeView"],["appels","🆘 Appels",state.calls.filter(c=>c.sante).length,"santeView"]],sv);
+  const tabs=partBar("sante","Partie de l’onglet Santé",[["suivi","📋 Suivi",S.suivi.length,"santeView"],["kine","🧘 Kiné",state.kine.ex.length,"santeView"],["ess","🧰 Mes essentiels",S.ess.length+aliS.length,"santeView"],["choix","✅ Mes choix validés",S.choix.length,"santeView"],["mic","🚽 Calendrier mictionnel",S.mic.length,"santeView"],["appels","🆘 Appels",state.calls.filter(c=>c.sante).length,"santeView"]],sv);
   let body;
   if(sv==="appels"){body=callsBody();}
+  else if(sv==="kine"){body=kineBody();}
   else if(sv==="suivi"){
     const list=S.suivi.slice().sort((a,b)=>(b.date+(b.time||"")).localeCompare(a.date+(a.time||"")));
     const last30=list.filter(x=>daysSince(x.date)<30);
@@ -1393,7 +1428,7 @@ let opened=false;
 function onOpen(){
   if(opened)return;opened=true;
   if(state.seenVersion!==VERSION){state.seenVersion=VERSION;save();setTimeout(newsModal,300);return;}
-  setTimeout(()=>{if(draftOffer())return;if(alertCheck())return;if(testLeft()){testPop();return;}const f=NOTE_FREQ[state.settings.noteFreq]||NOTE_FREQ.parfois;if(Math.random()<f[1])showNote();},800);
+  setTimeout(()=>{if(draftOffer())return;if(alertCheck())return;const da=dayAsk();if(testLeft()){testPop();return;}if(da)return;const f=NOTE_FREQ[state.settings.noteFreq]||NOTE_FREQ.parfois;if(Math.random()<f[1])showNote();},800);
 }
 
 /* ---------- V15 : voix, barre de question, doublons, sommaire ---------- */
@@ -2088,6 +2123,143 @@ function winForm(w){w=Object.assign({id:"",title:"",date:"",place:"",people:"",h
   <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="saveWin" data-id="${w.id}">Enregistrer</button></div>`;}
 function shrinkPhoto(file){return new Promise((ok,ko)=>{const r=new FileReader();r.onerror=ko;r.onload=()=>{const im=new Image();im.onerror=ko;im.onload=()=>{const max=520,k=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);ok(c.toDataURL("image/jpeg",.6));};im.src=r.result;};r.readAsDataURL(file);});}
 
+/* ---------- V25 : Santé › Kiné ---------- */
+const KDAYS=[[1,"Lun"],[2,"Mar"],[3,"Mer"],[4,"Jeu"],[5,"Ven"],[6,"Sam"],[0,"Dim"]];
+const KICS={1:"MO",2:"TU",3:"WE",4:"TH",5:"FR",6:"SA",0:"SU"};
+const KTIME={"Matin":"09:00","Midi":"12:30","Après-midi":"15:00","Soir":"18:00","Au coucher":"21:00"};
+function KGEMO(g){g=String(g||"");return /dos|lomb|cervic/i.test(g)?"🦴":/brux|mâch|mach/i.test(g)?"😬":/genou|jambe|cheville/i.test(g)?"🦵":/épaule|epaule|nuque|bras/i.test(g)?"💪":/respir/i.test(g)?"🌬️":"🧘";}
+let kineGrp="Tous",kinePhotos=[],kS=null,kT=null;
+function KIN(){return state.kine;}
+function kineToday(){const d=new Date().getDay();return KIN().ex.filter(x=>x.active!==false&&(x.days||[]).includes(d));}
+function kineDone(id,day){return ((KIN().done[day||today()])||[]).includes(id);}
+function kineCount(id,n){let c=0;for(let i=0;i<n;i++){const d=new Date();d.setDate(d.getDate()-i);if(kineDone(id,isoOf(d)))c++;}return c;}
+function kineDaysTxt(days){days=days||[];if(!days.length)return "";if(days.length===7)return "Tous les jours";return KDAYS.filter(([d])=>days.includes(d)).map(([,l])=>l).join(" ");}
+function kineDose(x){return [x.reps?x.reps+" répétition"+(+x.reps>1?"s":""):"",x.sets?x.sets+" série"+(+x.sets>1?"s":""):"",x.hold?"tenir "+x.hold+" s":""].filter(Boolean).join(", ");}
+function kineGroups(){const g=state.lists.kineGrp.filter(x=>KIN().ex.some(e=>e.grp===x));KIN().ex.forEach(e=>{if(e.grp&&!g.includes(e.grp))g.push(e.grp);});return g;}
+function kineSumTxt(list){const c={};list.forEach(x=>{c[x.grp]=(c[x.grp]||0)+1;});return Object.keys(c).map(g=>pl(c[g],"exercice")+" "+g).join(", ");}
+function kineBody(){const K=KIN(),L=K.ex,groups=kineGroups(),td=kineToday(),left=td.filter(x=>!kineDone(x.id));
+  if(kineGrp!=="Tous"&&!groups.includes(kineGrp))kineGrp="Tous";
+  const chips=["Tous",...groups].map(g=>`<button class="chip ${kineGrp===g?"on":""}" data-act="kineGrpV" data-id="${esc(g)}">${g==="Tous"?"Tous":KGEMO(g)+" "+esc(g)} (${g==="Tous"?L.length:L.filter(x=>x.grp===g).length})</button>`).join("");
+  const sum=td.length?`<div class="modebox neutre"><strong>🧘 Aujourd’hui</strong><p>${left.length?kineSumTxt(left)+" à faire.":"Tout est fait pour aujourd’hui, bravo ✓"}</p></div>`:"";
+  const show=kineGrp==="Tous"?groups:[kineGrp];
+  return `<p class="meta">Les exercices que ta kiné te donne à refaire chez toi, rangés par « pour quoi ». Les jours choisis, un rappel s’affiche à l’ouverture du carnet.</p>
+  <div class="bar"><button class="btn" data-act="kineNew">Ajouter un exercice</button></div>
+  ${L.length?`<div class="chips" role="group" aria-label="Filtrer par groupe">${chips}</div>`:""}${sum}
+  ${show.map(g=>{const l=L.filter(x=>x.grp===g);if(!l.length)return "";const info=K.groups[g]||{},gi="kg"+groups.indexOf(g);
+    return `<section class="block" id="${gi}"><div class="phead"><h3>${KGEMO(g)} ${esc(g)} <span class="badge">${l.length}</span></h3>${spkBtn(gi)}</div>
+    <div class="meta">${[info.who?"👩‍⚕️ "+esc(info.who):"",info.start?"Séances depuis le "+fmt(info.start):""].filter(Boolean).join(" · ")} <button class="btn ghost spk noread" data-act="kineGrpInfo" data-id="${esc(g)}">✎ Kiné et date</button></div>
+    ${l.map(kineRow).join("")}</section>`;}).join("")}
+  ${L.length?"":empty("Aucun exercice pour l’instant. Après ta séance, touche « Ajouter un exercice » : nom, pour quoi, photo ou lien vidéo, consignes et jours.")+exBox("🦴 Dos : « le chat et la vache », à quatre pattes. 10 répétitions, 2 séries. Lun Mer Ven, le matin.<br>😬 Bruxisme (mâchoire) : ouvrir doucement la bouche, langue au palais. Tenir 5 s, 10 fois. Tous les jours, au coucher.")}`;}
+function kineRow(x){const u=safeUrl(x.url),dn=kineDone(x.id),c14=kineCount(x.id,14),ph=x.photos||[];
+  return `<div class="row kine ${dn?"done":""}" id="k-${x.id}"><div class="grow">
+  ${ph.length?`<div class="kph">${ph.map((p,i)=>`<img class="zoom" src="${p}" alt="Photo ${i+1} : ${esc(x.name)} (toucher pour agrandir)" data-act="photoZoom" data-id="${esc(x.name)}">`).join("")}</div>`:""}
+  <b>${esc(x.name)}</b>${x.active===false?' <span class="badge">en pause</span>':""}
+  <div class="meta">${[kineDose(x),kineDaysTxt(x.days),x.moment?esc(x.moment):""].filter(Boolean).join(" · ")}</div>
+  ${x.steps?`<div class="meta">${esc(x.steps).replace(/\n/g,"<br>")}</div>`:""}
+  <div class="meta noread">${c14?"✓ Fait "+c14+" fois ces 14 derniers jours":"Pas encore fait ces 14 derniers jours"}</div>
+  <div class="bar noread" style="margin-top:6px"><button class="btn ${dn?"ghost":""} spk" data-act="kineDo" data-id="${x.id}" aria-pressed="${dn}">${dn?"✓ Fait aujourd’hui":"✓ Fait"}</button><button class="btn ghost spk" data-act="kineTimer" data-id="${x.id}">⏱ Démarrer</button>${u?`<a class="btn ghost spk" href="${esc(u)}" target="_blank" rel="noopener">▶️ Vidéo</a>`:""}<button class="btn ghost spk" data-act="kineIcs" data-id="${x.id}">🔔 Agenda</button></div></div>
+  ${spkBtn("k-"+x.id,1)}<button class="icon" data-act="kineEdit" data-id="${x.id}" aria-label="Modifier">✎</button><button class="icon" data-act="kineDel" data-id="${x.id}" aria-label="Supprimer">🗑</button></div>`;}
+function kinePrevHtml(){return kinePhotos.map((p,i)=>`<span class="kpv"><img class="zoom" src="${p}" alt="Photo ${i+1} (toucher pour agrandir)" data-act="photoZoom" data-id="Photo ${i+1}"><button type="button" class="btn ghost spk" data-act="kinePhDel" data-id="${i}">Retirer</button></span>`).join("");}
+function kineForm(x){x=Object.assign({id:"",name:"",grp:kineGrp!=="Tous"?kineGrp:(state.lists.kineGrp[0]||""),days:[],moment:"",reps:"",sets:"",hold:"",steps:"",url:"",photos:[],active:true},x||{});kinePhotos=(x.photos||[]).slice();
+  return `<h2>${x.id?"Modifier l’exercice":"🧘 Nouvel exercice kiné"}</h2>
+  <label for="kiN">Nom de l’exercice</label><input id="kiN" value="${esc(x.name)}" placeholder="Ex. : le chat et la vache">
+  ${selField("kiG","Pour quoi ?","kineGrp",x.grp)}
+  <label>Quels jours ?</label><div class="chips wrap" id="kiD" role="group" aria-label="Jours">${KDAYS.map(([d,l])=>`<label class="chip check"><input type="checkbox" value="${d}" ${(x.days||[]).includes(d)?"checked":""}>${l}</label>`).join("")}<button type="button" class="chip" data-act="kineAllDays">Tous les jours</button></div>
+  ${selField("kiM","Moment","kineMoment",x.moment)}
+  <div class="inline"><div><label for="kiR">Répétitions</label><input id="kiR" type="number" min="0" inputmode="numeric" value="${esc(x.reps)}"></div><div><label for="kiS">Séries</label><input id="kiS" type="number" min="0" inputmode="numeric" value="${esc(x.sets)}"></div><div><label for="kiH">Tenir (s)</label><input id="kiH" type="number" min="0" inputmode="numeric" value="${esc(x.hold)}"></div></div>
+  <label for="kiC">Consignes</label><textarea id="kiC" class="grow-ta" rows="3" placeholder="Ex. : à quatre pattes, dos rond en soufflant, puis creuser doucement">${esc(x.steps)}</textarea>
+  <label for="kiU">Lien vidéo <span class="hint">(YouTube, ou vidéo rangée sur ton Drive)</span></label><input id="kiU" type="url" value="${esc(x.url)}" placeholder="https://…">
+  <label for="kiPh">Photos du téléphone <span class="hint">(jusqu’à 3, réduites pour ne pas remplir le carnet)</span></label><input id="kiPh" type="file" accept="image/*" multiple>
+  <div class="wprev" id="kiPrev">${kinePrevHtml()}</div>
+  <p class="hint">Une vidéo filmée avec ton téléphone est trop lourde pour le carnet : range-la sur ton Drive et colle son lien ci-dessus.</p>
+  <label class="chip check" style="margin-top:10px"><input type="checkbox" id="kiA" ${x.active!==false?"checked":""}>Exercice en cours (décoche pour le mettre en pause)</label>
+  <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="kineSave" data-id="${x.id}">Enregistrer</button></div>`;}
+function kineTimerHtml(){const x=KIN().ex.find(e=>e.id===kS.id)||{};
+  return `<h2>⏱ ${esc(x.name||"Exercice")}</h2>${x.steps?`<p class="meta">${esc(x.steps).replace(/\n/g,"<br>")}</p>`:""}
+  <div class="ktime" id="kTime" aria-live="polite">0 s</div><p class="center" id="kCnt"></p>
+  <div class="bar" style="justify-content:center"><button class="btn" data-act="kTGo" id="kGo">▶ Démarrer</button><button class="btn ghost" data-act="kTRep">+1 répétition</button><button class="btn ghost" data-act="kTReset">↺ Remettre à zéro</button></div>
+  <div class="actions"><button class="btn ghost" data-act="closeModal">Fermer</button><button class="btn" data-act="kTEnd">✓ Fini, c’est fait</button></div>`;}
+function kRefresh(){if(!kS)return;const x=KIN().ex.find(e=>e.id===kS.id)||{},t=$("#kTime"),c=$("#kCnt"),g=$("#kGo");if(!t)return;
+  t.textContent=kS.hold?kS.left+" s":fmtSec(kS.up);
+  const R=+x.reps||0,S=+x.sets||0;c.innerHTML=(kS.fin?"💪 <b>Toutes les séries sont faites, bravo !</b><br>":"")+[R?`Répétition <b>${Math.min(kS.rep,R)} / ${R}</b>`:`Répétitions : <b>${kS.rep}</b>`,S?`Série <b>${Math.min(kS.set,S)} / ${S}</b>`:""].filter(Boolean).join(" · ");
+  if(g)g.textContent=kS.run?"⏸ Pause":"▶ Démarrer";}
+function fmtSec(s){const m=Math.floor(s/60),r=s%60;return m?m+" min "+String(r).padStart(2,"0")+" s":r+" s";}
+function kAddRep(){const x=KIN().ex.find(e=>e.id===kS.id)||{};kS.rep++;const R=+x.reps||0,S=+x.sets||0;
+  if(R&&kS.rep>=R){if(S&&kS.set>=S){kS.fin=true;kS.run=false;beep();}else if(S){kS.set++;kS.rep=0;kS.run=false;toast("Série terminée : petite pause, puis ▶ pour la suivante",3500);beep();}}}
+function kTick(){if(!kS||modalKind!=="kine"){clearInterval(kT);kT=null;return;}if(!kS.run)return;
+  if(kS.hold){kS.left--;if(kS.left<=0){beep();kS.left=kS.hold;kS.run=false;kAddRep();}}else kS.up++;kRefresh();}
+function kineIcsTxt(x){const days=(x.days||[]).length?x.days.slice():[1,2,3,4,5,6,0];const tm=(KTIME[x.moment]||"09:00").split(":");
+  let d=new Date();for(let i=0;i<7;i++){const t=new Date();t.setDate(t.getDate()+i);if(days.includes(t.getDay())){d=t;break;}}
+  d.setHours(+tm[0],+tm[1],0,0);const e=new Date(d.getTime()+900000),stamp=new Date().toISOString().replace(/[-:]/g,"").split(".")[0]+"Z";
+  return ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Carnet Pilote//FR","BEGIN:VEVENT","UID:kine-"+x.id+"@carnet-pilote","DTSTAMP:"+stamp,"DTSTART:"+icsLocal(d),"DTEND:"+icsLocal(e),
+    "RRULE:FREQ=WEEKLY;BYDAY="+days.map(k=>KICS[k]).join(","),"SUMMARY:"+icsEsc("🧘 Kiné : "+x.name),"DESCRIPTION:"+icsEsc([x.grp,kineDose(x),x.steps,safeUrl(x.url)].filter(Boolean).join(" — ")),
+    "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+icsEsc("Kiné : "+x.name),"TRIGGER:PT0M","END:VALARM","END:VEVENT","END:VCALENDAR"].join("\r\n");}
+
+/* ---------- V25 : rappel du bilan du couple ---------- */
+const COUPLE_TXT="C’est le jour du bilan hebdomadaire du couple. Ouvre ton fichier dans Chrome.";
+function coupleToday(){const c=state.settings.couple||{};return c.on!==false&&(c.days||[]).includes(new Date().getDay())&&state.ui.coupleDone!==today();}
+function coupleSel(){const c=state.settings.couple,d=c.days||[];
+  const key=c.on===false||!d.length?"none":d.length===1?String(d[0]):(d.length===2&&d.includes(6)&&d.includes(0)?"we":"__autre");
+  const opts=[["1","Lundi"],["2","Mardi"],["3","Mercredi"],["4","Jeudi"],["5","Vendredi"],["6","Samedi"],["0","Dimanche"],["we","Samedi et dimanche"],["none","Pas de rappel"],["__autre","➕ Autre… (plusieurs jours)"]];
+  return `<label for="cpDay">Jour du rappel</label><select id="cpDay">${opts.map(([v,l])=>`<option value="${v}" ${v===key?"selected":""}>${l}</option>`).join("")}</select>
+  <div class="chips wrap" id="cpDays" ${key==="__autre"?"":"hidden"} role="group" aria-label="Jours du rappel" style="margin-top:8px">${KDAYS.map(([v,l])=>`<label class="chip check"><input type="checkbox" value="${v}" ${d.includes(v)?"checked":""}>${l}</label>`).join("")}</div>
+  <label for="cpTxt">Message du rappel</label><input id="cpTxt" value="${esc(c.text||COUPLE_TXT)}">`;}
+
+/* ---------- V25 : nettoyage des éléments « à effacer » ---------- */
+const CLEAN_RX="a effacer",CLEAN_BAK="carnetPilote_avantNettoyage";
+const CLEAN_SKIP=new Set(["settings","tests","ui","taskOrd","snooze","subjLearn","seenVersion","cleanKeep","aidePins","reprendre"]);
+const CLEAN_WHERE={tasks:"Tâches & RDV",projects:"Projets",rep:"Reprendre ici",ideas:"Idées",skills:"Compétences",targets:"Métier visé",contacts:"Contacts",calls:"Appels",wins:"Mes victoires",music:"Musique",asstQ:"Assistant",claudeReq:"Demandes à Claude",journal:"Journal de bord",work:"Journal de bord",urgent:"Urgences",alerts:"Rappels",lists:"Menus (choix des listes)",sante:"Santé",q:"Mon quotidien",kine:"Santé › Kiné",carnets:"Mes carnets"};
+let cleanList=[],cleanBak=null;
+const nrmC=s=>String(s).normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[’'\s]+/g," ");
+function strHit(v){return typeof v==="string"&&v.length<4000&&!v.startsWith("data:")&&nrmC(v).includes(CLEAN_RX);}
+function objHit(o){for(const k in o){const v=o[k];if(strHit(v))return true;if(Array.isArray(v)&&v.some(strHit))return true;}return false;}
+function itemLabel(o){if(typeof o==="string")return o;for(const k of["title","name","text","what","act","choice","label","q","topic","note","why"]){if(typeof o[k]==="string"&&o[k].trim())return o[k];}return Object.values(o).find(strHit)||"(sans titre)";}
+function cleanSig(where,o){return where+"|"+(o&&typeof o==="object"&&o.id?o.id:itemLabel(o));}
+function cleanFind(){const out=[],keep=new Set(state.cleanKeep||[]);
+  const walk=(v,where,depth)=>{if(depth>7||!v||typeof v!=="object")return;
+    if(Array.isArray(v)){v.forEach(it=>{if(strHit(it)||(it&&typeof it==="object"&&!Array.isArray(it)&&objHit(it))){const sig=cleanSig(where,it);if(!keep.has(sig))out.push({arr:v,item:it,where,label:itemLabel(it),sig});}else walk(it,where,depth+1);});return;}
+    for(const k in v){if(depth===0&&CLEAN_SKIP.has(k))continue;walk(v[k],depth===0?(CLEAN_WHERE[k]||k):where,depth+1);}};
+  walk(state,"",0);return out;}
+function cleanBakGet(){if(cleanBak)return cleanBak;try{return localStorage.getItem(CLEAN_BAK);}catch(e){return null;}}
+function cleanOpen(){cleanList=cleanFind();if(!cleanList.length){toast("Rien à effacer : aucun élément « à effacer » ✓",3500);return;}
+  openModal(`<h2>🧹 Éléments « à effacer »</h2><p class="meta">Le carnet a trouvé ${pl(cleanList.length,"élément")} avec « à effacer ». Décoche ce que tu veux garder pour l’instant.</p>
+  <div id="clList">${cleanList.map((h,i)=>`<div class="row" id="cl-${i}"><label class="grow clrow"><input type="checkbox" data-cl="${i}" checked><span><b>${esc(String(h.label).slice(0,140))}</b><span class="meta">${esc(h.where)}</span></span></label><button class="btn ghost spk" data-act="cleanKeep" data-id="${i}">Garder</button></div>`).join("")}</div>
+  <p class="meta">« Garder » : le carnet ne te le proposera plus. Avant d’effacer, une copie de secours est faite : tu pourras annuler.</p>
+  <div class="actions"><button class="btn ghost" data-act="cleanLater">Plus tard</button><button class="btn" data-act="cleanGo">🗑 Effacer les cochés</button></div>`,"clean");}
+function cleanUndo(){const b=cleanBakGet();if(!b){toast("Pas de nettoyage à annuler");return;}
+  try{const o=JSON.parse(b);state=fixState(o.state);save();cleanBak=null;try{localStorage.removeItem(CLEAN_BAK);}catch(e){}render();toast("Nettoyage annulé : tout est revenu ✓",3500);}catch(e){toast("⚠️ Impossible d’annuler");}}
+
+/* ---------- V25 : rappels du jour (Accueil et ouverture) ---------- */
+function dayItems(){const out=[];const td=kineToday().filter(x=>!kineDone(x.id));
+  if(td.length)out.push({html:"🧘 Kiné aujourd’hui : "+esc(kineSumTxt(td))+".",btn:["Voir","goKine"]});
+  if(coupleToday())out.push({html:"💞 "+esc(state.settings.couple.text||COUPLE_TXT),btn:["✓ C’est fait","coupleDone"]});
+  if(state.ui.cleanSnooze!==today()){const n=cleanFind().length;if(n)out.push({html:"🧹 "+pl(n,"élément")+" « à effacer » dans le carnet.",btn:["Voir","cleanOpen"]});}
+  return out;}
+function dayCard(){const L=dayItems();return L.length?`<section class="block daycard noread" id="dayCard"><h3 style="margin:0 0 6px">📌 Rappels du jour</h3>${L.map(x=>`<div class="row"><div class="grow">${x.html}</div><button class="btn ghost spk" data-act="${x.btn[1]}">${x.btn[0]}</button></div>`).join("")}</section>`:"";}
+function dayAsk(){
+  if(state.ui.cleanSnooze!==today()){const n=cleanFind().length;if(n){ask(`🧹 ${pl(n,"élément")} « à effacer » dans ton carnet. Les voir ?`,[["Voir",()=>cleanOpen(),true],["Plus tard",()=>{state.ui.cleanSnooze=today();save();if(cur==="accueil")render();toast("D’accord, je te le redemande demain");}]],20000);return true;}}
+  if(coupleToday()){ask("💞 "+esc(state.settings.couple.text||COUPLE_TXT),[["✓ C’est fait",()=>ACT.coupleDone(),true],["Plus tard",()=>{}]],20000);return true;}
+  const td=kineToday().filter(x=>!kineDone(x.id));if(td.length){ask("🧘 Kiné aujourd’hui : "+esc(kineSumTxt(td))+".",[["Voir",()=>ACT.goKine(),true]],15000);return true;}
+  return false;}
+
+/* ---------- V25 : Mes carnets ---------- */
+function vCarnets(){const L=state.carnets||[];
+  return `<h2>🔗 Mes carnets</h2><p class="lead">Tes autres carnets, au même endroit. Colle l’adresse de ceux qui sont en ligne (GitHub) pour les ouvrir d’un toucher.</p>
+  <div class="bar"><button class="btn" data-act="carNew">Ajouter un carnet</button></div>
+  ${L.length?`<section class="block" id="carBlock"><div class="phead"><h3>Mes carnets <span class="badge">${L.length}</span></h3>${spkBtn("carBlock")}</div>${L.map(carRow).join("")}</section>`:empty("Aucun carnet pour l’instant. Touche « Ajouter un carnet ».")+exBox("💞 Bilan du couple : 📄 fichier à ouvrir dans Chrome.<br>📘 Mon carnet de démonstration : 🌐 carnet-personnalise.github.io/lea, avec un bouton Ouvrir.")}
+  <p class="meta">Un carnet qui n’est pas en ligne (simple fichier) ne peut pas s’ouvrir d’ici : Chrome l’interdit pour ta sécurité. Laisse alors l’adresse vide.</p>`;}
+function carRow(c){const u=safeUrl(c.url);
+  return `<div class="row" id="car-${c.id}"><div class="grow"><b>${esc(c.emoji||"📘")} ${esc(c.name)}</b><div class="meta">${u?"🌐 "+esc(u.replace(/^https?:\/\//i,"").replace(/\/$/,"")):"📄 Fichier à ouvrir dans Chrome"}</div>${c.note?`<div class="meta">${esc(c.note)}</div>`:""}
+  ${u?`<div class="bar noread" style="margin-top:6px"><a class="btn spk" href="${esc(u)}" target="_blank" rel="noopener">Ouvrir</a></div>`:""}</div>
+  ${spkBtn("car-"+c.id,1)}<button class="icon" data-act="carEdit" data-id="${c.id}" aria-label="Modifier">✎</button><button class="icon" data-act="carDel" data-id="${c.id}" aria-label="Supprimer">🗑</button></div>`;}
+function carForm(c){c=Object.assign({id:"",name:"",emoji:"📘",url:"",note:""},c||{});
+  return `<h2>${c.id?"Modifier le carnet":"🔗 Nouveau carnet"}</h2>
+  <label for="caN">Nom du carnet</label><input id="caN" value="${esc(c.name)}" placeholder="Ex. : Bilan du couple">
+  ${selField("caE","Emoji","carnetEmo",c.emoji)}
+  <label for="caU">Adresse <span class="hint">(si le carnet est en ligne, ex. GitHub ; sinon laisse vide)</span></label><input id="caU" type="url" value="${esc(c.url)}" placeholder="https://carnet-personnalise.github.io/…">
+  <label for="caT">Note</label><input id="caT" value="${esc(c.note)}" placeholder="Ex. : à remplir le dimanche">
+  <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="carSave" data-id="${c.id}">Enregistrer</button></div>`;}
+
 /* ---------- V20 : fiche de test ---------- */
 function testLeft(){const L=TESTS[VERSION]||[];if(!L.length)return 0;const N=((state.tests||{})[VERSION]||{}).notes||{};return L.filter((x,i)=>!(N[i]||{}).r).length;}
 function testPop(){const L=TESTS[VERSION]||[],n=testLeft();
@@ -2564,6 +2736,12 @@ FICHE DE TEST : à chaque nouvelle version, une fiche de test lue à voix haute,
 
 ASSISTANT ET DEMANDER À CLAUDE : un petit assistant sans IA (questions toutes prêtes et « Autre… », réponses tirées de mes données et lues à voix haute, nom et visage modifiables), et un bouton « Demander à Claude » qui prépare la demande avec le contexte, la copie et ouvre Claude.
 
+NETTOYAGE : le carnet retrouve tout ce qui est marqué « à effacer » et propose de l’effacer (à l’ouverture et dans les Paramètres), avec « Plus tard », « Garder » et une copie de secours pour annuler.
+
+RAPPELS DU JOUR : les rappels réguliers (exercices, bilans…) s’affichent à l’ouverture et dans une partie « Rappels du jour » de l’Accueil, avec un bouton « C’est fait ».
+
+MES CARNETS : chaque carnet a une page « Mes carnets » pour ouvrir les autres carnets en ligne ; un simple fichier ne s’ouvre pas depuis un carnet en ligne.
+
 FICHES PROTÉGÉES : une fenêtre qui s’ouvre toute seule (minuteur, rappel, alarme) se pose par-dessus une fiche en cours, sans l’effacer ; la fiche revient telle quelle. Ce qui est rempli est gardé au fur et à mesure, et proposé à la réouverture si le carnet s’est fermé avant « Enregistrer ». Le bouton de note rapide reste visible par-dessus les fiches.
 
 TRI ET RAPPELS : les listes ont un menu « Trier par » (les plus récentes en haut par défaut, et « Autre… »). Les fichiers agenda mettent des rappels en notification, jamais par e-mail.
@@ -2752,6 +2930,10 @@ function vAide(){
     <li><span>Garde seulement des <b>Notifications</b> : 1 jour avant, et 10 minutes avant. Supprime toute ligne « E-mail ».</span></li>
     <li><span>Pour les RDV, change le 2ᵉ rappel en <b>2 heures</b> dans l’événement, si Google ne l’a pas gardé.</span></li></ol>
     <p class="meta">Un vrai lien direct entre le carnet et Google Agenda est possible plus tard, mais demande un compte Google Cloud et une connexion : à voir si tu en as besoin.</p>`],
+  ["v25","🧘 Kiné, nettoyage et mes carnets (V25)",`<p><b>🧹 « À effacer » :</b> pendant un test, mets « test à effacer » dans le nom de ce que tu crées. Le carnet les retrouve tous et te propose de les effacer. « Plus tard » : il redemande le lendemain. « Garder » : il ne le propose plus. Juste après un nettoyage, « Annuler » remet tout.</p>
+    <p><b>🧘 Kiné :</b> Santé › Kiné. Une fiche par exercice, rangée par « Pour quoi ? ». Les vidéos filmées avec le téléphone sont trop lourdes : range-les sur ton Drive et colle le lien. Les jours choisis, le rappel est dans l’Accueil. Le bouton 🔔 Agenda crée un événement qui revient chaque semaine (règle ses notifications à la main dans Google Agenda).</p>
+    <p><b>💞 Bilan du couple :</b> le rappel se règle dans Paramètres. Le fichier n’est pas en ligne : ouvre-le dans Chrome.</p>
+    <p><b>🔗 Mes carnets :</b> un carnet en ligne (GitHub) s’ouvre d’un toucher. Un simple fichier ne peut pas s’ouvrir depuis le carnet : Chrome l’interdit pour ta sécurité.</p>`],
   ["regles","📋 Mes règles pour tout nouveau carnet HTML",`<p>Avant de créer un nouveau carnet (ou de faire évoluer celui de Kay Numérique), copie ce texte et colle-le à Claude <b>avant</b> de décrire ton besoin.</p>
     <label for="basePrompt">Règles communes à copier</label><textarea id="basePrompt" rows="8" readonly>${esc(BASE_PROMPT)}</textarea>
     <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="copyBase">Copier les règles</button></div>`],
@@ -2802,6 +2984,9 @@ function vParams0(){
   <p><b>Carnet Pilote ${VERSION}</b>, du ${VERSION_DATE}</p>
   <p class="meta">Nom du fichier : ${FILE_NAME}</p>
   <p class="meta">Aujourd’hui : ${longDate()}</p></section>
+  <section class="block" id="pClean"><h3>🧹 Nettoyer le carnet</h3><p class="meta">Retrouve partout ce que tu as marqué « à effacer » (par exemple « test à effacer »), pour l’effacer d’un coup.</p>
+  <div class="bar"><button class="btn" data-act="cleanOpen">Chercher les éléments « à effacer »</button>${cleanBakGet()?`<button class="btn ghost" data-act="cleanUndoBtn">↩️ Annuler le dernier nettoyage</button>`:""}${(state.cleanKeep||[]).length?`<button class="btn ghost spk" data-act="cleanKeepReset">Reproposer ceux gardés (${state.cleanKeep.length})</button>`:""}</div></section>
+  <section class="block" id="pCouple"><h3>💞 Rappel du bilan du couple</h3><p class="meta">Le jour choisi, un rappel s’affiche à l’ouverture du carnet et dans l’Accueil. Ton fichier n’étant pas en ligne, ouvre-le ensuite dans Chrome.</p>${coupleSel()}</section>
   <section class="block"><h3>Sauvegarde et restauration</h3>
   <p><b>Dernière sauvegarde :</b> ${stampText(state.lastExport)}</p>
   <p><b>Dernière restauration :</b> ${stampText(state.lastRestore)}</p>
@@ -3126,6 +3311,8 @@ function searchHits(q){
   if(has("musique musiques pachelbel playlist playlists musicolet écouter morceau "+kwx("music")))hits.push({fn:"musicOpen",title:"🎵 Mes musiques",sub:"Pour le minuteur Pomodoro"});
   if(has("test tester fiche de test essai remarques "+kwx("test"))&&TESTS[VERSION])hits.push({fn:"testOpen",title:"🧪 Fiche de test de la "+VERSION,sub:"Lue à voix haute, avec tes remarques"});
   state.calls.forEach(c=>{if(has(c.who,c.reason,c.note))hits.push({tab:"sante",view:"appels",id:"cl-"+c.id,title:"🆘 "+(c.who||"Appel")+(c.reason?" : "+c.reason:""),sub:"Appel noté, "+fmt(c.date),callsAll:true});});
+  state.kine.ex.forEach(x=>{if(has(x.name,x.grp,x.steps,x.moment))hits.push({tab:"sante",view:"kine",id:"k-"+x.id,title:"🧘 "+x.name,sub:"Kiné, "+x.grp});});
+  (state.carnets||[]).forEach(c=>{if(has(c.name,c.note,c.url))hits.push({tab:"carnets",id:"car-"+c.id,title:(c.emoji||"📘")+" "+c.name,sub:"Mes carnets"});});
   state.wins.forEach(w=>{if(has(w.title,w.place,w.people,w.hard,w.learn,w.note))hits.push({tab:"victoires",id:"w20-"+w.id,title:"🌟 "+w.title,sub:"Ma victoire"+(w.date?", "+fmt(w.date):"")});});
   state.contacts.forEach(c=>{if(has(c.name,c.rel,c.note,c.phone))hits.push({fn:"contactsOpen",title:"🆘 "+c.name,sub:"Contact d’urgence"+(c.rel?", "+c.rel:"")});});
   state.lists.repas.forEach(s=>{if(has(s))hits.push({fn:"mangeGo",arg:s,title:"🥗 "+s,sub:"Ce que j’ai noté pour cette envie"});});
@@ -3593,6 +3780,49 @@ const ACT={
   lkMove:(d,b)=>{const r=b.closest("[data-lk]");if(!r)return;if(+d<0&&r.previousElementSibling)r.parentNode.insertBefore(r,r.previousElementSibling);else if(+d>0&&r.nextElementSibling)r.parentNode.insertBefore(r.nextElementSibling,r);modalDirty=true;r.scrollIntoView({block:"nearest"});},
   lkDel:(_,b)=>{const r=b.closest("[data-lk]");if(!r)return;const box=r.parentNode;r.remove();if(!box.children.length)box.insertAdjacentHTML("beforeend",linkRowHtml(null));modalDirty=true;},
   gotoTask:id=>{const t=state.tasks.find(x=>x.id===id);if(!t)return;cur="taches";useTab(cur);taskFilter=t.done?"Faites":"Tous";render();setTimeout(()=>flash("t-"+id),60);},
+  /* V25 : Kiné */
+  kineNew:()=>openModal(kineForm(),"form"),
+  kineEdit:id=>{const x=KIN().ex.find(e=>e.id===id);if(x)openModal(kineForm(x),"form");},
+  kineDel:id=>{const K=KIN(),x=K.ex.find(e=>e.id===id);if(!x||!confirm("Supprimer l’exercice « "+x.name+" » ?"))return;K.ex=K.ex.filter(e=>e.id!==id);save();render();toast("Exercice supprimé");},
+  kineSave:id=>{const name=val("kiN");if(!name){toast("Écris le nom de l’exercice");const n=$("#kiN");if(n)n.focus();return;}
+    const days=[...document.querySelectorAll("#kiD input:checked")].map(c=>+c.value);
+    const data={name,grp:selVal("kiG",true)||"Autre",days,moment:selVal("kiM",true),reps:val("kiR"),sets:val("kiS"),hold:val("kiH"),steps:val("kiC"),url:(()=>{let u=val("kiU");if(u&&!/^https?:\/\//i.test(u))u="https://"+u;return u;})(),photos:kinePhotos.slice(0,3),active:!!($("#kiA")||{}).checked};
+    const K=KIN();let x=K.ex.find(e=>e.id===id);if(x)Object.assign(x,data);else{x=Object.assign({id:uid(),created:today()},data);K.ex.push(x);}
+    kineGrp="Tous";santeView="kine";cur="sante";modalDirty=false;save();closeModal();render();flash("k-"+x.id);toast(days.length?"Enregistré. Les jours choisis, un rappel s’affichera à l’ouverture.":"Enregistré");},
+  kinePhDel:i=>{kinePhotos.splice(+i,1);modalDirty=true;const p=$("#kiPrev");if(p)p.innerHTML=kinePrevHtml();},
+  kineAllDays:()=>{const b=document.querySelectorAll("#kiD input");const all=[...b].every(c=>c.checked);b.forEach(c=>{c.checked=!all;});modalDirty=true;},
+  kineGrpV:g=>{kineGrp=g;keepPos("main",render);},
+  kineDo:id=>{const K=KIN(),d=today();const l=K.done[d]||(K.done[d]=[]);const i=l.indexOf(id);if(i>=0)l.splice(i,1);else l.push(id);
+    const lim=new Date();lim.setDate(lim.getDate()-180);const lk=isoOf(lim);Object.keys(K.done).forEach(k=>{if(k<lk||!K.done[k].length)delete K.done[k];});
+    save();keepPos("k-"+id,render);toast(i>=0?"Retiré pour aujourd’hui":"Bravo, c’est fait ✓");},
+  kineGrpInfo:g=>{const i=KIN().groups[g]||{};openModal(`<h2>${KGEMO(g)} ${esc(g)}</h2><label for="kgW">Nom de la kiné</label><input id="kgW" value="${esc(i.who||"")}"><label for="kgS">Début des séances</label><input id="kgS" type="date" value="${esc(i.start||"")}"><div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="kineGrpSave" data-id="${esc(g)}">Enregistrer</button></div>`,"form");},
+  kineGrpSave:g=>{KIN().groups[g]={who:val("kgW"),start:val("kgS")};modalDirty=false;save();closeModal();render();toast("Enregistré");},
+  kineTimer:id=>{const x=KIN().ex.find(e=>e.id===id);if(!x)return;kS={id,rep:0,set:1,hold:+x.hold||0,left:+x.hold||0,up:0,run:false,fin:false};openModal(kineTimerHtml(),"kine");kRefresh();clearInterval(kT);kT=setInterval(kTick,1000);},
+  kTGo:()=>{if(!kS)return;if(kS.fin){kS.fin=false;kS.rep=0;kS.set=1;}kS.run=!kS.run;kRefresh();},
+  kTRep:()=>{if(!kS)return;kAddRep();kRefresh();},
+  kTReset:()=>{if(!kS)return;Object.assign(kS,{rep:0,set:1,left:kS.hold,up:0,run:false,fin:false});kRefresh();},
+  kTEnd:()=>{if(!kS)return;const id=kS.id,K=KIN(),d=today();const l=K.done[d]||(K.done[d]=[]);if(!l.includes(id))l.push(id);kS=null;save();closeModal();render();setTimeout(()=>flash("k-"+id),60);toast("Bravo, c’est fait ✓");},
+  kineIcs:id=>{const x=KIN().ex.find(e=>e.id===id);if(!x)return;downloadFile("kine-"+(x.name||"exercice").replace(/[^\wÀ-ÿ-]+/g,"_").slice(0,30)+".ics",kineIcsTxt(x),"text/calendar");toast("Fichier agenda téléchargé : il revient chaque semaine, les jours choisis. Ouvre-le pour l’ajouter.",4500);},
+  goKine:()=>{cur="sante";santeView="kine";render();window.scrollTo(0,0);},
+  /* V25 : bilan du couple */
+  coupleDone:()=>{state.ui.coupleDone=today();save();if(cur==="accueil")keepPos("main",render);toast("Bravo à vous deux 💞");},
+  /* V25 : nettoyage */
+  cleanOpen:()=>cleanOpen(),
+  cleanLater:()=>{state.ui.cleanSnooze=today();save();closeModal();render();toast("D’accord, je te le redemande demain");},
+  cleanKeep:i=>{const h=cleanList[+i];if(!h)return;state.cleanKeep=(state.cleanKeep||[]).concat(h.sig).slice(-300);save();const r=document.getElementById("cl-"+i);if(r)r.remove();if(!document.querySelector("#clList .row")){closeModal();render();}toast("Gardé : il ne te sera plus proposé");},
+  cleanGo:()=>{const sel=[...document.querySelectorAll("#clList input[data-cl]:checked")].map(c=>cleanList[+c.dataset.cl]).filter(Boolean);if(!sel.length){toast("Rien n’est coché");return;}
+    cleanBak=JSON.stringify({t:Date.now(),n:sel.length,state});try{localStorage.setItem(CLEAN_BAK,cleanBak);}catch(e){try{localStorage.removeItem(CLEAN_BAK);}catch(_){}}
+    sel.forEach(h=>{const i=h.arr.indexOf(h.item);if(i>=0)h.arr.splice(i,1);});save();closeModal();render();
+    ask(`🧹 ${pl(sel.length,"élément")} effacé${sel.length>1?"s":""}.`,[["Annuler",()=>cleanUndo(),true]],15000);},
+  cleanUndoBtn:()=>{if(confirm("Remettre le carnet comme avant le dernier nettoyage ? Ce que tu as changé depuis sera perdu."))cleanUndo();},
+  cleanKeepReset:()=>{state.cleanKeep=[];save();render();toast("Les éléments gardés seront de nouveau proposés");},
+  /* V25 : Mes carnets */
+  carNew:()=>openModal(carForm(),"form"),
+  carEdit:id=>{const c=(state.carnets||[]).find(x=>x.id===id);if(c)openModal(carForm(c),"form");},
+  carDel:id=>{const c=(state.carnets||[]).find(x=>x.id===id);if(!c||!confirm("Retirer « "+c.name+" » de la liste ? (le carnet lui-même n’est pas touché)"))return;state.carnets=state.carnets.filter(x=>x.id!==id);save();render();},
+  carSave:id=>{const name=val("caN");if(!name){toast("Écris le nom du carnet");return;}let u=val("caU");if(u&&!/^https?:\/\//i.test(u))u="https://"+u;
+    const data={name,emoji:selVal("caE",true)||"📘",url:u,note:val("caT")};let c=state.carnets.find(x=>x.id===id);if(c)Object.assign(c,data);else{c=Object.assign({id:uid()},data);state.carnets.push(c);}
+    cur="carnets";modalDirty=false;save();closeModal();render();flash("car-"+c.id);toast(u?"Enregistré : touche « Ouvrir » pour y aller":"Enregistré");},
   winNew:()=>openModal(winForm(),"form"),
   winEdit:id=>{const w=state.wins.find(x=>x.id===id);if(w)openModal(winForm(w),"form");},
   winDel:id=>{const w=state.wins.find(x=>x.id===id);if(!w||!confirm("Supprimer « "+w.title+" » ?"))return;state.wins=state.wins.filter(x=>x.id!==id);save();render();},
@@ -3706,6 +3936,12 @@ document.addEventListener("change",e=>{
   if(t.id==="clWho"){const o=$("#clWhoO");if(o){o.hidden=t.value!=="__autre";if(!o.hidden)o.focus();}}
   if(t.id==="clTask"){const o=$("#clTaskO");if(o){o.hidden=t.value!=="__autre";if(!o.hidden)o.focus();}claudeRefresh();}
   if(t.id==="aqSrc"){const w=$("#aqTxtWrap");if(w)w.hidden=t.value!=="txt";}
+  if(t.id==="kiPh"&&t.files&&t.files.length){const fs=[...t.files].slice(0,Math.max(0,3-kinePhotos.length));if(!fs.length){toast("3 photos au maximum : retire-en une d’abord");t.value="";return;}
+    Promise.all(fs.map(shrinkPhoto)).then(ds=>{kinePhotos.push(...ds);modalDirty=true;const pv=$("#kiPrev");if(pv)pv.innerHTML=kinePrevHtml();t.value="";if(t.files&&t.files.length>fs.length)toast("3 photos au maximum");}).catch(()=>toast("Cette photo n’a pas pu être lue"));return;}
+  if(t.id==="cpDay"){const v=t.value,c=state.settings.couple,box=$("#cpDays");if(v==="__autre"){if(box)box.hidden=false;return;}if(box)box.hidden=true;
+    c.days=v==="we"?[6,0]:v==="none"?[]:[+v];c.on=v!=="none";save();toast(v==="none"?"Rappel du bilan du couple arrêté":"Rappel du bilan du couple : "+t.options[t.selectedIndex].text.toLowerCase());return;}
+  if(t.closest&&t.closest("#cpDays")){const c=state.settings.couple;c.days=[...document.querySelectorAll("#cpDays input:checked")].map(x=>+x.value);c.on=c.days.length>0;save();toast(c.days.length?"Jours du rappel enregistrés":"Aucun jour coché : pas de rappel");return;}
+  if(t.id==="cpTxt"){state.settings.couple.text=t.value.trim();save();toast("Message enregistré");return;}
   if(t.id==="wiPh"&&t.files&&t.files[0]){shrinkPhoto(t.files[0]).then(d=>{winPhoto=d;modalDirty=true;const p=$("#wiPrev");if(p)p.innerHTML=`<img class="zoom" src="${d}" alt="Aperçu (toucher pour agrandir)" data-act="photoZoom" data-id=""><button type="button" class="btn ghost spk" data-act="winPhotoDel">Retirer la photo</button>`;}).catch(()=>toast("Cette photo n’a pas pu être lue"));t.value="";}
   if(k==="asstName"){state.settings.asstName=t.value.trim()||"Mon assistant";save();renderHeader();toast("Nom enregistré : "+asstName());}
   if((t.id==="micLever"||t.id==="micCoucher")&&micDay){const D=state.sante.micDays[micDay]=state.sante.micDays[micDay]||{};D[t.id==="micLever"?"lever":"coucher"]=t.value;save();render();toast("Enregistré");}
