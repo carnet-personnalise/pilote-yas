@@ -388,6 +388,7 @@ html.locked #lock{display:flex;position:fixed;inset:0;z-index:200;background:var
 #lockMsg{color:var(--red);font-weight:700;min-height:1.5em;margin:10px 0 0;text-align:center}
 #lockHint{margin:10px 0 0;text-align:center}
 #lockNowBtn{margin-left:auto;padding:6px 10px;font-size:.88rem;flex:0 0 auto}
+#syncBtn{margin-left:auto;padding:6px 10px;font-size:.88rem;flex:0 0 auto;white-space:nowrap}#syncBtn:not([hidden])~#lockNowBtn{margin-left:6px}#syncBtn.need{border-color:var(--sun);box-shadow:0 0 0 2px var(--sun)}
 </style>
 </head>
 <body>
@@ -396,6 +397,7 @@ html.locked #lock{display:flex;position:fixed;inset:0;z-index:200;background:var
     <div class="logo"><img src="data:image/png;base64,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" alt="Logo du Carnet Pilote"></div>
     <div><h1>Carnet Pilote</h1><span class="today" id="today"></span></div>
     <button class="asstBtn" id="asstBtn" data-act="asstOpen" aria-label="Mon assistant" title="Mon assistant"></button>
+    <button class="btn ghost" id="syncBtn" data-act="syncGo" aria-label="Synchroniser" hidden>☁️</button>
     <button class="btn ghost" id="lockNowBtn" data-act="lockNow" aria-label="Verrouiller" hidden>🔒<span class="lbl"> Verrouiller</span></button>
   </div>
   <div class="searchwrap">
@@ -442,7 +444,7 @@ html.locked #lock{display:flex;position:fixed;inset:0;z-index:200;background:var
 
 <script>
 "use strict";
-const VERSION="V25",VERSION_DATE="23/11/2026",FILE_NAME="V25Carnet_Pilote.html";
+const VERSION="V26",VERSION_DATE="24/11/2026",FILE_NAME="V26Carnet_Pilote.html";
 const MOT_DE_PASSE_DE_DEPART="1234"; // 🔒 Mot de passe provisoire : change "1234" ici (garde les guillemets). Ensuite, change-le plutôt dans ⚙️ Paramètres.
 const LOGO="data:image/png;base64,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";
 const KEY="carnetPilotageYasmine";
@@ -472,12 +474,12 @@ const TABS={
   q_abo:{label:"💳 Abonnements",kw:"abonnement abonnements ia claude chatgpt gemini tarif prix renouvellement fin essai gratuit résilier résilié rappel"},
   taches:{label:"Tâches & RDV",kw:"trier tri récentes plus récent date d’ajout notification ordre flèches priorité prioritaire monter descendre rendez-vous rdv santé médecin administratif démarche papiers rappel agenda calendrier échéance urgent reconversion emploi candidature famille objectifs loisirs à faire"},
   fichiers:{label:"Fichiers Drive",kw:"lien drive dossier document pdf google classement où rangé fichier nom"},
-  carnets:{label:"🔗 Mes carnets",kw:"carnets carnet mes autres carnets lien adresse github ouvrir application bilan couple"},
+  carnets:{label:"🔗 Mes carnets",kw:"courrier envoyer envoi boîte aux lettres message kay numérique kn mémoire de vie prestations dispatch carnets carnet mes autres carnets lien adresse github ouvrir application bilan couple"},
   victoires:{label:"🏆 Mes victoires",kw:"victoires avancées statistiques médaille médailles coupe progrès fait à faire bravo réussite souvenir souvenirs randonnée passé photo"},
   journal:{label:"Journal de bord",kw:"date tableau calendrier historique activité suivi durée travail chronomètre temps heures outils catégorie visite"},
   competences:{label:"Compétences",kw:"compétences cv recrutement savoir-faire savoir-être point bilan valoriser métier synthèse détail doublon regrouper dates copier liste étiquette technique transversale transférable métier visé reconversion comparer"},
   aide:{label:"🧠 Aide-mémoire",kw:"favori favoris installer installation fichiers téléchargements mode d’emploi comment aide procédure mise à jour version sauvegarde json restaurer drive lien mémoire claude maison porte pensées vrac routine raccourci pomodoro règles nouveau carnet prompt base modèle application appli pwa github pages en ligne héberger hébergement dépôt icône écran d’accueil manifest service worker"},
-  params:{label:"⚙️ Paramètres",kw:"historique versions vitesse lecture réglages mot de passe verrou verrouiller verrouillage automatique inactivité quitter indice code sauvegarde restauration export import prénom pomodoro pause cycles thème sombre clair ordre onglets version listes catégories outils barre adaptée phase plus utilisés mots cachés musique musiques assistant robot nom visage test tester fiche"}
+  params:{label:"⚙️ Paramètres",kw:"synchronisation synchro synchroniser google drive ordinateur téléphone appareils identifiant client id cloud historique versions vitesse lecture réglages mot de passe verrou verrouiller verrouillage automatique inactivité quitter indice code sauvegarde restauration export import prénom pomodoro pause cycles thème sombre clair ordre onglets version listes catégories outils barre adaptée phase plus utilisés mots cachés musique musiques assistant robot nom visage test tester fiche"}
 };
 const STOP=new Set(["projet","avec","dans","pour","atelier","ateliers","faire","sur","mon","mes","une","des"]);
 const WORK_MSG=[
@@ -533,6 +535,10 @@ const DEF_Q={
 const DEF_T={taskType:["Tâche","Rendez-vous"],taskStatus:["À faire","À suivre","Fait"],domains:DOMAINS.slice(),repSubj:[]};
 const KIND_VAL={Projet:"projet",Objectif:"objectif",Carnet:"carnet"},KIND_LBL={projet:"Projet",objectif:"Objectif",carnet:"Carnet"};
 const QPARTS={ast:"💡 Astuces",alim:"🥗 Alimentation",vet:"👗 Vêtements & sacs",beaute:"💄 Beauté",apa:"🏃‍♀️ APA perso",pret:"🤝 Prêté",abo:"💳 Abonnements"};
+const ROUTE_DEF=[
+  {m:"kay",name:"Kay Numérique",emoji:"💼",key:"kay-numerique",kw:["KN","K Numérique","K-numérique","Kay Numérique","Kay Numerique","Caille numérique"],sec:["Suivi des démarches","Idées","Ateliers"]},
+  {m:"memoire",name:"Ma mémoire de vie",emoji:"📒",key:"ma-memoire-de-vie",kw:["mémoire de vie"],sec:["Souvenirs","Frise chronologique","Documents"]},
+  {m:"prestation",name:"Prestations – Carnet numérique personnalisé",emoji:"🌿",key:"prestations",kw:["prestation","prestations","carnet numérique personnalisé","carnet personnalisé"],sec:["Idées prestations","Suivi des démarches","Clients"]}];
 const RATES={lente:["Lente",1.2],normale:["Normale",1.45],rapide:["Rapide",1.75]};
 const NOTE_FREQ={jamais:["Jamais",0],rarement:["Rarement",.2],parfois:["Parfois",.4],souvent:["Souvent",.75]};
 const TIPS=[
@@ -569,9 +575,22 @@ const TIPS=[
   {e:"🪟",t:"La pause du minuteur arrive pendant que tu remplis une fiche ? Réponds à la fenêtre : ta fiche revient, telle que tu l’avais laissée."},
   {e:"↕️",t:"Tâches & RDV : « Trier par », en haut, pour voir les plus récentes, ou l’échéance la plus proche, en premier."},
   {e:"🧪",t:"Pendant un test, tu peux fermer la fiche pour aller vérifier dans un onglet. Le bouton « 🧪 Retour au test », en bas à gauche, te ramène à ton étape."},
-  {e:"🗂️",t:"Une partie trop longue ? Touche son titre pour la replier : le carnet s’en souvient."}
+  {e:"🗂️",t:"Une partie trop longue ? Touche son titre pour la replier : le carnet s’en souvient."},
+  {e:"☁️",t:"« ☁️ Synchro » entouré, en haut ? Touche-le : ton téléphone et ton ordinateur se mettent d’accord."},
+  {e:"📤",t:"Écris « KN » dans une note : le carnet te propose de l’envoyer dans Kay Numérique, dans la bonne partie."}
 ];
-const TESTS={V25:[
+const TESTS={V26:[
+  {k:"Synchro › identifiant",t:"Sur l’ordinateur, crée ton identifiant Google : Aide-mémoire, partie « ☁️ Synchroniser mes appareils », étapes 1 à 7. Note si une étape ne ressemble pas à ce que tu vois."},
+  {k:"Synchro › 1er appareil",t:"Dans le carnet en ligne, sur l’appareil le plus à jour : Paramètres, ☁️ Synchronisation. Choisis l’appareil, colle l’identifiant, puis « Activer et synchroniser ». Accepte dans la fenêtre Google. En haut, le bouton ☁️✓ apparaît, et « Dernier envoi » a l’heure."},
+  {k:"Synchro › Drive",t:"Ouvre Google Drive : le fichier Carnet_Pilote_synchro.json est là."},
+  {k:"Synchro › 2e appareil",t:"Sur l’autre appareil, fais pareil (« 📋 Copier mon identifiant » pour l’envoyer). Vérifie que tes tâches des deux appareils sont maintenant réunies."},
+  {k:"Synchro › aller-retour",t:"Sur le téléphone, ajoute « test synchro à effacer » dans Reprendre ici. Attends 20 secondes. Sur l’ordinateur, touche ☁️ en haut : la ligne arrive. Efface-la sur l’ordinateur, attends 20 secondes, puis touche ☁️ sur le téléphone : elle disparaît aussi."},
+  {k:"Synchro › réouverture",t:"Ferme le carnet plus d’une heure, puis rouvre-le : il te propose « ☁️ Synchroniser ». Touche-le."},
+  {k:"Courrier › mot-clé",t:"Dans Reprendre ici, ajoute « KN test à effacer : relancer la mairie ». Le carnet propose de l’envoyer vers Kay Numérique. Touche « 📤 Envoyer », choisis « Suivi des démarches », puis Envoyer. Recommence avec « caille numérique test à effacer »."},
+  {k:"Courrier › Mes carnets",t:"Ouvre 🔗 Mes carnets : tes messages sont dans « 📤 Courrier pour mes carnets ». Essaie « 📋 Copier », puis « ✓ Arrivé » : le message passe dans « Déjà arrivés »."},
+  {k:"Mes carnets › réglages",t:"Touche ✎ sur Kay Numérique : complète son adresse en ligne, et regarde ses mots-clés et ses parties. Note l’adresse de réception (kay-numerique)."},
+  {k:"Fiche de test",t:"Pour finir : touche « Résumé ». Vérifie que toutes tes remarques y sont, puis « 📋 Copier mes remarques », et colle-les à Claude pour la V27."}
+],V25:[
   {k:"Nettoyage « à effacer »",t:"Crée 3 éléments avec « test à effacer » dans leur nom : une tâche, une ligne de Reprendre ici, et un exercice kiné (ou un projet). Ferme puis rouvre le carnet : une barre te propose de les voir. Touche « Voir » : les 3 sont dans la liste, avec leur onglet. Décoche-en un, puis « Effacer les cochés ». Touche « Annuler » dans la barre : tout revient. Recommence et efface pour de bon."},
   {k:"Nettoyage › Paramètres",t:"Dans Paramètres, « Nettoyer le carnet » : touche « Chercher ». S’il reste un élément, touche « Garder » : il ne te sera plus proposé."},
   {k:"Santé › Kiné",t:"Dans Santé, partie 🧘 Kiné, touche « Ajouter un exercice ». Remplis le nom, « Pour quoi ? » (Dos, Bruxisme ou Autre…), les jours dont aujourd’hui, le moment, les répétitions, une photo et un lien YouTube. Enregistre : l’exercice est rangé dans son groupe, avec la photo et le bouton ▶️ Vidéo."},
@@ -640,6 +659,14 @@ const TESTS={V25:[
   {k:"Fiche de test",t:"Pour finir : touche « Résumé », puis « 📋 Copier mes remarques », et colle-les à Claude pour la V21."}
 ]};
 const HISTORY=[
+  {v:"V26",d:"24/11/2026",n:[
+    "☁️ <b>Synchronisation Google Drive</b> : le même carnet sur ton téléphone et ton ordinateur, par un fichier de ton Drive. Les deux appareils mélangent leurs changements : rien n’est perdu, même si tu as travaillé sur les deux (Paramètres, ☁️ Synchronisation).",
+    "📤 <b>Courrier vers mes autres carnets</b> : le Carnet Pilote reconnaît les mots-clés (KN, K Numérique, Kay Numérique, Caille numérique…) et te propose d’envoyer la note ou la tâche dans le bon carnet, dans la bonne partie.",
+    "☁️ <b>Bouton en haut</b> : ☁️✓ quand tout est à jour, « ☁️ Synchro » quand Google demande de te reconnecter. À l’ouverture, le carnet te pose la question.",
+    "🔗 <b>Mes carnets</b> : Kay Numérique, Ma mémoire de vie et Prestations ajoutés, avec leurs mots-clés, leurs parties et leur adresse de réception. Nouvelle partie « 📤 Courrier pour mes carnets ».",
+    "📤 Reprendre ici : un bouton 📤 sur les lignes qui parlent d’un autre carnet.",
+    "📌 Rappels du jour : le courrier en attente, et la synchronisation à faire.",
+    "🧠 Aide-mémoire : création de ton identifiant Google pas à pas, texte à donner à Claude pour que tes autres carnets lisent leur courrier, et 2 nouvelles règles pour tous les carnets."]},
   {v:"V25",d:"23/11/2026",n:[
     "🧹 <b>Nettoyage</b> : le carnet retrouve partout ce qui est marqué « à effacer » (ex. « test à effacer ») et te propose de l’effacer, à l’ouverture ou dans les Paramètres. Une copie de secours permet d’annuler.",
     "🧘 <b>Santé › Kiné</b> : une fiche par exercice, rangée par « pour quoi » (Dos, Bruxisme, Autre…), avec photos, lien vidéo, consignes, jours et moment. Minuteur ⏱, bouton ✓ Fait et suivi sur 14 jours.",
@@ -858,7 +885,9 @@ function fixState(s){
   Object.keys(DEF_T).forEach(k=>{if(!Array.isArray(s.lists[k]))s.lists[k]=DEF_T[k].slice();});
   if(!Array.isArray(s.lists.carnetEmo))s.lists.carnetEmo=["📘","💞","🧘","📒","🏠","🌿","💼"];
   s.kine=Object.assign({ex:[],groups:{},done:{}},s.kine||{});if(!Array.isArray(s.kine.ex))s.kine.ex=[];if(!s.kine.groups||typeof s.kine.groups!=="object")s.kine.groups={};if(!s.kine.done||typeof s.kine.done!=="object")s.kine.done={};
-  if(!Array.isArray(s.carnets))s.carnets=[];if(!Array.isArray(s.cleanKeep))s.cleanKeep=[];
+  if(!Array.isArray(s.carnets))s.carnets=[];if(!Array.isArray(s.cleanKeep))s.cleanKeep=[];if(!Array.isArray(s.outbox))s.outbox=[];if(!Array.isArray(s.lists.syncDev))s.lists.syncDev=["Téléphone","Ordinateur","Tablette"];
+  if(!s.seed26){ROUTE_DEF.forEach(d=>{let c=s.carnets.find(x=>norm(x.name).includes(d.m));if(!c){c={id:uid(),name:d.name,emoji:d.emoji,url:"",note:""};s.carnets.push(c);}if(!Array.isArray(c.kw)||!c.kw.length)c.kw=d.kw.slice();if(!Array.isArray(c.sec)||!c.sec.length)c.sec=d.sec.slice();if(!c.key)c.key=d.key;});s.seed26=true;}
+  s.carnets.forEach(c=>{if(!Array.isArray(c.kw))c.kw=[];if(!Array.isArray(c.sec))c.sec=[];if(!c.key)c.key=String(c.name||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");});
   s.settings.couple=Object.assign({on:true,days:[0],text:""},s.settings.couple||{});if(!Array.isArray(s.settings.couple.days))s.settings.couple.days=[0];
   if(!s.seed18){if(!s.lists.domains.includes("Démarches professionnelles")){const i=s.lists.domains.indexOf("Reconversion pro");s.lists.domains.splice(i<0?s.lists.domains.length:i+1,0,"Démarches professionnelles");}s.seed18=true;}
   s.settings.split=Object.assign({ast:false,alim:false,vet:false,beaute:false,apa:false,pret:false,abo:false},s.settings.split||{});
@@ -917,7 +946,7 @@ const WEAK_W=new Set(["carnet","suivi","projet","atelier","version","demande","c
 let state;
 try{const raw=localStorage.getItem(KEY);state=fixState(raw?JSON.parse(raw):null);}catch(e){state=fixState(null);}
 let saveWarned=false;
-function save(){try{localStorage.setItem(KEY,JSON.stringify(state));saveWarned=false;}catch(e){if(!saveWarned){saveWarned=true;setTimeout(()=>toast("⚠️ Mémoire du carnet pleine : rien n’a pu être enregistré. Retire une photo (Mes victoires), puis fais une sauvegarde .json.",8000),50);}}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state));saveWarned=false;syncMark();}catch(e){if(!saveWarned){saveWarned=true;setTimeout(()=>toast("⚠️ Mémoire du carnet pleine : rien n’a pu être enregistré. Retire une photo (Mes victoires), puis fais une sauvegarde .json.",8000),50);}}}
 
 let cur="accueil",taskFilter="Tous",lastHits=[],pendingIdea=null,actx=null,justDragged=false,tickCount=0;
 
@@ -977,7 +1006,7 @@ function selVal(id,addIt){
 function applyTheme(){const t=state.settings.theme;if(t==="auto")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",t);}
 function applyPhase(){document.documentElement.setAttribute("data-phase",state.mode||"neutre");}
 function longDate(){const d=new Intl.DateTimeFormat("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"}).format(new Date());return d.charAt(0).toUpperCase()+d.slice(1);}
-function renderHeader(){const d=longDate();$("#today").textContent=(state.name||"Moi")+", "+d.charAt(0).toLowerCase()+d.slice(1);const lb=$("#lockNowBtn");if(lb)lb.hidden=!canLock();
+function renderHeader(){const d=longDate();$("#today").textContent=(state.name||"Moi")+", "+d.charAt(0).toLowerCase()+d.slice(1);const lb=$("#lockNowBtn");if(lb)lb.hidden=!canLock();syncBtnUpd();
   const ab=$("#asstBtn");if(ab){ab.innerHTML=robotSvg(state.settings.asstIcon,42);ab.setAttribute("aria-label",asstName());ab.title=asstName();}}
 function tabVisible(k){const sp=state.settings.split||{};if(k.startsWith("q_"))return !!sp[k.slice(2)];if(k==="quotidien")return !Object.keys(QPARTS).every(p=>sp[p]);return true;}
 function renderTabs(){
@@ -1081,7 +1110,7 @@ function vAccueil(){
     ${later.length?`<details><summary>⏳ Plus tard (${later.length})</summary>${later.map(i=>ideaRow(i,true)).join("")}</details>`:""}
   </section>`;
   const R=state.rep,U=state.ui,grp=!!U.repGroup,fold=!!U.repFold,left=R.filter(r=>!r.done).length;
-  const repRow=r=>{const on=repSel.has(r.id);return `<div class="row rep ${r.done?"done":""} ${on?"selon":""}" id="r-${r.id}">${repSelMode?`<button class="icon noread" data-act="repPick" data-id="${r.id}" aria-pressed="${on}" aria-label="Choisir cette ligne">${on?"☑️":"⬜"}</button>`:`<input type="checkbox" data-act="repTick" data-id="${r.id}" ${r.done?"checked":""} aria-label="C’est fait">`}<div class="grow"><div class="ttl">${esc(r.text)}</div>${r.date||(r.subj&&!grp)?`<div class="meta added noread">${[r.date?"Ajouté le "+fmt(r.date):"",r.subj&&!grp?"🗂️ "+esc(r.subj):""].filter(Boolean).join(" · ")}</div>`:""}</div>${repSelMode?"":`<button class="icon noread" data-act="repEdit" data-id="${r.id}" aria-label="Modifier cette ligne">✎</button><button class="icon noread" data-act="repDel" data-id="${r.id}" aria-label="Retirer cette ligne">✕</button>`}</div>`;};
+  const repRow=r=>{const on=repSel.has(r.id);return `<div class="row rep ${r.done?"done":""} ${on?"selon":""}" id="r-${r.id}">${repSelMode?`<button class="icon noread" data-act="repPick" data-id="${r.id}" aria-pressed="${on}" aria-label="Choisir cette ligne">${on?"☑️":"⬜"}</button>`:`<input type="checkbox" data-act="repTick" data-id="${r.id}" ${r.done?"checked":""} aria-label="C’est fait">`}<div class="grow"><div class="ttl">${esc(r.text)}</div>${r.date||(r.subj&&!grp)?`<div class="meta added noread">${[r.date?"Ajouté le "+fmt(r.date):"",r.subj&&!grp?"🗂️ "+esc(r.subj):""].filter(Boolean).join(" · ")}</div>`:""}</div>${repSelMode?"":`${routeFind(r.text)?`<button class="icon noread" data-act="mailFromRep" data-id="${r.id}" aria-label="Envoyer vers un autre carnet" title="Envoyer vers un autre carnet">📤</button>`:""}<button class="icon noread" data-act="repEdit" data-id="${r.id}" aria-label="Modifier cette ligne">✎</button><button class="icon noread" data-act="repDel" data-id="${r.id}" aria-label="Retirer cette ligne">✕</button>`}</div>`;};
   let repList="";
   if(grp){const keys=[];R.forEach(r=>{const k=r.subj||"";if(!keys.includes(k))keys.push(k);});keys.sort((a,b)=>(a?0:1)-(b?0:1));
     repList=keys.map(k=>{const l=R.filter(r=>(r.subj||"")===k);return `<p class="subh">${k?"🗂️ "+esc(k):"Sans sujet"} <span class="badge">${l.filter(r=>!r.done).length}</span></p>`+l.map(repRow).join("");}).join("");}
@@ -1427,9 +1456,10 @@ function newsModal(){
 let opened=false;
 function onOpen(){
   if(opened)return;opened=true;
-  if(state.seenVersion!==VERSION){state.seenVersion=VERSION;save();setTimeout(newsModal,300);return;}
-  setTimeout(()=>{if(draftOffer())return;if(alertCheck())return;const da=dayAsk();if(testLeft()){testPop();return;}if(da)return;const f=NOTE_FREQ[state.settings.noteFreq]||NOTE_FREQ.parfois;if(Math.random()<f[1])showNote();},800);
+  if(state.seenVersion!==VERSION){state.seenVersion=VERSION;save();setTimeout(newsModal,300);if(syncReady()&&tokOk())syncNow(false);return;}
+  setTimeout(()=>{if(draftOffer())return;if(syncOpen())return;openChecks();},800);
 }
+function openChecks(){if(alertCheck())return;const da=dayAsk();if(testLeft()){testPop();return;}if(da)return;const f=NOTE_FREQ[state.settings.noteFreq]||NOTE_FREQ.parfois;if(Math.random()<f[1])showNote();}
 
 /* ---------- V15 : voix, barre de question, doublons, sommaire ---------- */
 const spkBtn=(id,small)=>small?`<button class="icon noread" data-act="speak" data-id="${id}" aria-label="Écouter">🔊</button>`:`<button class="btn ghost spk noread" data-act="speak" data-id="${id}">🔊 Écouter</button>`;
@@ -2208,7 +2238,7 @@ function coupleSel(){const c=state.settings.couple,d=c.days||[];
 /* ---------- V25 : nettoyage des éléments « à effacer » ---------- */
 const CLEAN_RX="a effacer",CLEAN_BAK="carnetPilote_avantNettoyage";
 const CLEAN_SKIP=new Set(["settings","tests","ui","taskOrd","snooze","subjLearn","seenVersion","cleanKeep","aidePins","reprendre"]);
-const CLEAN_WHERE={tasks:"Tâches & RDV",projects:"Projets",rep:"Reprendre ici",ideas:"Idées",skills:"Compétences",targets:"Métier visé",contacts:"Contacts",calls:"Appels",wins:"Mes victoires",music:"Musique",asstQ:"Assistant",claudeReq:"Demandes à Claude",journal:"Journal de bord",work:"Journal de bord",urgent:"Urgences",alerts:"Rappels",lists:"Menus (choix des listes)",sante:"Santé",q:"Mon quotidien",kine:"Santé › Kiné",carnets:"Mes carnets"};
+const CLEAN_WHERE={tasks:"Tâches & RDV",projects:"Projets",rep:"Reprendre ici",ideas:"Idées",skills:"Compétences",targets:"Métier visé",contacts:"Contacts",calls:"Appels",wins:"Mes victoires",music:"Musique",asstQ:"Assistant",claudeReq:"Demandes à Claude",journal:"Journal de bord",work:"Journal de bord",urgent:"Urgences",alerts:"Rappels",lists:"Menus (choix des listes)",sante:"Santé",q:"Mon quotidien",kine:"Santé › Kiné",carnets:"Mes carnets",outbox:"Courrier pour mes carnets"};
 let cleanList=[],cleanBak=null;
 const nrmC=s=>String(s).normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[’'\s]+/g," ");
 function strHit(v){return typeof v==="string"&&v.length<4000&&!v.startsWith("data:")&&nrmC(v).includes(CLEAN_RX);}
@@ -2234,6 +2264,8 @@ function dayItems(){const out=[];const td=kineToday().filter(x=>!kineDone(x.id))
   if(td.length)out.push({html:"🧘 Kiné aujourd’hui : "+esc(kineSumTxt(td))+".",btn:["Voir","goKine"]});
   if(coupleToday())out.push({html:"💞 "+esc(state.settings.couple.text||COUPLE_TXT),btn:["✓ C’est fait","coupleDone"]});
   if(state.ui.cleanSnooze!==today()){const n=cleanFind().length;if(n)out.push({html:"🧹 "+pl(n,"élément")+" « à effacer » dans le carnet.",btn:["Voir","cleanOpen"]});}
+  const nm=(state.outbox||[]).filter(o=>o.status!=="recu").length;if(nm)out.push({html:"📤 "+pl(nm,"message")+" en attente pour tes autres carnets.",btn:["Voir","goCarnets"]});
+  if(syncReady()&&canSyncHere()&&!tokOk())out.push({html:"☁️ Ton carnet attend d’être synchronisé avec ton Drive.",btn:["Synchroniser","syncGo"]});
   return out;}
 function dayCard(){const L=dayItems();return L.length?`<section class="block daycard noread" id="dayCard"><h3 style="margin:0 0 6px">📌 Rappels du jour</h3>${L.map(x=>`<div class="row"><div class="grow">${x.html}</div><button class="btn ghost spk" data-act="${x.btn[1]}">${x.btn[0]}</button></div>`).join("")}</section>`:"";}
 function dayAsk(){
@@ -2242,22 +2274,181 @@ function dayAsk(){
   const td=kineToday().filter(x=>!kineDone(x.id));if(td.length){ask("🧘 Kiné aujourd’hui : "+esc(kineSumTxt(td))+".",[["Voir",()=>ACT.goKine(),true]],15000);return true;}
   return false;}
 
+/* ---------- V26 : synchronisation automatique par Google Drive ---------- */
+/* Un fichier Carnet_Pilote_synchro.json sur le Drive. Chaque appareil mélange ses changements avec ceux de l’autre, élément par élément (fusion à 3 points : ce qui a changé depuis la dernière synchro). */
+var SYNC_KEY="carnetPilote_synchro",SYNC_FILE="Carnet_Pilote_synchro.json",SYNC_SCOPE="https://www.googleapis.com/auth/drive.file";
+var SYNC_LOCAL=["chrono","pomo","fabPos","seenVersion","ui"],SYNC_LOCAL_SET=["bioId"];
+var syncCfg=(()=>{const d={clientId:"",on:false,device:"",fileId:"",remoteMod:"",lastPull:null,lastPush:null,base:null,dirty:true,dirtyAt:0,curH:"",lastH:"",err:"",asked:false,lastOk:0};try{return Object.assign(d,JSON.parse(localStorage.getItem(SYNC_KEY)||"{}"));}catch(e){return d;}})();
+var syncTok=null,syncTokExp=0,syncBusy=false,syncT=null,syncChkT=null,syncApplying=false,gisP=null,saveCount=0,tickSave=false;
+try{const t=JSON.parse(sessionStorage.getItem("carnetPilote_jeton")||"null");if(t&&t.exp>Date.now()+60000){syncTok=t.tok;syncTokExp=t.exp;}}catch(e){}
+function syncSave(){try{localStorage.setItem(SYNC_KEY,JSON.stringify(syncCfg));}catch(e){}}
+const syncReady=()=>!!(syncCfg&&syncCfg.on&&syncCfg.clientId);
+const tokOk=()=>!!(syncTok&&Date.now()<syncTokExp-60000);
+const canSyncHere=()=>location.protocol==="https:";
+/* empreinte d’une valeur (clés triées, pour comparer sans tenir compte de l’ordre) */
+function stab(v){if(Array.isArray(v))return "["+v.map(stab).join(",")+"]";if(v&&typeof v==="object")return "{"+Object.keys(v).sort().map(k=>JSON.stringify(k)+":"+stab(v[k])).join(",")+"}";return JSON.stringify(v===undefined?null:v);}
+function hsh(v){const s=stab(v);let h1=0xdeadbeef,h2=0x41c6ce57;for(let i=0;i<s.length;i++){const c=s.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677);}
+  h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return (h2>>>0).toString(36)+(h1>>>0).toString(36);}
+const isObjS=v=>!!v&&typeof v==="object"&&!Array.isArray(v);
+const isIdArr=a=>Array.isArray(a)&&a.length>0&&a.every(x=>isObjS(x)&&x.id);
+function snap(v,path,out){const n={h:hsh(v)};if(isObjS(v)){n.o=1;Object.keys(v).forEach(k=>snap(v[k],path+"/"+k,out));}else if(isIdArr(v)){n.ids={};v.forEach(x=>{n.ids[x.id]=hsh(x);});}out[path]=n;return out;}
+function mrg(L,R,B,path,rNew){const b=B[path];
+  if(isObjS(L)&&isObjS(R)){const o={};new Set([...Object.keys(L),...Object.keys(R)]).forEach(k=>{const p=path+"/"+k,inL=k in L,inR=k in R;
+      if(inL&&inR){o[k]=mrg(L[k],R[k],B,p,rNew);return;}
+      const v=inL?L[k]:R[k],bk=B[p];if(bk&&bk.h===hsh(v))return; /* effacé sur l’autre appareil */
+      o[k]=v;});return o;}
+  if(Array.isArray(L)&&Array.isArray(R)&&(isIdArr(L)||isIdArr(R)||(b&&b.ids))){
+    const bi=b&&b.ids,mL=new Map(),mR=new Map(),out=[],seen=new Set();L.forEach(x=>{if(x&&x.id)mL.set(x.id,x);});R.forEach(x=>{if(x&&x.id)mR.set(x.id,x);});
+    const first=rNew?R:L,second=rNew?L:R,noId=x=>{const c=Object.assign({},x);delete c.id;return stab(c);};
+    const firstKeys=!bi?new Set(first.filter(x=>x&&x.id).map(noId)):null;
+    const pick=id=>{const a=mL.get(id),r=mR.get(id),bh=bi&&bi[id];
+      if(a&&r){const ha=hsh(a),hr=hsh(r);if(ha===hr)return a;if(bh===ha)return r;if(bh===hr)return a;return rNew?r:a;}
+      const v=a||r;if(bh!==undefined&&hsh(v)===bh)return null; /* effacé sur l’autre appareil */
+      return v;};
+    [first,second].forEach((arr,j)=>arr.forEach(x=>{if(!x||!x.id){if(j===0)out.push(x);return;}if(seen.has(x.id))return;seen.add(x.id);
+      if(j===1&&firstKeys&&!(mL.has(x.id)&&mR.has(x.id))&&firstKeys.has(noId(x)))return; /* même élément créé deux fois */
+      const v=pick(x.id);if(v)out.push(v);}));
+    return out;}
+  const hL=hsh(L),hR=hsh(R);if(hL===hR)return L;if(b&&b.h===hL)return R;if(b&&b.h===hR)return L;return rNew?R:L;}
+function syncPart(s){const o=JSON.parse(JSON.stringify(s));SYNC_LOCAL.forEach(k=>delete o[k]);if(o.settings)SYNC_LOCAL_SET.forEach(k=>delete o.settings[k]);return o;}
+function syncApply(m){const keep={},ks={};SYNC_LOCAL.forEach(k=>{keep[k]=state[k];});SYNC_LOCAL_SET.forEach(k=>{ks[k]=state.settings[k];});
+  const n=Object.assign({},m,keep);n.settings=Object.assign({},m.settings||{},ks);syncApplying=true;try{state=fixState(n);save();}finally{syncApplying=false;}}
+/* appelé à chaque enregistrement */
+function syncMark(){if(typeof syncCfg==="undefined"||!syncCfg||syncApplying||tickSave||!syncReady())return;saveCount=(saveCount||0)+1;clearTimeout(syncChkT);syncChkT=setTimeout(syncCheck,3000);}
+function syncCheck(){if(!syncReady())return;const h=hsh(syncPart(state));if(h!==syncCfg.curH){syncCfg.curH=h;syncCfg.dirtyAt=Date.now();}syncCfg.dirty=h!==syncCfg.lastH;syncSave();
+  if(syncCfg.dirty&&tokOk()&&canSyncHere()){clearTimeout(syncT);syncT=setTimeout(()=>syncNow(false),12000);}syncBtnUpd();}
+function gisLoad(){if(window.google&&google.accounts&&google.accounts.oauth2)return Promise.resolve();if(gisP)return gisP;
+  gisP=new Promise((ok,ko)=>{const s=document.createElement("script");s.src="https://accounts.google.com/gsi/client";s.async=true;s.onload=()=>ok();s.onerror=()=>{gisP=null;ko(new Error("gis"));};document.head.appendChild(s);});return gisP;}
+function getToken(interactive){if(tokOk())return Promise.resolve(syncTok);if(!interactive)return Promise.reject(new Error("notoken"));
+  return gisLoad().then(()=>new Promise((ok,ko)=>{const tc=google.accounts.oauth2.initTokenClient({client_id:syncCfg.clientId.trim(),scope:SYNC_SCOPE,
+      callback:r=>{if(r&&r.access_token){syncTok=r.access_token;syncTokExp=Date.now()+(+r.expires_in||3600)*1000;try{sessionStorage.setItem("carnetPilote_jeton",JSON.stringify({tok:syncTok,exp:syncTokExp}));}catch(e){}syncCfg.asked=true;syncSave();ok(syncTok);}else ko(new Error((r&&r.error)||"refus"));},
+      error_callback:e=>ko(new Error((e&&e.type)||"popup"))});
+    tc.requestAccessToken({prompt:syncCfg.asked?"":"consent"});}));}
+const GD="https://www.googleapis.com/drive/v3/files",GU="https://www.googleapis.com/upload/drive/v3/files";
+async function gdf(url,opt){opt=opt||{};opt.headers=Object.assign({Authorization:"Bearer "+syncTok},opt.headers||{});const r=await fetch(url,opt);
+  if(r.status===401){syncTok=null;syncTokExp=0;try{sessionStorage.removeItem("carnetPilote_jeton");}catch(e){}throw new Error("401");}if(!r.ok)throw new Error("http"+r.status);return r;}
+async function gdFind(){if(syncCfg.fileId){try{const j=await (await gdf(GD+"/"+syncCfg.fileId+"?fields=id,modifiedTime,trashed")).json();if(!j.trashed)return j;}catch(e){if(e.message==="401")throw e;}syncCfg.fileId="";}
+  const q=encodeURIComponent("name='"+SYNC_FILE+"' and trashed=false");const j=await (await gdf(GD+"?q="+q+"&orderBy=modifiedTime%20desc&pageSize=5&spaces=drive&fields=files(id,modifiedTime)")).json();
+  const f=(j.files||[])[0];if(f)syncCfg.fileId=f.id;return f||null;}
+async function gdGet(id){return (await gdf(GD+"/"+id+"?alt=media")).json();}
+async function gdUp(body){const txt=JSON.stringify(body),big=new Blob([txt]).size>4500000,meta={name:SYNC_FILE,mimeType:"application/json",description:"Synchronisation du Carnet Pilote : ne pas modifier ni partager."};
+  if(big){const r=await gdf(syncCfg.fileId?GU+"/"+syncCfg.fileId+"?uploadType=resumable&fields=id,modifiedTime":GU+"?uploadType=resumable&fields=id,modifiedTime",{method:syncCfg.fileId?"PATCH":"POST",headers:{"Content-Type":"application/json; charset=UTF-8"},body:JSON.stringify(syncCfg.fileId?{}:meta)});
+    const loc=r.headers.get("Location");if(!loc)throw new Error("http0");const r2=await fetch(loc,{method:"PUT",headers:{"Content-Type":"application/json"},body:txt});if(!r2.ok)throw new Error("http"+r2.status);const j=await r2.json();syncCfg.fileId=j.id||syncCfg.fileId;return j;}
+  if(syncCfg.fileId)return (await gdf(GU+"/"+syncCfg.fileId+"?uploadType=media&fields=id,modifiedTime",{method:"PATCH",headers:{"Content-Type":"application/json"},body:txt})).json();
+  const bd="cp"+uid(),r=await gdf(GU+"?uploadType=multipart&fields=id,modifiedTime",{method:"POST",headers:{"Content-Type":"multipart/related; boundary="+bd},
+    body:"--"+bd+"\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n"+JSON.stringify(meta)+"\r\n--"+bd+"\r\nContent-Type: application/json\r\n\r\n"+txt+"\r\n--"+bd+"--"});
+  const j=await r.json();syncCfg.fileId=j.id;return j;}
+function syncErrTxt(m){if(m==="gis")return "Google ne répond pas (Internet ?)";if(/popup/.test(m))return "La fenêtre Google s’est fermée : touche ☁️ pour réessayer";if(/access_denied|refus/.test(m))return "Google n’a pas donné l’accès : touche ☁️ et accepte";
+  if(m==="http403")return "Drive refuse l’accès : vérifie que « Google Drive API » est activée (Aide-mémoire, ☁️)";if(/invalid|client/.test(m))return "Identifiant Google incorrect (Paramètres, Synchronisation)";return "Synchronisation impossible pour l’instant ("+m+")";}
+async function syncNow(interactive,again){
+  if(!syncReady()){if(interactive){cur="params";render();setTimeout(()=>flash("pSync"),80);}return;}
+  if(!canSyncHere()){if(interactive)toast("☁️ La synchronisation marche dans le carnet en ligne (ton application), pas dans un fichier téléchargé",6000);return;}
+  if(syncBusy)return;
+  if(!navigator.onLine){syncCfg.err="Pas d’Internet pour l’instant";syncBtnUpd();if(interactive)toast("☁️ Pas d’Internet : la synchronisation se fera plus tard",4000);return;}
+  if(!interactive&&(modalKind==="form"||isLocked())){clearTimeout(syncT);syncT=setTimeout(()=>syncNow(false),30000);return;}
+  syncBusy=true;syncBtnUpd();let retry=false;
+  try{await getToken(interactive);
+    const f=await gdFind();const c0=saveCount;let local=syncPart(state),rs=null,rem=null,merged=local,pulled=false;
+    if(f&&f.modifiedTime!==syncCfg.remoteMod){rem=await gdGet(f.id);rs=rem&&rem.state&&typeof rem.state==="object"?rem.state:null;}
+    if(rs){if(saveCount!==c0)local=syncPart(state);merged=mrg(local,rs,syncCfg.base||{},"",(rem.savedAt||0)>(syncCfg.dirtyAt||0));pulled=hsh(merged)!==hsh(local);syncCfg.lastPull={t:Date.now(),dev:rem.device||""};}
+    if(pulled)syncApply(merged);
+    const need=!f||syncCfg.dirty||!!(rs&&hsh(merged)!==hsh(rs))||!!(f&&!rs&&f.modifiedTime!==syncCfg.remoteMod);
+    const part=syncPart(state),c1=saveCount;
+    if(need){const j=await gdUp({app:"Carnet Pilote",format:1,version:VERSION,device:syncCfg.device||"",savedAt:Date.now(),state:part});syncCfg.remoteMod=j.modifiedTime||"";syncCfg.lastPush={t:Date.now(),dev:syncCfg.device||""};syncCfg.base=snap(part,"",{});}
+    else{if(f)syncCfg.remoteMod=f.modifiedTime;if(rs)syncCfg.base=snap(rs,"",{});}
+    syncCfg.lastH=hsh(part);syncCfg.curH=syncCfg.lastH;syncCfg.dirty=saveCount!==c1;syncCfg.err="";syncCfg.lastOk=Date.now();syncSave();
+    if(pulled){render();toast("☁️ Synchronisé : les changements de l’autre appareil sont arrivés ✓",4000);}else if(interactive)toast(need?"☁️ Synchronisé : envoyé sur ton Drive ✓":"☁️ Déjà à jour ✓",3000);
+    if(syncCfg.dirty){clearTimeout(syncT);syncT=setTimeout(()=>syncNow(false),12000);}
+    mailPublish();
+  }catch(e){const m=(e&&e.message)||"";
+    if(m==="401"&&interactive&&!again)retry=true;else if(m==="401"||m==="notoken")syncCfg.err="";else{syncCfg.err=syncErrTxt(m);if(interactive)toast("☁️ "+syncCfg.err,6000);}syncSave();}
+  finally{syncBusy=false;syncBtnUpd();if(cur==="params"&&$("#pSync"))keepPos("pSync",render);}
+  if(retry)return syncNow(true,true);}
+function syncBtnUpd(){const b=document.getElementById("syncBtn");if(!b||typeof syncCfg==="undefined"||!syncCfg)return;const on=syncReady()&&canSyncHere();b.hidden=!on;if(!on)return;
+  b.classList.toggle("need",!syncBusy&&!tokOk());
+  const [t,l]=syncBusy?["⏳","Synchronisation en cours"]:syncCfg.err?["⚠️☁️","Synchronisation : "+syncCfg.err]:!tokOk()?["☁️ Synchro","Toucher pour synchroniser avec ton Drive"]:syncCfg.dirty?["☁️…","Envoi sur ton Drive dans quelques secondes"]:["☁️✓","Synchronisé avec ton Drive"];
+  b.innerHTML=t;b.setAttribute("aria-label",l);b.title=l;}
+function syncWhen(x){if(!x||!x.t)return "pas encore";const d=new Date(x.t);return (isoOf(d)===today()?"aujourd’hui":"le "+fmt(isoOf(d)))+" à "+hText(hm(d))+(x.dev?" ("+esc(x.dev)+")":"");}
+/* à l’ouverture : synchro silencieuse, ou une question si Google demande de se reconnecter */
+function syncOpen(){if(!syncReady()||!canSyncHere()||!navigator.onLine)return false;gisLoad().catch(()=>{});
+  if(tokOk()){syncNow(false);return false;}
+  let done=false;const go=()=>{if(done)return;done=true;setTimeout(openChecks,400);};
+  ask("☁️ Synchroniser avec ton Drive, pour retrouver ce que tu as fait sur l’autre appareil ?",[["☁️ Synchroniser",()=>{done=true;syncNow(true).finally(()=>setTimeout(openChecks,800));},true],["Plus tard",go]],25000);
+  setTimeout(go,26000);return true;}
+function syncSec(){const c=syncCfg,here=canSyncHere(),ready=syncReady();
+  return `<section class="block" id="pSync"><h3>☁️ Synchronisation (Google Drive)</h3>
+  <p class="meta">Le même carnet sur ton téléphone et ton ordinateur. Les changements passent par un fichier de ton Drive : <b>${SYNC_FILE}</b>. Les deux appareils <b>mélangent</b> leurs changements : rien n’est perdu, même si tu as travaillé sur les deux.</p>
+  ${here?"":`<div class="warn">⚠️ Ici, le carnet est ouvert comme un simple fichier. La synchronisation marche dans le carnet en ligne : <b>carnet-personnalise.github.io/pilote-yas</b> (ton application).</div>`}
+  ${ready?`<p><b>État :</b> ${syncBusy?"⏳ en cours…":c.err?"⚠️ "+esc(c.err):!tokOk()?"☁️ à reconnecter : touche « Synchroniser maintenant »":c.dirty?"☁️ envoi dans quelques secondes":"✓ synchronisé"}</p>
+  <p class="meta">📤 Dernier envoi : ${syncWhen(c.lastPush)}<br>📥 Dernière réception : ${syncWhen(c.lastPull)}</p>`:exBox("État : ✓ synchronisé<br>📤 Dernier envoi : aujourd’hui à 10h12 (Téléphone)<br>📥 Dernière réception : aujourd’hui à 9h40 (Ordinateur)")}
+  ${selField("syDev","Cet appareil","syncDev",c.device)}
+  <label for="syId">Mon identifiant Google <span class="hint">(ID client, il finit par .apps.googleusercontent.com)</span></label><input id="syId" value="${esc(c.clientId)}" placeholder="123456-abcdef.apps.googleusercontent.com" autocomplete="off" spellcheck="false">
+  <p class="hint">À créer une seule fois, sur l’ordinateur : 🧠 Aide-mémoire, partie « ☁️ Synchroniser mes appareils (V26) ».</p>
+  <div class="bar" style="margin:10px 0 0">${ready?`<button class="btn" data-act="syncGo">☁️ Synchroniser maintenant</button><button class="btn ghost" data-act="syncSet">Enregistrer les changements</button><button class="btn ghost" data-act="syncCopyId">📋 Copier mon identifiant</button><button class="btn ghost" data-act="syncOff">Arrêter sur cet appareil</button>`:`<button class="btn" data-act="syncOn">☁️ Activer et synchroniser</button>`}</div>
+  <p class="meta">Commence par l’appareil qui a les données les plus à jour. Google demande de se reconnecter environ toutes les heures : touche alors le bouton ☁️, en haut. Garde aussi ta sauvegarde .json de la semaine.</p></section>`;}
+
+/* ---------- V26 : courrier vers mes autres carnets ---------- */
+/* Les carnets en ligne sur carnet-personnalise.github.io partagent le même stockage : le Carnet Pilote y dépose les messages (clé « carnets_courrier »), chaque carnet lit ceux qui lui sont adressés. */
+const MAIL_KEY="carnets_courrier";
+const slugOf=s=>norm(s).replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
+const rxCache={};
+function routeRx(w){const k=norm(w);return rxCache[k]||(rxCache[k]=new RegExp("(^|[^a-z0-9])"+k.trim().replace(/[.*+?^${}()|[\]\\]/g,"\\$&").replace(/[\s-]+/g,"[\\s-]*")+"($|[^a-z0-9])"));}
+function routeFind(text){const t=norm(text);if(!t)return null;return (state.carnets||[]).find(c=>(c.kw||[]).some(w=>String(w).trim()&&routeRx(w).test(t)))||null;}
+function routeOffer(text,src){const c=routeFind(text);if(!c)return false;
+  ask("📤 Ça parle de "+esc(c.name)+". L’envoyer dans ce carnet ?",[["📤 Envoyer",()=>mailForm(src,c.id,text),true],["Non, garder ici",()=>{}]],15000);return true;}
+let mailSrc={kind:"",id:""};
+function secOpts(c,v){const L=(c&&c.sec)||[];return `${L.map(x=>`<option ${x===v?"selected":""}>${esc(x)}</option>`).join("")}<option value="">Je ne sais pas (à ranger là-bas)</option><option value="__autre">➕ Autre…</option>`;}
+function mailForm(src,cid,text){mailSrc=src||{kind:"",id:""};const C=state.carnets||[];const c=C.find(x=>x.id===cid)||C[0]||null;
+  if(!text&&src&&src.kind==="rep"){const r=state.rep.find(x=>x.id===src.id);text=r?r.text:"";}
+  if(!text&&src&&src.kind==="task"){const t=state.tasks.find(x=>x.id===src.id);text=t?t.title+(t.note?" — "+t.note:""):"";}
+  openModal(`<h2>📤 Envoyer vers un autre carnet</h2><p class="meta">Le message part dans « 🔗 Mes carnets ». Ton autre carnet le range dans la bonne partie dès qu’il sait lire son courrier (Aide-mémoire, partie V26).</p>
+  <label for="mlTo">Vers quel carnet ?</label><select id="mlTo">${C.map(x=>`<option value="${x.id}" ${c&&x.id===c.id?"selected":""}>${esc((x.emoji||"📘")+" "+x.name)}</option>`).join("")}<option value="__autre" ${c?"":"selected"}>➕ Autre…</option></select>
+  <input id="mlToO" placeholder="Nom du carnet" aria-label="Nom du carnet : autre" ${c?"hidden":""}>
+  <label for="mlSec">Dans quelle partie ?</label><select id="mlSec">${secOpts(c,"")}</select><input id="mlSecO" placeholder="Nom de la partie, ex. Suivi des démarches" aria-label="Partie : autre" hidden>
+  <label for="mlTxt">Texte</label><textarea id="mlTxt" class="grow-ta" rows="3">${esc(text||"")}</textarea>
+  ${src&&src.kind?`<label class="chip check" style="margin-top:12px"><input type="checkbox" id="mlKeep" ${src.kind==="task"?"checked":""}> Garder aussi ${src.kind==="task"?"la tâche":"la ligne"} ici</label>`:""}
+  <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="mailSend">📤 Envoyer</button></div>`,"form");}
+function mailMsg(o){return {id:o.id,from:"carnet-pilote",fromName:"Carnet Pilote",to:o.key,toName:o.toName,section:o.section||"",text:o.text,date:o.date,time:o.time||"",status:"attente"};}
+/* dépose le courrier en attente et lit les accusés de réception */
+function mailPublish(){if(!state||!Array.isArray(state.outbox))return false;let ch=false;
+  try{let box=JSON.parse(localStorage.getItem(MAIL_KEY)||"[]");if(!Array.isArray(box))box=[];
+    box.forEach(m=>{if(m&&m.status==="recu"){const o=state.outbox.find(x=>x.id===m.id);if(o&&o.status!=="recu"){o.status="recu";o.recvAt=m.recvAt||today();ch=true;}}});
+    box=box.filter(m=>m&&(m.from!=="carnet-pilote"||state.outbox.some(o=>o.id===m.id&&(o.status!=="recu"||m.status==="recu"))));
+    const ids=new Set(box.map(m=>m.id));state.outbox.filter(o=>o.status!=="recu"&&!ids.has(o.id)).forEach(o=>box.push(mailMsg(o)));
+    localStorage.setItem(MAIL_KEY,JSON.stringify(box));}catch(e){}
+  if(ch){save();if(cur==="carnets")render();}return ch;}
+function mailRow(o){const c=(state.carnets||[]).find(x=>x.id===o.to),u=c&&safeUrl(c.url);
+  return `<div class="row" id="ml-${o.id}"><div class="grow"><b>→ ${esc((c&&c.emoji)||"📘")} ${esc(o.toName)}${o.section?" › "+esc(o.section):""}</b><div class="ttl">${esc(o.text).replace(/\n/g,"<br>")}</div>
+  <div class="meta">${o.status==="recu"?"✅ Arrivé"+(o.recvAt?" le "+fmt(o.recvAt):""):"⏳ En attente"} · envoyé le ${fmt(o.date)}${o.time?" à "+hText(o.time):""}</div>
+  <div class="bar noread" style="margin-top:6px"><button class="btn ghost spk" data-act="mailCopy" data-id="${o.id}">📋 Copier</button>${u?`<a class="btn ghost spk" href="${esc(u)}" target="_blank" rel="noopener">Ouvrir le carnet</a>`:""}${o.status!=="recu"?`<button class="btn ghost spk" data-act="mailDone" data-id="${o.id}">✓ Arrivé</button>`:""}</div></div>
+  <button class="icon" data-act="mailDel" data-id="${o.id}" aria-label="Retirer ce message">🗑</button></div>`;}
+function mailBlock(){const L=state.outbox||[],W=L.filter(o=>o.status!=="recu"),D=L.filter(o=>o.status==="recu");
+  return `<section class="block" id="mailBlock"><div class="phead"><h3>📤 Courrier pour mes carnets ${W.length?`<span class="badge">${W.length}</span>`:""}</h3>${spkBtn("mailBlock")}</div>
+  <p class="meta">Ce que tu envoies depuis Reprendre ici, la note rapide ✍️ ou une tâche. Le carnet reconnaît les mots-clés de chaque carnet (ex. « KN », même mal dicté).</p>
+  <div class="bar noread"><button class="btn ghost" data-act="mailNew">📤 Écrire à un carnet</button></div>
+  ${W.length?W.map(mailRow).join(""):L.length?`<p class="meta">Rien en attente ✓</p>`:exBox("→ 💼 Kay Numérique › Suivi des démarches<br>« Relancer la mairie pour l’atelier seniors »<br>⏳ En attente · envoyé le 24/11/2026")}
+  ${D.length?`<details class="fold2" data-fold="mailDone" ${foldOpen("mailDone",false)?"open":""}><summary>Déjà arrivés (${D.length})</summary>${D.map(mailRow).join("")}</details>`:""}</section>`;}
+
 /* ---------- V25 : Mes carnets ---------- */
 function vCarnets(){const L=state.carnets||[];
   return `<h2>🔗 Mes carnets</h2><p class="lead">Tes autres carnets, au même endroit. Colle l’adresse de ceux qui sont en ligne (GitHub) pour les ouvrir d’un toucher.</p>
   <div class="bar"><button class="btn" data-act="carNew">Ajouter un carnet</button></div>
+  ${mailBlock()}
   ${L.length?`<section class="block" id="carBlock"><div class="phead"><h3>Mes carnets <span class="badge">${L.length}</span></h3>${spkBtn("carBlock")}</div>${L.map(carRow).join("")}</section>`:empty("Aucun carnet pour l’instant. Touche « Ajouter un carnet ».")+exBox("💞 Bilan du couple : 📄 fichier à ouvrir dans Chrome.<br>📘 Mon carnet de démonstration : 🌐 carnet-personnalise.github.io/lea, avec un bouton Ouvrir.")}
   <p class="meta">Un carnet qui n’est pas en ligne (simple fichier) ne peut pas s’ouvrir d’ici : Chrome l’interdit pour ta sécurité. Laisse alors l’adresse vide.</p>`;}
 function carRow(c){const u=safeUrl(c.url);
-  return `<div class="row" id="car-${c.id}"><div class="grow"><b>${esc(c.emoji||"📘")} ${esc(c.name)}</b><div class="meta">${u?"🌐 "+esc(u.replace(/^https?:\/\//i,"").replace(/\/$/,"")):"📄 Fichier à ouvrir dans Chrome"}</div>${c.note?`<div class="meta">${esc(c.note)}</div>`:""}
+  return `<div class="row" id="car-${c.id}"><div class="grow"><b>${esc(c.emoji||"📘")} ${esc(c.name)}</b><div class="meta">${u?"🌐 "+esc(u.replace(/^https?:\/\//i,"").replace(/\/$/,"")):(c.kw&&c.kw.length?"🌐 Adresse pas encore notée : touche ✎":"📄 Fichier à ouvrir dans Chrome")}</div>${c.note?`<div class="meta">${esc(c.note)}</div>`:""}${c.kw&&c.kw.length?`<div class="meta">🔤 Mots-clés : ${c.kw.map(esc).join(", ")}</div>`:""}${c.sec&&c.sec.length?`<div class="meta">🗂️ Parties : ${c.sec.map(esc).join(", ")}</div>`:""}${c.key?`<div class="meta">📬 Adresse de réception : <b>${esc(c.key)}</b></div>`:""}
   ${u?`<div class="bar noread" style="margin-top:6px"><a class="btn spk" href="${esc(u)}" target="_blank" rel="noopener">Ouvrir</a></div>`:""}</div>
   ${spkBtn("car-"+c.id,1)}<button class="icon" data-act="carEdit" data-id="${c.id}" aria-label="Modifier">✎</button><button class="icon" data-act="carDel" data-id="${c.id}" aria-label="Supprimer">🗑</button></div>`;}
-function carForm(c){c=Object.assign({id:"",name:"",emoji:"📘",url:"",note:""},c||{});
+function carForm(c){c=Object.assign({id:"",name:"",emoji:"📘",url:"",note:"",kw:[],sec:[],key:""},c||{});
   return `<h2>${c.id?"Modifier le carnet":"🔗 Nouveau carnet"}</h2>
   <label for="caN">Nom du carnet</label><input id="caN" value="${esc(c.name)}" placeholder="Ex. : Bilan du couple">
   ${selField("caE","Emoji","carnetEmo",c.emoji)}
   <label for="caU">Adresse <span class="hint">(si le carnet est en ligne, ex. GitHub ; sinon laisse vide)</span></label><input id="caU" type="url" value="${esc(c.url)}" placeholder="https://carnet-personnalise.github.io/…">
   <label for="caT">Note</label><input id="caT" value="${esc(c.note)}" placeholder="Ex. : à remplir le dimanche">
+  <label for="caK">📤 Mots-clés pour y envoyer <span class="hint">(sépare-les par une virgule ; majuscules et accents ne comptent pas)</span></label><input id="caK" value="${esc((c.kw||[]).join(", "))}" placeholder="Ex. : KN, Kay Numérique, Caille numérique">
+  <label for="caS">🗂️ Parties de ce carnet <span class="hint">(pour ranger le courrier, séparées par une virgule)</span></label><input id="caS" value="${esc((c.sec||[]).join(", "))}" placeholder="Ex. : Suivi des démarches, Idées prestations">
+  ${c.key?`<p class="meta">📬 Adresse de réception : <b>${esc(c.key)}</b> (à donner à Claude pour ce carnet)</p>`:""}
   <div class="actions"><button class="btn ghost" data-act="closeModal">Annuler</button><button class="btn" data-act="carSave" data-id="${c.id}">Enregistrer</button></div>`;}
 
 /* ---------- V20 : fiche de test ---------- */
@@ -2742,6 +2933,10 @@ RAPPELS DU JOUR : les rappels réguliers (exercices, bilans…) s’affichent à
 
 MES CARNETS : chaque carnet a une page « Mes carnets » pour ouvrir les autres carnets en ligne ; un simple fichier ne s’ouvre pas depuis un carnet en ligne.
 
+SYNCHRONISATION : le même carnet sur le téléphone et l’ordinateur, par un fichier .json sur mon Google Drive (accès « drive.file », mon identifiant Google Cloud collé dans les Paramètres, jamais écrit dans le fichier public). Les deux appareils mélangent leurs changements élément par élément, sans rien perdre. Un bouton ☁️ en haut, et une question à l’ouverture quand Google demande de se reconnecter. Restaurer un .json ne doit rien effacer sur l’autre appareil.
+
+BOÎTE AUX LETTRES ENTRE CARNETS : le Carnet Pilote est mon point d’entrée unique. Il reconnaît les mots-clés de chaque carnet (sans tenir compte des majuscules, des accents ni des erreurs de dictée) et propose d’envoyer la note ou la tâche vers le bon carnet, dans la bonne partie. Les messages passent par le stockage partagé du site (clé « carnets_courrier », même adresse carnet-personnalise.github.io). Chaque carnet a une adresse de réception (ex. « kay-numerique ») : à l’ouverture, il lit les messages qui lui sont adressés, les range, et les marque « reçus ».
+
 FICHES PROTÉGÉES : une fenêtre qui s’ouvre toute seule (minuteur, rappel, alarme) se pose par-dessus une fiche en cours, sans l’effacer ; la fiche revient telle quelle. Ce qui est rempli est gardé au fur et à mesure, et proposé à la réouverture si le carnet s’est fermé avant « Enregistrer ». Le bouton de note rapide reste visible par-dessus les fiches.
 
 TRI ET RAPPELS : les listes ont un menu « Trier par » (les plus récentes en haut par défaut, et « Autre… »). Les fichiers agenda mettent des rappels en notification, jamais par e-mail.
@@ -2753,6 +2948,13 @@ STYLE : minimaliste et épuré, tableaux et fiches mémo plutôt que texte dense
 MON PROFIL : pragmatique, méthodique, minimaliste. Des tâches courtes, des pauses, et des repères pour reprendre facilement après une phase basse.
 
 EN LIGNE ET APPLICATION MOBILE : prévoir dès le départ que le carnet sera mis en ligne sur GitHub Pages et installé comme une application. Donc : un fichier index.html (en plus du fichier avec la version d’abord, à garder sur le Drive), les lignes du manifest.json et du Service Worker (sw.js) dans le fichier, et des icônes à partir du logo. Rien de personnel ni de médical écrit dans le fichier, car il est public : mes données restent dans le téléphone et dans le .json.`;
+const MAIL_PROMPT=`Ajoute à ce carnet la réception du courrier envoyé par mon Carnet Pilote. Les deux carnets sont en ligne sur le même site (carnet-personnalise.github.io).
+- Adresse de réception de ce carnet : « [ADRESSE] » (je la trouve dans le Carnet Pilote, onglet 🔗 Mes carnets).
+- À l’ouverture du carnet, et quand je reviens dessus, lis localStorage « carnets_courrier » : un tableau JSON de messages {id, from, fromName, to, toName, section, text, date, time, status}.
+- Prends seulement les messages avec to = l’adresse de ce carnet et status = "attente". Garde dans les données du carnet la liste des id déjà rangés, pour ne jamais les ranger deux fois.
+- Montre-les dans une fenêtre « 📬 Courrier du Carnet Pilote » : le texte, la partie proposée (section) dans un menu des parties du carnet avec « Autre… », et les boutons « Ranger » et « Plus tard ». Un rappel dans l’accueil tant qu’il reste du courrier.
+- Quand un message est rangé : ajoute-le dans la partie choisie, puis dans « carnets_courrier » mets status = "recu" et recvAt = la date du jour (AAAA-MM-JJ). Ne supprime et ne modifie rien d’autre dans cette clé.
+- Ajoute cette nouveauté, datée, dans l’Historique des versions du carnet.`;
 const UPDATE_PROMPT="Voici mon Carnet Pilote (fichier HTML joint). Prépare la version suivante en gardant tout ce qui existe, ajoute ses nouveautés datées dans l’Historique des versions, et donne-moi les 2 fichiers : la version (ex. V22Carnet_Pilote.html) et index.html pour GitHub. Mes remarques : …";
 function vAide(){
   const s=state.settings,P=state.aidePins;
@@ -2934,6 +3136,26 @@ function vAide(){
     <p><b>🧘 Kiné :</b> Santé › Kiné. Une fiche par exercice, rangée par « Pour quoi ? ». Les vidéos filmées avec le téléphone sont trop lourdes : range-les sur ton Drive et colle le lien. Les jours choisis, le rappel est dans l’Accueil. Le bouton 🔔 Agenda crée un événement qui revient chaque semaine (règle ses notifications à la main dans Google Agenda).</p>
     <p><b>💞 Bilan du couple :</b> le rappel se règle dans Paramètres. Le fichier n’est pas en ligne : ouvre-le dans Chrome.</p>
     <p><b>🔗 Mes carnets :</b> un carnet en ligne (GitHub) s’ouvre d’un toucher. Un simple fichier ne peut pas s’ouvrir depuis le carnet : Chrome l’interdit pour ta sécurité.</p>`],
+  ["v26","☁️ Synchroniser mes appareils (V26)",`<p>But : le <b>même carnet</b> sur ton téléphone et ton ordinateur. Il faut d’abord créer, <b>une seule fois</b>, ton identifiant Google (gratuit). Fais-le sur l’ordinateur, c’est plus confortable (environ 15 minutes).</p>
+    <ol class="steps"><li><span><span class="pic">🌐</span> Va sur <b>console.cloud.google.com</b> et connecte-toi avec le compte Google de ton Drive. Accepte les conditions.</span></li>
+    <li><span><span class="pic">➕</span> En haut, « Sélectionner un projet », puis <b>Nouveau projet</b>. Nom : <b>Carnet Pilote</b>. <b>Créer</b>, puis choisis ce projet.</span></li>
+    <li><span><span class="pic">📚</span> Menu ☰, <b>API et services</b>, <b>Bibliothèque</b>. Cherche <b>Google Drive API</b>, ouvre-la, puis <b>Activer</b>.</span></li>
+    <li><span><span class="pic">📝</span> Menu ☰, <b>API et services</b>, <b>Écran de consentement OAuth</b> (parfois appelé « Google Auth Platform »), puis <b>Commencer</b>. Nom de l’application : <b>Carnet Pilote</b>. E-mail d’assistance : le tien. Cible : <b>Externe</b>. E-mail de contact : le tien. Accepte, puis <b>Créer</b>.</span></li>
+    <li><span><span class="pic">👤</span> Partie <b>Audience</b>, « Utilisateurs test » : <b>Add users</b>, écris ton adresse Gmail, <b>Enregistrer</b>.</span></li>
+    <li><span><span class="pic">🔑</span> Partie <b>Clients</b> : <b>Créer un client</b>. Type : <b>Application Web</b>. Nom : Carnet Pilote. « Origines JavaScript autorisées » : <b>Ajouter un URI</b>, écris <b>https://carnet-personnalise.github.io</b> (rien après). <b>Créer</b>.</span></li>
+    <li><span><span class="pic">📋</span> Copie l’<b>ID client</b> (il finit par <b>.apps.googleusercontent.com</b>). Range-le dans une note : ce n’est pas un mot de passe, mais ne le mets pas dans le fichier du carnet.</span></li>
+    <li><span><span class="pic">⚙️</span> Dans le carnet <b>en ligne</b> : Paramètres, <b>☁️ Synchronisation</b>. Choisis l’appareil, colle l’identifiant, puis <b>Activer et synchroniser</b>. Google te demande ton compte : accepte. S’il affiche « Google n’a pas validé cette application » : c’est normal, c’est la tienne. Touche <b>Continuer</b>.</span></li>
+    <li><span><span class="pic">📱</span> Fais pareil sur l’autre appareil. Le bouton « 📋 Copier mon identifiant » t’évite de le retaper.</span></li></ol>
+    <p><b>Commence par l’appareil qui a les données les plus à jour.</b> Au premier passage, le carnet réunit ce qu’il y a sur les deux appareils.</p>
+    <p><b>☁️ Ensuite :</b> après chaque changement, l’envoi se fait tout seul (environ 15 secondes). En haut : <b>☁️✓</b> = à jour. <b>☁️ Synchro</b> (entouré) = Google demande de te reconnecter, environ toutes les heures : touche-le. À l’ouverture, le carnet te pose la question.</p>
+    <p><b>🛟 Sécurité :</b> le fichier <b>Carnet_Pilote_synchro.json</b> sur ton Drive contient tout ton carnet, santé comprise : ne le modifie pas, ne le partage pas, ne le mets jamais sur GitHub. Garde aussi ta sauvegarde .json de la semaine.</p>
+    <p><b>Si ça bloque :</b> « origin_mismatch » : l’adresse de l’étape 6 est mal écrite. « Accès bloqué… validation » : ajoute ton adresse dans les utilisateurs test (étape 5). Rien ne s’ouvre dans l’application installée : essaie la même adresse dans Chrome (mêmes données).</p>
+    <h3 style="margin:18px 0 4px">📤 Le courrier vers mes autres carnets</h3>
+    <p>Le Carnet Pilote est ton point d’entrée. Quand tu écris « KN » (ou Kay Numérique, Caille numérique…) dans Reprendre ici, la note rapide ✍️ ou une tâche, il te propose de l’envoyer dans Kay Numérique, dans la bonne partie. Les mots-clés et les parties de chaque carnet se changent dans 🔗 Mes carnets (✎).</p>
+    <p>Pour que l’autre carnet range son courrier tout seul, il doit apprendre à le lire. Une seule fois par carnet : ouvre un projet Claude avec ce carnet, colle ce texte, en remplaçant [ADRESSE] par son adresse de réception${(state.carnets||[]).filter(c=>c.key).length?" ("+(state.carnets||[]).filter(c=>c.key).map(c=>esc(c.name)+" : <b>"+esc(c.key)+"</b>").join(" ; ")+")":""}.</p>
+    <label for="mailPrompt">Texte à donner à Claude</label><textarea id="mailPrompt" rows="8" readonly>${esc(MAIL_PROMPT)}</textarea>
+    <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="copyMailPrompt">Copier le texte</button></div>
+    <p class="meta">En attendant, chaque message a un bouton « 📋 Copier » et « Ouvrir le carnet ». Le courrier marche quand les deux carnets sont en ligne au même endroit (carnet-personnalise.github.io), sur le même appareil. Avec la synchronisation, il suit sur tes deux appareils.</p>`],
   ["regles","📋 Mes règles pour tout nouveau carnet HTML",`<p>Avant de créer un nouveau carnet (ou de faire évoluer celui de Kay Numérique), copie ce texte et colle-le à Claude <b>avant</b> de décrire ton besoin.</p>
     <label for="basePrompt">Règles communes à copier</label><textarea id="basePrompt" rows="8" readonly>${esc(BASE_PROMPT)}</textarea>
     <div class="bar" style="margin:10px 0 0"><button class="btn ghost" data-act="copyBase">Copier les règles</button></div>`],
@@ -2987,6 +3209,7 @@ function vParams0(){
   <section class="block" id="pClean"><h3>🧹 Nettoyer le carnet</h3><p class="meta">Retrouve partout ce que tu as marqué « à effacer » (par exemple « test à effacer »), pour l’effacer d’un coup.</p>
   <div class="bar"><button class="btn" data-act="cleanOpen">Chercher les éléments « à effacer »</button>${cleanBakGet()?`<button class="btn ghost" data-act="cleanUndoBtn">↩️ Annuler le dernier nettoyage</button>`:""}${(state.cleanKeep||[]).length?`<button class="btn ghost spk" data-act="cleanKeepReset">Reproposer ceux gardés (${state.cleanKeep.length})</button>`:""}</div></section>
   <section class="block" id="pCouple"><h3>💞 Rappel du bilan du couple</h3><p class="meta">Le jour choisi, un rappel s’affiche à l’ouverture du carnet et dans l’Accueil. Ton fichier n’étant pas en ligne, ouvre-le ensuite dans Chrome.</p>${coupleSel()}</section>
+  ${syncSec()}
   <section class="block"><h3>Sauvegarde et restauration</h3>
   <p><b>Dernière sauvegarde :</b> ${stampText(state.lastExport)}</p>
   <p><b>Dernière restauration :</b> ${stampText(state.lastRestore)}</p>
@@ -3276,7 +3499,7 @@ function updateFabs(){
 }
 function tick(){
   const p=state.pomo,now=Date.now();
-  if(state.chrono.running){state.chrono.lastSeen=now;if(++tickCount%10===0)save();}
+  if(state.chrono.running){state.chrono.lastSeen=now;if(++tickCount%10===0){tickSave=true;save();tickSave=false;}}
   if(p.phase==="work"&&now>=p.end)startPause(true);
   else if(p.phase==="pause"&&now>=p.end)endPause();
   const cd=$("#chronoDisp");if(cd&&state.chrono.running)cd.textContent=hms(chronoMs());
@@ -3421,7 +3644,7 @@ const ACT={
     if(pendingIdea)state.ideas=state.ideas.filter(i=>i.id!==pendingIdea);
     save();closeModal();
     if(cur!=="accueil"){cur="taches";if((taskFilter==="Faites"&&!done)||(taskFilter==="À suivre"&&!data.follow)||(!["Tous","Faites","À suivre"].includes(taskFilter)&&!domains.includes(taskFilter)))taskFilter="Tous";}
-    render();flash("t-"+tid);if(!id)setTimeout(()=>offerRep(title),300);toast(newName?"Enregistré, avec le nouveau projet « "+newName+" »":data.date?"Enregistré. Touche 🔔 pour l’agenda":"Enregistré",newName?4000:2600);
+    render();flash("t-"+tid);if(!id)setTimeout(()=>{if(!routeOffer(title,{kind:"task",id:tid}))offerRep(title);},300);toast(newName?"Enregistré, avec le nouveau projet « "+newName+" »":data.date?"Enregistré. Touche 🔔 pour l’agenda":"Enregistré",newName?4000:2600);
   },
   delTask:id=>{const t=state.tasks.find(x=>x.id===id);if(!t||!confirm("Supprimer « "+t.title+" » ?"))return;state.tasks=state.tasks.filter(x=>x.id!==id);state.projects.forEach(p=>{if(p.nextTask===id)p.nextTask="";});save();render();},
   toggleTask:id=>{const t=state.tasks.find(x=>x.id===id);if(!t)return;t.done=!t.done;t.doneDate=t.done?today():"";save();render();if(t.done)toast("Bravo, c’est fait ✓");},
@@ -3497,7 +3720,8 @@ const ACT={
   jumpTop:()=>jumpTo(document.getElementById("tocNav")),
   repAdd:()=>{const v=val("repIn");if(!v){toast("Écris d’abord une ligne");return;}const sj=subjVal("repSubj");
     v.split(/\n+/).map(x=>x.trim()).filter(Boolean).reverse().forEach(t=>{if(sj)learnSubj(t,sj);state.rep.unshift({id:uid(),text:t,done:false,date:today(),subj:sj||autoSubj(t),auto:!sj});});
-    state.ui.repFold=false;save();keepPos("repBlock",render);const i=$("#repIn");if(i)i.focus({preventScroll:true});},
+    state.ui.repFold=false;save();keepPos("repBlock",render);const i=$("#repIn");if(i)i.focus({preventScroll:true});
+    const nw=state.rep.slice(0,v.split(/\n+/).filter(x=>x.trim()).length).find(r=>routeFind(r.text));if(nw)setTimeout(()=>routeOffer(nw.text,{kind:"rep",id:nw.id}),250);},
   repResubj:()=>{let n=0;state.rep.forEach(r=>{if(r.auto===false)return;const s=autoSubj(r.text);if(s!==(r.subj||"")){r.subj=s;n++;}r.auto=true;});save();keepPos("repBlock",render);
     toast(n?pl(n,"sujet corrigé","sujets corrigés")+". Les sujets choisis à la main n’ont pas bougé.":"Les sujets étaient déjà bons ✓",4500);},
   repTick:id=>{const r=state.rep.find(x=>x.id===id);if(!r)return;r.done=!r.done;save();keepPos("repBlock",render);if(r.done)toast("Bravo ✓");repCheck();},
@@ -3573,7 +3797,7 @@ const ACT={
     const d=new Date();const file=VERSION+"Carnet_Pilote_sauvegarde_"+isoOf(d)+"_"+pad(d.getHours())+"h"+pad(d.getMinutes())+".json";
     state.lastExport={date:isoOf(d),time:hm(d),file};save();downloadFile(file,JSON.stringify(state,null,2),"application/json");render();
     toast(added?"Sauvegarde téléchargée, avec "+fmtSec(added)+" de chrono enregistrées":"Sauvegarde téléchargée",3500);},
-  resetAll:()=>{if(!confirm("Tout effacer ? As-tu bien sauvegardé avant ?"))return;state=fixState(null);startVisit();save();applyTheme();restoreFabs();cur="accueil";render();toast("Carnet remis à zéro");},
+  resetAll:()=>{if(!confirm("Tout effacer ? As-tu bien sauvegardé avant ?"))return;syncCfg.base=null;syncCfg.on=false;syncSave();state=fixState(null);startVisit();save();applyTheme();restoreFabs();cur="accueil";render();toast("Carnet remis à zéro");},
   addUrgent:()=>{const v=val("uIn");if(!v)return;state.urgent.unshift({id:uid(),text:v,date:today()});save();pinModal();updateFabs();},
   delUrgent:id=>{state.urgent=state.urgent.filter(u=>u.id!==id);save();pinModal();updateFabs();toast("Réglé ✓");},
   chronoStart:()=>{const n=Date.now();state.chrono={running:true,start:n,lastSeen:n,gap:0,tool:selVal("chTool",true),cat:catVal("chCat",true),details:val("chDet")};save();chronoModal();updateFabs();},
@@ -3754,7 +3978,8 @@ const ACT={
   qnAdd:()=>{const v=val("qnIn");if(!v){toast("Écris ou dicte d’abord ton idée");return;}const ctx=$("#qnCtx")&&$("#qnCtx").checked?"["+placeLabel()+"] ":"";
     const L=v.split(/\n+/).map(x=>x.trim()).filter(Boolean);L.reverse().forEach(t=>{const txt=ctx+t;state.rep.unshift({id:uid(),text:txt,done:false,date:today(),subj:autoSubj(txt),auto:true});});
     state.ui.repFold=false;save();if(cur==="accueil")keepPos("repBlock",render);const i=$("#qnIn");if(i){i.value="";autoGrow(i);i.focus({preventScroll:true});}
-    toast(L.length>1?L.length+" lignes ajoutées à Reprendre ici ✓":"Ajouté à Reprendre ici ✓");},
+    toast(L.length>1?L.length+" lignes ajoutées à Reprendre ici ✓":"Ajouté à Reprendre ici ✓");
+    const nw=state.rep.slice(0,L.length).find(r=>routeFind(r.text));if(nw)setTimeout(()=>routeOffer(nw.text,{kind:"rep",id:nw.id}),900);},
   dictate:(id,b)=>dictate(id,b),
   musicOpen:()=>musicModal(),
   musicBack:()=>pomoModal(),
@@ -3816,12 +4041,39 @@ const ACT={
     ask(`🧹 ${pl(sel.length,"élément")} effacé${sel.length>1?"s":""}.`,[["Annuler",()=>cleanUndo(),true]],15000);},
   cleanUndoBtn:()=>{if(confirm("Remettre le carnet comme avant le dernier nettoyage ? Ce que tu as changé depuis sera perdu."))cleanUndo();},
   cleanKeepReset:()=>{state.cleanKeep=[];save();render();toast("Les éléments gardés seront de nouveau proposés");},
+  /* V26 : synchronisation et courrier */
+  syncGo:()=>{if(!syncReady()){cur="params";render();setTimeout(()=>flash("pSync"),80);return;}syncNow(true);},
+  syncOn:()=>{const id=val("syId").replace(/\s+/g,"");if(!/\.apps\.googleusercontent\.com$/.test(id)){toast("Colle ton identifiant Google : il finit par .apps.googleusercontent.com",5000);return;}
+    const dv=selVal("syDev",true);if(!dv){toast("Choisis d’abord cet appareil (Téléphone, Ordinateur…)",4000);return;}
+    syncCfg.clientId=id;syncCfg.device=dv;syncCfg.on=true;syncCfg.err="";syncCfg.dirty=true;syncSave();if(!canSyncHere()){render();toast("Enregistré. Ouvre maintenant le carnet en ligne (ton application) pour synchroniser",6000);return;}syncNow(true);},
+  syncSet:()=>{const id=val("syId").replace(/\s+/g,"");if(id&&id!==syncCfg.clientId){if(!/\.apps\.googleusercontent\.com$/.test(id)){toast("Cet identifiant ne finit pas par .apps.googleusercontent.com",5000);return;}syncCfg.clientId=id;syncTok=null;syncTokExp=0;syncCfg.asked=false;}
+    const dv=selVal("syDev",true);if(dv)syncCfg.device=dv;syncSave();keepPos("pSync",render);toast("Enregistré ✓");},
+  syncCopyId:()=>{if(syncCfg.clientId)copyText(syncCfg.clientId,"#syId","Identifiant copié : envoie-le sur ton autre appareil");},
+  syncOff:()=>{if(!confirm("Arrêter la synchronisation sur cet appareil ? Tes données restent ici, et le fichier reste sur ton Drive."))return;syncCfg.on=false;syncTok=null;syncTokExp=0;try{sessionStorage.removeItem("carnetPilote_jeton");}catch(e){}syncSave();keepPos("pSync",render);toast("Synchronisation arrêtée sur cet appareil");},
+  goCarnets:()=>{cur="carnets";render();setTimeout(()=>flash("mailBlock"),80);},
+  mailNew:()=>mailForm({kind:"",id:""},"",""),
+  mailFromRep:id=>mailForm({kind:"rep",id},(routeFind((state.rep.find(r=>r.id===id)||{}).text||"")||{}).id,""),
+  mailSend:()=>{const to=val("mlTo");let c;
+    if(to==="__autre"){const n=val("mlToO");if(!n){toast("Écris le nom du carnet");return;}c=state.carnets.find(x=>norm(x.name)===norm(n));if(!c){c={id:uid(),name:n,emoji:"📘",url:"",note:"",kw:[],sec:[],key:slugOf(n)};state.carnets.push(c);}}
+    else c=state.carnets.find(x=>x.id===to);
+    if(!c){toast("Choisis un carnet");return;}
+    let sec=val("mlSec");if(sec==="__autre"){sec=val("mlSecO");if(sec&&!c.sec.some(x=>norm(x)===norm(sec)))c.sec.push(sec);}
+    const text=val("mlTxt");if(!text){toast("Le texte est vide");return;}
+    const keep=$("#mlKeep")?$("#mlKeep").checked:true,d=new Date();
+    state.outbox.unshift({id:uid(),to:c.id,key:c.key||slugOf(c.name),toName:c.name,section:sec||"",text,date:isoOf(d),time:hm(d),status:"attente",src:mailSrc.kind||""});
+    if(!keep&&mailSrc.kind==="rep")state.rep=state.rep.filter(r=>r.id!==mailSrc.id);
+    if(!keep&&mailSrc.kind==="task")state.tasks=state.tasks.filter(t=>t.id!==mailSrc.id);
+    modalDirty=false;save();mailPublish();closeModal();render();toast("📤 Prêt pour « "+c.name+" »"+(sec?" › "+sec:"")+". Tu le retrouves dans 🔗 Mes carnets.",4500);},
+  mailCopy:id=>{const o=state.outbox.find(x=>x.id===id);if(o)copyText(o.text,null,"Copié : colle-le dans « "+o.toName+" »");},
+  mailDone:id=>{const o=state.outbox.find(x=>x.id===id);if(!o)return;o.status="recu";o.recvAt=today();save();mailPublish();render();toast("✓ Rangé dans les messages arrivés");},
+  mailDel:id=>{const o=state.outbox.find(x=>x.id===id);if(!o||!confirm("Retirer ce message ?"))return;state.outbox=state.outbox.filter(x=>x.id!==id);save();mailPublish();render();},
+  copyMailPrompt:()=>copyText(MAIL_PROMPT,"#mailPrompt","Copié : colle-le à Claude avec ton autre carnet"),
   /* V25 : Mes carnets */
   carNew:()=>openModal(carForm(),"form"),
   carEdit:id=>{const c=(state.carnets||[]).find(x=>x.id===id);if(c)openModal(carForm(c),"form");},
   carDel:id=>{const c=(state.carnets||[]).find(x=>x.id===id);if(!c||!confirm("Retirer « "+c.name+" » de la liste ? (le carnet lui-même n’est pas touché)"))return;state.carnets=state.carnets.filter(x=>x.id!==id);save();render();},
   carSave:id=>{const name=val("caN");if(!name){toast("Écris le nom du carnet");return;}let u=val("caU");if(u&&!/^https?:\/\//i.test(u))u="https://"+u;
-    const data={name,emoji:selVal("caE",true)||"📘",url:u,note:val("caT")};let c=state.carnets.find(x=>x.id===id);if(c)Object.assign(c,data);else{c=Object.assign({id:uid()},data);state.carnets.push(c);}
+    const csv=x=>val(x).split(",").map(y=>y.trim()).filter(Boolean);const data={name,emoji:selVal("caE",true)||"📘",url:u,note:val("caT"),kw:csv("caK"),sec:csv("caS")};let c=state.carnets.find(x=>x.id===id);if(!c||!c.key)data.key=slugOf(name);if(c)Object.assign(c,data);else{c=Object.assign({id:uid()},data);state.carnets.push(c);}
     cur="carnets";modalDirty=false;save();closeModal();render();flash("car-"+c.id);toast(u?"Enregistré : touche « Ouvrir » pour y aller":"Enregistré");},
   winNew:()=>openModal(winForm(),"form"),
   winEdit:id=>{const w=state.wins.find(x=>x.id===id);if(w)openModal(winForm(w),"form");},
@@ -3898,6 +4150,8 @@ document.addEventListener("input",e=>{
 });
 document.addEventListener("change",e=>{
   const t=e.target,k=t.dataset.set;
+  if(t.id==="mlTo"){const o=$("#mlToO");if(o){o.hidden=t.value!=="__autre";if(!o.hidden)o.focus();}const s=$("#mlSec");if(s)s.innerHTML=secOpts((state.carnets||[]).find(x=>x.id===t.value),"");const so=$("#mlSecO");if(so)so.hidden=true;return;}
+  if(t.id==="mlSec"){const o=$("#mlSecO");if(o){o.hidden=t.value!=="__autre";if(!o.hidden)o.focus();}return;}
   if(t.tagName==="SELECT"&&t.dataset.kind){
     const o=document.getElementById(t.id+"O");
     if(o){o.hidden=t.value!=="__autre";if(!o.hidden)o.focus();}
@@ -3962,7 +4216,7 @@ document.addEventListener("change",e=>{
     r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||!Array.isArray(o.projects)||!Array.isArray(o.tasks))throw new Error("format");
       if(!confirm("Remplacer le contenu actuel par cette sauvegarde ?"))return;
       const keepChrono=state.chrono,d=new Date();
-      state=fixState(o);state.chrono=keepChrono;state.lastRestore={date:isoOf(d),time:hm(d),file:file.name};
+      state=fixState(o);state.chrono=keepChrono;state.lastRestore={date:isoOf(d),time:hm(d),file:file.name};syncCfg.base=null;syncCfg.dirtyAt=Date.now();syncCfg.dirty=true;syncSave();
       save();applyTheme();restoreFabs();cur="params";render();toast("Carnet restauré");}
       catch(err){toast("Ce fichier n’est pas une sauvegarde du carnet");}};
     r.readAsText(file);t.value="";
@@ -3985,6 +4239,10 @@ document.addEventListener("visibilitychange",()=>{
   if(document.hidden){draftSaveNow();if(c.running){c.lastSeen=now;save();}return;}
   if(c.running&&c.lastSeen&&now-c.lastSeen>30*60000){recordWork(c,c.start,c.lastSeen);startVisit();render();toast("Bon retour ! Nouvelle visite lancée.");}
 });
+document.addEventListener("visibilitychange",()=>{if(typeof syncCfg==="undefined")return;
+  if(document.hidden){if(syncCfg.dirty&&tokOk())syncNow(false);return;}
+  mailPublish();syncBtnUpd();if(syncReady()&&tokOk()&&Date.now()-(syncCfg.lastOk||0)>60000)syncNow(false);});
+window.addEventListener("online",()=>{if(syncReady()&&tokOk())syncNow(false);else syncBtnUpd();});
 window.addEventListener("pagehide",()=>{draftSaveNow();if(state.chrono.running){state.chrono.lastSeen=Date.now();save();}});
 window.addEventListener("resize",()=>{Object.keys(FABS).forEach(k=>{const p=state.fabPos[k];if(p)placeFab(document.getElementById(k),p.x,p.y);});setHdr();document.querySelectorAll(".hs").forEach(hsUpd);recenter();});
 window.addEventListener("scroll",()=>{if(window.scrollX)recenter();},{passive:true});
@@ -4037,6 +4295,7 @@ setupLock();
 window.addEventListener("load",()=>{setHdr();recenter();document.querySelectorAll(".hs").forEach(hsUpd);});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{setHdr();document.querySelectorAll(".hs").forEach(hsUpd);});
 if(merged)setTimeout(()=>toast("Bon retour ! Ta séance continue."),600);
+mailPublish();if(syncReady()&&canSyncHere())gisLoad().catch(()=>{});syncBtnUpd();
 </script>
 <script>
 /* Application mobile : fonctionne seulement une fois le carnet en ligne (https) */
